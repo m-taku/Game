@@ -178,16 +178,16 @@
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
-    <ImageContentTask Include="Assets\sprite\fade.png">
-      <Filter>Assets\sprite</Filter>
-    </ImageContentTask>
-  </ItemGroup>
-  <ItemGroup>
     <Image Include="Assets\modelData\livingbuildings.png">
       <Filter>Assets\modelData</Filter>
     </Image>
     <Image Include="Assets\modelData\worktops007.jpg">
       <Filter>Assets\modelData</Filter>
     </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Assets\lever\larer_01.tks">
+      <Filter>Assets\font</Filter>
+    </None>
   </ItemGroup>
 </Project>

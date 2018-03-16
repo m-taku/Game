@@ -727,11 +727,11 @@
     <CustomBuild Include="Assets\effect\Texture\wind02.png" />
   </ItemGroup>
   <ItemGroup>
-    <ImageContentTask Include="Assets\sprite\fade.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Image Include="Assets\modelData\livingbuildings.png" />
     <Image Include="Assets\modelData\worktops007.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Assets\lever\larer_01.tks" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
