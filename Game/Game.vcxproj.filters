@@ -40,6 +40,7 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="AI.cpp" />
     <ClCompile Include="Stage.cpp" />
+    <ClCompile Include="camera.cpp" />
   </ItemGroup>
   <ItemGroup>
     <CLInclude Include="resource.h">
@@ -53,6 +54,7 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="AI.h" />
     <ClInclude Include="Stage.h" />
+    <ClInclude Include="camera.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Game.rc">

@@ -3,8 +3,10 @@
 #include"Human.h"
 
 
+
 Player::Player()
 {
+	
 }
 
 
@@ -20,15 +22,23 @@ bool Player::Start()
 }
 void Player::Update()
 {
-	CQuaternion qBias;
-	qBias = rotation(0);
+	//左スティックの入力量を受け取る。
+	float lStick_x = Pad(0).GetLStickXF();
+	float lStick_y = Pad(0).GetLStickYF();
+	float rStick_x = Pad(0).GetRStickXF();
+	float rStick_y = Pad(0).GetRStickYF();
+	m_position.x += 5 * lStick_x;
+	m_position.z += 5 * lStick_y;
+	rotY += rStick_x * 5;
+	qBias = rotation(rotY);
 	//プレイヤーの前方向を計算
-	CMatrix mRot;
+	
 	mRot.MakeRotationFromQuaternion(qBias);
 	m_forward.x = mRot.m[2][0];
 	m_forward.y = mRot.m[2][1];
 	m_forward.z = mRot.m[2][2];
-	m_skinModel.Update(m_position, qBias, { 0.5f,0.5f,0.5f });
+	m_forward.Normalize();
+	m_skinModel.Update(m_position, qBias, { 1.0f, 1.0f,1.0f });
 }
 void Player::Render(CRenderContext& rc)
 {

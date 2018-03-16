@@ -18,5 +18,8 @@ public:
 	CShaderResourceView m_normalMap;		//法線マップ。
 	CShaderResourceView m_specMap;			//スペキュラマップ。
 	CVector3 m_forward;						//プレイヤーの前方。
+	float rotY=0.0f; //回転
+	CQuaternion qBias;
+	CMatrix mRot;
 };
 

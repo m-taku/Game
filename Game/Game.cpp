@@ -5,6 +5,7 @@
 #include"Player.h"
 #include"AI.h"
 #include"Stage.h"
+#include"camera.h"
 Game::Game()
 {
 	//Ç±Ç±Ç…äÓñ{ìIÇ»î≠ê∂Çï`Ç≠
@@ -43,6 +44,7 @@ bool Game::Start()
 		NewGO<Player>(0, "Player");
 		//NewGO<AI>(0, "AI");
 		NewGO<Stage>(0, "stage");
+		NewGO<camera>(0, "camera");
 	}
 
 	m_Fade=FindGO<Fade>("Fade");
