@@ -4,6 +4,7 @@
 #include"Taitor.h"
 #include"Player.h"
 #include"AI.h"
+#include"Stage.h"
 Game::Game()
 {
 	//ここに基本的な発生を描く
@@ -33,14 +34,15 @@ bool Game::Start()
 	//カメラを設定。
 	MainCamera().SetTarget({ 0.0f, 10.0f, 0.0f });
 	MainCamera().SetNear(0.1f);
-	MainCamera().SetFar(100.0f);
-	MainCamera().SetPosition({ 30.0f, 10.0f, 0.0f });
+	MainCamera().SetFar(10000.0f);
+	MainCamera().SetPosition({ 3000.0f, 1000.0f, 0.0f });
 	MainCamera().Update();
 	//ここに基本的な発生を描く
 	{
 		NewGO<Taitor>(0, "Taitor");
 		NewGO<Player>(0, "Player");
 		//NewGO<AI>(0, "AI");
+		NewGO<Stage>(0, "stage");
 	}
 
 	m_Fade=FindGO<Fade>("Fade");
