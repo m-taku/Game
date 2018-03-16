@@ -20,10 +20,14 @@ bool Player::Start()
 }
 void Player::Update()
 {
-	m_movespeed = {1.0f, 0.0f, 0.0f};
 	CQuaternion qBias;
-	qBias = rotation(180);
-	Muve(m_movespeed);//ムーヴスピード入れると動く
+	qBias = rotation(0);
+	//プレイヤーの前方向を計算
+	CMatrix mRot;
+	mRot.MakeRotationFromQuaternion(qBias);
+	m_forward.x = mRot.m[2][0];
+	m_forward.y = mRot.m[2][1];
+	m_forward.z = mRot.m[2][2];
 	m_skinModel.Update(m_position, qBias, { 0.5f,0.5f,0.5f });
 }
 void Player::Render(CRenderContext& rc)
