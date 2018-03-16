@@ -40,11 +40,14 @@ bool Game::Start()
 	{
 		NewGO<Taitor>(0, "Taitor");
 		NewGO<Player>(0, "Player");
-		NewGO<AI>(0, "AI");
+		//NewGO<AI>(0, "AI");
 	}
 
 	m_Fade=FindGO<Fade>("Fade");
-	m_Fade->StartFadeOut();
+	if (m_Fade != NULL) {
+		m_Fade->StartFadeOut();
+		a++;
+	}
 	/*m_skinModelRender = NewGO<prefab::CSkinModelRender>(0);
 	m_skinModelRender->Init(L"modelData/unityChan.cmo");
 	m_skinModelRender->SetScale({ 0.1f, 0.1f, 0.1f } );*/
@@ -54,11 +57,11 @@ void Game::Update()
 {
 	//クリア関係？？
 	
-	if (Pad(0).IsTrigger(enButtonB) && a >= 1) {
+	if (Pad(0).IsTrigger(enButtonB) && a >= 2) {
 		m_Fade->StartFadeOut();
 		a--;
 	}
-	if (Pad(0).IsTrigger(enButtonA)&&a==0) {
+	if (Pad(0).IsTrigger(enButtonA)&&a==1) {
 		m_Fade->StartFadeIn();
 		a++;
 	}
