@@ -2,6 +2,8 @@
 #include "Game.h"
 #include"Fade.h"
 #include"Taitor.h"
+#include"Player.h"
+#include"AI.h"
 Game::Game()
 {
 	//ここに基本的な発生を描く
@@ -37,7 +39,8 @@ bool Game::Start()
 	//ここに基本的な発生を描く
 	{
 		NewGO<Taitor>(0, "Taitor");
-
+		NewGO<Player>(0, "Player");
+		NewGO<AI>(0, "AI");
 	}
 
 	m_Fade=FindGO<Fade>("Fade");
@@ -50,6 +53,7 @@ bool Game::Start()
 void Game::Update()
 {
 	//クリア関係？？
+	
 	if (Pad(0).IsTrigger(enButtonB) && a >= 1) {
 		m_Fade->StartFadeOut();
 		a--;
