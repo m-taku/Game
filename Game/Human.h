@@ -11,7 +11,7 @@ public:
 	CQuaternion qBias_x;
 	CQuaternion qBias_z;
 	CQuaternion rotation(float a) {
-		qBias_x.SetRotationDeg(CVector3::AxisY, -90.0f);
+		qBias_x.SetRotationDeg(CVector3::AxisY, 0.0f);
 		qBias_z.SetRotationDeg(CVector3::AxisY, a);
 		qBias_x.Multiply(qBias_z);
 		return qBias_x;
