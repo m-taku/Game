@@ -25,6 +25,7 @@ public:
 	CQuaternion qBias1;
 	CQuaternion qrot;
 	CMatrix mRot;
-	CQuaternion m_rotation = CQuaternion::Identity;
+	CQuaternion m_rotation = CQuaternion::Identity;//キャラの回転
+	CQuaternion d_rotation = CQuaternion::Identity;//ダミーの回転（縦）
 };
 

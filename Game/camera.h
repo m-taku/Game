@@ -13,7 +13,8 @@ public:
 	//メンバ変数
 	/////////////////////////////////////
 	Player* m_player;	//プレイヤー。
-	CVector3 target;
-	CVector3 Ppos;
+	CVector3 target = CVector3::Zero;
+	CVector3 Ppos = CVector3::Zero;
+	float d = 0.0f;
 };
 
