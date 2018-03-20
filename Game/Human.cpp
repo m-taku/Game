@@ -9,10 +9,11 @@ Human::Human()
 
 Human::~Human()
 {
+	
 }
 bool Human::Start()
 {
-
+	
 	return true;
 }
 void Human::Update() {

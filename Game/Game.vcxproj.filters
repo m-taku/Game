@@ -41,9 +41,7 @@
     <ClCompile Include="AI.cpp" />
     <ClCompile Include="Stage.cpp" />
     <ClCompile Include="camera.cpp" />
-    <ClCompile Include="AImove.cpp" />
-    <ClCompile Include="Level.cpp" />
-    <ClCompile Include="MapChip.cpp" />
+    <ClCompile Include="taieki.cpp" />
   </ItemGroup>
   <ItemGroup>
     <CLInclude Include="resource.h">
@@ -58,9 +56,7 @@
     <ClInclude Include="AI.h" />
     <ClInclude Include="Stage.h" />
     <ClInclude Include="camera.h" />
-    <ClInclude Include="AImove.h" />
-    <ClInclude Include="Level.h" />
-    <ClInclude Include="MapChip.h" />
+    <ClInclude Include="taieki.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Game.rc">
@@ -74,10 +70,10 @@
     <MeshContentTask Include="Assets\modelData\stage.FBX">
       <Filter>Assets\modelData</Filter>
     </MeshContentTask>
-    <MeshContentTask Include="Assets\modelData\stage1.FBX">
+    <MeshContentTask Include="Assets\modelData\taieki.FBX">
       <Filter>Assets\modelData</Filter>
     </MeshContentTask>
-    <MeshContentTask Include="Assets\modelData\hantei.FBX">
+    <MeshContentTask Include="Assets\modelData\stage1.FBX">
       <Filter>Assets\modelData</Filter>
     </MeshContentTask>
   </ItemGroup>
@@ -190,15 +186,6 @@
     <CustomBuild Include="Assets\effect\Texture\wind02.png">
       <Filter>Assets\effect\Texture</Filter>
     </CustomBuild>
-    <CustomBuild Include="Assets\lever\leval00.tks">
-      <Filter>Assets</Filter>
-    </CustomBuild>
-    <CustomBuild Include="Assets\lever\leval01.tks">
-      <Filter>Assets</Filter>
-    </CustomBuild>
-    <CustomBuild Include="Assets\lever\leval000.tks">
-      <Filter>Assets</Filter>
-    </CustomBuild>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\modelData\livingbuildings.png">
@@ -207,5 +194,10 @@
     <Image Include="Assets\modelData\worktops007.jpg">
       <Filter>Assets\modelData</Filter>
     </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Assets\lever\larer_01.tks">
+      <Filter>Assets\font</Filter>
+    </None>
   </ItemGroup>
 </Project>
