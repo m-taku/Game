@@ -41,6 +41,9 @@
     <ClCompile Include="AI.cpp" />
     <ClCompile Include="Stage.cpp" />
     <ClCompile Include="camera.cpp" />
+    <ClCompile Include="AImove.cpp" />
+    <ClCompile Include="Level.cpp" />
+    <ClCompile Include="MapChip.cpp" />
   </ItemGroup>
   <ItemGroup>
     <CLInclude Include="resource.h">
@@ -55,6 +58,9 @@
     <ClInclude Include="AI.h" />
     <ClInclude Include="Stage.h" />
     <ClInclude Include="camera.h" />
+    <ClInclude Include="AImove.h" />
+    <ClInclude Include="Level.h" />
+    <ClInclude Include="MapChip.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Game.rc">
