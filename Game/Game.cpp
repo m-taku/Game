@@ -5,8 +5,12 @@
 #include"Player.h"
 #include"AI.h"
 #include"Stage.h"
+<<<<<<< HEAD
 #include"Level.h"
 #include"AImove.h"
+=======
+#include"camera.h"
+>>>>>>> 2d17ab8e8be7b1d97574d3fd2aba03b4fc0ce85e
 Game::Game()
 {
 	//Ç±Ç±Ç…äÓñ{ìIÇ»î≠ê∂Çï`Ç≠
@@ -45,8 +49,12 @@ bool Game::Start()
 		NewGO<Player>(0, "Player");
 		//NewGO<AI>(0, "AI");
 		NewGO<Stage>(0, "stage");
+<<<<<<< HEAD
 		m_level.Build(L"lever/leval01.tks");
 		NewGO<AImove>(0, "na");
+=======
+		NewGO<camera>(0, "camera");
+>>>>>>> 2d17ab8e8be7b1d97574d3fd2aba03b4fc0ce85e
 	}
 
 	m_Fade=FindGO<Fade>("Fade");
