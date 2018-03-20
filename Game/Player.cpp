@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "Player.h"
 #include"Human.h"
-//#include"taieki.h"
+#include"taieki.h"
 
 
 
@@ -13,7 +13,7 @@ Player::Player()
 
 Player::~Player()
 {
-//	DeleteGO(FindGO<taieki>("taieki"));
+	DeleteGO(FindGO<taieki>("taieki"));
 }
 bool Player::Start()
 {
