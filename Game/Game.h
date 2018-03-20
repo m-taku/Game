@@ -1,5 +1,5 @@
 #pragma once
-//#include "Level.h"
+#include "Level.h"
 
 #include "tkEngine/graphics/effect/tkEffect.h"
 class Fade;
