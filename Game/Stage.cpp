@@ -32,8 +32,6 @@ bool Stage::Start()
 }
 void Stage::Update()
 {
-	CQuaternion qRot;// = CQuaternion::Identity;
-	qRot.SetRotationDeg(CVector3::AxisY, 90.0f);
 	m_skinModel.Update(CVector3::Zero, CQuaternion::Identity, CVector3::One);
 }
 void Stage::Render(CRenderContext& rc)

@@ -1,4 +1,5 @@
 #pragma once
+#include "Level.h"
 
 #include "tkEngine/graphics/effect/tkEffect.h"
 class Fade;
@@ -16,8 +17,9 @@ public:
 	CAnimation m_animation;
 	CVector3 m_pos = CVector3::Zero;
 	Fade* m_Fade;
-	int a=0;
+	int a=0;							//ƒŒƒxƒ‹B
 private:
 	void InitSceneLight();
+	float g = 0.0f, f = 0.0;
 };
 
