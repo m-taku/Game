@@ -16,7 +16,7 @@ void Stage::OnDestroy()
 }
 bool Stage::Start()
 {
-	m_skinModelData.Load(L"modelData/stage1.cmo");
+	m_skinModelData.Load(L"modelData/stage.cmo");
 	m_skinModel.Init(m_skinModelData);
 	//メッシュコライダーを作成。
 	m_meshCollider.CreateFromSkinModel(m_skinModel, nullptr);
