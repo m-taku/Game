@@ -27,15 +27,15 @@ bool taieki::Start()
 }
 void taieki::Update()
 {
-	tpos += CF * 400.0f;
+	tpos += CF * 60.0f;
 	
-	TS.y -= 980.0f * GameTime().GetFrameDeltaTime();
+	TS.y -= 50.0f * GameTime().GetFrameDeltaTime();
 	tpos.y += TS.y;
 	if (tpos.y <= 0.0f)
 	{
 		DeleteGO(this);
 	}
-	m_taieki.Update(tpos, CQuaternion::Identity, { 1.0f, 1.0f,1.0f });
+	m_taieki.Update(tpos, CQuaternion::Identity, { 2.0f, 2.0f,2.0f });
 }
 void taieki::Render(CRenderContext& rc)
 {

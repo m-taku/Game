@@ -31,8 +31,8 @@ bool Player::Start()
 void Player::Update()
 {
 	//左スティックの入力量を受け取る。
-	float lStick_x = Pad(0).GetLStickXF()*150.0f;
-	float lStick_y = Pad(0).GetLStickYF()*150.0f;
+	float lStick_x = Pad(0).GetLStickXF()*300.0f;
+	float lStick_y = Pad(0).GetLStickYF()*300.0f;
 	//右スティックの入力量を受け取る。
 	float rStick_x = Pad(0).GetRStickXF();
 	float rStick_y = Pad(0).GetRStickYF();
@@ -47,7 +47,7 @@ void Player::Update()
 		&& m_charaCon.IsOnGround()  //かつ、地面に居たら
 		) {
 		//ジャンプする。
-		m_moveSpeed.y = 200.0f;	//上方向に速度を設定して、
+		m_moveSpeed.y = 400.0f;	//上方向に速度を設定して、
 		m_charaCon.Jump();		//キャラクターコントローラーにジャンプしたことを通知する。
 	}
 	m_moveSpeed.y -= 980.0f * GameTime().GetFrameDeltaTime();
