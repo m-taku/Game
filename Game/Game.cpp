@@ -5,6 +5,8 @@
 #include"Player.h"
 #include"AI.h"
 #include"Stage.h"
+#include"Level.h"
+#include"AImove.h"
 Game::Game()
 {
 	//ここに基本的な発生を描く
@@ -32,10 +34,10 @@ void Game::OnDestroy()
 bool Game::Start()
 {
 	//カメラを設定。
-	MainCamera().SetTarget({ 0.0f, 10.0f, 0.0f });
+	MainCamera().SetTarget({ 0.0f, 10.0f, 0.5f });
 	MainCamera().SetNear(10.0f);
 	MainCamera().SetFar(50000.0f);
-	MainCamera().SetPosition({ 30.0f, 100.0f, 0.0f });
+	MainCamera().SetPosition({ 30.0f, 10.0f, 0.0f });
 	MainCamera().Update();
 	//ここに基本的な発生を描く
 	{
@@ -43,6 +45,8 @@ bool Game::Start()
 		NewGO<Player>(0, "Player");
 		//NewGO<AI>(0, "AI");
 		NewGO<Stage>(0, "stage");
+		m_level.Build(L"lever/leval01.tks");
+		NewGO<AImove>(0, "na");
 	}
 
 	m_Fade=FindGO<Fade>("Fade");
@@ -67,7 +71,13 @@ void Game::Update()
 		m_Fade->StartFadeIn();
 		a++;
 	}
-	
+	if (Pad(0).IsTrigger(enButtonLeft)) {
+		g += 100.0;
+	}
+	if (Pad(0).IsTrigger(enButtonRight)) {
+
+		f += 100.0;
+	}
 }
 void Game::Render(CRenderContext& rc)
 {

@@ -25,6 +25,7 @@ void Player::Update()
 	qBias = rotation(180);
 	Muve(m_movespeed);//ムーヴスピード入れると動く
 	m_skinModel.Update(m_position, qBias, { 0.5f,0.5f,0.5f });
+
 }
 void Player::Render(CRenderContext& rc)
 {
