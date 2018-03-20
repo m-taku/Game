@@ -17,6 +17,7 @@ public:
 	CAnimation m_animation;
 	CVector3 m_pos = CVector3::Zero;
 	Fade* m_Fade;
+	Level m_level;
 	int a=0;							//ƒŒƒxƒ‹B
 private:
 	void InitSceneLight();

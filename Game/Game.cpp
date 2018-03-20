@@ -5,7 +5,8 @@
 #include"Player.h"
 #include"AI.h"
 #include"Stage.h"
-
+#include"Level.h"
+#include"AImove.h"
 #include"camera.h"
 Game::Game()
 {
@@ -46,6 +47,8 @@ bool Game::Start()
 		//NewGO<AI>(0, "AI");
 		NewGO<Stage>(0, "stage");
 		NewGO<camera>(0, "camera");
+		NewGO<AImove>(0, "AIm");
+		m_level.Build(L"lever/leval01.tks");
 	}
 
 	m_Fade=FindGO<Fade>("Fade");
