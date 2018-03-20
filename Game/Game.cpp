@@ -4,6 +4,10 @@
 #include"Taitor.h"
 #include"Player.h"
 #include"AI.h"
+#include"Stage.h"
+#include"Level.h"
+#include"AImove.h"
+#include"camera.h"
 Game::Game()
 {
 	//ここに基本的な発生を描く
@@ -31,20 +35,27 @@ void Game::OnDestroy()
 bool Game::Start()
 {
 	//カメラを設定。
-	MainCamera().SetTarget({ 0.0f, 10.0f, 0.0f });
-	MainCamera().SetNear(0.1f);
-	MainCamera().SetFar(100.0f);
+	MainCamera().SetTarget({ 0.0f, 10.0f, 0.5f });
+	MainCamera().SetNear(10.0f);
+	MainCamera().SetFar(50000.0f);
 	MainCamera().SetPosition({ 30.0f, 10.0f, 0.0f });
 	MainCamera().Update();
 	//ここに基本的な発生を描く
 	{
 		NewGO<Taitor>(0, "Taitor");
 		NewGO<Player>(0, "Player");
-		NewGO<AI>(0, "AI");
+		//NewGO<AI>(0, "AI");
+		NewGO<Stage>(0, "stage");
+		NewGO<camera>(0, "camera");
+		NewGO<AImove>(0, "AIm");
+		m_level.Build(L"lever/leval01.tks");
 	}
 
 	m_Fade=FindGO<Fade>("Fade");
-	m_Fade->StartFadeOut();
+	if (m_Fade != NULL) {
+		m_Fade->StartFadeOut();
+		a++;
+	}
 	/*m_skinModelRender = NewGO<prefab::CSkinModelRender>(0);
 	m_skinModelRender->Init(L"modelData/unityChan.cmo");
 	m_skinModelRender->SetScale({ 0.1f, 0.1f, 0.1f } );*/
@@ -54,15 +65,21 @@ void Game::Update()
 {
 	//クリア関係？？
 	
-	if (Pad(0).IsTrigger(enButtonB) && a >= 1) {
+	if (Pad(0).IsTrigger(enButtonB) && a >= 2) {
 		m_Fade->StartFadeOut();
 		a--;
 	}
-	if (Pad(0).IsTrigger(enButtonA)&&a==0) {
+	if (Pad(0).IsTrigger(enButtonA)&&a==1) {
 		m_Fade->StartFadeIn();
 		a++;
 	}
-	
+	if (Pad(0).IsTrigger(enButtonLeft)) {
+		g += 100.0;
+	}
+	if (Pad(0).IsTrigger(enButtonRight)) {
+
+		f += 100.0;
+	}
 }
 void Game::Render(CRenderContext& rc)
 {

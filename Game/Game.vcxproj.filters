@@ -39,6 +39,11 @@
     <ClCompile Include="Human.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="AI.cpp" />
+    <ClCompile Include="Stage.cpp" />
+    <ClCompile Include="camera.cpp" />
+    <ClCompile Include="AImove.cpp" />
+    <ClCompile Include="Level.cpp" />
+    <ClCompile Include="MapChip.cpp" />
   </ItemGroup>
   <ItemGroup>
     <CLInclude Include="resource.h">
@@ -51,6 +56,11 @@
     <ClInclude Include="Human.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="AI.h" />
+    <ClInclude Include="Stage.h" />
+    <ClInclude Include="camera.h" />
+    <ClInclude Include="AImove.h" />
+    <ClInclude Include="Level.h" />
+    <ClInclude Include="MapChip.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Game.rc">
@@ -59,6 +69,15 @@
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\unityChan.fbx">
+      <Filter>Assets\modelData</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Assets\modelData\stage.FBX">
+      <Filter>Assets\modelData</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Assets\modelData\stage1.FBX">
+      <Filter>Assets\modelData</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Assets\modelData\hantei.FBX">
       <Filter>Assets\modelData</Filter>
     </MeshContentTask>
   </ItemGroup>
@@ -171,10 +190,22 @@
     <CustomBuild Include="Assets\effect\Texture\wind02.png">
       <Filter>Assets\effect\Texture</Filter>
     </CustomBuild>
+    <CustomBuild Include="Assets\lever\leval00.tks">
+      <Filter>Assets</Filter>
+    </CustomBuild>
+    <CustomBuild Include="Assets\lever\leval01.tks">
+      <Filter>Assets</Filter>
+    </CustomBuild>
+    <CustomBuild Include="Assets\lever\leval000.tks">
+      <Filter>Assets</Filter>
+    </CustomBuild>
   </ItemGroup>
   <ItemGroup>
-    <ImageContentTask Include="Assets\sprite\fade.png">
-      <Filter>Assets\sprite</Filter>
-    </ImageContentTask>
+    <Image Include="Assets\modelData\livingbuildings.png">
+      <Filter>Assets\modelData</Filter>
+    </Image>
+    <Image Include="Assets\modelData\worktops007.jpg">
+      <Filter>Assets\modelData</Filter>
+    </Image>
   </ItemGroup>
 </Project>
