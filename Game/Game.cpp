@@ -47,10 +47,12 @@ bool Game::Start()
 		//NewGO<AI>(0, "AI");
 		NewGO<Stage>(0, "stage");
 		NewGO<camera>(0, "camera");
+		m_level[0].Build(L"lever/leval01.tks");
+		m_level[1].X = 5.0f;
+		m_level[1].Z=  5.0f;
+		m_level[1].Build(L"lever/leval01.tks");
 		NewGO<AImove>(0, "AIm");
-		m_level.Build(L"lever/leval01.tks");
 	}
-
 	m_Fade=FindGO<Fade>("Fade");
 	if (m_Fade != NULL) {
 		m_Fade->StartFadeOut();
@@ -80,6 +82,11 @@ void Game::Update()
 
 		f += 100.0;
 	}
+	MainCamera().SetTarget({ 0.0f, 10.0f, 0.5f });
+	MainCamera().SetNear(10.0f);
+	MainCamera().SetFar(50000.0f);
+	MainCamera().SetPosition({ 30.0f, 10.0f, 0.0f });
+	MainCamera().Update();
 }
 void Game::Render(CRenderContext& rc)
 {

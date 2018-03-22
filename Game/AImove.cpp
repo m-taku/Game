@@ -14,52 +14,65 @@ AImove::~AImove()
 
 bool AImove::Start()
 {
-	Game* game = FindGO<Game>("Game");
-	Size = game->m_level.m_mapChipList.size();
-	iin= game->m_level.m_mapChipList[No]->m_position;//.erase(it);
-	m_skinModelData.Load(L"modelData/unityChan.cmo");//プレイヤーを書け
-	m_skinModel.Init(m_skinModelData);
-	m_skinModel.Update(iin, CQuaternion::Identity,{ 500.0f,500.0f,500.0f });
-	No++;
+	game = FindGO<Game>("Game");
+	for (int i = 0; i < 10; i++) {
+		if (game->m_level[i].m_mapChipList.size() == NULL) {
+			break;
+		}
+		No[i] = 0;
+		Size[i] = game->m_level[i].m_mapChipList.size();
+		iin[i] = game->m_level[i].m_mapChipList[No[i]]->m_position;//.erase(it);
+		m_skinModelData[i].Load(L"modelData/unityChan.cmo");//プレイヤーを書け
+		m_skinModel[i].Init(m_skinModelData[i]);
+		m_skinModel[i].Update(iin[i], CQuaternion::Identity, { 500.0f,500.0f,500.0f });
+		j++;
+		K[i] = 0.0f;
+		in[i] = 0.0f;
+		Fream[i] = 0;
+		Flag[i] = 0;
+		No[i] = 1;
+	}
 	return true;
 }
 void AImove::Update()
 {
-	if (Flag == 0) {
-		//int i= Level->m_mapChipList.size;
-		Game* game = FindGO<Game>("Game");
-		if (No <Size&&No>=0) {	
-			bekutor = game->m_level.m_mapChipList[No]->m_position-iin;
-			bekutor.y = 0.0f;
-			K = sqrt(bekutor.x*bekutor.x + bekutor.y*bekutor.y + bekutor.z*bekutor.z);
-			bekutor.Normalize();
-			Fream = -1;
-			No += hugo * 1;
+	for (int i = 0; i < j; i++) {
+		if (Flag[i] == 0) {
+			if (No[i] < Size[i] && No[i] >= 0) {
+				bekutor[i] = game->m_level[i].m_mapChipList[No[i]]->m_position - iin[i];
+				bekutor[i].y = 0.0f;
+				K[i] = sqrt(bekutor[i].x*bekutor[i].x + bekutor[i].y*bekutor[i].y + bekutor[i].z*bekutor[i].z);
+				bekutor[i].Normalize();
+				Fream[i] = 0;
+				No[i] += hugo * 1;
+			}
+			else {
+				No[i] = 0;
+				bekutor[i] = game->m_level[i].m_mapChipList[No[i]]->m_position - iin[i];
+				bekutor[i].y = 0.0f;
+				K[i] = sqrt(bekutor[i].x*bekutor[i].x + bekutor[i].y*bekutor[i].y + bekutor[i].z*bekutor[i].z);
+				bekutor[i].Normalize();
+				Fream[i] = 0;
+				No[i] += hugo * 1;
+			}
+			in[i] = K[i] / 500;
+			Flag[i]--;
 		}
 		else {
-			No = 0;
-			bekutor = game->m_level.m_mapChipList[No]->m_position - iin;
-			bekutor.y = 0.0f;
-			K = sqrt(bekutor.x*bekutor.x + bekutor.y*bekutor.y + bekutor.z*bekutor.z);
-			bekutor.Normalize();
-			Fream = -1;
-			No += hugo * 1;
+			iin[i] += bekutor[i] * in[i]/**hugo*/;
+			if (K[i] - in[i] * Fream[i] <= 0)
+			{
+				Flag[i]++;
+			}
+			Fream[i]++;
+			iin[i].y = 0.0f;
 		}
-		in=K / 10;
-		Flag--;
+		m_skinModel[i].Update(iin[i], CQuaternion::Identity, { 1.0f,1.0f,1.0f });
 	}
-	else {
-		iin += bekutor *in/**hugo*/;
-		if (K - in*Fream <= 0)
-		{
-			Flag++;
-		}
-	}
-	iin.y = 0.0f;
-	Fream++;
-	m_skinModel.Update(iin, CQuaternion::Identity, { 1.0f,1.0f,1.0f });
 }
 void  AImove::Render(CRenderContext& rc)
 {
-	m_skinModel.Draw(rc, MainCamera().GetViewMatrix(), MainCamera().GetProjectionMatrix());
+	for (int i = 0; i < j; i++) {
+		m_skinModel[i].Draw(rc, MainCamera().GetViewMatrix(), MainCamera().GetProjectionMatrix());
+	}
 }
