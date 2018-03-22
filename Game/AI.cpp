@@ -61,10 +61,17 @@ void AI::NPCDamage()
 void AI::NPCZombie_Normal()
 {
 	//一定範囲を徘徊する。
-	//if () {//他のNPCを見つけたら
+
+	//一定範囲内に他のNPCを見つけたら
+	//float len;
+	//if (len) {
 	//	if (m->Zonbe == 0) {//それがゾンビではなかったら
-	//		ZombieChaseNumber = MyNumber; //自分が立っていたパスの番号を記憶する。
-	//		pa = Zombie_Chase; //パターンを追跡に変える。
+	//		//視界内か、角度をとって調べる。
+
+	//		if () {//角度内(視界内)だったら
+	//			ZombieChaseNumber = MyNumber; //自分が立っていたパスの番号を記憶する。
+	//			pa = Zombie_Chase; //パターンを追跡に変える。
+	//		}
 	//	}
 	//}
 }
@@ -135,6 +142,11 @@ void AI::Turn()//ここ
 }
 
 void AI::NPCRuet()//NPCルート
+{
+
+}
+
+float AI::VectorAngleDeg(CVector3 c)
 {
 
 }
