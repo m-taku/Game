@@ -6,8 +6,8 @@ public:
 	~Human();
 	bool Start();
 	void Update();
-	CVector3 m_position = { 0.0f,0.0f,0.0f };		//座標。
-	CVector3 m_movespeed = { 0.0f,0.0f,0.0f };		//移動速度。
+	CVector3 m_position = CVector3::Zero;		//座標。
+	CVector3 m_movespeed = CVector3::Zero;		//移動速度。
 	CQuaternion qBias_x;
 	CQuaternion qBias_z;
 	CQuaternion rotation(float a) {
@@ -21,6 +21,14 @@ public:
 		//return m_position;
 	}
 	CVector3 kakudai;
+<<<<<<< HEAD
 	int Zonbe = 0;//ゾンビ化したときに+1する。
+=======
+	int Zonbe = 0;
+
+	
+
+
+>>>>>>> a419c3131ef65b0e11cb7f5c01d1efbdc63ec9c8
 };
 

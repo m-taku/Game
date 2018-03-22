@@ -1,6 +1,7 @@
 #pragma once
 #include"Human.h"
 #include "tkEngine/character/tkCharacterController.h"
+class taieki;
 class Player : public Human
 {
 public:
@@ -27,5 +28,8 @@ public:
 	CMatrix mRot;
 	CQuaternion m_rotation = CQuaternion::Identity;//キャラの回転
 	CQuaternion d_rotation = CQuaternion::Identity;//ダミーの回転（縦）
+	CSkinModel m_taieki;
+	CSkinModelData m_taiekiModelData;
+	taieki* Tp = nullptr;
 };
 

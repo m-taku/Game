@@ -8,7 +8,6 @@ public:
 	~AI();
 	bool Start();
 	void Update();
-
 	void NPCNormal();
 	void NPCDamage();
 	void NPCZombie_Normal();
@@ -18,6 +17,7 @@ public:
 	void Render(CRenderContext& rc);
 	void Turn();
 	void NPCRuet(); //NPCの移動ルートを格納する。
+	float GetKyori(CVector3 a, CVector3 b);  //2つのオブジェクトの距離を計測する。
 
 	//メンバ変数
 	enum npcpattern { //switch文に使う。
@@ -31,7 +31,15 @@ public:
 	CSkinModel m_skinModel;					//スキンモデル。
 	CSkinModelData m_skinModelData;			//スキンモデルデータ。
 	CQuaternion m_rotation = CQuaternion::Identity;	//回転。
+	CVector3 m_forward;						//キャラの前方。
+	CVector3 m_rite;						//キャラの右方向。
+	CMatrix mRot;
 	bool DamageFlag = false;      //ダメージを受けたかを示すフラグ。
 	bool HitFlag = false;      //ダメージを与えたかを示すフラグ。
+	bool BattleFlag = false;     //特殊部隊と戦闘をしているかを示すフラグ。
+	bool ForceFlag = false;     //特殊部隊の出現を表すフラグ。
+	int MyNumber = 0;               //今自分が存在しているパスの番号。
+	int ZombieChaseNumber = 0;      //ゾンビが追跡を始めた時に立っていたパスの番号。
+	float m_speed;
 };
 
