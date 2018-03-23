@@ -45,7 +45,7 @@ void AImove::Update()
 			Fream = -1;
 			No += hugo * 1;
 		}
-		in=K / 10;
+		in=K / 100;
 		Flag--;
 	}
 	else {

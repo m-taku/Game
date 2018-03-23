@@ -740,10 +740,20 @@
     <CustomBuild Include="Assets\effect\Texture\wind02.png" />
   </ItemGroup>
   <ItemGroup>
+    <CustomBuild Include="Assets\effect\Texture\aura3_type2.png" />
+    <CustomBuild Include="Assets\effect\Texture\glow.png" />
+    <CustomBuild Include="Assets\effect\Texture\magma.png" />
     <Image Include="Assets\modelData\livingbuildings.png" />
+    <Image Include="Assets\modelData\white.png" />
     <Image Include="Assets\modelData\worktops007.jpg" />
   </ItemGroup>
   <ItemGroup>
+    <CustomBuild Include="Assets\effect\mqo\ball2.efkmodel">
+      <FileType>Document</FileType>
+    </CustomBuild>
+    <CustomBuild Include="Assets\effect\aura.efk">
+      <FileType>Document</FileType>
+    </CustomBuild>
     <None Include="Assets\lever\larer_01.tks" />
     <CustomBuild Include="Assets\lever\leval00.tks">
       <FileType>Document</FileType>
