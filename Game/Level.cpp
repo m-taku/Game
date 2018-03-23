@@ -30,7 +30,8 @@ void Level::Build(const wchar_t* levelDataFilePath)
 		CQuaternion rotation;
 		position = locData.GetObjectPosition(i);
 		rotation = locData.GetObjectRotation(i);
-
+		position.x = position.x + -1600.0f*X;
+		position.z = position.z + -1600.0f*Z;
 		//ボーン名からモデルデータのファイルパスを作成する。
 		const wchar_t* boneName = locData.GetObjectName(i);
 		wchar_t modelDataFilePath[256];

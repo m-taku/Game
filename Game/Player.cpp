@@ -38,6 +38,7 @@ void Player::Update()
 	//左スティックの入力量を受け取る。
 	float lStick_x = Pad(0).GetLStickXF()*500.0f;
 	float lStick_y = Pad(0).GetLStickYF()*500.0f;
+
 	//右スティックの入力量を受け取る。
 	float rStick_x = Pad(0).GetRStickXF();
 	float rStick_y = Pad(0).GetRStickYF();
@@ -80,7 +81,7 @@ void Player::Update()
 	m_moveSpeed += m_forward*lStick_y;
 	m_moveSpeed += m_rite * lStick_x;
 	m_position = m_charaCon.Execute(GameTime().GetFrameDeltaTime(), m_moveSpeed);
-	
+
 	m_skinModel.Update(m_position, m_rotation, CVector3::One);
 }
 void Player::Render(CRenderContext& rc)

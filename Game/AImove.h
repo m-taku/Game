@@ -1,5 +1,6 @@
 #pragma once
-class Level;
+#define KOSUU 2
+#include"Game.h"
 class AImove : public IGameObject
 {
 public:
@@ -8,17 +9,18 @@ public:
 	bool Start() override;
 	void Update() override;
 	void Render(CRenderContext& rc);
-	CSkinModel m_skinModel;					//スキンモデル。
-	CSkinModelData m_skinModelData;			//スキンモデルデータ。
-	Level* Level;
-	CVector3 iin;
-	float in;
-	int Size = 0;
-	CVector3 bekutor = CVector3::Zero;
-	float K = 0.0f;
-	int Fream = 0;
-	int Flag = 0;
-	int No = 0;
+	CSkinModel m_skinModel[KOSUU];					//スキンモデル。
+	CSkinModelData m_skinModelData[KOSUU];			//スキンモデルデータ。
+	CVector3 iin[KOSUU];
+	float in[KOSUU];
+	int Size[KOSUU];
+	int j = 0;
+	CVector3 bekutor[KOSUU];
+	float K[KOSUU];
+	int Fream[KOSUU];
+	int Flag[KOSUU];
+	int No[KOSUU];
 	int hugo = 1;
+	Game* game;
 };
 

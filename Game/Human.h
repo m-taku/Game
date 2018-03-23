@@ -21,10 +21,7 @@ public:
 		//return m_position;
 	}
 	CVector3 kakudai;
-	int Zonbe = 0;
-
-	
-
+	int Zonbe = 0;//ƒ]ƒ“ƒr‰»‚µ‚½‚Æ‚«‚É+1‚·‚éB
 
 };
 
