@@ -37,7 +37,7 @@ void taieki::Update()
 		e_pos = tpos;
 		e_pos.y += 10.0f;
 		player->effect->SetPosition(e_pos);
-		player->effect->SetScale({20.0f,20.0f,20.0f});
+		player->effect->SetScale({100.0f,100.0f,100.0f});
 		DeleteGO(this);
 	}
 	m_taieki.Update(tpos, CQuaternion::Identity, { 2.0f, 2.0f,2.0f });

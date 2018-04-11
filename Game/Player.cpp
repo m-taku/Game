@@ -7,7 +7,6 @@
 
 Player::Player()
 {
-	
 }
 
 
@@ -62,7 +61,7 @@ void Player::Update()
 		//ínñ Ç…Ç¬Ç¢ÇΩÅB
 		m_moveSpeed.y = 0.0f;
 	}
-	if (Pad(0).IsTrigger(enButtonB)&& NULL == FindGO<taieki>("taieki"))
+	if (Pad(0).IsTrigger(enButtonRB2)&& NULL == FindGO<taieki>("taieki"))
 	{
 		NewGO<taieki>(0,"taieki");
 	}
@@ -78,6 +77,7 @@ void Player::Update()
 	m_rite.y = mRot.m[0][1];
 	m_rite.z = mRot.m[0][2];
 	m_rite.Normalize();
+
 	m_moveSpeed += m_forward*lStick_y;
 	m_moveSpeed += m_rite * lStick_x;
 	m_position = m_charaCon.Execute(GameTime().GetFrameDeltaTime(), m_moveSpeed);

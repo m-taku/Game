@@ -8,7 +8,6 @@ public:
 	~taieki();
 	bool Start();
 	void Update();
-	void wait();
 	void Render(CRenderContext& rc);
 	CVector3 tpos = CVector3::Zero;
 	CSkinModel m_taieki;

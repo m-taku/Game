@@ -8,6 +8,7 @@
 #include"Level.h"
 #include"AImove.h"
 #include"camera.h"
+#include"tekihei.h"
 Game::Game()
 {
 	//Ç±Ç±Ç…äÓñ{ìIÇ»î≠ê∂Çï`Ç≠
@@ -52,6 +53,7 @@ bool Game::Start()
 		m_level[1].Z=  5.0f;
 		m_level[1].Build(L"lever/leval01.tks");
 		NewGO<AImove>(0, "AIm");
+		NewGO<tekihei>(0, "tekihei");
 	}
 	m_Fade=FindGO<Fade>("Fade");
 	if (m_Fade != NULL) {

@@ -640,6 +640,7 @@
     </ClCompile>
     <ClCompile Include="taieki.cpp" />
     <ClCompile Include="Taitor.cpp" />
+    <ClCompile Include="tekihei.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AI.h" />
@@ -652,6 +653,7 @@
     <ClInclude Include="Stage.h" />
     <ClInclude Include="taieki.h" />
     <ClInclude Include="Taitor.h" />
+    <ClInclude Include="tekihei.h" />
     <CustomBuild Include="Assets\shader\LightingFunction.h" />
     <CustomBuild Include="Assets\shader\modelCB.h" />
     <CustomBuild Include="Assets\shader\modelSRV.h" />

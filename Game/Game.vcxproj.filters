@@ -51,6 +51,7 @@
     <ClCompile Include="AImove.cpp" />
     <ClCompile Include="Level.cpp" />
     <ClCompile Include="MapChip.cpp" />
+    <ClCompile Include="tekihei.cpp" />
   </ItemGroup>
   <ItemGroup>
     <CLInclude Include="resource.h">
@@ -69,6 +70,7 @@
     <ClInclude Include="AImove.h" />
     <ClInclude Include="Level.h" />
     <ClInclude Include="MapChip.h" />
+    <ClInclude Include="tekihei.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Game.rc">
