@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "taieki.h"
+#include "Player.h"
 
 #include"camera.h"
 
@@ -21,18 +22,22 @@ bool taieki::Start()
 	CF = MainCamera().GetForward();
 	CF.Normalize();
 	tpos = player->m_position;
-	tpos.y += 80.0f;
-	
+	tpos.y += 70.0f;
+	PS = player->m_moveSpeed;
 	return true;
 }
 void taieki::Update()
 {
-	tpos += CF * 60.0f;
+		tpos += (CF * 60.0f)+PS/25.0f;
 	
 	TS.y -= 50.0f * GameTime().GetFrameDeltaTime();
 	tpos.y += TS.y;
 	if (tpos.y <= 0.0f)
 	{
+		e_pos = tpos;
+		e_pos.y += 10.0f;
+		player->effect->SetPosition(e_pos);
+		player->effect->SetScale({100.0f,100.0f,100.0f});
 		DeleteGO(this);
 	}
 	m_taieki.Update(tpos, CQuaternion::Identity, { 2.0f, 2.0f,2.0f });

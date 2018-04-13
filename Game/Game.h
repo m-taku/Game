@@ -1,6 +1,7 @@
 #pragma once
 #include "Level.h"
-
+#include"Pasu.h"
+#include"keiroK.h"
 #include "tkEngine/graphics/effect/tkEffect.h"
 class Fade;
 class Game : public IGameObject
@@ -18,7 +19,9 @@ public:
 	CVector3 m_pos = CVector3::Zero;
 	Fade* m_Fade;
 	Level m_level[3];
-	int a=0;							//レベル。
+	Pasu pasu[3];
+	keiroK* keiro;
+	int a=2;							//レベル。
 private:
 	void InitSceneLight();
 	float g = 0.0f, f = 0.0;
