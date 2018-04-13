@@ -8,14 +8,18 @@ public:
 	~AI();
 	bool Start();
 	void Update();
-	void NPCNormal();
-	void NPCDamage();
-	void NPCZombie_Normal();
-	void NPCZombie_Chase();
-	void NPCZombie_Attack();
+
+	void NPCNormal();//市民の通常行動の処理。
+	void NPCEscape_NPC();//市民がゾンビNPCから逃げるときの処理。
+	void NPCEscape_Player();//市民がゾンビプレイヤーから逃げるときの処理。
+	void NPCDamage();//攻撃を受けてからゾンビNPCになるまでの処理。
+	void NPCZombie_Normal();//ゾンビNPCの通常行動の処理。
+	void NPCZombie_Chase();//ゾンビNPCが市民を追跡するときの処理。
+	void NPCZombie_Attack();//特殊部隊とゾンビが戦う時の処理。
 
 	void Render(CRenderContext& rc);
 	void Turn();
+	void DamageHantei();//ダメージ判定。
 	void NPCRuet(); //NPCの移動ルートを格納する。
 	float GetKyori(CVector3 a, CVector3 b);  //2つのオブジェクトの距離を計測する。
 	float VectorAngleDeg(CVector3 c);  //2つのベクトルの角度を角度表記(degree)で返す。
@@ -23,6 +27,8 @@ public:
 	//メンバ変数
 	enum npcpattern { //switch文に使う。
 		Normal,             //市民の通常状態。
+		Escape_NPC,             //市民のNPCからの逃走状態。
+		Escape_Player,       //市民のプレイヤーからの逃走状態。
 		Damage,             //ダメージを受けたとき。
 		Zombie_Normal,      //ゾンビ化NPCの通常状態。
 		Zombie_Chase,       //ゾンビ化NPCの追跡状態。
@@ -34,6 +40,7 @@ public:
 	CQuaternion m_rotation = CQuaternion::Identity;	//回転。
 	CVector3 m_forward;						//キャラの前方。
 	CVector3 m_rite;						//キャラの右方向。
+	CVector3 muki;                          //市民の逃げる向き。
 	CMatrix mRot;
 	bool DamageFlag = false;      //ダメージを受けたかを示すフラグ。
 	bool HitFlag = false;      //ダメージを与えたかを示すフラグ。
@@ -41,6 +48,9 @@ public:
 	bool ForceFlag = false;     //特殊部隊の出現を表すフラグ。
 	int MyNumber = 0;               //今自分が存在しているパスの番号。
 	int ZombieChaseNumber = 0;      //ゾンビが追跡を始めた時に立っていたパスの番号。
+	int NPCEscapeNumber = 0;      //NPCが逃走を始めた時に立っていたパスの番号。
 	float m_speed;
+	AI* Tansaku = nullptr;  //探索結果のオブジェクトを格納する。
+	AI*Chase_Zombie;  //追跡してくるキャラを格納する。
 };
 
