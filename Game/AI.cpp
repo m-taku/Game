@@ -148,7 +148,8 @@ void AI::NPCRuet()//NPCÉãÅ[Ég
 
 float AI::VectorAngleDeg(CVector3 c)
 {
-
+	float a = 0.0f;
+	return a;
 }
 void AI::Update()
 {

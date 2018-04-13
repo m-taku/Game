@@ -48,6 +48,9 @@
     <ClCompile Include="AImove.cpp" />
     <ClCompile Include="Level.cpp" />
     <ClCompile Include="MapChip.cpp" />
+    <ClCompile Include="Pasu.cpp" />
+    <ClCompile Include="kanren.cpp" />
+    <ClCompile Include="keiroK.cpp" />
   </ItemGroup>
   <ItemGroup>
     <CLInclude Include="resource.h">
@@ -66,6 +69,9 @@
     <ClInclude Include="AImove.h" />
     <ClInclude Include="Level.h" />
     <ClInclude Include="MapChip.h" />
+    <ClInclude Include="Pasu.h" />
+    <ClInclude Include="kanren.h" />
+    <ClInclude Include="keiroK.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Game.rc">
@@ -205,6 +211,9 @@
       <Filter>Assets\lever</Filter>
     </CustomBuild>
     <CustomBuild Include="Assets\lever\leval00.tks">
+      <Filter>Assets\lever</Filter>
+    </CustomBuild>
+    <CustomBuild Include="Assets\lever\leval001.tks">
       <Filter>Assets\lever</Filter>
     </CustomBuild>
   </ItemGroup>
