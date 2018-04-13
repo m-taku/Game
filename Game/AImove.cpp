@@ -65,6 +65,7 @@ void AImove::Update()
 			Fream[i]++;
 			iin[i].y = 0.0f;
 		}
+
 		m_skinModel[i].Update(iin[i], CQuaternion::Identity, { 1.0f,1.0f,1.0f });
 	}
 }

@@ -32,6 +32,9 @@
     <Filter Include="Assets\lever">
       <UniqueIdentifier>{a763d8cf-c3c1-484f-9b4a-6edd2f8c0ce1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Assets\effect\mqo">
+      <UniqueIdentifier>{b4ed4d7b-ba29-4c2f-a922-534ffd162735}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -48,9 +51,7 @@
     <ClCompile Include="AImove.cpp" />
     <ClCompile Include="Level.cpp" />
     <ClCompile Include="MapChip.cpp" />
-    <ClCompile Include="Pasu.cpp" />
-    <ClCompile Include="kanren.cpp" />
-    <ClCompile Include="keiroK.cpp" />
+    <ClCompile Include="tekihei.cpp" />
   </ItemGroup>
   <ItemGroup>
     <CLInclude Include="resource.h">
@@ -69,9 +70,7 @@
     <ClInclude Include="AImove.h" />
     <ClInclude Include="Level.h" />
     <ClInclude Include="MapChip.h" />
-    <ClInclude Include="Pasu.h" />
-    <ClInclude Include="kanren.h" />
-    <ClInclude Include="keiroK.h" />
+    <ClInclude Include="tekihei.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Game.rc">
@@ -213,8 +212,20 @@
     <CustomBuild Include="Assets\lever\leval00.tks">
       <Filter>Assets\lever</Filter>
     </CustomBuild>
-    <CustomBuild Include="Assets\lever\leval001.tks">
-      <Filter>Assets\lever</Filter>
+    <CustomBuild Include="Assets\effect\Texture\aura3_type2.png">
+      <Filter>Assets\effect\Texture</Filter>
+    </CustomBuild>
+    <CustomBuild Include="Assets\effect\Texture\glow.png">
+      <Filter>Assets\effect\Texture</Filter>
+    </CustomBuild>
+    <CustomBuild Include="Assets\effect\Texture\magma.png">
+      <Filter>Assets\effect\Texture</Filter>
+    </CustomBuild>
+    <CustomBuild Include="Assets\effect\mqo\ball2.efkmodel">
+      <Filter>Assets\effect\mqo</Filter>
+    </CustomBuild>
+    <CustomBuild Include="Assets\effect\aura.efk">
+      <Filter>Assets\effect</Filter>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
@@ -222,6 +233,9 @@
       <Filter>Assets\modelData</Filter>
     </Image>
     <Image Include="Assets\modelData\worktops007.jpg">
+      <Filter>Assets\modelData</Filter>
+    </Image>
+    <Image Include="Assets\modelData\white.png">
       <Filter>Assets\modelData</Filter>
     </Image>
   </ItemGroup>
