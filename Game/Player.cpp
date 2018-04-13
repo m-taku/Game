@@ -17,9 +17,11 @@ Player::~Player()
 }
 bool Player::Start()
 {
-	
+	effect = NewGO<prefab::CEffect>(0);
+	effect->Play(L"effect/aura.efk");
 	m_skinModelData.Load(L"modelData/unityChan.cmo");//プレイヤーを書け
 	m_skinModel.Init(m_skinModelData);
+
 	//キャラクターコントローラーを初期化。
 	m_charaCon.Init(
 		20.0,			//半径。 

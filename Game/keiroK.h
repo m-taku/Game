@@ -10,7 +10,7 @@ typedef struct {
 	int cost;
 }ando;
 		
-class keiroK
+class keiroK : public IGameObject
 {
 public:
 	keiroK();

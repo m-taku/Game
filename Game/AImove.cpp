@@ -23,8 +23,8 @@ bool AImove::Start()
 		if (game->pasu[i].m_pointList.size() == NULL) {
 			break;
 		}
-		for (; kosuu[i] < game->keiro.jyunban.size(); kosuu[i]++) {
-			No[kosuu[i]] = game->keiro.jyunban[kosuu[i]];
+		for (; kosuu[i] < game->keiro->jyunban.size(); kosuu[i]++) {
+			No[kosuu[i]] = game->keiro->jyunban[kosuu[i]];
 
 		}
 		//Size[i] = game->pasu[i].GetNumPoint();

@@ -10,6 +10,7 @@
 #include"camera.h"
 #include"Pasu.h"
 #include"keiroK.h"
+#include"tekihei.h"
 Game::Game()
 {
 	//Ç±Ç±Ç…äÓñ{ìIÇ»î≠ê∂Çï`Ç≠
@@ -50,6 +51,7 @@ bool Game::Start()
 		NewGO<AI>(0, "AI");
 		NewGO<Stage>(0, "stage");
 		NewGO<camera>(0, "camera");/*
+
 		m_level[0].Build(L"lever/leval001.tks");*/
 		wchar_t moveFilePath[256];
 		swprintf_s(moveFilePath, L"lever/leval001.tks");
@@ -57,7 +59,7 @@ bool Game::Start()
 		//m_level[1].X = 5.0f;
 		//m_level[1].Z=  5.0f;
 		//m_level[1].Build(L"lever/leval01.tks");
-
+		NewGO<tekihei>(0, "tekihei");
 	//	NewGO<AImove>(0, "AIm");
 	}
 	m_Fade=FindGO<Fade>("Fade");
@@ -84,7 +86,8 @@ void Game::Update()
 			4190.29980
 			,- 221.356491
 			,4564.60596 };
-		keiro.tansa(k,b);
+		keiro=NewGO<keiroK>(0);
+		keiro->tansa(k,b);
 
 		NewGO<AImove>(0, "AIm");
 	}

@@ -20,7 +20,7 @@ public:
 	Fade* m_Fade;
 	Level m_level[3];
 	Pasu pasu[3];
-	keiroK keiro;
+	keiroK* keiro;
 	int a=2;							//ƒŒƒxƒ‹B
 private:
 	void InitSceneLight();
