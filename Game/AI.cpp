@@ -5,6 +5,7 @@
 #include"Game.h"
 #include"keiroK.h"
 #define REACH 5.0  //ゾンビの攻撃範囲。この距離まで近づいたら攻撃する。
+#define PI 3.141592653589793 
 AI NPC;
 //今回はmを引用するNPCのハンドルとして、jを特殊部隊のハンドルとして代用する。これは後に直しておくように。
 //NPCとNPCゾンビの両方を処理する。
@@ -36,19 +37,20 @@ bool AI::Start()
 		m_position		//初期位置。
 	);
 	game->siminUI[iNo]->kyorikeisan(game->da[iNo][1] - 1);
+	SetTags(10);
 	return true;
 }
 void AI::NPCNormal()
 {
 
-	CVector3 v = game->siminUI[iNo]->K- m_position ;
+	CVector3 v = game->siminUI[iNo]->K - m_position;
 	float len = v.Length();//長さ
-	if (50<=len) {
-	//	m_position += (game->siminUI[iNo]->bekutor)*m_speed;
-		m_position = m_charaCon.Execute(GameTime().GetFrameDeltaTime(),game->siminUI[iNo]->bekutor*m_speed);
+	if (50 <= len) {
+		//	m_position += (game->siminUI[iNo]->bekutor)*m_speed;
+		m_position = m_charaCon.Execute(GameTime().GetFrameDeltaTime(), game->siminUI[iNo]->bekutor*m_speed);
 	}
 	else {
-		if (ima >= 4)		
+		if (ima >= 4)
 			ima = 0;
 		game->siminUI[iNo]->kyorikeisan(game->da[iNo][ima++] - 1);
 		kore = 0;
@@ -56,10 +58,10 @@ void AI::NPCNormal()
 	CVector3 v2 = m_position - pl->m_position;
 	float len1 = v2.Length();//長さ
 
-	if (len1<500.0f) {//プレイヤーを見つけたら
+	if (len1 < 500.0f) {//プレイヤーを見つけたら
 		pa = Escape;
 		retu_position = m_position;
-		m_speed=3000.0f;
+		m_speed = 3000.0f;
 		//DamageFlag = true;
 		//プレイヤーから逃げる。
 	}
@@ -67,6 +69,59 @@ void AI::NPCNormal()
 		pa = Damage;
 		DamageFlag = true;//ダメージフラグをtrueにする。
 	}
+	//	/////////////////////////////////
+	//	//一定のルートをうろうろする処理。
+	//	/////////////////////////////////
+	//
+	//	FindGameObjectsWithTag(10, [&](IGameObject* go) {
+	//		if (go != this) {            //自分からの距離を計測するため、検索結果から自分を除外する。
+	//			AI* ai = (AI*)go;
+	//			if (ai->Zonbe == 1) {                                        //それがゾンビだったら
+	//				float kyori = GetKyori(this->m_position, ai->m_position);//自分との距離を求める。
+	//				if (kyori < 60.0f) {                                     //距離が視界範囲以内だったら
+	//					float angle = VectorAngleDeg(ai->m_position);        //検索対象の座標を引数にする。
+	//					if (angle <= 45.0f&&angle >= -45.0f) {                //角度が視界内だったら
+	//																		  //ゾンビから逃げる。
+	//						muki.x = m_forward.x*(-1);
+	//						muki.y = m_forward.y*(-1);
+	//						muki.z = m_forward.z*(-1);//反対の向きに向く。
+	//						pa = Escape_NPC;
+	//						NPCEscapeNumber = MyNumber;
+	//						Chase_Zombie = ai;   //NPCからの逃走関数に使う。
+	//					}
+	//				}
+	//			}
+	//		}
+	//
+	//	});
+	//	Player* pl = FindGO<Player>("Player");
+	//	CVector3 v = m_position - pl->m_position;
+	//	float len = v.Length();//長さ
+	//	if (len < 60.0f) {//プレイヤーを見つけたら
+	//		float angle = VectorAngleDeg(pl->m_position); //検索対象の座標を引数にする。
+	//		if (angle <= 45.0f&&angle >= -45.0f) { //角度が視界内だったら
+	//											   //プレイヤーから逃げる。
+	//
+	//			muki.x = m_forward.x*(-1);
+	//			muki.y = m_forward.y*(-1);
+	//			muki.z = m_forward.z*(-1);
+	//			NPCEscapeNumber = MyNumber;
+	//			pa = Escape_Player;
+	//		}
+	//	}
+	//	//if (len < REACH) {//攻撃を受ける範囲まで近づいたら確実にダメージを受けるので
+	//	//	DamageFlag = true;//ダメージフラグをtrueにする。
+	//	//}
+	//	//if (DamageFlag == true) {//プレイヤーからの攻撃を受けたら
+	//	//	static int i = 0; //30フレームをカウントする。
+	//	//	if (i >= 30) {
+	//	//		pa = Damage;//30フレーム経過したらパターンをダメージに変える。
+	//	//	}
+	//	//	else {
+	//	//		i++; //1フレーム経過をカウントする。
+	//	//	}
+	//	//	
+	//	//}
 }
 
 void AI::NPCDamage()
@@ -87,7 +142,56 @@ void AI::NPCDamage()
 	}
 
 }
+//void AI::NPCEscape_NPC() //NPCからの逃走
+//{
+//	static bool LostFlag = false;  //見失ったかどうかを示すフラグ。
+//								   ///////////////////
+//								   //逃走に関する処理。
+//								   ///////////////////
+//
+//	float len = GetKyori(this->m_position, Chase_Zombie->m_position);
+//	if (len >= 60) { //距離が60以上空いたら
+//		LostFlag = true;
+//	}
+//	if (LostFlag == true) { //見失ったら
+//
+//							/////////////////////
+//							//元の位置に戻る処理。
+//							/////////////////////
+//
+//		if (NPCEscapeNumber == MyNumber) {//元の位置の番号に戻ったら
+//			pa = Normal; //パターンをノーマルに変える。
+//			LostFlag = false;//フラグを元に戻す。
+//		}
+//
+//	}
+//}
 
+//void AI::NPCEscape_Player() //プレイヤーからの逃走
+//{
+//	///////////////////
+//	//逃走に関する処理。
+//	///////////////////
+//
+//	static bool LostFlag = false;  //見失ったかどうかを示すフラグ。
+//	Player* pl = FindGO<Player>("Player");
+//	float len = GetKyori(this->m_position, pl->m_position);
+//	if (len >= 120) { //距離が120以上空いたら
+//		LostFlag = true; //NPCはプレイヤーを見失う。
+//	}
+//	if (LostFlag == true) { //見失ったら
+//
+//							/////////////////////
+//							//元の位置に戻る処理。
+//							/////////////////////
+//
+//		if (NPCEscapeNumber == MyNumber) {//元の位置の番号に戻ったら
+//			pa = Normal; //パターンをノーマルに変える。
+//			LostFlag = false;//フラグを元に戻す。
+//		}
+//
+//	}
+//}
 void AI::NPCZombie_Normal()
 {
 	//一定範囲を徘徊する。
@@ -104,6 +208,33 @@ void AI::NPCZombie_Normal()
 	//		}
 	//	}
 	//}
+	//この下あれ
+	/////////////////////////////////
+	//一定のルートをうろうろする処理。
+	/////////////////////////////////
+	//float min_Nagasa = 9999.0f;
+	//FindGameObjectsWithTag(10, [&](IGameObject* go) {
+	//	if (go != this) {            //自分からの距離を計測するため、検索結果から自分を除外する。
+	//		AI* ai = (AI*)go;
+	//		if (ai->Zonbe == 0) {   //それが一般市民だったら
+	//			float kyori = GetKyori(this->m_position, ai->m_position);//自分との距離を求める。
+	//			if (kyori < 60.0f) {  //距離が視界範囲以内だったら
+	//				float angle = VectorAngleDeg(ai->m_position); //検索対象の座標を引数にする。
+	//				if (angle <= 45.0f&&angle >= -45.0f) { //角度が視界内だったら
+	//					if (kyori < min_Nagasa) { //自分に一番近いのなら
+	//						min_Nagasa = kyori;
+	//						Tansaku = ai;
+	//					}
+	//				}
+	//			}
+	//		}
+	//	}
+
+	//});
+
+	//if (Tansaku != nullptr) {
+	//	pa = Zombie_Chase; //パターンをゾンビチェイスに変える。
+	//}
 }
 
 void AI::NPCZombie_Chase()
@@ -117,6 +248,11 @@ void AI::NPCZombie_Chase()
 	//		HitFlag == false;
 	//	}
 	//}
+		//else {
+		//	/////////////////////////////////
+		//	//市民NPCを追跡する処理。
+		//	/////////////////////////////////
+		//}
 	//if (len<REACH) {//NPCに追いついたら
 	//	//攻撃する(確実に当たる仕様)。
 
@@ -178,8 +314,37 @@ void AI::NPCRuet()//NPCルート
 
 float AI::VectorAngleDeg(CVector3 c)
 {
-	float a = 0.0f;
-	return a;
+	
+	CVector3 sa;
+	m_forward;
+	sa = c - m_position;
+
+	sa.Normalize();//向きVectorにする。
+	float kaku = acosf(m_forward.Dot(sa));//２つのべクトルの内積のアークコサインを求める。(ラジアン)
+
+	float degree = kaku * 180.0 / PI;
+
+	return degree;
+}
+void AI::DamageHantei() //全てのゾンビと距離でダメージ判定をする。
+{
+	FindGameObjectsWithTag(10, [&](IGameObject* go) {
+		if (go != this) {            //自分からの距離を計測するため、検索結果から自分を除外する。
+			AI* ai = (AI*)go;
+			if (ai->Zonbe == 1) {   //それがゾンビだったら
+				float kyori = GetKyori(this->m_position, ai->m_position);//自分との距離を求める。
+				if (kyori < REACH) {  //距離が攻撃範囲以内だったら
+					pa = Damage; //パターンをダメージにかえる。
+				}
+			}
+		}
+	});
+
+	Player* pl = FindGO<Player>("Player");
+	float kyori = GetKyori(this->m_position, pl->m_position);//自分との距離を求める。
+	if (kyori < REACH) {  //距離が攻撃範囲以内だったら
+		pa = Damage; //パターンをダメージにかえる。
+	}
 }
 void AI::Update()
 {
@@ -197,6 +362,12 @@ void AI::Update()
 		//NPCの動きを書く。
 		NPCNormal();
 		break;
+	//case Escape_NPC:
+	//	NPCEscape_NPC();
+	//	break;
+	//case Escape_Player:
+	//	NPCEscape_Player();
+	//	break;
 	case Escape:
 		NPCescape();
 		break;
@@ -216,8 +387,14 @@ void AI::Update()
 	case Zombie_Attack:
 		//NPCZombie_Attack();
 		break;
+	default:
+		NPCZombie_Normal();
+		break;
 	}
 
+	if (Zonbe == 0) { //自分がゾンビではなかったら
+		DamageHantei(); //ゾンビとの当たり判定をとる。
+	}
 	
 	//Muve(m_movespeed);//ムーヴスピード入れると動く
 	//m_movespeed.x += 0.001;
