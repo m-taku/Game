@@ -83,6 +83,14 @@ void Player::Update()
 		m_position.y = -100.0f;
 	}
 	m_skinModel.Update(m_position, m_rotation, CVector3::One);
+	/*FindGameObjectsWithTag(10, [&](IGameObject* go) {
+		CVector3 diff;
+		AI* ai = (AI*)go;
+		diff = ai->position - m_position;
+		if (diff.Length() < 100.0f) {
+
+		}
+	});*/
 }
 void Player::Render(CRenderContext& rc)
 {

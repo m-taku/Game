@@ -81,17 +81,8 @@ void Game::Update()
 	//クリア関係？？
 	
 	if (Pad(0).IsTrigger(enButtonB) && a >= 2) {
-	/*	m_Fade->StartFadeOut();
-		a--;*/
-		CVector3 k = { 8881.04883
-			,-221.356491
-			,9464.60547 };
-		CVector3 b = {
-			4190.29980
-			,-221.356491
-			,4564.60596 };
-		keiro = NewGO<keiroK>(0);
-		keiro->tansa(k,b);
+		m_Fade->StartFadeOut();
+		a--;
 
 	}
 	if (Pad(0).IsTrigger(enButtonA)&&a==1) {
