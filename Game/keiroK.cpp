@@ -156,19 +156,19 @@ int keiroK::GetDistance(CVector3 iP ,CVector3 GP)
 void keiroK::tansa(CVector3 i,CVector3 Ta)
 {
 	Game *game=FindGO<Game>("Game");
-	for (int l = 0; l < game->pasu[0].resuto.size(); l++) {
-		resuto1.push_back(game->pasu[0].resuto[l]);
+	for (int l = 0; l < game->pasu.resuto.size(); l++) {
+		resuto1.push_back(game->pasu.resuto[l]);
 	}
-	CVector3 ko = i - game->pasu[0].m_pointList[0];
+	CVector3 ko = i - game->pasu.m_pointList[0];
 	float sa =sqrt(ko.x*ko.x +ko.y*ko.y +ko.z*ko.z);
 
-	CVector3 koj = Ta - game->pasu[0].m_pointList[0];
+	CVector3 koj = Ta - game->pasu.m_pointList[0];
 	float saj = sqrt(koj.x*koj.x + koj.y*koj.y + koj.z*koj.z);
 	int l= resuto1.size();
 	for (int h = 1; h < l; h++) {
-		CVector3 k = i - game->pasu[0].m_pointList[h];
+		CVector3 k = i - game->pasu.m_pointList[h];
 		float saa = sqrt(k.x*k.x + k.y*k.y + k.z*k.z);
-		CVector3 kf = Ta - game->pasu[0].m_pointList[h];
+		CVector3 kf = Ta - game->pasu.m_pointList[h];
 		float san = sqrt(kf.x*kf.x + kf.y*kf.y + kf.z*kf.z);
 		if (sa>saa) {
 			sa = saa;
@@ -179,8 +179,8 @@ void keiroK::tansa(CVector3 i,CVector3 Ta)
 			N = h+1;
 		}
 	}
-	ga = game->pasu[0].m_pointList[N - 1];
-	fa = game->pasu[0].m_pointList[f - 1];
+	ga = game->pasu.m_pointList[N - 1];
+	fa = game->pasu.m_pointList[f - 1];
 	Satando(
 		&stuyt,
 		fa,

@@ -48,14 +48,18 @@ bool Game::Start()
 	{
 		NewGO<Taitor>(0, "Taitor");
 		NewGO<Player>(0, "Player");
-		NewGO<AI>(0, "AI");
+		for (int k=0; k < 2; k++) {
+			siminUI.push_back(NewGO<AImove>(0, "AIm"));
+			simin.push_back(NewGO<AI>(0, "AI"));
+
+		}
 		NewGO<Stage>(0, "stage");
 		NewGO<camera>(0, "camera");/*
 
 		m_level[0].Build(L"lever/leval001.tks");*/
 		wchar_t moveFilePath[256];
-		swprintf_s(moveFilePath, L"lever/leval001.tks");
-		pasu[0].Load(moveFilePath);
+		swprintf_s(moveFilePath, L"lever/leval00%d.tks",1);
+		pasu.Load(moveFilePath);
 		//m_level[1].X = 5.0f;
 		//m_level[1].Z=  5.0f;
 		//m_level[1].Build(L"lever/leval01.tks");
@@ -80,16 +84,15 @@ void Game::Update()
 	/*	m_Fade->StartFadeOut();
 		a--;*/
 		CVector3 k = { 8881.04883
-			,- 221.356491
+			,-221.356491
 			,9464.60547 };
 		CVector3 b = {
 			4190.29980
-			,- 221.356491
+			,-221.356491
 			,4564.60596 };
-		keiro=NewGO<keiroK>(0);
+		keiro = NewGO<keiroK>(0);
 		keiro->tansa(k,b);
 
-		NewGO<AImove>(0, "AIm");
 	}
 	if (Pad(0).IsTrigger(enButtonA)&&a==1) {
 		m_Fade->StartFadeIn();

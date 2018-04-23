@@ -16,10 +16,6 @@ public:
 		qBias_x.Multiply(qBias_z);
 		return qBias_x;
 	}
-	void Muve(CVector3 X) {
-		m_position += X;
-		//return m_position;
-	}
 	CVector3 kakudai;
 	int Zonbe = 0;//ƒ]ƒ“ƒr‰»‚µ‚½‚Æ‚«‚É+1‚·‚éB
 
