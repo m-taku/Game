@@ -58,7 +58,7 @@ void Player::Update()
 		//ínñ Ç…Ç¬Ç¢ÇΩÅB
 		m_moveSpeed.y = 0.0f;
 	}
-	if (Pad(0).IsTrigger(enButtonB)&& NULL == FindGO<taieki>("taieki"))
+	if (Pad(0).IsTrigger(enButtonRB2)&& NULL == FindGO<taieki>("taieki"))
 	{
 		NewGO<taieki>(0,"taieki");
 	}

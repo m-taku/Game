@@ -18,6 +18,10 @@ bool tekihei::Start()
 	
 	for (int i = 0;i < teki;i++)
 	{
+		damageflag[i] = 0;
+		time[i] = 0;
+		tama_to_player[i] = CVector3::Zero;
+		tama_to_player_vector[i] = 0.0f;
 		teki_to_tama_vector[i] = 0.0f;
 		teki_to_tama[i] = CVector3::Zero;
 		tamamuki[i] = CVector3::Zero;
@@ -111,10 +115,37 @@ void tekihei::Update()
 			}
 			if (tamaflag[i] == 1)
 			{
+				playerpos = Pp->m_position;
+				playerpos.y += 50.0f;
+				tama_to_player[i] = playerpos - tamapos[i];
+				tama_to_player_vector[i] = sqrt(tama_to_player[i].x*tama_to_player[i].x + tama_to_player[i].y*tama_to_player[i].y + tama_to_player[i].z*tama_to_player[i].z);
+
 				teki_to_tama[i] = tamapos[i] - tekipos[i];
 				teki_to_tama_vector[i] = sqrt(teki_to_tama[i].x*teki_to_tama[i].x + teki_to_tama[i].y*teki_to_tama[i].y + teki_to_tama[i].z*teki_to_tama[i].z);
-				tamapos[i] += tamamuki[i] * 30.0f;
-				tamaEF[i]->SetPosition(tamapos[i]);
+				if (tama_to_player_vector[i] > 50.0f && damageflag[i] == 0)
+				{
+					tamapos[i] += tamamuki[i] * 30.0f;
+					tamaEF[i]->SetPosition(tamapos[i]);
+				}
+					
+				
+				if (tama_to_player_vector[i] <= 50.0f)
+				{
+					damageflag[i] = 1;
+				}
+				if (damageflag[i] == 1)
+				{
+					tamaEF[i]->SetScale({ 100.0f,100.0f,100.0f });
+					time[i]++;
+
+					if (time[i] >= 90)
+					{
+						DeleteGO(tamaEF[i]);
+						tamaflag[i] = 0;
+						time[i] = 0;
+						damageflag[i] = 0;
+					}
+				}
 				if (teki_to_tama_vector[i] >= 1000)
 				{
 					DeleteGO(tamaEF[i]);

@@ -76,6 +76,7 @@ bool Game::Start()
 void Game::Update()
 {
 	//クリア関係？？
+
 		if (m_Fade != NULL) {
 		m_Fade->StartFadeIn();
 	}
@@ -94,8 +95,8 @@ void Game::Update()
 	if (Pad(0).IsTrigger(enButtonRight)) {
 
 		f += 100.0;
-	}
-	MainCamera().SetTarget({ 0.0f, 10.0f, 0.5f });
+	}*/
+	/*MainCamera().SetTarget({ 0.0f, 10.0f, 0.5f });
 	MainCamera().SetNear(10.0f);
 	MainCamera().SetFar(50000.0f);
 	MainCamera().SetPosition({ 30.0f, 10.0f, 0.0f });

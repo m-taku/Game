@@ -25,6 +25,8 @@ public:
 	CVector3 ppos = CVector3::Zero;
 	CVector3 teki_to_player[teki];
 	float teki_to_player_vector[teki];
+	CVector3 tama_to_player[teki];
+	float tama_to_player_vector[teki];
 	float teki_angle[teki];
 	CQuaternion trot[teki];
 	float teki_siya[teki];
@@ -34,4 +36,7 @@ public:
 	CVector3 tamamuki[teki];
 	CVector3 teki_to_tama[teki];
 	float teki_to_tama_vector[teki];
+	CVector3 playerpos = CVector3::Zero;
+	int time[teki];
+	int damageflag[teki];
 };

@@ -58,6 +58,7 @@ void taieki::Update()
 				e_pos = tpos;
 				effect->SetPosition(e_pos);
 				effect->SetScale({ 100.0f,100.0f,100.0f });
+				effect->Play(L"effect/aura.efk");
 				DeleteGO(this);
 			}
 		}
@@ -67,9 +68,9 @@ void taieki::Update()
 	{
 		effect = NewGO<prefab::CEffect>(0);
 		e_pos = tpos;
-		effect->Play(L"effect/aura.efk");
 		effect->SetPosition(e_pos);
 		effect->SetScale({100.0f,100.0f,100.0f});
+		effect->Play(L"effect/aura.efk");
 		DeleteGO(this);
 	}
 	m_taieki.Update(tpos, CQuaternion::Identity, { 2.0f, 2.0f,2.0f });
