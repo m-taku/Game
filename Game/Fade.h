@@ -25,6 +25,7 @@ public:
 		return  toumeiodo;
 	}
 
+	float toumeiodo = 0.0f;//透明度
 private:
 	enum EnState {
 		FadeIn,		//!<フェードイン中。
@@ -34,6 +35,5 @@ private:
 	CShaderResourceView m_texture;
 	CSprite m_sprite;
 	EnState m_Fade = Idle;
-	float toumeiodo = 1.0f;//透明度
 };
 

@@ -624,6 +624,7 @@
     <ClCompile Include="camera.cpp" />
     <ClCompile Include="Fade.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="Geizi.cpp" />
     <ClCompile Include="Human.cpp" />
     <ClCompile Include="kanren.cpp" />
     <ClCompile Include="keiroK.cpp" />
@@ -649,6 +650,7 @@
     <ClInclude Include="AI.h" />
     <ClInclude Include="AImove.h" />
     <ClInclude Include="camera.h" />
+    <ClInclude Include="Geizi.h" />
     <ClInclude Include="Human.h" />
     <ClInclude Include="kanren.h" />
     <ClInclude Include="keiroK.h" />
@@ -754,6 +756,9 @@
     <Image Include="Assets\modelData\livingbuildings.png" />
     <Image Include="Assets\modelData\white.png" />
     <Image Include="Assets\modelData\worktops007.jpg" />
+    <Image Include="Assets\sprite\fade.png" />
+    <ImageContentTask Include="Assets\sprite\ge-ji.png" />
+    <ImageContentTask Include="Assets\sprite\waku.png" />
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="Assets\effect\mqo\ball2.efkmodel">

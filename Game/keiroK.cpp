@@ -153,30 +153,30 @@ int keiroK::GetDistance(CVector3 iP ,CVector3 GP)
 		return (sa_Y + (sa_X - sa_Y));
 	}
 }
-void keiroK::tansa(CVector3 i,CVector3 Ta)
+void keiroK::tansa(CVector3 i, CVector3 Ta, std::vector<int> *a)
 {
-	Game *game=FindGO<Game>("Game");
+	Game *game = FindGO<Game>("Game");
 	for (int l = 0; l < game->pasu.resuto.size(); l++) {
 		resuto1.push_back(game->pasu.resuto[l]);
 	}
 	CVector3 ko = i - game->pasu.m_pointList[0];
-	float sa =sqrt(ko.x*ko.x +ko.y*ko.y +ko.z*ko.z);
+	float sa = sqrt(ko.x*ko.x + ko.y*ko.y + ko.z*ko.z);
 
 	CVector3 koj = Ta - game->pasu.m_pointList[0];
 	float saj = sqrt(koj.x*koj.x + koj.y*koj.y + koj.z*koj.z);
-	int l= resuto1.size();
+	int l = resuto1.size();
 	for (int h = 1; h < l; h++) {
 		CVector3 k = i - game->pasu.m_pointList[h];
 		float saa = sqrt(k.x*k.x + k.y*k.y + k.z*k.z);
 		CVector3 kf = Ta - game->pasu.m_pointList[h];
 		float san = sqrt(kf.x*kf.x + kf.y*kf.y + kf.z*kf.z);
-		if (sa>saa) {
+		if (sa > saa) {
 			sa = saa;
-			f = h+1;
+			f = h + 1;
 		}
-		if (san<saj) {
+		if (san < saj) {
 			saj = san;
-			N = h+1;
+			N = h + 1;
 		}
 	}
 	ga = game->pasu.m_pointList[N - 1];
@@ -187,21 +187,32 @@ void keiroK::tansa(CVector3 i,CVector3 Ta)
 		ga,
 		f,
 		-1,
-		resuto1[f-1]->No,
+		resuto1[f - 1]->No,
 		0
 	);
-	open.insert(open.begin()+sum++,stuyt);
+	open.insert(open.begin() + sum++, stuyt);
 	if (Kans(0) == -1) {
-		auto han=  close.begin();
+		auto han = close.begin();
 		int hairetu = f;
 		jyunban.push_back(hairetu);
 		for (; han < close.end(); han++) {
 			if (han->tunagi == hairetu) {
 				hairetu = han->ime;
 				jyunban.push_back(hairetu);
-				han=close.begin();
+				han = close.begin();
 			}
 		}
 	}
-
+	for (int goulo = 0; goulo < jyunban.size(); goulo++) {
+		a->push_back(jyunban[goulo]);
+	}
+		open.erase(open.begin(), open.end());
+		close.erase(close.begin(), close.end());
+		resuto1.erase(resuto1.begin(), resuto1.end());
+		jyunban.erase(jyunban.begin(), jyunban.end());
+		f = 1;
+		N = 1;
+		sum = 0;
+		sumd = 0;
+		fghjkl = 0;
 }
