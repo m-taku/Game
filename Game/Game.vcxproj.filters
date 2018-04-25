@@ -52,6 +52,10 @@
     <ClCompile Include="Level.cpp" />
     <ClCompile Include="MapChip.cpp" />
     <ClCompile Include="tekihei.cpp" />
+    <ClCompile Include="kanren.cpp" />
+    <ClCompile Include="keiroK.cpp" />
+    <ClCompile Include="Pasu.cpp" />
+    <ClCompile Include="Geizi.cpp" />
   </ItemGroup>
   <ItemGroup>
     <CLInclude Include="resource.h">
@@ -71,6 +75,10 @@
     <ClInclude Include="Level.h" />
     <ClInclude Include="MapChip.h" />
     <ClInclude Include="tekihei.h" />
+    <ClInclude Include="kanren.h" />
+    <ClInclude Include="keiroK.h" />
+    <ClInclude Include="Pasu.h" />
+    <ClInclude Include="Geizi.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Game.rc">
@@ -227,6 +235,7 @@
     <CustomBuild Include="Assets\effect\aura.efk">
       <Filter>Assets\effect</Filter>
     </CustomBuild>
+    <CustomBuild Include="Assets\lever\leval001.tks" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\modelData\livingbuildings.png">
@@ -238,10 +247,21 @@
     <Image Include="Assets\modelData\white.png">
       <Filter>Assets\modelData</Filter>
     </Image>
+    <Image Include="Assets\sprite\fade.png">
+      <Filter>Assets\sprite</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\lever\larer_01.tks">
       <Filter>Assets\font</Filter>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ImageContentTask Include="Assets\sprite\ge-ji.png">
+      <Filter>Assets\sprite</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\waku.png">
+      <Filter>Assets\sprite</Filter>
+    </ImageContentTask>
   </ItemGroup>
 </Project>

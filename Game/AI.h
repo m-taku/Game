@@ -2,6 +2,7 @@
 #include "tkEngine/character/tkCharacterController.h"
 #include"Human.h"
 #include"Game.h"
+#include"Geizi.h"
 class Player;
 class keiroK;
 
@@ -51,6 +52,7 @@ public:
 	CVector3 m_rite;						//ƒLƒƒƒ‰‚Ì‰E•ûŒüB
 	CMatrix mRot;
 	keiroK* keiro;
+	Geizi* Gaizi;
 	Player* pl;
 	CVector3 retu_position;
 	Game* game;

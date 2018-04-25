@@ -11,6 +11,7 @@
 #include"Pasu.h"
 #include"keiroK.h"
 #include"tekihei.h"
+#include"Geizi.h"
 Game::Game()
 {
 	//ここに基本的な発生を描く
@@ -46,6 +47,7 @@ bool Game::Start()
 	MainCamera().Update();
 	//ここに基本的な発生を描く
 	{
+		NewGO<Geizi>(0, "Geizi");
 		NewGO<Taitor>(0, "Taitor");
 		NewGO<Player>(0, "Player");
 		for (int k=0; k < 2; k++) {
@@ -64,7 +66,6 @@ bool Game::Start()
 		//m_level[1].Z=  5.0f;
 		//m_level[1].Build(L"lever/leval01.tks");
 		NewGO<tekihei>(0, "tekihei");
-	//	NewGO<AImove>(0, "AIm");
 	}
 	m_Fade=FindGO<Fade>("Fade");
 	if (m_Fade != NULL) {

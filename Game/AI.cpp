@@ -4,6 +4,7 @@
 #include "Player.h"
 #include"Game.h"
 #include"keiroK.h"
+#include"Geizi.h"
 #define REACH 5.0  //ゾンビの攻撃範囲。この距離まで近づいたら攻撃する。
 #define PI 3.141592653589793 
 AI NPC;
@@ -22,6 +23,7 @@ AI::~AI()
 bool AI::Start()
 {
 	pl = FindGO<Player>("Player");
+	Gaizi = FindGO<Geizi>("Geizi");
 	game=FindGO<Game>("Game");
 	iNo = game->No++;
 	m_position= game->pasu.m_pointList[game->da[iNo][0] - 1];
@@ -53,12 +55,12 @@ void AI::NPCNormal()
 		if (ima >= 4)
 			ima = 0;
 		game->siminUI[iNo]->kyorikeisan(game->da[iNo][ima++] - 1);
-		kore = 0;
 	}
 	CVector3 v2 = m_position - pl->m_position;
 	float len1 = v2.Length();//長さ
 
 	if (len1 < 500.0f) {//プレイヤーを見つけたら
+		Gaizi->point += 0.1f;
 		pa = Escape;
 		retu_position = m_position;
 		m_speed = 3000.0f;
