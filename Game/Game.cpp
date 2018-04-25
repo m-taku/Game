@@ -80,7 +80,7 @@ void Game::Update()
 {
 	//クリア関係？？
 	
-	if (Pad(0).IsTrigger(enButtonB) && a >= 2) {
+	/*if (Pad(0).IsTrigger(enButtonB) && a >= 2) {
 		m_Fade->StartFadeOut();
 		a--;
 
@@ -95,12 +95,12 @@ void Game::Update()
 	if (Pad(0).IsTrigger(enButtonRight)) {
 
 		f += 100.0;
-	}
-	MainCamera().SetTarget({ 0.0f, 10.0f, 0.5f });
+	}*/
+	/*MainCamera().SetTarget({ 0.0f, 10.0f, 0.5f });
 	MainCamera().SetNear(10.0f);
 	MainCamera().SetFar(50000.0f);
 	MainCamera().SetPosition({ 30.0f, 10.0f, 0.0f });
-	MainCamera().Update();
+	MainCamera().Update();*/
 }
 void Game::Render(CRenderContext& rc)
 {
