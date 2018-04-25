@@ -8,6 +8,8 @@
 #include"Level.h"
 #include"AImove.h"
 #include"camera.h"
+#include"Pasu.h"
+#include"keiroK.h"
 #include"tekihei.h"
 Game::Game()
 {
@@ -25,6 +27,7 @@ void Game::InitSceneLight()
 }
 void Game::OnDestroy()
 {
+
 	//Ç±Ç±Ç≈ç≈èIìIÇ…ÇcÇÖÇåÇÖÇîÇÖÇfÇnÇê‚ëŒÇµÇ´ÇÈÅB
 
 
@@ -45,15 +48,23 @@ bool Game::Start()
 	{
 		NewGO<Taitor>(0, "Taitor");
 		NewGO<Player>(0, "Player");
-		//NewGO<AI>(0, "AI");
+		for (int k=0; k < 2; k++) {
+			siminUI.push_back(NewGO<AImove>(0, "AIm"));
+			simin.push_back(NewGO<AI>(0, "AI"));
+
+		}
 		NewGO<Stage>(0, "stage");
-		NewGO<camera>(0, "camera");
-		m_level[0].Build(L"lever/leval01.tks");
-		m_level[1].X = 5.0f;
-		m_level[1].Z=  5.0f;
-		m_level[1].Build(L"lever/leval01.tks");
-		NewGO<AImove>(0, "AIm");
+		NewGO<camera>(0, "camera");/*
+
+		m_level[0].Build(L"lever/leval001.tks");*/
+		wchar_t moveFilePath[256];
+		swprintf_s(moveFilePath, L"lever/leval00%d.tks",1);
+		pasu.Load(moveFilePath);
+		//m_level[1].X = 5.0f;
+		//m_level[1].Z=  5.0f;
+		//m_level[1].Build(L"lever/leval01.tks");
 		NewGO<tekihei>(0, "tekihei");
+	//	NewGO<AImove>(0, "AIm");
 	}
 	m_Fade=FindGO<Fade>("Fade");
 	if (m_Fade != NULL) {
@@ -72,6 +83,7 @@ void Game::Update()
 	if (Pad(0).IsTrigger(enButtonB) && a >= 2) {
 		m_Fade->StartFadeOut();
 		a--;
+
 	}
 	if (Pad(0).IsTrigger(enButtonA)&&a==1) {
 		m_Fade->StartFadeIn();
@@ -92,4 +104,5 @@ void Game::Update()
 }
 void Game::Render(CRenderContext& rc)
 {
+
 }

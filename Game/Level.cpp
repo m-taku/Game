@@ -1,7 +1,6 @@
 #include "stdafx.h"
 #include "Level.h"
 #include "MapChip.h"
-
 Level::Level()
 {
 }
@@ -39,5 +38,6 @@ void Level::Build(const wchar_t* levelDataFilePath)
 		MapChip* mapChip = NewGO<MapChip>(0);
 		mapChip->Init(modelDataFilePath, position, CVector3::One, rotation);
 		m_mapChipList.push_back(mapChip);
+		
 	}
 }

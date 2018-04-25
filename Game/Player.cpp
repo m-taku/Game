@@ -7,6 +7,7 @@
 
 Player::Player()
 {
+	
 }
 
 
@@ -18,6 +19,7 @@ bool Player::Start()
 {
 	m_skinModelData.Load(L"modelData/unityChan.cmo");//プレイヤーを書け
 	m_skinModel.Init(m_skinModelData);
+
 	//キャラクターコントローラーを初期化。
 	m_charaCon.Init(
 		20.0,			//半径。 
@@ -33,7 +35,6 @@ void Player::Update()
 	//左スティックの入力量を受け取る。
 	float lStick_x = Pad(0).GetLStickXF()*500.0f;
 	float lStick_y = Pad(0).GetLStickYF()*500.0f;
-
 	//右スティックの入力量を受け取る。
 	float rStick_x = Pad(0).GetRStickXF();
 	float rStick_y = Pad(0).GetRStickYF();
@@ -48,7 +49,7 @@ void Player::Update()
 		&& m_charaCon.IsOnGround()  //かつ、地面に居たら
 		) {
 		//ジャンプする。
-		m_moveSpeed.y = 600.0f;	//上方向に速度を設定して、
+		m_moveSpeed.y = 400.0f;	//上方向に速度を設定して、
 		m_charaCon.Jump();		//キャラクターコントローラーにジャンプしたことを通知する。
 	}
 	m_moveSpeed.y -= 980.0f * GameTime().GetFrameDeltaTime();
@@ -57,7 +58,7 @@ void Player::Update()
 		//地面についた。
 		m_moveSpeed.y = 0.0f;
 	}
-	if (Pad(0).IsTrigger(enButtonRB2)&& NULL == FindGO<taieki>("taieki"))
+	if (Pad(0).IsTrigger(enButtonB)&& NULL == FindGO<taieki>("taieki"))
 	{
 		NewGO<taieki>(0,"taieki");
 	}
@@ -73,12 +74,23 @@ void Player::Update()
 	m_rite.y = mRot.m[0][1];
 	m_rite.z = mRot.m[0][2];
 	m_rite.Normalize();
-
 	m_moveSpeed += m_forward*lStick_y;
 	m_moveSpeed += m_rite * lStick_x;
 	m_position = m_charaCon.Execute(GameTime().GetFrameDeltaTime(), m_moveSpeed);
-
+	m_moveSpeed.z = 0.0f;
+	m_moveSpeed.x = 0.0f;
+	if (m_position.y <= -100.0f) {
+		m_position.y = -100.0f;
+	}
 	m_skinModel.Update(m_position, m_rotation, CVector3::One);
+	/*FindGameObjectsWithTag(10, [&](IGameObject* go) {
+		CVector3 diff;
+		AI* ai = (AI*)go;
+		diff = ai->position - m_position;
+		if (diff.Length() < 100.0f) {
+
+		}
+	});*/
 }
 void Player::Render(CRenderContext& rc)
 {

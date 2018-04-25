@@ -3,6 +3,9 @@
 #include"Level.h"
 #include"math.h"
 #include"Game.h"
+#include"Pasu.h"
+#include"keiroK.h"
+#include"AI.h"
 AImove::AImove()
 {
 }
@@ -12,68 +15,70 @@ AImove::~AImove()
 {
 }
 
+
 bool AImove::Start()
 {
 	game = FindGO<Game>("Game");
-	for (int i = 0; i < 10; i++) {
-		if (game->m_level[i].m_mapChipList.size() == NULL) {
-			break;
-		}
-		No[i] = 0;
-		Size[i] = game->m_level[i].m_mapChipList.size();
-		iin[i] = game->m_level[i].m_mapChipList[No[i]]->m_position;//.erase(it);
-		m_skinModelData[i].Load(L"modelData/unityChan.cmo");//プレイヤーを書け
-		m_skinModel[i].Init(m_skinModelData[i]);
-		m_skinModel[i].Update(iin[i], CQuaternion::Identity, { 500.0f,500.0f,500.0f });
-		j++;
-		K[i] = 0.0f;
-		in[i] = 0.0f;
-		Fream[i] = 0;
-		Flag[i] = 0;
-		No[i] = 1;
+	g = game->No;
+	//for (int i = 0; i <10; i++) {
+	//	if (game->pasu[i].m_pointList.size() == NULL) {
+	//		break;
+	////	}
+	//	for (int ko=0; ko< game->keiro->jyunban.size(); ko++) {
+	//		No[ko]] = game->keiro->jyunban[ko];
+
+	//	}
+	Size = 4;//game->pasu.m_pointList.size();
+	for (int i = 0; i < 4; i++) {
+		No[i] = game->da[g][i];
 	}
+	//.erase(it);
+//	m_skinModelData.Load(L"modelData/unityChan.cmo");//プレイヤーを書け
+	//m_skinModel[i].Init(m_skinModelData[i]);
+//	m_skinModel[i].Update(iin[i], CQuaternion::Identity, { 500.0f,500.0f,500.0f });
+	//j++;
+	in = 500.0f;
+	Fream = 0;
+	Flag = 0;
+	iin.y = 0.0f;
 	return true;
 }
 void AImove::Update()
 {
-	for (int i = 0; i < j; i++) {
-		if (Flag[i] == 0) {
-			if (No[i] < Size[i] && No[i] >= 0) {
-				bekutor[i] = game->m_level[i].m_mapChipList[No[i]]->m_position - iin[i];
-				bekutor[i].y = 0.0f;
-				K[i] = sqrt(bekutor[i].x*bekutor[i].x + bekutor[i].y*bekutor[i].y + bekutor[i].z*bekutor[i].z);
-				bekutor[i].Normalize();
-				Fream[i] = 0;
-				No[i] += hugo * 1;
-			}
-			else {
-				No[i] = 0;
-				bekutor[i] = game->m_level[i].m_mapChipList[No[i]]->m_position - iin[i];
-				bekutor[i].y = 0.0f;
-				K[i] = sqrt(bekutor[i].x*bekutor[i].x + bekutor[i].y*bekutor[i].y + bekutor[i].z*bekutor[i].z);
-				bekutor[i].Normalize();
-				Fream[i] = 0;
-				No[i] += hugo * 1;
-			}
-			in[i] = K[i] / 500;
-			Flag[i]--;
-		}
-		else {
-			iin[i] += bekutor[i] * in[i]/**hugo*/;
-			if (K[i] - in[i] * Fream[i] <= 0)
-			{
-				Flag[i]++;
-			}
-			Fream[i]++;
-			iin[i].y = 0.0f;
-		}
-
-		m_skinModel[i].Update(iin[i], CQuaternion::Identity, { 1.0f,1.0f,1.0f });
-	}
+	//if (Flag == 0) {
+	//	if (ima < Size && ima >= 0) {
+	//		kyorikeisan(No[ima]);
+	//	}
+	//	else {/*
+	//		hugo = hugo * -1;*/
+	//		ima = 0;//+= hugo;
+	//		kyorikeisan(No[ima]);
+	//	}
+	//	Flag--;
+	//}
+	//else {
+	//	iin += bekutor * in/**hugo*/;
+	//	game->simin[g]->m_position = iin;
+	//	if (K - in * Fream <= 10 && K - in * Fream >= -10)
+	//	{
+	//		Flag++;
+	//	}
+	//	Fream++;
+	//	iin.y = 0.0f;
+	//}
 }
 void  AImove::Render(CRenderContext& rc)
 {
-	for (int i = 0; i < j; i++) {
-		m_skinModel[i].Draw(rc, MainCamera().GetViewMatrix(), MainCamera().GetProjectionMatrix());
-	}
+	//for (int i = 0; i < j; i++) {
+	//	m_skinModel[i].Draw(rc, MainCamera().GetViewMatrix(), MainCamera().GetProjectionMatrix());
+	//}
+}
+void AImove::kyorikeisan(int bangou)
+{
+	bekutor = game->pasu.m_pointList[bangou] - game->simin[g]->m_position;
+	bekutor.y = 0.0f;
+	K = game->pasu.m_pointList[bangou];
+	K.y = 0.0f;
+	bekutor.Normalize();
+	Fream = 0;
 }
