@@ -51,7 +51,7 @@ public:
 	CVector3 m_forward;						//キャラの前方。
 	CVector3 m_rite;						//キャラの右方向。
 	CMatrix mRot;
-	keiroK* keiro;
+	keiroK keiro;
 	Geizi* Gaizi;
 	Player* pl;
 	CVector3 retu_position;
@@ -68,6 +68,7 @@ public:
 	int kore = 0;
 	int modori = 0;
 	int da = 1;
+	std::vector<int> jyunban;
 	AI* Tansaku = nullptr;  //探索結果のオブジェクトを格納する。
 	AI*Chase_Zombie;  //追跡してくるキャラを格納する。
 };

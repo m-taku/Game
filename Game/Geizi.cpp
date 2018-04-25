@@ -1,0 +1,59 @@
+#include "stdafx.h"
+#include "Geizi.h"
+#include"tekihei.h"
+
+Geizi::Geizi()
+{
+}
+
+
+Geizi::~Geizi()
+{
+}
+
+bool Geizi::Start()
+{
+
+	m_texture.CreateFromDDSTextureFromFile(L"sprite/waku.dds");
+	m_sprite.Init(m_texture, 400, 100);
+	m_position = {-320.0,300.0,0.0};
+	m_sprite.Update(m_position, CQuaternion::Identity, { 1.0f,1.0f,1.0f }, { 0.0f,1.0f });
+	n_position = m_position;
+	n_position += { 10.0, -10.0, 0.0};
+	n_texture.CreateFromDDSTextureFromFile(L"sprite/ge-ji.dds");
+	n_sprite.Init(n_texture, 400, 100);
+	n_sprite.Update(n_position, CQuaternion::Identity, { 1.0f,1.0f,1.0f }, { 0.0f,1.0f });
+
+	hm_sprite.Init(m_texture, 400, 100);
+	hm_position = { 250.0f,300.0f,0.0f };
+	hm_sprite.Update(hm_position, CQuaternion::Identity, { 1.0f,1.0f,1.0f }, { 0.0f,1.0f });
+	hn_sprite.Init(n_texture, 400, 100);
+	hn_position = hm_position;
+	hn_position += { 10.0, -10.0, 0.0};
+	hn_sprite.Update(hn_position, CQuaternion::Identity, { 1.0f,1.0f,1.0f }, { 0.0f,-1.0f });
+	return true;
+}
+void Geizi::Update()
+{
+
+	if (point >= 0.95) {
+		point = 0.95;
+		if (furag <= 0) {
+			NewGO<tekihei>(0, "tekihei");
+			furag++;
+		}
+	}
+	n_sprite.Update(n_position, CQuaternion::Identity, { point,0.8f,1.0f }, { 0.0f,1.0f });
+	m_sprite.Update(m_position, CQuaternion::Identity, { 1.0f,1.0f,1.0f }, { 0.0f,1.0f });
+
+	hn_sprite.Update(hn_position, CQuaternion::Identity, { 0.95f-point,0.8f,1.0f }, { 0.0f,1.0f });
+	hm_sprite.Update(hm_position, CQuaternion::Identity, { 1.0f,1.0f,1.0f }, { 0.0f,1.0f });
+
+}
+void Geizi::Render(CRenderContext& rc)
+{
+	m_sprite.Draw(rc, MainCamera2D().GetViewMatrix(), MainCamera2D().GetProjectionMatrix());
+	n_sprite.Draw(rc, MainCamera2D().GetViewMatrix(), MainCamera2D().GetProjectionMatrix());
+	hm_sprite.Draw(rc, MainCamera2D().GetViewMatrix(), MainCamera2D().GetProjectionMatrix());
+	hn_sprite.Draw(rc, MainCamera2D().GetViewMatrix(), MainCamera2D().GetProjectionMatrix());
+}

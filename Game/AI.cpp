@@ -1,9 +1,9 @@
 #include "stdafx.h"
 #include"AImove.h"
+#include"keiroK.h"
 #include "AI.h"
 #include "Player.h"
 #include"Game.h"
-#include"keiroK.h"
 #include"Geizi.h"
 #define REACH 5.0  //ƒ]ƒ“ƒr‚ÌUŒ‚”ÍˆÍB‚±‚Ì‹——£‚Ü‚Å‹ß‚Ã‚¢‚½‚çUŒ‚‚·‚éB
 #define PI 3.141592653589793 
@@ -430,7 +430,7 @@ void AI::Update()
 }
 void AI::NPCReturn()
 {
-	int Size=keiro->jyunban.size();
+	int Size= jyunban.size();
 
 	CVector3 v = game->siminUI[iNo]->K - m_position;
 	float len = v.Length();//’·‚³
@@ -445,7 +445,7 @@ void AI::NPCReturn()
 			da = 1;
 		}
 		else {
-			game->siminUI[iNo]->kyorikeisan(keiro->jyunban[da++] - 1);
+			game->siminUI[iNo]->kyorikeisan(jyunban[da++] - 1);
 			modori = 0;
 		}
 	}
@@ -462,9 +462,9 @@ void AI::NPCescape()
 		m_position =m_charaCon.Execute(GameTime().GetFrameDeltaTime(),v*m_speed);
 	}
 	else {
-		keiro = NewGO<keiroK>(0);
-		keiro->tansa(m_position, retu_position);
-		game->siminUI[iNo]->kyorikeisan(keiro->jyunban[0]-1);
+		jyunban.erase(jyunban.begin(), jyunban.end());
+		keiro.tansa(m_position, retu_position,&jyunban);
+		game->siminUI[iNo]->kyorikeisan(jyunban[0]-1);
 		pa = Return;
 		m_speed = 1000.0f;
 	}

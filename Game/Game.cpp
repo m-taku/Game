@@ -14,8 +14,24 @@
 #include"Geizi.h"
 Game::Game()
 {
-	//ここに基本的な発生を描く
-	NewGO<Taitor>(0,"Taitor");
+	NewGO<Geizi>(0, "Geizi");
+	NewGO<Player>(0, "Player");
+	for (int k = 0; k < 2; k++) {
+		siminUI.push_back(NewGO<AImove>(0, "AIm"));
+		simin.push_back(NewGO<AI>(0, "AI"));
+
+	}
+	NewGO<Stage>(0, "stage");
+	NewGO<camera>(0, "camera");/*
+
+	m_level[0].Build(L"lever/leval001.tks");*/
+	wchar_t moveFilePath[256];
+	swprintf_s(moveFilePath, L"lever/leval00%d.tks", 1);
+	pasu.Load(moveFilePath);
+	//m_level[1].X = 5.0f;
+	//m_level[1].Z=  5.0f;
+	//m_level[1].Build(L"lever/leval01.tks");
+//ここに基本的な発生を描く
 }
 
 
@@ -35,7 +51,8 @@ void Game::OnDestroy()
 
 
 	//再起動（タイトル表示）
-	NewGO<Game>(0, nullptr);
+
+	NewGO<Taitor>(0, "Taitor");
 }
 bool Game::Start()
 {
@@ -47,31 +64,10 @@ bool Game::Start()
 	MainCamera().Update();
 	//ここに基本的な発生を描く
 	{
-		NewGO<Geizi>(0, "Geizi");
-		NewGO<Taitor>(0, "Taitor");
-		NewGO<Player>(0, "Player");
-		for (int k=0; k < 2; k++) {
-			siminUI.push_back(NewGO<AImove>(0, "AIm"));
-			simin.push_back(NewGO<AI>(0, "AI"));
-
-		}
-		NewGO<Stage>(0, "stage");
-		NewGO<camera>(0, "camera");/*
-
-		m_level[0].Build(L"lever/leval001.tks");*/
-		wchar_t moveFilePath[256];
-		swprintf_s(moveFilePath, L"lever/leval00%d.tks",1);
-		pasu.Load(moveFilePath);
-		//m_level[1].X = 5.0f;
-		//m_level[1].Z=  5.0f;
-		//m_level[1].Build(L"lever/leval01.tks");
-		NewGO<tekihei>(0, "tekihei");
+		
 	}
 	m_Fade=FindGO<Fade>("Fade");
-	if (m_Fade != NULL) {
-		m_Fade->StartFadeOut();
-		a++;
-	}
+
 	/*m_skinModelRender = NewGO<prefab::CSkinModelRender>(0);
 	m_skinModelRender->Init(L"modelData/unityChan.cmo");
 	m_skinModelRender->SetScale({ 0.1f, 0.1f, 0.1f } );*/
@@ -80,8 +76,10 @@ bool Game::Start()
 void Game::Update()
 {
 	//クリア関係？？
-	
-	if (Pad(0).IsTrigger(enButtonB) && a >= 2) {
+		if (m_Fade != NULL) {
+		m_Fade->StartFadeIn();
+	}
+	/*if (Pad(0).IsTrigger(enButtonB) && a >= 2) {
 		m_Fade->StartFadeOut();
 		a--;
 
@@ -101,7 +99,7 @@ void Game::Update()
 	MainCamera().SetNear(10.0f);
 	MainCamera().SetFar(50000.0f);
 	MainCamera().SetPosition({ 30.0f, 10.0f, 0.0f });
-	MainCamera().Update();
+	MainCamera().Update();*/
 }
 void Game::Render(CRenderContext& rc)
 {
