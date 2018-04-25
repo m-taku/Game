@@ -1,7 +1,6 @@
 #pragma once
 #include"Human.h"
 #include "tkEngine/character/tkCharacterController.h"
-#include "tkEngine/graphics/effect/tkEffect.h"
 class taieki;
 class Player : public Human
 {
@@ -32,6 +31,6 @@ public:
 	CSkinModel m_taieki;
 	CSkinModelData m_taiekiModelData;
 	taieki* Tp = nullptr;
-	prefab::CEffect* effect = nullptr;
+	
 };
 

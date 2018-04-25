@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "taieki.h"
-#include "Player.h"
+#include"math.h"
 
 #include"camera.h"
 
@@ -16,7 +16,14 @@ taieki::~taieki()
 
 bool taieki::Start()
 {
+	
+	for (int i = 0;i < teki;i++)
+	{
+		taieki_to_tekipos[i] = CVector3::Zero;
+
+	}
 	player = FindGO<Player>("Player");
+	tekip = FindGO<tekihei>("tekihei");
 	m_taiekiModelData.Load(L"modelData/taieki.cmo");
 	m_taieki.Init(m_taiekiModelData);
 	CF = MainCamera().GetForward();
@@ -28,16 +35,41 @@ bool taieki::Start()
 }
 void taieki::Update()
 {
-		tpos += (CF * 60.0f)+PS/25.0f;
+	
+	
+
+		tpos += (CF * 80.0f)+PS/25.0f;
 	
 	TS.y -= 50.0f * GameTime().GetFrameDeltaTime();
 	tpos.y += TS.y;
+
+	for (int i = 0;i < teki;i++)
+	{
+		if (tekip != NULL)
+		{
+			tekipos2[i] = tekip->tekipos[i];
+			tekipos2[i].y += 50.0f;
+			taieki_to_tekipos[i] = tekipos2[i] - tpos;
+			tekikyori[i] = sqrt(taieki_to_tekipos[i].x*taieki_to_tekipos[i].x + taieki_to_tekipos[i].y*taieki_to_tekipos[i].y + taieki_to_tekipos[i].z*taieki_to_tekipos[i].z);
+			taieki_to_tekipos[i].Normalize();
+			if (tekikyori[i] <= 50.0f)
+			{
+				effect = NewGO<prefab::CEffect>(0);
+				e_pos = tpos;
+				effect->SetPosition(e_pos);
+				effect->SetScale({ 100.0f,100.0f,100.0f });
+				DeleteGO(this);
+			}
+		}
+	}
+
 	if (tpos.y <= 0.0f)
 	{
+		effect = NewGO<prefab::CEffect>(0);
 		e_pos = tpos;
-		e_pos.y += 10.0f;
-		player->effect->SetPosition(e_pos);
-		player->effect->SetScale({100.0f,100.0f,100.0f});
+		effect->Play(L"effect/aura.efk");
+		effect->SetPosition(e_pos);
+		effect->SetScale({100.0f,100.0f,100.0f});
 		DeleteGO(this);
 	}
 	m_taieki.Update(tpos, CQuaternion::Identity, { 2.0f, 2.0f,2.0f });
