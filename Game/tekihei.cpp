@@ -151,6 +151,7 @@ void tekihei::Update()
 					DeleteGO(tamaEF[i]);
 					tamaflag[i] = 0;
 				}
+
 			}
 		}
 		tekipos[i] = m_charaCon[i].Execute(GameTime().GetFrameDeltaTime(), tekispeed[i]);
