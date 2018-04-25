@@ -17,8 +17,6 @@ Player::~Player()
 }
 bool Player::Start()
 {
-	effect = NewGO<prefab::CEffect>(0);
-	effect->Play(L"effect/aura.efk");
 	m_skinModelData.Load(L"modelData/unityChan.cmo");//プレイヤーを書け
 	m_skinModel.Init(m_skinModelData);
 
@@ -32,6 +30,8 @@ bool Player::Start()
 }
 void Player::Update()
 {
+	m_moveSpeed.z = 0.0f;
+	m_moveSpeed.x = 0.0f;
 	//左スティックの入力量を受け取る。
 	float lStick_x = Pad(0).GetLStickXF()*5000.0f;
 	float lStick_y = Pad(0).GetLStickYF()*5000.0f;
