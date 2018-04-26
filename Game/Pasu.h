@@ -41,7 +41,7 @@ public:
 	//	return &m_edgeList[no];
 	//}
 	std::vector<CVector3> m_pointList;	//!<座標のリスト。
-	std::vector<int> pointNo;
+	std::vector<unsigned int> pointNo;
 	std::vector<kanren*> resuto;
 	kanren* kan;
 private:

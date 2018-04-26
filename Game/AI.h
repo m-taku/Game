@@ -30,7 +30,7 @@ public:
 	void NPCRuet(); //NPCの移動ルートを格納する。
 	float GetKyori(CVector3 a, CVector3 b);  //2つのオブジェクトの距離を計測する。
 	float VectorAngleDeg(CVector3 c);  //2つのベクトルの角度を角度表記(degree)で返す。
-
+	float Siya(CVector3 h, float g);
 	float VectorAngleDeg2(CVector3 c);
 	//メンバ変数
 	enum npcpattern { //switch文に使う。

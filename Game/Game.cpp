@@ -16,7 +16,7 @@ Game::Game()
 {
 	gaizi=NewGO<Geizi>(1, "Geizi");
 	player =NewGO<Player>(0, "Player");
-	for (int k = 0; k < 2; k++) {
+	for (int k = 0; k < 5; k++) {
 		siminUI.push_back(NewGO<AImove>(0, "AIm"));
 		simin.push_back(NewGO<AI>(0, "AI"));
 
@@ -26,7 +26,7 @@ Game::Game()
 
 	m_level[0].Build(L"lever/leval001.tks");*/
 	wchar_t moveFilePath[256];
-	swprintf_s(moveFilePath, L"lever/leval00%d.tks", 1);
+	swprintf_s(moveFilePath, L"lever/leval00%d.tks", 2);
 	pasu.Load(moveFilePath);
 	//m_level[1].X = 5.0f;
 	//m_level[1].Z=  5.0f;

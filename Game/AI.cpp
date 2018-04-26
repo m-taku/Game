@@ -5,6 +5,7 @@
 #include "Player.h"
 #include"Game.h"
 #include"Geizi.h"
+#include"tekihei.h"
 #define REACH 100.0  //ゾンビの攻撃範囲。この距離まで近づいたら攻撃する。
 #define PI 3.141592653589793 
 AI NPC;
@@ -34,11 +35,17 @@ bool AI::Start()
 	CMatrix mRot;
 	//mRot.MakeRotationFromQuaternion();
 	m_charaCon.Init(
-		20.0,			//半径。 
+		80.0,			//半径。 
 		100.0f,			//高さ。
 		m_position		//初期位置。
 	);
 	game->siminUI[iNo]->kyorikeisan(game->da[iNo][1] - 1);
+	m_tekirot.MakeRotationFromQuaternion(m_rotation);
+	m_forward.x = m_tekirot.m[2][0];
+	m_forward.y = m_tekirot.m[2][1];
+	m_forward.z = m_tekirot.m[2][2];
+	m_forward.Normalize();
+	m_rotation.SetRotationDeg(CVector3::AxisY,VectorAngleDeg(game->siminUI[iNo]->bekutor));
 	SetTags(10);
 	return true;
 }
@@ -48,12 +55,12 @@ void AI::NPCNormal()
 	CVector3 v = game->siminUI[iNo]->K - m_position;
 	float len = v.Length();//長さ
 	if (50 <= len) {
-		if (VectorAngleDeg2(v)>=10.0) {
+		if (VectorAngleDeg2(v)>=3.0) {
 			CQuaternion qBias1;
 			qBias1.SetRotationDeg(CVector3::AxisY, 5.0f);
 			m_rotation.Multiply(qBias1);
 		}
-		else if (VectorAngleDeg2(v) <= -10.0)
+		else if (VectorAngleDeg2(v) <= -3.0)
 		{
 			CQuaternion qBias1;
 			qBias1.SetRotationDeg(CVector3::AxisY, -5.0f);
@@ -61,7 +68,7 @@ void AI::NPCNormal()
 		}
 		else {
 			//	m_position += (game->siminUI[iNo]->bekutor)*m_speed;
-			m_position = m_charaCon.Execute(GameTime().GetFrameDeltaTime(), game->siminUI[iNo]->bekutor*m_speed);
+			m_position = m_charaCon.Execute(GameTime().GetFrameDeltaTime(), m_forward*m_speed);
 		}
 	}
 	else {
@@ -71,17 +78,37 @@ void AI::NPCNormal()
 	}
 	CVector3 v2 = pl->m_position-m_position;
 	float len1 = v2.Length();//長さ
-
-	if (len1 < 500.0f) {//プレイヤーを見つけたら
-		if (fabsf(VectorAngleDeg(v2)) <= 45.0f) {
-			Gaizi->point += 0.1f;
-			pa = Escape;
-			retu_position = m_position;
-			m_speed = 3000.0f;
-			//DamageFlag = true;
-			//プレイヤーから逃げる。
-		}
+	if (Siya(v2, len1) != 0) {
+		Gaizi->point += 0.1f;
+		pa = Escape;
 	}
+	FindGameObjectsWithTag(10, [&](IGameObject* go) {
+		if (go != this) {            //自分からの距離を計測するため、検索結果から自分を除外する。
+			AI* ai = (AI*)go;
+			if (ai->Zonbe == 0) {  //それがゾンビでなかったら
+				CVector3 kyori1 =   ai->m_position - this->m_position;//自分との距離を求める。
+				float f = kyori1.Length();
+				if (Siya(kyori1, f)) { //距離が攻撃範囲以内だったら
+
+					CQuaternion qBias1;
+					qBias1.SetRotationDeg(CVector3::AxisY, 1.0f);
+					m_rotation.Multiply(qBias1);
+
+					 //パターンをダメージにかえる。
+				}
+			}
+		}
+	});
+	//if (len1 < 500.0f) {//プレイヤーを見つけたら
+	//	if (fabsf(VectorAngleDeg(v2)) <= 45.0f) {
+	//		Gaizi->point += 0.1f;
+	//		pa = Escape;
+	//		retu_position = m_position;
+	//		m_speed = 3000.0f;
+	//		//DamageFlag = true;
+	//		//プレイヤーから逃げる。
+	//	}
+	//}
 	if (len1 < REACH) {//攻撃を受ける範囲まで近づいたら確実にダメージを受けるので
 		pa = Damage;
 		DamageFlag = true;//ダメージフラグをtrueにする。
@@ -139,6 +166,10 @@ void AI::NPCNormal()
 	//	//	}
 	//	//	
 	//	//}
+	if (Gaizi->furag >= 1)
+	{
+		pa = Zombie_Attack;
+	}
 }
 
 void AI::NPCDamage()
@@ -252,6 +283,7 @@ void AI::NPCZombie_Normal()
 	//if (Tansaku != nullptr) {
 	//	pa = Zombie_Chase; //パターンをゾンビチェイスに変える。
 	//}
+
 }
 
 void AI::NPCZombie_Chase()
@@ -280,6 +312,7 @@ void AI::NPCZombie_Chase()
 
 void AI::NPCZombie_Attack()//vs特殊部隊
 {
+	
 	//if (BattleFlag == false) {//部隊と戦っておらず、フリーな状態なら
 	//	//一番近い部隊に移動する。
 	//	float len = GetKyori(m_position,j->m_position );
@@ -339,7 +372,20 @@ float AI::VectorAngleDeg2(CVector3 c)
 
 	return degree;
 }
+float AI::Siya(CVector3 h, float g)
+{
 
+	if (g < 500.0f) {
+		if (fabsf(VectorAngleDeg(h)) <= 45.0f) {//見つけたら
+			retu_position = m_position;
+			m_speed = 3000.0f;
+			//DamageFlag = true;
+			//プレイヤーから逃げる。
+			return 1;
+		}
+	}
+	return 0;
+}
 float AI::VectorAngleDeg(CVector3 c)
 {
 	
@@ -384,10 +430,6 @@ void AI::Update()
 	m_rite.y = k_tekirot.m[0][1];
 	m_rite.z = k_tekirot.m[0][2];
 	m_rite.Normalize();
-
-	if (ForceFlag==true) {//特殊部隊が出現したら
-		pa = Zombie_Attack; //パターンをゾンビアタックに切り替える。
-	}
 
 	CQuaternion qBias;
 	qBias = rotation(270);
@@ -457,6 +499,7 @@ void AI::Update()
 	//		,- 221.356491
 	//		,4564.60596 };
 	//	keiro=NewGO<keiroK>(0);
+	
 
 	//	keiro->tansa(k, b);
 	m_skinModel.Update(m_position, m_rotation, { 0.5f, 0.5f,0.5f });
