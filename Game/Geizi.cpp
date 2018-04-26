@@ -31,7 +31,6 @@ bool Geizi::Start()
 	hn_position = hm_position;
 	hn_position += { 10.0, -10.0, 0.0};
 	hn_sprite.Update(hn_position, CQuaternion::Identity, { 1.0f,1.0f,1.0f }, { 0.0f,-1.0f });
-	hy_texture.CreateFromDDSTextureFromFile(L"sprite/ka-soru.dds");
 	hy_sprite.Init(hy_texture, 110, 100);
 	return true;
 }
@@ -59,7 +58,7 @@ void Geizi::Update()
 
 	hy_texture.CreateFromDDSTextureFromFile(L"sprite/syoujun.dds");
 	hy_sprite.Init(hy_texture, 110, 100);
-	hy_sprite.Update(CVector3::Zero, CQuaternion::Identity, { 0.5f,0.5f,1.0f }, { 0.0f,0.0f });
+	hy_sprite.Update(CVector3::Zero, CQuaternion::Identity, { 0.5f,0.5f,1.0f }, { 0.5f,0.5f });
 
 }
 void Geizi::Render(CRenderContext& rc)
