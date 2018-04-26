@@ -44,7 +44,6 @@ bool AI::Start()
 }
 void AI::NPCNormal()
 {
-
 	CVector3 v = game->siminUI[iNo]->K - m_position; //Kが次の目的地
 	float len = v.Length();//長さ
 	if (50 <= len) {
@@ -61,7 +60,7 @@ void AI::NPCNormal()
 		}
 		else {
 			//	m_position += (game->siminUI[iNo]->bekutor)*m_speed;
-			m_position = m_charaCon.Execute(GameTime().GetFrameDeltaTime(), game->siminUI[iNo]->bekutor*m_speed);
+			m_position = m_charaCon.Execute(GameTime().GetFrameDeltaTime(), game->siminUI[iNo]->bekutor*m_speed);//移動。
 		}
 	}
 	else {
@@ -218,7 +217,6 @@ void AI::NPCZombie_Normal()
 				}
 			}
 		}
-
 	});
 
 	if (Tansaku != nullptr) {
@@ -271,6 +269,37 @@ void AI::NPCZombie_Attack()//vs特殊部隊
 	
 }
 
+void AI::NPCFade_Out()//一般市民が退場するときの処理。
+{
+
+	CVector3 v = game->siminUI[iNo]->K - m_position; //Kが次の目的地
+	float len = v.Length();//長さ
+	if (50 <= len) {
+		if (VectorAngleDeg2(v) >= 10.0) {//10度より上なら回転
+			CQuaternion qBias1;
+			qBias1.SetRotationDeg(CVector3::AxisY, 5.0f);
+			m_rotation.Multiply(qBias1);
+		}
+		else if (VectorAngleDeg2(v) <= -10.0)//-10度より下なら回転
+		{
+			CQuaternion qBias1;
+			qBias1.SetRotationDeg(CVector3::AxisY, -5.0f);
+			m_rotation.Multiply(qBias1);
+		}
+		else {//10度未満でかつ-10度以上なら
+			//	m_position += (game->siminUI[iNo]->bekutor)*m_speed;
+			m_position = m_charaCon.Execute(GameTime().GetFrameDeltaTime(), game->siminUI[iNo]->bekutor*m_speed);//移動。
+		}
+	}
+	else {//パスに着いたら
+		if (ima >= jyunban.size()) {//指定されたパスの最後まで着いたら
+			pa = Death;
+		}
+			
+		game->siminUI[iNo]->kyorikeisan(jyunban[ima++] - 1);
+	}
+}
+
 float AI::GetKyori(CVector3 a, CVector3 b) //2つのオブジェクトの座標を受け取り、オブジェクト間の距離を返す。
 {
 	CVector3 v = a - b;
@@ -303,7 +332,6 @@ void AI::NPCRuet()//NPCルート
 
 float AI::VectorAngleDeg2(CVector3 c)
 {
-
 	c.Normalize();//向きVectorにする。
 	float kaku = atanf(c.Dot(m_rite));//２つのべクトルの内積のアークコサインを求める。(ラジアン)
 
@@ -314,8 +342,6 @@ float AI::VectorAngleDeg2(CVector3 c)
 
 float AI::VectorAngleDeg(CVector3 c)
 {
-	
-
 	c.Normalize();//向きVectorにする。
 	float kaku = acosf(c.Dot(m_forward));//２つのべクトルの内積のアークコサインを求める。(ラジアン)
 
@@ -343,6 +369,12 @@ void AI::DamageHantei() //全てのゾンビと距離でダメージ判定をする。
 		pa = Damage; //パターンをダメージにかえる。
 	}
 }
+
+void AI::NPCDeath()
+{
+
+}
+
 void AI::Update()
 {
 	//pa = Normal; //ここはプレイヤーの行動によって変化するようにする。
@@ -357,8 +389,22 @@ void AI::Update()
 	m_rite.z = k_tekirot.m[0][2];
 	m_rite.Normalize();
 
-	if (ForceFlag==true) {//特殊部隊が出現したら
-		pa = Zombie_Attack; //パターンをゾンビアタックに切り替える。
+	if (Zonbe == 0) { //自分がゾンビではなかったら
+	DamageHantei(); //ゾンビとの当たり判定をとる。
+	}
+
+	if (ForceFlag == true) {//特殊部隊が出現したら
+		if (Zonbe == 1) {//自分がゾンビだったら
+			pa = Zombie_Attack; //パターンをゾンビアタックに切り替える。
+		}
+		else {//尚且つ、自分がゾンビではなかったら
+			jyunban.erase(jyunban.begin(), jyunban.end());
+			keiro.tansa(m_position, game->pasu.m_pointList[0], &jyunban);
+			game->siminUI[iNo]->kyorikeisan(jyunban[0] - 1);
+			ima = 1;
+			pa = Fade_Out; //パターンをフェードアウトに切り替える。
+		}
+		ForceFlag == false;//1回しか実行したくないのでフラグをさげる。
 	}
 
 	CQuaternion qBias;
@@ -381,6 +427,9 @@ void AI::Update()
 	case Return:
 		NPCReturn();
 		break;
+	case Fade_Out:
+		NPCFade_Out();
+		break;
 	case Damage:
 		NPCDamage();
 		break;
@@ -394,13 +443,18 @@ void AI::Update()
 	case Zombie_Attack:
 		//NPCZombie_Attack();
 		break;
+	case Death:
+		NPCDeath();
+		break;
 	default:
 		NPCZombie_Normal();
 		break;
 	}
 
-	if (Zonbe == 0) { //自分がゾンビではなかったら
-		DamageHantei(); //ゾンビとの当たり判定をとる。
+	
+	if (Gaizi->furag == 1) {//特殊部隊が出現したら、
+		ForceFlag = true;//出現フラグを立てる。
+		Gaizi->furag++;
 	}
 	
 	//Muve(m_movespeed);//ムーヴスピード入れると動く
@@ -433,6 +487,7 @@ void AI::Update()
 	//	keiro->tansa(k, b);
 	m_skinModel.Update(m_position, m_rotation, { 0.5f, 0.5f,0.5f });
 }
+
 void AI::NPCReturn()
 {
 	int Size= jyunban.size();

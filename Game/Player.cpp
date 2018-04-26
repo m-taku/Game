@@ -22,7 +22,7 @@ bool Player::Start()
 
 	//キャラクターコントローラーを初期化。
 	m_charaCon.Init(
-		20.0,			//半径。 
+		30.0,			//半径。 
 		100.0f,			//高さ。
 		m_position		//初期位置。
 	);

@@ -18,11 +18,13 @@ public:
 	//void NPCEscape_NPC();//市民がゾンビNPCから逃げるときの処理。
 	//void NPCEscape_Player();//市民がゾンビプレイヤーから逃げるときの処理。
 	void NPCDamage();//攻撃を受けてからゾンビNPCになるまでの処理。
+	void NPCFade_Out();//一般市民がステージから出ていくまでの処理。
 	void NPCZombie_Normal();//ゾンビNPCの通常行動の処理。
 	void NPCZombie_Chase();//ゾンビNPCが市民を追跡するときの処理。
 	void NPCZombie_Attack();//特殊部隊とゾンビが戦う時の処理。
 	void NPCescape();//市民がゾンビプレイヤーから逃げるときの処理。
 	void NPCReturn();//戻るとき
+	void NPCDeath();
 
 	void Render(CRenderContext& rc);
 	void Turn();
@@ -40,9 +42,11 @@ public:
 		//Escape_NPC,             //市民のNPCからの逃走状態。
 		//Escape_Player,       //市民のプレイヤーからの逃走状態。
 		Return,				//戻るとき。
+		Fade_Out,           //特殊部隊が出現して、一般市民が退場するとき。
 		Zombie_Normal,      //ゾンビ化NPCの通常状態。
 		Zombie_Chase,       //ゾンビ化NPCの追跡状態。
-		Zombie_Attack       //ゾンビ化NPCの攻撃状態。
+		Zombie_Attack,      //ゾンビ化NPCの攻撃状態。
+		Death               //NPCの死亡。
 	};
 	enum npcpattern pa;
 	CCharacterController m_charaCon;
