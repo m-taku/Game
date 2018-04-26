@@ -250,9 +250,6 @@
     <Image Include="Assets\sprite\fade.png">
       <Filter>Assets\sprite</Filter>
     </Image>
-    <Image Include="Assets\sprite\kajy.png">
-      <Filter>Assets\sprite</Filter>
-    </Image>
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\lever\larer_01.tks">
@@ -264,9 +261,6 @@
       <Filter>Assets\sprite</Filter>
     </ImageContentTask>
     <ImageContentTask Include="Assets\sprite\waku.png">
-      <Filter>Assets\sprite</Filter>
-    </ImageContentTask>
-    <ImageContentTask Include="Assets\sprite\ka-soru.png">
       <Filter>Assets\sprite</Filter>
     </ImageContentTask>
     <ImageContentTask Include="Assets\sprite\syoujun.png">
