@@ -1,5 +1,6 @@
 #pragma once
 #include"Player.h"
+#include"Geizi.h"
 #include "tkEngine/graphics/effect/tkEffect.h"
 #include "tkEngine/character/tkCharacterController.h"
 #define teki 10
@@ -21,6 +22,7 @@ public:
 	CMatrix m_tekirot[teki];
 	CVector3 tekiright[teki];
 	CVector3 tekifoward[teki];
+	Geizi *gaizi;
 	Player *Pp = nullptr;
 	CVector3 ppos = CVector3::Zero;
 	CVector3 teki_to_player[teki];

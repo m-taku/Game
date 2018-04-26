@@ -1,7 +1,6 @@
 #include "stdafx.h"
 #include "taieki.h"
 #include"math.h"
-
 #include"camera.h"
 
 
