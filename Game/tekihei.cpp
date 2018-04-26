@@ -141,7 +141,7 @@ void tekihei::Update()
 					tamaEF[i]->SetScale({ 100.0f,100.0f,100.0f });
 					time[i]++;
 
-					if (time[i] >= 90)
+					if (time[i] >= 10)
 					{
 						DeleteGO(tamaEF[i]);
 						tamaflag[i] = 0;
@@ -154,6 +154,7 @@ void tekihei::Update()
 					DeleteGO(tamaEF[i]);
 					tamaflag[i] = 0;
 				}
+
 			}
 		}
 		tekipos[i] = m_charaCon[i].Execute(GameTime().GetFrameDeltaTime(), tekispeed[i]);
