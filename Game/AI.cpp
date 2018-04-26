@@ -43,17 +43,16 @@ bool AI::Start()
 void AI::NPCNormal()
 {
 
-	CVector3 v = game->siminUI[iNo]->K - m_position;
+	CVector3 v = game->siminUI[iNo]->K - m_position; //Kが次の目的地
 	float len = v.Length();//長さ
-	if (50 <= len) {
+	if (50 <= len) {//目的地についていないなら
 		//	m_position += (game->siminUI[iNo]->bekutor)*m_speed;
-		m_position = m_charaCon.Execute(GameTime().GetFrameDeltaTime(), game->siminUI[iNo]->bekutor*m_speed);
+		m_position = m_charaCon.Execute(GameTime().GetFrameDeltaTime(), game->siminUI[iNo]->bekutor*m_speed);//移動
 	}
-	else {
-		if (ima >= 4)
-			ima = 0;
+	else {//着いたとき
+		if (ima >= 4)//今のポジションが４なら
+			ima = 0;//0にリセットする。0,1,2,3,4の順番。
 		game->siminUI[iNo]->kyorikeisan(game->da[iNo][ima++] - 1);
-		kore = 0;
 	}
 	CVector3 v2 = m_position - pl->m_position;
 	float len1 = v2.Length();//長さ
@@ -61,14 +60,11 @@ void AI::NPCNormal()
 	if (len1 < 500.0f) {//プレイヤーを見つけたら
 		pa = Escape;
 		retu_position = m_position;
-		m_speed = 3000.0f;
+		m_speed = 3000.0f;//逃げるときのスピード
 		//DamageFlag = true;
 		//プレイヤーから逃げる。
 	}
-	if (len1 < REACH) {//攻撃を受ける範囲まで近づいたら確実にダメージを受けるので
-		pa = Damage;
-		DamageFlag = true;//ダメージフラグをtrueにする。
-	}
+
 	//	/////////////////////////////////
 	//	//一定のルートをうろうろする処理。
 	//	/////////////////////////////////
@@ -109,19 +105,6 @@ void AI::NPCNormal()
 	//			pa = Escape_Player;
 	//		}
 	//	}
-	//	//if (len < REACH) {//攻撃を受ける範囲まで近づいたら確実にダメージを受けるので
-	//	//	DamageFlag = true;//ダメージフラグをtrueにする。
-	//	//}
-	//	//if (DamageFlag == true) {//プレイヤーからの攻撃を受けたら
-	//	//	static int i = 0; //30フレームをカウントする。
-	//	//	if (i >= 30) {
-	//	//		pa = Damage;//30フレーム経過したらパターンをダメージに変える。
-	//	//	}
-	//	//	else {
-	//	//		i++; //1フレーム経過をカウントする。
-	//	//	}
-	//	//	
-	//	//}
 }
 
 void AI::NPCDamage()
@@ -142,6 +125,7 @@ void AI::NPCDamage()
 	}
 
 }
+
 //void AI::NPCEscape_NPC() //NPCからの逃走
 //{
 //	static bool LostFlag = false;  //見失ったかどうかを示すフラグ。
@@ -192,49 +176,35 @@ void AI::NPCDamage()
 //
 //	}
 //}
+
 void AI::NPCZombie_Normal()
 {
-	//一定範囲を徘徊する。
-
-	//一定範囲内に他のNPCを見つけたら
-	//float len;
-	//if (len) {
-	//	if (m->Zonbe == 0) {//それがゾンビではなかったら
-	//		//視界内か、角度をとって調べる。
-
-	//		if () {//角度内(視界内)だったら
-	//			ZombieChaseNumber = MyNumber; //自分が立っていたパスの番号を記憶する。
-	//			pa = Zombie_Chase; //パターンを追跡に変える。
-	//		}
-	//	}
-	//}
-	//この下あれ
 	/////////////////////////////////
 	//一定のルートをうろうろする処理。
 	/////////////////////////////////
-	//float min_Nagasa = 9999.0f;
-	//FindGameObjectsWithTag(10, [&](IGameObject* go) {
-	//	if (go != this) {            //自分からの距離を計測するため、検索結果から自分を除外する。
-	//		AI* ai = (AI*)go;
-	//		if (ai->Zonbe == 0) {   //それが一般市民だったら
-	//			float kyori = GetKyori(this->m_position, ai->m_position);//自分との距離を求める。
-	//			if (kyori < 60.0f) {  //距離が視界範囲以内だったら
-	//				float angle = VectorAngleDeg(ai->m_position); //検索対象の座標を引数にする。
-	//				if (angle <= 45.0f&&angle >= -45.0f) { //角度が視界内だったら
-	//					if (kyori < min_Nagasa) { //自分に一番近いのなら
-	//						min_Nagasa = kyori;
-	//						Tansaku = ai;
-	//					}
-	//				}
-	//			}
-	//		}
-	//	}
+	float min_Nagasa = 9999.0f;
+	FindGameObjectsWithTag(10, [&](IGameObject* go) {
+		if (go != this) {            //自分からの距離を計測するため、検索結果から自分を除外する。
+			AI* ai = (AI*)go;
+			if (ai->Zonbe == 0) {   //それが一般市民だったら
+				float kyori = GetKyori(this->m_position, ai->m_position);//自分との距離を求める。
+				if (kyori < 60.0f) {  //距離が視界範囲以内だったら
+					float angle = VectorAngleDeg(ai->m_position); //検索対象の座標を引数にする。
+					if (angle <= 45.0f&&angle >= -45.0f) { //角度が視界内だったら
+						if (kyori < min_Nagasa) { //自分に一番近いのなら
+							min_Nagasa = kyori;
+							Tansaku = ai;
+						}
+					}
+				}
+			}
+		}
 
-	//});
+	});
 
-	//if (Tansaku != nullptr) {
-	//	pa = Zombie_Chase; //パターンをゾンビチェイスに変える。
-	//}
+	if (Tansaku != nullptr) {
+		pa = Zombie_Chase; //パターンをゾンビチェイスに変える。
+	}
 }
 
 void AI::NPCZombie_Chase()
@@ -282,7 +252,7 @@ void AI::NPCZombie_Attack()//vs特殊部隊
 	
 }
 
-float AI::GetKyori(CVector3 a, CVector3 b) //2つのオブジェクトの座標を受け取る。
+float AI::GetKyori(CVector3 a, CVector3 b) //2つのオブジェクトの座標を受け取り、オブジェクト間の距離を返す。
 {
 	CVector3 v = a - b;
 	float len = v.Length();//長さ
@@ -312,7 +282,7 @@ void AI::NPCRuet()//NPCルート
 
 }
 
-float AI::VectorAngleDeg(CVector3 c)
+float AI::VectorAngleDeg(CVector3 c)//
 {
 	
 	CVector3 sa;
@@ -437,9 +407,9 @@ void AI::NPCReturn()
 		m_position=	m_charaCon.Execute(GameTime().GetFrameDeltaTime(), (game->siminUI[iNo]->bekutor)*m_speed);
 	}
 	else {
-		if (da >= Size) {
+		if (da >= Size) {//元の位置にもどった
 			ima--;
-			pa = Normal;
+			pa = Normal;//パターンをノーマルにかえる。
 			da = 1;
 		}
 		else {
@@ -459,7 +429,7 @@ void AI::NPCescape()
 		//m_position += v * m_speed;
 		m_position =m_charaCon.Execute(GameTime().GetFrameDeltaTime(),v*m_speed);
 	}
-	else {
+	else {//元の位置に戻る処理。
 		keiro = NewGO<keiroK>(0);
 		keiro->tansa(m_position, retu_position);
 		game->siminUI[iNo]->kyorikeisan(keiro->jyunban[0]-1);
