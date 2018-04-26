@@ -1,6 +1,7 @@
 #pragma once
 #include "Player.h"
 #include "tekihei.h"
+#include"Geizi.h"
 #include "tkEngine/graphics/effect/tkEffect.h"
 class taieki:public IGameObject
 {

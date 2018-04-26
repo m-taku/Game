@@ -2,7 +2,7 @@
 #include "tekihei.h"
 #include"Player.h"
 #include"math.h"
-
+#include"Geizi.h"
 
 tekihei::tekihei()
 {
@@ -15,7 +15,9 @@ tekihei::~tekihei()
 
 bool tekihei::Start()
 {
-	
+
+
+	gaizi = FindGO<Geizi>("Geizi");
 	for (int i = 0;i < teki;i++)
 	{
 		damageflag[i] = 0;
@@ -129,9 +131,10 @@ void tekihei::Update()
 				}
 					
 				
-				if (tama_to_player_vector[i] <= 50.0f)
+				if (tama_to_player_vector[i] <= 50.0f&& damageflag[i]==0)
 				{
 					damageflag[i] = 1;
+					gaizi->HP+=0.1;
 				}
 				if (damageflag[i] == 1)
 				{

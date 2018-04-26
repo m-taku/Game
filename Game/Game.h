@@ -2,6 +2,10 @@
 #include "Level.h"
 #include"Pasu.h"
 #include"keiroK.h"
+#include"Geizi.h"
+#include"Player.h"
+#include"Stage.h"
+#include"camera.h"
 #include "tkEngine/graphics/effect/tkEffect.h"
 class Fade;
 class AI;
@@ -22,11 +26,15 @@ public:
 	std::vector<AI*> simin;
 	std::vector<AImove*> siminUI;
 	Fade* m_Fade;
+	Geizi* gaizi;
+	Player* player;
+	Stage* stge;
+	camera* camera1;
 	Level m_level[3];
 	Pasu  pasu;
 	keiroK* keiro;
 	int No = 0;
-	int da[2][4] = { { 1,4,5,8}, { 2, 3, 11,10} };
+	int da[2][6] = { { 1,4,5,7,10,9}, { 3, 4, 13,15,10,11} };
 	int a=2;							//ƒŒƒxƒ‹B
 private:
 	void InitSceneLight();

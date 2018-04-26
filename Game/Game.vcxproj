@@ -757,6 +757,9 @@
     <Image Include="Assets\modelData\white.png" />
     <Image Include="Assets\modelData\worktops007.jpg" />
     <Image Include="Assets\sprite\fade.png" />
+    <Image Include="Assets\sprite\kajy.png" />
+    <ImageContentTask Include="Assets\sprite\syoujun.png" />
+    <ImageContentTask Include="Assets\sprite\ka-soru.png" />
     <ImageContentTask Include="Assets\sprite\ge-ji.png" />
     <ImageContentTask Include="Assets\sprite\waku.png" />
   </ItemGroup>

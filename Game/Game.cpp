@@ -14,15 +14,15 @@
 #include"Geizi.h"
 Game::Game()
 {
-	NewGO<Geizi>(0, "Geizi");
-	NewGO<Player>(0, "Player");
+	gaizi=NewGO<Geizi>(1, "Geizi");
+	player =NewGO<Player>(0, "Player");
 	for (int k = 0; k < 2; k++) {
 		siminUI.push_back(NewGO<AImove>(0, "AIm"));
 		simin.push_back(NewGO<AI>(0, "AI"));
 
 	}
-	NewGO<Stage>(0, "stage");
-	NewGO<camera>(0, "camera");/*
+	stge =NewGO<Stage>(0, "stage");
+	camera1 =NewGO<camera>(0, "camera");/*
 
 	m_level[0].Build(L"lever/leval001.tks");*/
 	wchar_t moveFilePath[256];
@@ -46,10 +46,14 @@ void Game::OnDestroy()
 {
 
 	//ここで最終的にＤｅｌｅｔｅＧＯを絶対しきる。
-
-
-
-
+	DeleteGO(gaizi);
+	DeleteGO(player);
+	DeleteGO(stge);
+	DeleteGO(camera1);
+	for (int k = 0; k < 2; k++) {
+		DeleteGO(siminUI[k]);
+		DeleteGO(simin[k]);
+	}
 	//再起動（タイトル表示）
 
 	NewGO<Taitor>(0, "Taitor");
@@ -77,7 +81,7 @@ void Game::Update()
 {
 	//クリア関係？？
 
-		if (m_Fade != NULL) {
+	if (m_Fade != NULL) {
 		m_Fade->StartFadeIn();
 	}
 	/*if (Pad(0).IsTrigger(enButtonB) && a >= 2) {
@@ -101,6 +105,9 @@ void Game::Update()
 	MainCamera().SetFar(50000.0f);
 	MainCamera().SetPosition({ 30.0f, 10.0f, 0.0f });
 	MainCamera().Update();*/
+	if (gaizi->HPfurag >= 1) {
+		DeleteGO(this);
+	}
 }
 void Game::Render(CRenderContext& rc)
 {

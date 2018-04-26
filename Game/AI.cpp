@@ -5,7 +5,7 @@
 #include "Player.h"
 #include"Game.h"
 #include"Geizi.h"
-#define REACH 5.0  //ゾンビの攻撃範囲。この距離まで近づいたら攻撃する。
+#define REACH 100.0  //ゾンビの攻撃範囲。この距離まで近づいたら攻撃する。
 #define PI 3.141592653589793 
 AI NPC;
 //今回はmを引用するNPCのハンドルとして、jを特殊部隊のハンドルとして代用する。これは後に直しておくように。
@@ -48,24 +48,39 @@ void AI::NPCNormal()
 	CVector3 v = game->siminUI[iNo]->K - m_position;
 	float len = v.Length();//長さ
 	if (50 <= len) {
-		//	m_position += (game->siminUI[iNo]->bekutor)*m_speed;
-		m_position = m_charaCon.Execute(GameTime().GetFrameDeltaTime(), game->siminUI[iNo]->bekutor*m_speed);
+		if (VectorAngleDeg2(v)>=10.0) {
+			CQuaternion qBias1;
+			qBias1.SetRotationDeg(CVector3::AxisY, 5.0f);
+			m_rotation.Multiply(qBias1);
+		}
+		else if (VectorAngleDeg2(v) <= -10.0)
+		{
+			CQuaternion qBias1;
+			qBias1.SetRotationDeg(CVector3::AxisY, -5.0f);
+			m_rotation.Multiply(qBias1);
+		}
+		else {
+			//	m_position += (game->siminUI[iNo]->bekutor)*m_speed;
+			m_position = m_charaCon.Execute(GameTime().GetFrameDeltaTime(), game->siminUI[iNo]->bekutor*m_speed);
+		}
 	}
 	else {
-		if (ima >= 4)
+		if (ima >= 6)
 			ima = 0;
 		game->siminUI[iNo]->kyorikeisan(game->da[iNo][ima++] - 1);
 	}
-	CVector3 v2 = m_position - pl->m_position;
+	CVector3 v2 = pl->m_position-m_position;
 	float len1 = v2.Length();//長さ
 
 	if (len1 < 500.0f) {//プレイヤーを見つけたら
-		Gaizi->point += 0.1f;
-		pa = Escape;
-		retu_position = m_position;
-		m_speed = 3000.0f;
-		//DamageFlag = true;
-		//プレイヤーから逃げる。
+		if (fabsf(VectorAngleDeg(v2)) <= 45.0f) {
+			Gaizi->point += 0.1f;
+			pa = Escape;
+			retu_position = m_position;
+			m_speed = 3000.0f;
+			//DamageFlag = true;
+			//プレイヤーから逃げる。
+		}
 	}
 	if (len1 < REACH) {//攻撃を受ける範囲まで近づいたら確実にダメージを受けるので
 		pa = Damage;
@@ -314,17 +329,25 @@ void AI::NPCRuet()//NPCルート
 
 }
 
+float AI::VectorAngleDeg2(CVector3 c)
+{
+
+	c.Normalize();//向きVectorにする。
+	float kaku = atanf(c.Dot(m_rite));//２つのべクトルの内積のアークコサインを求める。(ラジアン)
+
+	float degree = CMath::RadToDeg(kaku);
+
+	return degree;
+}
+
 float AI::VectorAngleDeg(CVector3 c)
 {
 	
-	CVector3 sa;
-	m_forward;
-	sa = c - m_position;
 
-	sa.Normalize();//向きVectorにする。
-	float kaku = acosf(m_forward.Dot(sa));//２つのべクトルの内積のアークコサインを求める。(ラジアン)
+	c.Normalize();//向きVectorにする。
+	float kaku = acosf(c.Dot(m_forward));//２つのべクトルの内積のアークコサインを求める。(ラジアン)
 
-	float degree = kaku * 180.0 / PI;
+	float degree =CMath::RadToDeg(kaku);
 
 	return degree;
 }
@@ -351,7 +374,17 @@ void AI::DamageHantei() //全てのゾンビと距離でダメージ判定をする。
 void AI::Update()
 {
 	//pa = Normal; //ここはプレイヤーの行動によって変化するようにする。
-	
+	m_tekirot.MakeRotationFromQuaternion(m_rotation);
+	m_forward.x = m_tekirot.m[2][0];
+	m_forward.y = m_tekirot.m[2][1];
+	m_forward.z = m_tekirot.m[2][2];
+	m_forward.Normalize();
+	k_tekirot.MakeRotationFromQuaternion(m_rotation);
+	m_rite.x = k_tekirot.m[0][0];
+	m_rite.y = k_tekirot.m[0][1];
+	m_rite.z = k_tekirot.m[0][2];
+	m_rite.Normalize();
+
 	if (ForceFlag==true) {//特殊部隊が出現したら
 		pa = Zombie_Attack; //パターンをゾンビアタックに切り替える。
 	}

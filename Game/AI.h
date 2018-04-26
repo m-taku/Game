@@ -31,6 +31,7 @@ public:
 	float GetKyori(CVector3 a, CVector3 b);  //2つのオブジェクトの距離を計測する。
 	float VectorAngleDeg(CVector3 c);  //2つのベクトルの角度を角度表記(degree)で返す。
 
+	float VectorAngleDeg2(CVector3 c);
 	//メンバ変数
 	enum npcpattern { //switch文に使う。
 		Normal,             //市民の通常状態。
@@ -48,12 +49,17 @@ public:
 	CSkinModel m_skinModel;					//スキンモデル。
 	CSkinModelData m_skinModelData;			//スキンモデルデータ。
 	CQuaternion m_rotation = CQuaternion::Identity;	//回転。
+
+	CQuaternion front = CQuaternion::Identity;
 	CVector3 m_forward;						//キャラの前方。
 	CVector3 m_rite;						//キャラの右方向。
 	CMatrix mRot;
 	keiroK keiro;
 	Geizi* Gaizi;
 	Player* pl;
+	CMatrix m_tekirot;
+
+	CMatrix k_tekirot;
 	CVector3 retu_position;
 	Game* game;
 	bool DamageFlag = false;      //ダメージを受けたかを示すフラグ。
