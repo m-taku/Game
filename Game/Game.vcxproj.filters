@@ -250,6 +250,7 @@
     <Image Include="Assets\sprite\fade.png">
       <Filter>Assets\sprite</Filter>
     </Image>
+    <Image Include="Assets\sprite\ka-soru.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\lever\larer_01.tks">
