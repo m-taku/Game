@@ -10,7 +10,7 @@ typedef struct {
 	int cost;
 }ando;
 		
-class keiroK : public IGameObject
+class keiroK 
 {
 public:
 	keiroK();
@@ -18,7 +18,7 @@ public:
 	int Kans(int count);
 	int GetDistance(CVector3 IP,CVector3 GP);
 	int BackTrace(int x);
-	void tansa(CVector3 i, CVector3 Ta);
+	void tansa(CVector3 i, CVector3 Ta, std::vector<int> *a);
 	ando stuyt;
 	std::vector<ando> open;
 	std::vector<ando> close;

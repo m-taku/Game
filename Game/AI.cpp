@@ -1,10 +1,11 @@
 #include "stdafx.h"
 #include"AImove.h"
+#include"keiroK.h"
 #include "AI.h"
 #include "Player.h"
 #include"Game.h"
-#include"keiroK.h"
-#define REACH 5.0  //ゾンビの攻撃範囲。この距離まで近づいたら攻撃する。
+#include"Geizi.h"
+#define REACH 100.0  //ゾンビの攻撃範囲。この距離まで近づいたら攻撃する。
 #define PI 3.141592653589793 
 AI NPC;
 //今回はmを引用するNPCのハンドルとして、jを特殊部隊のハンドルとして代用する。これは後に直しておくように。
@@ -22,6 +23,7 @@ AI::~AI()
 bool AI::Start()
 {
 	pl = FindGO<Player>("Player");
+	Gaizi = FindGO<Geizi>("Geizi");
 	game=FindGO<Game>("Game");
 	iNo = game->No++;
 	m_position= game->pasu.m_pointList[game->da[iNo][0] - 1];
@@ -45,24 +47,41 @@ void AI::NPCNormal()
 
 	CVector3 v = game->siminUI[iNo]->K - m_position; //Kが次の目的地
 	float len = v.Length();//長さ
-	if (50 <= len) {//目的地についていないなら
-		//	m_position += (game->siminUI[iNo]->bekutor)*m_speed;
-		m_position = m_charaCon.Execute(GameTime().GetFrameDeltaTime(), game->siminUI[iNo]->bekutor*m_speed);//移動
+	if (50 <= len) {
+		if (VectorAngleDeg2(v)>=10.0) {
+			CQuaternion qBias1;
+			qBias1.SetRotationDeg(CVector3::AxisY, 5.0f);
+			m_rotation.Multiply(qBias1);
+		}
+		else if (VectorAngleDeg2(v) <= -10.0)
+		{
+			CQuaternion qBias1;
+			qBias1.SetRotationDeg(CVector3::AxisY, -5.0f);
+			m_rotation.Multiply(qBias1);
+		}
+		else {
+			//	m_position += (game->siminUI[iNo]->bekutor)*m_speed;
+			m_position = m_charaCon.Execute(GameTime().GetFrameDeltaTime(), game->siminUI[iNo]->bekutor*m_speed);
+		}
 	}
-	else {//着いたとき
-		if (ima >= 4)//今のポジションが４なら
-			ima = 0;//0にリセットする。0,1,2,3,4の順番。
+	else {
+		if (ima >= 6)//今のポジションが6なら
+			//0にリセットする。0,1,2,3,4,5の順番。
+			ima = 0;
 		game->siminUI[iNo]->kyorikeisan(game->da[iNo][ima++] - 1);
 	}
-	CVector3 v2 = m_position - pl->m_position;
+	CVector3 v2 = pl->m_position-m_position;
 	float len1 = v2.Length();//長さ
 
 	if (len1 < 500.0f) {//プレイヤーを見つけたら
-		pa = Escape;
-		retu_position = m_position;
-		m_speed = 3000.0f;//逃げるときのスピード
-		//DamageFlag = true;
-		//プレイヤーから逃げる。
+		if (fabsf(VectorAngleDeg(v2)) <= 45.0f) {
+			Gaizi->point += 0.1f;
+			pa = Escape;
+			retu_position = m_position;
+			m_speed = 3000.0f;
+			//DamageFlag = true;
+			//プレイヤーから逃げる。
+		}
 	}
 
 	//	/////////////////////////////////
@@ -282,17 +301,25 @@ void AI::NPCRuet()//NPCルート
 
 }
 
-float AI::VectorAngleDeg(CVector3 c)//
+float AI::VectorAngleDeg2(CVector3 c)
+{
+
+	c.Normalize();//向きVectorにする。
+	float kaku = atanf(c.Dot(m_rite));//２つのべクトルの内積のアークコサインを求める。(ラジアン)
+
+	float degree = CMath::RadToDeg(kaku);
+
+	return degree;
+}
+
+float AI::VectorAngleDeg(CVector3 c)
 {
 	
-	CVector3 sa;
-	m_forward;
-	sa = c - m_position;
 
-	sa.Normalize();//向きVectorにする。
-	float kaku = acosf(m_forward.Dot(sa));//２つのべクトルの内積のアークコサインを求める。(ラジアン)
+	c.Normalize();//向きVectorにする。
+	float kaku = acosf(c.Dot(m_forward));//２つのべクトルの内積のアークコサインを求める。(ラジアン)
 
-	float degree = kaku * 180.0 / PI;
+	float degree =CMath::RadToDeg(kaku);
 
 	return degree;
 }
@@ -319,7 +346,17 @@ void AI::DamageHantei() //全てのゾンビと距離でダメージ判定をする。
 void AI::Update()
 {
 	//pa = Normal; //ここはプレイヤーの行動によって変化するようにする。
-	
+	m_tekirot.MakeRotationFromQuaternion(m_rotation);
+	m_forward.x = m_tekirot.m[2][0];
+	m_forward.y = m_tekirot.m[2][1];
+	m_forward.z = m_tekirot.m[2][2];
+	m_forward.Normalize();
+	k_tekirot.MakeRotationFromQuaternion(m_rotation);
+	m_rite.x = k_tekirot.m[0][0];
+	m_rite.y = k_tekirot.m[0][1];
+	m_rite.z = k_tekirot.m[0][2];
+	m_rite.Normalize();
+
 	if (ForceFlag==true) {//特殊部隊が出現したら
 		pa = Zombie_Attack; //パターンをゾンビアタックに切り替える。
 	}
@@ -398,7 +435,7 @@ void AI::Update()
 }
 void AI::NPCReturn()
 {
-	int Size=keiro->jyunban.size();
+	int Size= jyunban.size();
 
 	CVector3 v = game->siminUI[iNo]->K - m_position;
 	float len = v.Length();//長さ
@@ -413,7 +450,7 @@ void AI::NPCReturn()
 			da = 1;
 		}
 		else {
-			game->siminUI[iNo]->kyorikeisan(keiro->jyunban[da++] - 1);
+			game->siminUI[iNo]->kyorikeisan(jyunban[da++] - 1);
 			modori = 0;
 		}
 	}
@@ -429,10 +466,11 @@ void AI::NPCescape()
 		//m_position += v * m_speed;
 		m_position =m_charaCon.Execute(GameTime().GetFrameDeltaTime(),v*m_speed);
 	}
-	else {//元の位置に戻る処理。
-		keiro = NewGO<keiroK>(0);
-		keiro->tansa(m_position, retu_position);
-		game->siminUI[iNo]->kyorikeisan(keiro->jyunban[0]-1);
+
+	else {
+		jyunban.erase(jyunban.begin(), jyunban.end());
+		keiro.tansa(m_position, retu_position,&jyunban);
+		game->siminUI[iNo]->kyorikeisan(jyunban[0]-1);
 		pa = Return;
 		m_speed = 1000.0f;
 	}
