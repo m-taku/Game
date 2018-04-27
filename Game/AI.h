@@ -69,7 +69,7 @@ public:
 	bool DamageFlag = false;      //ダメージを受けたかを示すフラグ。
 	bool HitFlag = false;      //ダメージを与えたかを示すフラグ。
 	bool BattleFlag = false;     //特殊部隊と戦闘をしているかを示すフラグ。
-	bool ForceFlag = false;     //特殊部隊の出現を表すフラグ。
+	int ForceFlag = 0;     //特殊部隊の出現を表すフラグ。
 	int MyNumber = 0;               //今自分が存在しているパスの番号。
 	int ZombieChaseNumber = 0;      //ゾンビが追跡を始めた時に立っていたパスの番号。
 	float m_speed;

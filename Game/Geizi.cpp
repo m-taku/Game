@@ -48,7 +48,6 @@ void Geizi::Update()
 		point = 0.95;
 		if (furag <= 0) {
 			haus=NewGO<tekihei>(0, "tekihei");
-
 			furag++;
 		}
 	}

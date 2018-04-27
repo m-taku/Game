@@ -25,8 +25,8 @@ public:
 	std::vector<kanren*> resuto1;
 	std::vector<int> jyunban;
 private:	
-	int f = 1;
-	int N = 1;
+	int f = 0;
+	int N = 0;
 	int sum = 0;
 	int sumd = 0;
 	int fghjkl=0;
