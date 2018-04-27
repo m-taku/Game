@@ -51,13 +51,14 @@ void taieki::Update()
 			taieki_to_tekipos[i] = tekipos2[i] - tpos;
 			tekikyori[i] = sqrt(taieki_to_tekipos[i].x*taieki_to_tekipos[i].x + taieki_to_tekipos[i].y*taieki_to_tekipos[i].y + taieki_to_tekipos[i].z*taieki_to_tekipos[i].z);
 			taieki_to_tekipos[i].Normalize();
-			if (tekikyori[i] <= 50.0f)
+			if (tekikyori[i] <= 50.0f&&tekip->tekiheiflag[i]==1)
 			{
-				effect = NewGO<prefab::CEffect>(0);
+				tekip->tekiHP[i]--;
+				/*effect = NewGO<prefab::CEffect>(0);
 				e_pos = tpos;
 				effect->SetPosition(e_pos);
 				effect->SetScale({ 100.0f,100.0f,100.0f });
-				effect->Play(L"effect/aura.efk");
+				effect->Play(L"effect/aura.efk");*/
 				DeleteGO(this);
 			}
 		}
@@ -65,11 +66,11 @@ void taieki::Update()
 
 	if (tpos.y <= 0.0f)
 	{
-		effect = NewGO<prefab::CEffect>(0);
+		/*effect = NewGO<prefab::CEffect>(0);
 		e_pos = tpos;
 		effect->SetPosition(e_pos);
 		effect->SetScale({100.0f,100.0f,100.0f});
-		effect->Play(L"effect/aura.efk");
+		effect->Play(L"effect/aura.efk");*/
 		DeleteGO(this);
 	}
 	m_taieki.Update(tpos, CQuaternion::Identity, { 2.0f, 2.0f,2.0f });

@@ -24,6 +24,7 @@ public:
 	CVector3 taieki_to_tekipos[teki];
 	CVector3 tekipos2[teki];
 	float tekikyori[teki];
-	prefab::CEffect* effect = nullptr;
+
+	/*prefab::CEffect* effect = nullptr;*/
 };
 
