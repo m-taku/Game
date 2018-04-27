@@ -236,6 +236,9 @@
       <Filter>Assets\effect</Filter>
     </CustomBuild>
     <CustomBuild Include="Assets\lever\leval001.tks" />
+    <CustomBuild Include="Assets\lever\leval002.tks">
+      <Filter>Assets\lever</Filter>
+    </CustomBuild>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\modelData\livingbuildings.png">

@@ -159,28 +159,28 @@ void keiroK::tansa(CVector3 i, CVector3 Ta, std::vector<int> *a)
 	for (int l = 0; l < game->pasu.resuto.size(); l++) {
 		resuto1.push_back(game->pasu.resuto[l]);
 	}
-	CVector3 ko = i - game->pasu.m_pointList[0];
-	float sa = sqrt(ko.x*ko.x + ko.y*ko.y + ko.z*ko.z);
+	CVector3 ko = game->pasu.m_pointList[0]-i;
+	float sa = ko.Length();
 
-	CVector3 koj = Ta - game->pasu.m_pointList[0];
-	float saj = sqrt(koj.x*koj.x + koj.y*koj.y + koj.z*koj.z);
+	CVector3 koj = game->pasu.m_pointList[0]-Ta;
+	float saj = koj.Length();
 	int l = resuto1.size();
 	for (int h = 1; h < l; h++) {
-		CVector3 k = i - game->pasu.m_pointList[h];
-		float saa = sqrt(k.x*k.x + k.y*k.y + k.z*k.z);
-		CVector3 kf = Ta - game->pasu.m_pointList[h];
-		float san = sqrt(kf.x*kf.x + kf.y*kf.y + kf.z*kf.z);
+		CVector3 k = game->pasu.m_pointList[h]-i;
+		float saa =k.Length();
+		CVector3 kf = game->pasu.m_pointList[h]-Ta;
+		float san = kf.Length();
 		if (sa > saa) {
 			sa = saa;
-			f = h + 1;
+			f = h;
 		}
-		if (san < saj) {
+		if (saj>san) {
 			saj = san;
-			N = h + 1;
+			N = h;
 		}
 	}
-	ga = game->pasu.m_pointList[N - 1];
-	fa = game->pasu.m_pointList[f - 1];
+	fa = game->pasu.m_pointList[f];
+	ga = game->pasu.m_pointList[N];
 	Satando(
 		&stuyt,
 		fa,

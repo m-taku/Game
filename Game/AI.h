@@ -32,7 +32,7 @@ public:
 	void NPCRuet(); //NPCの移動ルートを格納する。
 	float GetKyori(CVector3 a, CVector3 b);  //2つのオブジェクトの距離を計測する。
 	float VectorAngleDeg(CVector3 c);  //2つのベクトルの角度を角度表記(degree)で返す。
-
+	float Siya(CVector3 h, float g);
 	float VectorAngleDeg2(CVector3 c);
 	//メンバ変数
 	enum npcpattern { //switch文に使う。
@@ -69,7 +69,7 @@ public:
 	bool DamageFlag = false;      //ダメージを受けたかを示すフラグ。
 	bool HitFlag = false;      //ダメージを与えたかを示すフラグ。
 	bool BattleFlag = false;     //特殊部隊と戦闘をしているかを示すフラグ。
-	bool ForceFlag = false;     //特殊部隊の出現を表すフラグ。
+	int ForceFlag = 0;     //特殊部隊の出現を表すフラグ。
 	int MyNumber = 0;               //今自分が存在しているパスの番号。
 	int ZombieChaseNumber = 0;      //ゾンビが追跡を始めた時に立っていたパスの番号。
 	float m_speed;

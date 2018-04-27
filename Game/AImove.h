@@ -13,5 +13,6 @@ public:
 	Game* game;
 	CVector3 K;
 	int g = 0;
+	int j = 0;
 };
 
