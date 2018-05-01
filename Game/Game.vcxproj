@@ -783,6 +783,9 @@
     <CustomBuild Include="Assets\lever\leval001.tks">
       <FileType>Document</FileType>
     </CustomBuild>
+    <CustomBuild Include="Assets\lever\leval002.tks">
+      <FileType>Document</FileType>
+    </CustomBuild>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

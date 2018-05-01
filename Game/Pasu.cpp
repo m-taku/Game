@@ -28,7 +28,7 @@ void Pasu::Load(const wchar_t* filePath)
 		pos.x = mat.m[3][0];
 		pos.z = -mat.m[3][1];
 		pos.y = mat.m[3][2];
-		int No2 = _wtoi(boan[i]->GetName());
+		unsigned int No2 = _wtoll(boan[i]->GetName());
 #if BUILD_LEVEL != BUILD_LEVEL_MASTER
 		if (No2 == 0) {
 			TK_WARNING_MESSAGE_BOX("パスのノードのボーンの名前が不正です。");
@@ -36,7 +36,7 @@ void Pasu::Load(const wchar_t* filePath)
 			return;
 		}
 #endif
-		int No = No2 / 100000000;
+		unsigned int No = No2 / 100000000;
 		m_pointList[No - 1] = pos;
 		pointNo[No - 1] = No2;
 	}

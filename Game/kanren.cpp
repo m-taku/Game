@@ -17,13 +17,13 @@ kanren::~kanren()
 		}
 	}
 }
-void kanren::kanrenz(int a,std::vector<CVector3> &b)
+void kanren::kanrenz(unsigned int a,std::vector<CVector3> &b)
 {
-	int s=a%100000000;
+	unsigned int s=a%100000000;
 	for (int i = 3; i >= 0; i--)
 	{
-		int wa=powf(100.0f, i);
-		int d = s /wa;
+		unsigned int wa=powf(100.0f, i);
+		unsigned int d = s /wa;
 		if (d == 0) {
 			break;
 		}
