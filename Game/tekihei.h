@@ -41,4 +41,8 @@ public:
 	CVector3 playerpos = CVector3::Zero;
 	int time[teki];
 	int damageflag[teki];
+	int tekiheiflag[teki];
+	int tekiHP[teki];
+	int clearcount = 0;
+	int soma = 0;
 };

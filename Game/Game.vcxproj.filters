@@ -250,6 +250,9 @@
     <Image Include="Assets\modelData\white.png">
       <Filter>Assets\modelData</Filter>
     </Image>
+    <Image Include="Assets\sprite\fade.png">
+      <Filter>Assets\sprite</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\lever\larer_01.tks">
@@ -268,8 +271,5 @@
     </ImageContentTask>
     <ImageContentTask Include="Assets\sprite\ka-soru.png" />
     <ImageContentTask Include="Assets\sprite\kajy.png" />
-    <ImageContentTask Include="Assets\sprite\fade.png">
-      <Filter>Assets\sprite</Filter>
-    </ImageContentTask>
   </ItemGroup>
 </Project>

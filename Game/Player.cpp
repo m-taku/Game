@@ -2,12 +2,14 @@
 #include "Player.h"
 #include"Human.h"
 #include"taieki.h"
-
+#include"tekihei.h"
+#include"Geizi.h"
 
 
 Player::Player()
 {
-	
+
+	hakaba=NewGO<prefab::CEffect>(0);
 }
 
 
@@ -26,6 +28,11 @@ bool Player::Start()
 		100.0f,			//高さ。
 		m_position		//初期位置。
 	);
+	landpos.x = 2600.0f;
+	landpos.z = -5000.0f;
+	hakaba->Play(L"effect/aura.efk");
+	hakaba->SetPosition(landpos);
+	hakaba->SetScale({ 100.0f,100.0f,100.0f });
 	return true;
 }
 void Player::Update()
@@ -44,6 +51,12 @@ void Player::Update()
 	/*qBias.SetRotationDeg(CVector3::AxisX, rotX);*/
 	qBias1.SetRotationDeg(CVector3::AxisY, rotY);
 	m_rotation.Multiply(qBias1);
+	if (hakaba != NULL)
+	{
+		land_to_player = landpos - m_position;
+		land_to_player_vector = sqrt(land_to_player.x*land_to_player.x + land_to_player.y*land_to_player.y + land_to_player.z*land_to_player.z);
+	}
+	
 
 	if (Pad(0).IsTrigger(enButtonA) //Aボタンが押されたら
 		&& m_charaCon.IsOnGround()  //かつ、地面に居たら
@@ -76,12 +89,30 @@ void Player::Update()
 	m_rite.Normalize();
 	m_moveSpeed += m_forward*lStick_y;
 	m_moveSpeed += m_rite * lStick_x;
+	if (hakaba->IsPlay()&&landflag == 1 && land_to_player_vector <= 50.0f)
+	{
+		m_moveSpeed = CVector3::Zero;
+		if (Pad(0).IsTrigger(enButtonA))
+		{
+			DeleteGO(hakaba);
+			FindGO<Geizi>("Geizi")->point += 1.0f;
+		}
+		if (Pad(0).IsTrigger(enButtonB))
+		{
+			landflag = 0;
+		}
+	}
+	if (land_to_player_vector > 50.0f)
+	{
+		landflag = 1;
+	}
 	m_position = m_charaCon.Execute(GameTime().GetFrameDeltaTime(), m_moveSpeed);
 	m_moveSpeed.z = 0.0f;
 	m_moveSpeed.x = 0.0f;
 	if (m_position.y <= -100.0f) {
 		m_position.y = -100.0f;
 	}
+	
 	m_skinModel.Update(m_position, m_rotation, CVector3::One);
 	/*FindGameObjectsWithTag(10, [&](IGameObject* go) {
 		CVector3 diff;
