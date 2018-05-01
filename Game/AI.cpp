@@ -436,9 +436,9 @@ void AI::DamageHantei() //全てのゾンビと距離でダメージ判定をする。
 	}
 }
 
-void AI::NPCDeath()
+void AI::NPCDeath()//死亡、消滅処理。
 {
-
+	DeleteGO(this);//自己消滅。
 }
 
 void AI::Update()
