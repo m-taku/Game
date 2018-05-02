@@ -56,6 +56,7 @@
     <ClCompile Include="keiroK.cpp" />
     <ClCompile Include="Pasu.cpp" />
     <ClCompile Include="Geizi.cpp" />
+    <ClCompile Include="item.cpp" />
   </ItemGroup>
   <ItemGroup>
     <CLInclude Include="resource.h">
@@ -79,6 +80,7 @@
     <ClInclude Include="keiroK.h" />
     <ClInclude Include="Pasu.h" />
     <ClInclude Include="Geizi.h" />
+    <ClInclude Include="item.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Game.rc">
@@ -101,6 +103,7 @@
     <MeshContentTask Include="Assets\modelData\hantei.FBX">
       <Filter>Assets\modelData</Filter>
     </MeshContentTask>
+    <MeshContentTask Include="Assets\modelData\item.FBX" />
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="Assets\shader\tonemap.fx">
@@ -253,6 +256,7 @@
     <Image Include="Assets\sprite\fade.png">
       <Filter>Assets\sprite</Filter>
     </Image>
+    <Image Include="Assets\modelData\ao.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\lever\larer_01.tks">

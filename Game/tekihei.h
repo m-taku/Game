@@ -1,6 +1,7 @@
 #pragma once
 #include"Player.h"
 #include"Geizi.h"
+#include"item.h"
 #include "tkEngine/graphics/effect/tkEffect.h"
 #include "tkEngine/character/tkCharacterController.h"
 #define teki 10
@@ -45,4 +46,6 @@ public:
 	int tekiHP[teki];
 	int clearcount = 0;
 	int soma = 0;
+	int itemf = 0;
+	int itemf2 = 0;
 };
