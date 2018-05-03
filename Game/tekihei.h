@@ -46,6 +46,4 @@ public:
 	int tekiHP[teki];
 	int clearcount = 0;
 	int soma = 0;
-	int itemf = 0;
-	int itemf2 = 0;
 };

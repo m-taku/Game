@@ -19,8 +19,7 @@ tekihei::~tekihei()
 
 bool tekihei::Start()
 {
-
-
+	NewGO<item>(0, "item");
 	gaizi = FindGO<Geizi>("Geizi");
 	for (int i = 0;i < teki;i++)
 	{
@@ -170,13 +169,7 @@ void tekihei::Update()
 			if (tekiHP[i] == 0)
 			{
 				tekiheiflag[i] = 0;
-				itemf = i;
-				if (itemf2 == 0)
-				{
-					NewGO<item>(0, "item");
-					itemf2 = 1;
-				}
-				
+
 			}
 			tekipos[i] = m_charaCon[i].Execute(GameTime().GetFrameDeltaTime(), tekispeed[i]);
 			tekiskinModel[i].Update(tekipos[i], tekirot[i], CVector3::One);
