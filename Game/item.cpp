@@ -13,12 +13,11 @@ item::~item()
 
 bool item::Start()
 {
+	tp = FindGO<tekihei>("tekihei");
 	itemModelData.Load(L"modelData/item.cmo");
 	for (int i = 0;i < tekikazu;i++)
 	{
-		tp = FindGO<tekihei>("tekihei");
 		itemf[i] = 0;
-		
 		itemModel[i].Init(itemModelData);
 	}
 	
@@ -28,6 +27,7 @@ bool item::Start()
 
 void item::Update()
 {
+
 	for (int i = 0;i < tekikazu;i++)
 	{
 		if (tp != NULL)

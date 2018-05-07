@@ -23,7 +23,7 @@ Game::Game()
 	}
 	stge =NewGO<Stage>(0, "stage");
 	camera1 =NewGO<camera>(0, "camera");
-	item1 = NewGO<item>(0, "item");
+	
 	/*
 
 	m_level[0].Build(L"lever/leval001.tks");*/
@@ -55,7 +55,7 @@ void Game::OnDestroy()
 	DeleteGO(gaizi);
 	DeleteGO(stge);
 	DeleteGO(camera1);
-	DeleteGO(item1);
+	DeleteGO(FindGO<item>("item"));
 
 	//再起動（タイトル表示）
 
