@@ -1,6 +1,7 @@
 #pragma once
 #include"Player.h"
 #include"Geizi.h"
+#include"item.h"
 #include "tkEngine/graphics/effect/tkEffect.h"
 #include "tkEngine/character/tkCharacterController.h"
 #define teki 10
