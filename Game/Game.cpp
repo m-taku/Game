@@ -23,9 +23,7 @@ Game::Game()
 	}
 	stge =NewGO<Stage>(0, "stage");
 	camera1 =NewGO<camera>(0, "camera");
-	item1 = NewGO<item>(0, "item");
-	/*
-
+/*
 	m_level[0].Build(L"lever/leval001.tks");*/
 	wchar_t moveFilePath[256];
 	swprintf_s(moveFilePath, L"lever/leval00%d.tks", 2);
@@ -55,7 +53,7 @@ void Game::OnDestroy()
 	DeleteGO(gaizi);
 	DeleteGO(stge);
 	DeleteGO(camera1);
-	DeleteGO(item1);
+	DeleteGO(FindGO<item>("item"));
 
 	//再起動（タイトル表示）
 
@@ -108,9 +106,6 @@ void Game::Update()
 	MainCamera().SetFar(50000.0f);
 	MainCamera().SetPosition({ 30.0f, 10.0f, 0.0f });
 	MainCamera().Update();*/
-	if (gaizi->HPfurag >= 1) {
-		DeleteGO(this);
-	}
 }
 void Game::Render(CRenderContext& rc)
 {

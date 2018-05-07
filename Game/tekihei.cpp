@@ -3,7 +3,8 @@
 #include"Player.h"
 #include"math.h"
 #include"Geizi.h"
-
+#include"GameEnd.h"
+#include"item.h"
 tekihei::tekihei()
 {
 }
@@ -21,9 +22,9 @@ tekihei::~tekihei()
 
 bool tekihei::Start()
 {
-	NewGO<item>(0, "item");
 	gaizi = FindGO<Geizi>("Geizi");
-	
+
+	NewGO<item>(0, "item");
 	for (int i = 0;i < teki;i++)
 	{
 		tekiHP[i] = 5;
@@ -163,7 +164,7 @@ void tekihei::Update()
 					}
 					if (teki_to_tama_vector[i] >= 1000)
 					{
-						DeleteGO(tamaEF[i]);
+						tamaEF[i]->Release();
 						tamaflag[i] = 0;
 					}
 
@@ -192,12 +193,15 @@ void tekihei::Update()
 		}
 		if (tekiheiflag[i]==0)
 		{
+			if(tamaEF[i]!=NULL)
 			tamaEF[i]->Release();
 			tamaflag[i] = 0;
 		}
 	}
-
-	
+	if (soma >= teki) {
+		NewGO<GameEnd>(0, "End");
+		DeleteGO(this);
+	}
 }
 
 void tekihei::Render(CRenderContext& rc)
