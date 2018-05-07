@@ -12,6 +12,7 @@
 #include"keiroK.h"
 #include"tekihei.h"
 #include"Geizi.h"
+#include"item.h"
 Game::Game()
 {
 	gaizi=NewGO<Geizi>(1, "Geizi");
@@ -21,7 +22,9 @@ Game::Game()
 		simin.push_back(NewGO<AI>(0, "AI"));
 	}
 	stge =NewGO<Stage>(0, "stage");
-	camera1 =NewGO<camera>(0, "camera");/*
+	camera1 =NewGO<camera>(0, "camera");
+	item1 = NewGO<item>(0, "item");
+	/*
 
 	m_level[0].Build(L"lever/leval001.tks");*/
 	wchar_t moveFilePath[256];
@@ -53,6 +56,7 @@ void Game::OnDestroy()
 	DeleteGO(player);
 	DeleteGO(stge);
 	DeleteGO(camera1);
+	DeleteGO(item1);
 
 	//再起動（タイトル表示）
 
