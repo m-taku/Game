@@ -255,6 +255,48 @@ void AI::NPCDamage()
 
 void AI::NPCZombie_Normal()
 {
+
+	CVector3 v = game->siminUI[iNo]->K - m_position; //Kが次の目的地
+	float len = v.Length();//長さ
+	if (30 <= len) {
+		float angle = VectorAngleDeg(v);
+		if (angle >= 3.0) {
+			v.y = 0.0f;
+			v.Normalize();
+			CVector3 forward = this->m_forward;
+			//回転軸を求める。
+			CVector3 rotAxis;
+			rotAxis.Cross(forward, v);
+			rotAxis.Normalize();
+			CQuaternion qBias1;
+			qBias1.SetRotationDeg(rotAxis, 3.0f);
+			m_rotation.Multiply(qBias1);
+		}
+		else {
+			if (angle >= 2.0f) {
+				v.y = 0.0f;
+				v.Normalize();
+				CVector3 forward = this->m_forward;
+				//回転軸を求める。
+				CVector3 rotAxis;
+				rotAxis.Cross(forward, v);
+				rotAxis.Normalize();
+				CQuaternion qBias1;
+				qBias1.SetRotationDeg(rotAxis, angle);
+				m_rotation.Multiply(qBias1);
+			}
+			//	m_position += (game->siminUI[iNo]->bekutor)*m_speed;
+			m_position = m_charaCon.Execute(GameTime().GetFrameDeltaTime(), m_forward*m_speed);
+		}
+	}
+	else {
+		if (ima >= 6)//今のポジションが6なら
+					 //0にリセットする。0,1,2,3,4,5の順番。
+			ima = 0;
+		game->siminUI[iNo]->kyorikeisan(game->da[iNo][ima++] - 1);
+	}
+
+
 	/////////////////////////////////
 	//一定のルートをうろうろする処理。
 	/////////////////////////////////
@@ -284,25 +326,29 @@ void AI::NPCZombie_Normal()
 
 void AI::NPCZombie_Chase()
 {
-	//float len = GetKyori(m_position, m->m_position);
-	//if (len>80.0f||HitFlag == true) {//他のNPCを見失った(距離が80以上あいた)、あるいは攻撃を与えたら
-	//	//元の位置に戻る。
+	float len = GetKyori(m_position, Tansaku->m_position);
+	if (len>80.0f||HitFlag == true) {//他のNPCを見失った(距離が80以上あいた)、あるいは攻撃を与えたら
+		//元の位置に戻る。
 
-	//	if (ZombieChaseNumber = MyNumber) {//元の位置の番号に戻ったら
-	//		pa = Zombie_Normal; //パターンをゾンビノーマルに変える。
-	//		HitFlag == false;
-	//	}
-	//}
-		//else {
-		//	/////////////////////////////////
-		//	//市民NPCを追跡する処理。
-		//	/////////////////////////////////
-		//}
-	//if (len<REACH) {//NPCに追いついたら
-	//	//攻撃する(確実に当たる仕様)。
+		if (ZombieChaseNumber == MyNumber) {//元の位置の番号に戻ったら
+			Tansaku = nullptr; //検索結果を初期化する。
+			pa = Zombie_Normal; //パターンをゾンビノーマルに変える。
+			HitFlag = false;
+		}
+	}else {//NPCを見失っておらず、見つけていたら
 
-	//		HitFlag = true; //「NPCに攻撃を当てた」というフラグをたてる。
-	//	}
+			/////////////////////////////////
+			//市民NPCを追跡する処理。
+			/////////////////////////////////
+
+		if (len<REACH) {//NPCに追いついたら
+						//攻撃する(確実に当たる仕様)。
+
+			HitFlag = true; //「NPCに攻撃を当てた」というフラグをたてる。
+		}
+	}
+
+	
 	
 }
 
@@ -414,7 +460,7 @@ float AI::VectorAngleDeg2(CVector3 c)
 	c.Normalize();//向きVectorにする。
 	float kaku = atanf(c.Dot(m_rite));//２つのべクトルの内積のアークコサインを求める。(ラジアン)
 
-	float degree = CMath::RadToDeg(kaku);
+	float degree = CMath::RadToDeg(kaku);//求めたラジアンを度に変える。
 
 	return degree;
 }
