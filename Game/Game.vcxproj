@@ -624,8 +624,10 @@
     <ClCompile Include="camera.cpp" />
     <ClCompile Include="Fade.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="GameEnd.cpp" />
     <ClCompile Include="Geizi.cpp" />
     <ClCompile Include="Human.cpp" />
+    <ClCompile Include="item.cpp" />
     <ClCompile Include="kanren.cpp" />
     <ClCompile Include="keiroK.cpp" />
     <ClCompile Include="Level.cpp" />
@@ -650,8 +652,10 @@
     <ClInclude Include="AI.h" />
     <ClInclude Include="AImove.h" />
     <ClInclude Include="camera.h" />
+    <ClInclude Include="GameEnd.h" />
     <ClInclude Include="Geizi.h" />
     <ClInclude Include="Human.h" />
+    <ClInclude Include="item.h" />
     <ClInclude Include="kanren.h" />
     <ClInclude Include="keiroK.h" />
     <ClInclude Include="Level.h" />
@@ -675,6 +679,7 @@
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\hantei.FBX" />
+    <MeshContentTask Include="Assets\modelData\item.FBX" />
     <MeshContentTask Include="Assets\modelData\stage.FBX" />
     <MeshContentTask Include="Assets\modelData\stage1.FBX" />
     <MeshContentTask Include="Assets\modelData\taieki.FBX" />
@@ -753,6 +758,7 @@
     <CustomBuild Include="Assets\effect\Texture\aura3_type2.png" />
     <CustomBuild Include="Assets\effect\Texture\glow.png" />
     <CustomBuild Include="Assets\effect\Texture\magma.png" />
+    <Image Include="Assets\modelData\ao.png" />
     <Image Include="Assets\modelData\livingbuildings.png" />
     <Image Include="Assets\modelData\white.png" />
     <Image Include="Assets\modelData\worktops007.jpg" />

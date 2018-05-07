@@ -12,6 +12,7 @@
 #include"keiroK.h"
 #include"tekihei.h"
 #include"Geizi.h"
+#include"item.h"
 Game::Game()
 {
 	gaizi=NewGO<Geizi>(1, "Geizi");
@@ -19,10 +20,11 @@ Game::Game()
 	for (int k = 0; k < 5; k++) {
 		siminUI.push_back(NewGO<AImove>(0, "AIm"));
 		simin.push_back(NewGO<AI>(0, "AI"));
-
 	}
 	stge =NewGO<Stage>(0, "stage");
-	camera1 =NewGO<camera>(0, "camera");/*
+	camera1 =NewGO<camera>(0, "camera");
+	item1 = NewGO<item>(0, "item");
+	/*
 
 	m_level[0].Build(L"lever/leval001.tks");*/
 	wchar_t moveFilePath[256];
@@ -44,16 +46,17 @@ void Game::InitSceneLight()
 }
 void Game::OnDestroy()
 {
-
-	//ここで最終的にＤｅｌｅｔｅＧＯを絶対しきる。
-	DeleteGO(gaizi);
 	DeleteGO(player);
-	DeleteGO(stge);
-	DeleteGO(camera1);
-	for (int k = 0; k < 2; k++) {
+	//ここで最終的にＤｅｌｅｔｅＧＯを絶対しきる。	
+	for (int k = 0; k < 5; k++) {
 		DeleteGO(siminUI[k]);
 		DeleteGO(simin[k]);
 	}
+	DeleteGO(gaizi);
+	DeleteGO(stge);
+	DeleteGO(camera1);
+	DeleteGO(item1);
+
 	//再起動（タイトル表示）
 
 	NewGO<Taitor>(0, "Taitor");
@@ -81,7 +84,7 @@ void Game::Update()
 {
 	//クリア関係？？
 
-	if (m_Fade != NULL) {
+	if (m_Fade != NULL&& m_Fade->toumeiodo >= 1.0f) {
 		m_Fade->StartFadeIn();
 	}
 	/*if (Pad(0).IsTrigger(enButtonB) && a >= 2) {

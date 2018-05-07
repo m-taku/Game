@@ -6,6 +6,7 @@
 #include"Player.h"
 #include"Stage.h"
 #include"camera.h"
+#include"item.h"
 #include "tkEngine/graphics/effect/tkEffect.h"
 class Fade;
 class AI;
@@ -30,6 +31,7 @@ public:
 	Player* player;
 	Stage* stge;
 	camera* camera1;
+	item* item1;
 	Level m_level[3];
 	Pasu  pasu;
 	keiroK* keiro;

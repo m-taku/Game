@@ -13,15 +13,17 @@ tekihei::~tekihei()
 {
 	for (int i = 0;i < teki;i++)
 	{
-		DeleteGO(tamaEF[i]);
+		if (tamaEF[i] != NULL) {
+			tamaEF[i]->Release();
+		}
 	}
 }
 
 bool tekihei::Start()
 {
-
-
+	NewGO<item>(0, "item");
 	gaizi = FindGO<Geizi>("Geizi");
+	
 	for (int i = 0;i < teki;i++)
 	{
 		tekiHP[i] = 5;
@@ -153,7 +155,7 @@ void tekihei::Update()
 
 						if (time[i] >= 10)
 						{
-							DeleteGO(tamaEF[i]);
+							tamaEF[i]->Release();
 							tamaflag[i] = 0;
 							time[i] = 0;
 							damageflag[i] = 0;
@@ -170,6 +172,7 @@ void tekihei::Update()
 			if (tekiHP[i] == 0)
 			{
 				tekiheiflag[i] = 0;
+
 			}
 			tekipos[i] = m_charaCon[i].Execute(GameTime().GetFrameDeltaTime(), tekispeed[i]);
 			tekiskinModel[i].Update(tekipos[i], tekirot[i], CVector3::One);
@@ -189,7 +192,7 @@ void tekihei::Update()
 		}
 		if (tekiheiflag[i]==0)
 		{
-			DeleteGO(tamaEF[i]);
+			tamaEF[i]->Release();
 			tamaflag[i] = 0;
 		}
 	}

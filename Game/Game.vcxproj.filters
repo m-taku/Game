@@ -56,6 +56,8 @@
     <ClCompile Include="keiroK.cpp" />
     <ClCompile Include="Pasu.cpp" />
     <ClCompile Include="Geizi.cpp" />
+    <ClCompile Include="item.cpp" />
+    <ClCompile Include="GameEnd.cpp" />
   </ItemGroup>
   <ItemGroup>
     <CLInclude Include="resource.h">
@@ -79,6 +81,8 @@
     <ClInclude Include="keiroK.h" />
     <ClInclude Include="Pasu.h" />
     <ClInclude Include="Geizi.h" />
+    <ClInclude Include="item.h" />
+    <ClInclude Include="GameEnd.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Game.rc">
@@ -101,6 +105,7 @@
     <MeshContentTask Include="Assets\modelData\hantei.FBX">
       <Filter>Assets\modelData</Filter>
     </MeshContentTask>
+    <MeshContentTask Include="Assets\modelData\item.FBX" />
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="Assets\shader\tonemap.fx">
@@ -235,8 +240,10 @@
     <CustomBuild Include="Assets\effect\aura.efk">
       <Filter>Assets\effect</Filter>
     </CustomBuild>
-    <CustomBuild Include="Assets\lever\leval001.tks" />
     <CustomBuild Include="Assets\lever\leval002.tks">
+      <Filter>Assets\lever</Filter>
+    </CustomBuild>
+    <CustomBuild Include="Assets\lever\leval001.tks">
       <Filter>Assets\lever</Filter>
     </CustomBuild>
   </ItemGroup>
@@ -253,6 +260,7 @@
     <Image Include="Assets\sprite\fade.png">
       <Filter>Assets\sprite</Filter>
     </Image>
+    <Image Include="Assets\modelData\ao.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\lever\larer_01.tks">
