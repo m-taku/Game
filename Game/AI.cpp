@@ -35,7 +35,7 @@ bool AI::Start()
 	CMatrix mRot;
 	//mRot.MakeRotationFromQuaternion();
 	m_charaCon.Init(
-		20.0,			//半径。 
+		50.0,			//半径。 
 		100.0f,			//高さ。
 		m_position		//初期位置。
 	);
@@ -53,8 +53,9 @@ void AI::NPCNormal()
 {
 	CVector3 v = game->siminUI[iNo]->K - m_position; //Kが次の目的地
 	float len = v.Length();//長さ
-	if (100 <= len) {
-		if (VectorAngleDeg(v)>=3.0) {
+	if (300 <= len) {
+		float angle = VectorAngleDeg(v);
+		if (angle>=3.0) {
 			v.y = 0.0f;
 			v.Normalize();
 			CVector3 forward = this->m_forward;
@@ -67,20 +68,34 @@ void AI::NPCNormal()
 			m_rotation.Multiply(qBias1);
 		}
 		else {
+			if (angle >= 2.0f) {
+				v.y = 0.0f;
+				v.Normalize();
+				CVector3 forward = this->m_forward;
+				//回転軸を求める。
+				CVector3 rotAxis;
+				rotAxis.Cross(forward, v);
+				rotAxis.Normalize();
+				CQuaternion qBias1;
+				qBias1.SetRotationDeg(rotAxis, angle);
+				m_rotation.Multiply(qBias1);
+			}
 			//	m_position += (game->siminUI[iNo]->bekutor)*m_speed;
-			m_position = m_charaCon.Execute(GameTime().GetFrameDeltaTime(), game->siminUI[iNo]->bekutor*m_speed);
+			m_position = m_charaCon.Execute(GameTime().GetFrameDeltaTime(), m_forward*m_speed);
 		}
 	}
 	else {
 		if (ima >= 6)//今のポジションが6なら
 			//0にリセットする。0,1,2,3,4,5の順番。
 			ima = 0;
+		m_charaCon.SetPosition(game->pasu.m_pointList[game->da[iNo][ima - 1] - 1]);
+		m_position = m_charaCon.GetPosition();
 		game->siminUI[iNo]->kyorikeisan(game->da[iNo][ima++] - 1);
 	}
-	CVector3 v2 = pl->m_position-m_position;
+	CVector3 v2 = pl->m_position - m_position;
 	float len1 = v2.Length();//長さ
 	if (Siya(v2, len1) != 0) {
-		Gaizi->point += 0.1f;
+		Gaizi->point += 1.1f;
 		pa = Escape;
 	}
 	FindGameObjectsWithTag(10, [&](IGameObject* go) {
@@ -95,7 +110,6 @@ void AI::NPCNormal()
 					qBias1.SetRotationDeg(CVector3::AxisY, 1.0f);
 					m_rotation.Multiply(qBias1);
 
-					 //パターンをダメージにかえる。
 				}
 			}
 		}
@@ -320,7 +334,7 @@ void AI::NPCFade_Out()//一般市民が退場するときの処理。
 
 	CVector3 v = game->siminUI[iNo]->K - m_position; //Kが次の目的地
 	float len = v.Length();//長さ
-	if (50 <= len) {
+	if (100 <= len) {
 		float angle = VectorAngleDeg(v);
 		if (angle >= 2.0) {//10度より上なら回転
 			//パスまでベクトルをXZ平面上での向きにする。
@@ -337,7 +351,18 @@ void AI::NPCFade_Out()//一般市民が退場するときの処理。
 		}
 		else {//10度未満でかつ-10度以上なら
 			//	m_position += (game->siminUI[iNo]->bekutor)*m_speed;
-
+			//if (angle != 0) {
+			//	v.y = 0.0f;
+			//	v.Normalize();
+			//	CVector3 forward = this->m_forward;
+			//	//回転軸を求める。
+			//	CVector3 rotAxis;
+			//	rotAxis.Cross(forward, v);
+			//	rotAxis.Normalize();
+			//	CQuaternion qBias1;
+			//	qBias1.SetRotationDeg(rotAxis, angle);
+			//	m_rotation.Multiply(qBias1);
+			//}
 			m_position = m_charaCon.Execute(GameTime().GetFrameDeltaTime(), m_forward*m_speed);//移動。
 		}
 		//}
@@ -349,7 +374,12 @@ void AI::NPCFade_Out()//一般市民が退場するときの処理。
 			pa = Death;
 			da = 1;
 		}
-		game->siminUI[iNo]->kyorikeisan(jyunban[da++] - 1);
+		else {
+
+			m_charaCon.SetPosition(game->pasu.m_pointList[jyunban[da - 1] - 1]);
+			m_position = m_charaCon.GetPosition();
+			game->siminUI[iNo]->kyorikeisan(jyunban[da++] - 1);
+		}
 	}
 }
 
@@ -398,7 +428,7 @@ float AI::Siya(CVector3 h, float g)
 	if (g < 500.0f) {
 		if (fabsf(VectorAngleDeg(h)) <= 45.0f) {//見つけたら
 			retu_position = m_position;
-			m_speed = 3000.0f;
+			//m_speed = 1000.0f;
 			//DamageFlag = true;
 			//プレイヤーから逃げる。
 			return 1;
@@ -429,7 +459,6 @@ void AI::DamageHantei() //全てのゾンビと距離でダメージ判定をする。
 		}
 	});
 
-	Player* pl = FindGO<Player>("Player");
 	float kyori = GetKyori(this->m_position, pl->m_position);//自分との距離を求める。
 	if (kyori < REACH) {  //距離が攻撃範囲以内だったら
 		pa = Damage; //パターンをダメージにかえる。
@@ -563,17 +592,19 @@ void AI::NPCReturn()
 
 	CVector3 v = game->siminUI[iNo]->K - m_position;
 	float len = v.Length();//長さ
-	if (50 <= len) {
+	if (300 <= len) {
 		//m_position += game->siminUI[iNo]->bekutor*m_speed;
 		m_position=	m_charaCon.Execute(GameTime().GetFrameDeltaTime(), (game->siminUI[iNo]->bekutor)*m_speed);
 	}
 	else {
+
 		if (da >= Size) {//元の位置にもどった
 			ima--;
 			pa = Normal;//パターンをノーマルにかえる。
 			da = 1;
 		}
 		else {
+			m_position = game->pasu.m_pointList[jyunban[da-1]-1];
 			game->siminUI[iNo]->kyorikeisan(jyunban[da++] - 1);
 			modori = 0;
 		}
@@ -584,7 +615,7 @@ void AI::NPCescape()
 
 	CVector3 v = m_position - pl->m_position;
 	float len = v.Length();//長さ
-	if (len < 1000.0) {
+	if (len < 2000.0) {
 		v.Normalize();//正規化して向きベクトルにする。
 		v.y = 0.0f;
 		//m_position += v * m_speed;
@@ -596,7 +627,6 @@ void AI::NPCescape()
 		keiro.tansa(m_position, retu_position,&jyunban);
 		game->siminUI[iNo]->kyorikeisan(jyunban[0]-1);
 		pa = Return;
-		m_speed = 1000.0f;
 	}
 }
 

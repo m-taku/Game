@@ -15,6 +15,7 @@ bool Taitor::Start()
 	n_sprite.Init(n_texture, 1280, 720);
 	n_sprite.Update(n_position, CQuaternion::Identity, { 1.0f,1.0f,1.0f });
 	fase = FindGO<Fade>("Fade");
+//	fase->StartFadeOut();
 	return true;
 }
 void Taitor::Update()

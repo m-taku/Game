@@ -45,15 +45,16 @@ void Game::InitSceneLight()
 void Game::OnDestroy()
 {
 
-	//ここで最終的にＤｅｌｅｔｅＧＯを絶対しきる。
+	//ここで最終的にＤｅｌｅｔｅＧＯを絶対しきる。	
+	for (int k = 0; k < 5; k++) {
+		DeleteGO(siminUI[k]);
+		DeleteGO(simin[k]);
+	}
 	DeleteGO(gaizi);
 	DeleteGO(player);
 	DeleteGO(stge);
 	DeleteGO(camera1);
-	for (int k = 0; k < 2; k++) {
-		DeleteGO(siminUI[k]);
-		DeleteGO(simin[k]);
-	}
+
 	//再起動（タイトル表示）
 
 	NewGO<Taitor>(0, "Taitor");
@@ -81,7 +82,7 @@ void Game::Update()
 {
 	//クリア関係？？
 
-	if (m_Fade != NULL) {
+	if (m_Fade != NULL&& m_Fade->toumeiodo >= 1.0f) {
 		m_Fade->StartFadeIn();
 	}
 	/*if (Pad(0).IsTrigger(enButtonB) && a >= 2) {
