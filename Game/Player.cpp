@@ -15,7 +15,7 @@ Player::Player()
 
 Player::~Player()
 {
-//	DeleteGO(FindGO<taieki>("taieki"));
+	DeleteGO(FindGO<taieki>("taieki"));
 	
 }
 bool Player::Start()
