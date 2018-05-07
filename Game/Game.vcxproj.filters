@@ -57,6 +57,7 @@
     <ClCompile Include="Pasu.cpp" />
     <ClCompile Include="Geizi.cpp" />
     <ClCompile Include="item.cpp" />
+    <ClCompile Include="GameEnd.cpp" />
   </ItemGroup>
   <ItemGroup>
     <CLInclude Include="resource.h">
@@ -81,6 +82,7 @@
     <ClInclude Include="Pasu.h" />
     <ClInclude Include="Geizi.h" />
     <ClInclude Include="item.h" />
+    <ClInclude Include="GameEnd.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Game.rc">
@@ -238,8 +240,10 @@
     <CustomBuild Include="Assets\effect\aura.efk">
       <Filter>Assets\effect</Filter>
     </CustomBuild>
-    <CustomBuild Include="Assets\lever\leval001.tks" />
     <CustomBuild Include="Assets\lever\leval002.tks">
+      <Filter>Assets\lever</Filter>
+    </CustomBuild>
+    <CustomBuild Include="Assets\lever\leval001.tks">
       <Filter>Assets\lever</Filter>
     </CustomBuild>
   </ItemGroup>

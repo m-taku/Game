@@ -15,7 +15,8 @@ Player::Player()
 
 Player::~Player()
 {
-	DeleteGO(FindGO<taieki>("taieki"));
+//	DeleteGO(FindGO<taieki>("taieki"));
+	
 }
 bool Player::Start()
 {
@@ -44,6 +45,7 @@ void Player::Update()
 	//右スティックの入力量を受け取る。
 	float rStick_x = Pad(0).GetRStickXF();
 	float rStick_y = Pad(0).GetRStickYF();
+
 	
 	/*rotX += rStick_y * 5;*/
 	rotY = rStick_x * 5;

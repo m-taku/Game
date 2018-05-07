@@ -13,7 +13,9 @@ tekihei::~tekihei()
 {
 	for (int i = 0;i < teki;i++)
 	{
-		DeleteGO(tamaEF[i]);
+		if (tamaEF[i] != NULL) {
+			tamaEF[i]->Release();
+		}
 	}
 }
 
@@ -153,7 +155,7 @@ void tekihei::Update()
 
 						if (time[i] >= 10)
 						{
-							DeleteGO(tamaEF[i]);
+							tamaEF[i]->Release();
 							tamaflag[i] = 0;
 							time[i] = 0;
 							damageflag[i] = 0;
@@ -190,7 +192,7 @@ void tekihei::Update()
 		}
 		if (tekiheiflag[i]==0)
 		{
-			DeleteGO(tamaEF[i]);
+			tamaEF[i]->Release();
 			tamaflag[i] = 0;
 		}
 	}
