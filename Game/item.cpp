@@ -13,11 +13,12 @@ item::~item()
 
 bool item::Start()
 {
+	itemModelData.Load(L"modelData/item.cmo");
 	for (int i = 0;i < tekikazu;i++)
 	{
 		tp = FindGO<tekihei>("tekihei");
 		itemf[i] = 0;
-		itemModelData.Load(L"modelData/item.cmo");
+		
 		itemModel[i].Init(itemModelData);
 	}
 	

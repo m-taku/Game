@@ -21,6 +21,7 @@ bool tekihei::Start()
 {
 	NewGO<item>(0, "item");
 	gaizi = FindGO<Geizi>("Geizi");
+	
 	for (int i = 0;i < teki;i++)
 	{
 		tekiHP[i] = 5;
