@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "Geizi.h"
 #include"tekihei.h"
-
+#include"GameEnd.h"
 Geizi::Geizi()
 {
 }
@@ -42,6 +42,7 @@ void Geizi::Update()
 		if (HPfurag <= 0) {
 			DeleteGO(haus);
 			HPfurag++;
+			NewGO<GameEnd>(0,"End");
 		}
 	}
 	if (point >= 0.95) {

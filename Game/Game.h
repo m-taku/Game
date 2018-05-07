@@ -31,7 +31,6 @@ public:
 	Player* player;
 	Stage* stge;
 	camera* camera1;
-	item* item1;
 	Level m_level[3];
 	Pasu  pasu;
 	keiroK* keiro;
