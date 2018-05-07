@@ -333,7 +333,7 @@ void AI::NPCFade_Out()//一般市民が退場するときの処理。
 
 	CVector3 v = game->siminUI[iNo]->K - m_position; //Kが次の目的地
 	float len = v.Length();//長さ
-	if (300 <= len) {
+	if (100 <= len) {
 		float angle = VectorAngleDeg(v);
 		if (angle >= 2.0) {//10度より上なら回転
 			//パスまでベクトルをXZ平面上での向きにする。

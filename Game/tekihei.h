@@ -13,9 +13,8 @@ public:
 	bool Start();
 	void Update();
 	void Render(CRenderContext& rc);
-
 	CSkinModel tekiskinModel[teki];					//スキンモデル。
-	CSkinModelData tekiskinModelData[teki];
+	CSkinModelData tekiskinModelData;
 	CCharacterController m_charaCon[teki];		//キャラクタコントローラ。
 	CVector3 tekipos[teki];//敵のポジション
 	CVector3 tekispeed[teki];//移動速度

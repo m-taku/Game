@@ -23,6 +23,7 @@ bool tekihei::Start()
 {
 	NewGO<item>(0, "item");
 	gaizi = FindGO<Geizi>("Geizi");
+	tekiskinModelData.Load(L"modelData/unityChan.cmo");//プレイヤーを書け
 	for (int i = 0;i < teki;i++)
 	{
 		tekiHP[i] = 5;
@@ -44,8 +45,7 @@ bool tekihei::Start()
 		tekipos[i] = CVector3::Zero;
 		tekipos[i].x = 3600.0f;
 		tekipos[i].z = -4800.0f;
-		tekiskinModelData[i].Load(L"modelData/unityChan.cmo");//プレイヤーを書け
-		tekiskinModel[i].Init(tekiskinModelData[i]);
+		tekiskinModel[i].Init(tekiskinModelData);
 		trot[i].SetRotationDeg(CVector3::AxisY, -90.0f);//回転
 		tekirot[i].Multiply(trot[i]);
 		
@@ -206,6 +206,6 @@ void tekihei::Render(CRenderContext& rc)
 	for (int i = 0;i < teki;i++)
 	{
 		if(tekiheiflag[i]==1)
-		tekiskinModel[i].Draw(rc, MainCamera().GetViewMatrix(), MainCamera().GetProjectionMatrix());
+		tekiskinModel[9].Draw(rc, MainCamera().GetViewMatrix(), MainCamera().GetProjectionMatrix());
 	}
 }

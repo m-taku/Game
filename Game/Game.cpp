@@ -19,7 +19,6 @@ Game::Game()
 	for (int k = 0; k < 5; k++) {
 		siminUI.push_back(NewGO<AImove>(0, "AIm"));
 		simin.push_back(NewGO<AI>(0, "AI"));
-
 	}
 	stge =NewGO<Stage>(0, "stage");
 	camera1 =NewGO<camera>(0, "camera");/*
