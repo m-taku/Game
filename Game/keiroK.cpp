@@ -179,8 +179,8 @@ void keiroK::tansa(CVector3 i, CVector3 Ta, std::vector<int> *a)
 			N = h;
 		}
 	}
-	fa = game->pasu.m_pointList[f];
-	ga = game->pasu.m_pointList[N];
+	fa = game->pasu.m_pointList[f++];
+	ga = game->pasu.m_pointList[N++];
 	Satando(
 		&stuyt,
 		fa,

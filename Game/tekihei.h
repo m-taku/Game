@@ -13,7 +13,6 @@ public:
 	bool Start();
 	void Update();
 	void Render(CRenderContext& rc);
-
 	CSkinModel tekiskinModel[teki];					//スキンモデル。
 	CSkinModelData tekiskinModelData[teki];
 	CCharacterController m_charaCon[teki];		//キャラクタコントローラ。
