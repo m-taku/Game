@@ -16,7 +16,6 @@ public:
 	CAnimation m_animation;
 	prefab::CDirectionLight* m_charaLight = nullptr;	//!<キャラクタ用のライト。
 	CCharacterController m_charaCon;		//キャラクタコントローラ。
-	CCharacterController itemcharacon;
 	CVector3 m_moveSpeed = CVector3::Zero;
 	CShaderResourceView m_normalMap;		//法線マップ。
 	CShaderResourceView m_specMap;			//スペキュラマップ。

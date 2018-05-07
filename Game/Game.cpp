@@ -46,14 +46,13 @@ void Game::InitSceneLight()
 }
 void Game::OnDestroy()
 {
-
+	DeleteGO(player);
 	//‚±‚±‚ÅÅI“I‚É‚c‚…‚Œ‚…‚”‚…‚f‚n‚ğâ‘Î‚µ‚«‚éB	
 	for (int k = 0; k < 5; k++) {
 		DeleteGO(siminUI[k]);
 		DeleteGO(simin[k]);
 	}
 	DeleteGO(gaizi);
-	DeleteGO(player);
 	DeleteGO(stge);
 	DeleteGO(camera1);
 	DeleteGO(item1);
