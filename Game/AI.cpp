@@ -20,6 +20,7 @@ AI::AI()
 
 AI::~AI()
 {
+
 }
 bool AI::Start()
 {
@@ -53,7 +54,7 @@ void AI::NPCNormal()
 {
 	CVector3 v = game->siminUI[iNo]->K - m_position; //Kが次の目的地
 	float len = v.Length();//長さ
-	if (300 <= len) {
+	if (30 <= len) {
 		float angle = VectorAngleDeg(v);
 		if (angle>=3.0) {
 			v.y = 0.0f;
@@ -88,8 +89,6 @@ void AI::NPCNormal()
 		if (ima >= 6)//今のポジションが6なら
 			//0にリセットする。0,1,2,3,4,5の順番。
 			ima = 0;
-		m_charaCon.SetPosition(game->pasu.m_pointList[game->da[iNo][ima - 1] - 1]);
-		m_position = m_charaCon.GetPosition();
 		game->siminUI[iNo]->kyorikeisan(game->da[iNo][ima++] - 1);
 	}
 	CVector3 v2 = pl->m_position - m_position;
@@ -334,7 +333,7 @@ void AI::NPCFade_Out()//一般市民が退場するときの処理。
 
 	CVector3 v = game->siminUI[iNo]->K - m_position; //Kが次の目的地
 	float len = v.Length();//長さ
-	if (100 <= len) {
+	if (300 <= len) {
 		float angle = VectorAngleDeg(v);
 		if (angle >= 2.0) {//10度より上なら回転
 			//パスまでベクトルをXZ平面上での向きにする。
@@ -375,9 +374,6 @@ void AI::NPCFade_Out()//一般市民が退場するときの処理。
 			da = 1;
 		}
 		else {
-
-			m_charaCon.SetPosition(game->pasu.m_pointList[jyunban[da - 1] - 1]);
-			m_position = m_charaCon.GetPosition();
 			game->siminUI[iNo]->kyorikeisan(jyunban[da++] - 1);
 		}
 	}
@@ -604,7 +600,6 @@ void AI::NPCReturn()
 			da = 1;
 		}
 		else {
-			m_position = game->pasu.m_pointList[jyunban[da-1]-1];
 			game->siminUI[iNo]->kyorikeisan(jyunban[da++] - 1);
 			modori = 0;
 		}

@@ -14,7 +14,7 @@ tekihei::~tekihei()
 	for (int i = 0;i < teki;i++)
 	{
 		if (tamaEF[i]!=NULL&&tamaEF[i]->IsPlay()) {
-			DeleteGO(tamaEF[i]);
+			tamaEF[i]->Release();
 		}
 	}
 }
@@ -154,7 +154,7 @@ void tekihei::Update()
 
 						if (time[i] >= 10)
 						{
-							DeleteGO(tamaEF[i]);
+							tamaEF[i]->Release();
 							tamaflag[i] = 0;
 							time[i] = 0;
 							damageflag[i] = 0;
@@ -162,7 +162,7 @@ void tekihei::Update()
 					}
 					if (teki_to_tama_vector[i] >= 1000)
 					{
-						DeleteGO(tamaEF[i]);
+						tamaEF[i]->Release();
 						tamaflag[i] = 0;
 					}
 
@@ -192,7 +192,7 @@ void tekihei::Update()
 		if (tekiheiflag[i]==0)
 		{
 			if (tamaEF[i]!=NULL&&tamaEF[i]->IsPlay()) {
-				DeleteGO(tamaEF[i]);
+				tamaEF[i]->Release();
 				tamaflag[i] = 0;
 			}
 		}
