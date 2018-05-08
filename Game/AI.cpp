@@ -496,7 +496,6 @@ void AI::DamageHantei() //全てのゾンビと距離でダメージ判定をする。
 				float kyori = GetKyori(this->m_position, ai->m_position);//自分との距離を求める。
 				if (kyori < REACH) {  //距離が攻撃範囲以内だったら
 					pa = Damage; //パターンをダメージにかえる。
-
 					DamageFlag = true;//ダメージフラグをtrueにする。
 				}
 			}
@@ -506,7 +505,6 @@ void AI::DamageHantei() //全てのゾンビと距離でダメージ判定をする。
 	float kyori = GetKyori(this->m_position, pl->m_position);//自分との距離を求める。
 	if (kyori < REACH) {  //距離が攻撃範囲以内だったら
 		pa = Damage; //パターンをダメージにかえる。
-
 		DamageFlag = true;//ダメージフラグをtrueにする。
 	}
 }
