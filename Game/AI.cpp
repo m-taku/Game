@@ -16,8 +16,6 @@ AI::AI()
 	pa = Normal; //ここはプレイヤーの行動によって変化するようにする。
 	m_speed = 500.0f; //ノーマル状態のときの移動速度。
 }
-
-
 AI::~AI()
 {
 	//m_charaCon.RemoveRigidBoby();
@@ -182,7 +180,6 @@ void AI::NPCNormal()
 	//	//	
 	//	//}
 }
-
 void AI::NPCDamage()
 {
 	if (DamageFlag == true) {//プレイヤーからの攻撃を受けたら
@@ -201,9 +198,7 @@ void AI::NPCDamage()
 	}
 
 }
-
-//void AI::NPCEscape_NPC() //NPCからの逃走
-//{
+//void AI::NPCEscape_NPC() //NPCからの逃
 //	static bool LostFlag = false;  //見失ったかどうかを示すフラグ。
 //								   ///////////////////
 //								   //逃走に関する処理。
@@ -226,7 +221,6 @@ void AI::NPCDamage()
 //
 //	}
 //}
-
 //void AI::NPCEscape_Player() //プレイヤーからの逃走
 //{
 //	///////////////////
@@ -251,8 +245,6 @@ void AI::NPCDamage()
 //		}
 //
 //	}
-//}
-
 void AI::NPCZombie_Normal()
 {
 
@@ -308,7 +300,7 @@ void AI::NPCZombie_Normal()
 				float kyori = GetKyori(this->m_position, ai->m_position);//自分との距離を求める。
 				if (kyori < 60.0f) {  //距離が視界範囲以内だったら
 					float angle = VectorAngleDeg(ai->m_position); //検索対象の座標を引数にする。
-					if (angle <= 45.0f&&angle >= -45.0f) { //角度が視界内だったら
+					if (angle <= 45.0f) { //角度が視界内だったら
 						if (kyori < min_Nagasa) { //自分に一番近いのなら
 							min_Nagasa = kyori;
 							Tansaku = ai;
@@ -323,35 +315,30 @@ void AI::NPCZombie_Normal()
 		pa = Zombie_Chase; //パターンをゾンビチェイスに変える。
 	}
 }
-
 void AI::NPCZombie_Chase()
 {
 	float len = GetKyori(m_position, Tansaku->m_position);
 	if (len>80.0f||HitFlag == true) {//他のNPCを見失った(距離が80以上あいた)、あるいは攻撃を与えたら
 		//元の位置に戻る。
-
 		if (ZombieChaseNumber == MyNumber) {//元の位置の番号に戻ったら
 			Tansaku = nullptr; //検索結果を初期化する。
 			pa = Zombie_Normal; //パターンをゾンビノーマルに変える。
 			HitFlag = false;
 		}
 	}else {//NPCを見失っておらず、見つけていたら
-
+		CVector3 n = m_position - Tansaku->m_position;
+		n.Normalize();
+		n.y = 0.0f;
+		m_position = m_charaCon.Execute(GameTime().GetFrameDeltaTime(), n*m_speed);
 			/////////////////////////////////
 			//市民NPCを追跡する処理。
 			/////////////////////////////////
-
 		if (len<REACH) {//NPCに追いついたら
 						//攻撃する(確実に当たる仕様)。
-
 			HitFlag = true; //「NPCに攻撃を当てた」というフラグをたてる。
 		}
-	}
-
-	
-	
+	}	
 }
-
 void AI::NPCZombie_Attack()//vs特殊部隊
 {
 	
@@ -373,7 +360,6 @@ void AI::NPCZombie_Attack()//vs特殊部隊
 	//}
 	
 }
-
 void AI::NPCFade_Out()//一般市民が退場するときの処理。
 {
 
@@ -424,14 +410,12 @@ void AI::NPCFade_Out()//一般市民が退場するときの処理。
 		}
 	}
 }
-
 float AI::GetKyori(CVector3 a, CVector3 b) //2つのオブジェクトの座標を受け取り、オブジェクト間の距離を返す。
 {
 	CVector3 v = a - b;
 	float len = v.Length();//長さ
 	return len;  //2つのオブジェクトの距離を返す。
 }
-
 void AI::Turn()//ここ
 {
 	if (fabsf(m_movespeed.x) < 0.001f
@@ -449,12 +433,10 @@ void AI::Turn()//ここ
 	//SetRotationDegではなくSetRotationを使用する。
 	m_rotation.SetRotation(CVector3::AxisY, angle);
 }
-
 void AI::NPCRuet()//NPCルート
 {
 
 }
-
 float AI::VectorAngleDeg2(CVector3 c)
 {
 	c.Normalize();//向きVectorにする。
@@ -508,12 +490,10 @@ void AI::DamageHantei() //全てのゾンビと距離でダメージ判定をする。
 		DamageFlag = true;//ダメージフラグをtrueにする。
 	}
 }
-
 void AI::NPCDeath()//死亡、消滅処理。
 {
 //	DeleteGO(this);//自己消滅。
 }
-
 void AI::Update()
 {
 	//pa = Normal; //ここはプレイヤーの行動によって変化するようにする。
@@ -578,7 +558,7 @@ void AI::Update()
 		NPCDamage();
 		break;
 	case Zombie_Normal:
-		//NPCZombie_Normal();
+		NPCZombie_Normal();
 		break;
 	case Zombie_Chase:
 		//他のNPCを見つけた時の処理を書く。
@@ -629,7 +609,6 @@ void AI::Update()
 	//	keiro->tansa(k, b);
 	m_skinModel.Update(m_position, m_rotation, { 0.5f, 0.5f,0.5f });
 }
-
 void AI::NPCReturn()
 {
 	int Size= jyunban.size();
@@ -672,7 +651,6 @@ void AI::NPCescape()
 		pa = Return;
 	}
 }
-
 void AI::Render(CRenderContext& rc)
 {
 	m_skinModel.Draw(rc, MainCamera().GetViewMatrix(), MainCamera().GetProjectionMatrix());

@@ -15,6 +15,7 @@ Player::Player()
 
 Player::~Player()
 {
+
 	DeleteGO(FindGO<taieki>("taieki"));
 	
 }
