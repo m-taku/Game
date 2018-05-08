@@ -14,13 +14,13 @@ AI NPC;
 AI::AI()
 {
 	pa = Normal; //ここはプレイヤーの行動によって変化するようにする。
-	m_speed = 1000.0f; //ノーマル状態のときの移動速度。
+	m_speed = 500.0f; //ノーマル状態のときの移動速度。
 }
 
 
 AI::~AI()
 {
-	m_charaCon.RemoveRigidBoby();
+	//m_charaCon.RemoveRigidBoby();
 }
 bool AI::Start()
 {
@@ -496,6 +496,8 @@ void AI::DamageHantei() //全てのゾンビと距離でダメージ判定をする。
 				float kyori = GetKyori(this->m_position, ai->m_position);//自分との距離を求める。
 				if (kyori < REACH) {  //距離が攻撃範囲以内だったら
 					pa = Damage; //パターンをダメージにかえる。
+
+					DamageFlag = true;//ダメージフラグをtrueにする。
 				}
 			}
 		}
@@ -504,6 +506,8 @@ void AI::DamageHantei() //全てのゾンビと距離でダメージ判定をする。
 	float kyori = GetKyori(this->m_position, pl->m_position);//自分との距離を求める。
 	if (kyori < REACH) {  //距離が攻撃範囲以内だったら
 		pa = Damage; //パターンをダメージにかえる。
+
+		DamageFlag = true;//ダメージフラグをtrueにする。
 	}
 }
 
