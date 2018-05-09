@@ -23,7 +23,7 @@ public:
 	void NPCZombie_Attack();//特殊部隊とゾンビが戦う時の処理。
 	void NPCescape();//市民がゾンビプレイヤーから逃げるときの処理。
 	void NPCReturn();//戻るとき
-	void NPCDeath();
+	void NPCDeath();//死亡、消滅処理。
 
 	void Render(CRenderContext& rc);
 	void Turn();
