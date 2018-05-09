@@ -8,7 +8,7 @@
 #include"tekihei.h"
 #define REACH 100.0  //ゾンビの攻撃範囲。この距離まで近づいたら攻撃する。
 #define PI 3.141592653589793 
-AI NPC;
+//AI NPC;
 //今回はmを引用するNPCのハンドルとして、jを特殊部隊のハンドルとして代用する。これは後に直しておくように。
 //NPCとNPCゾンビの両方を処理する。
 AI::AI()
@@ -33,7 +33,7 @@ bool AI::Start()
 
 	CMatrix mRot;
 	//mRot.MakeRotationFromQuaternion();
-	m_charaCon.Init(
+	A_charaCon.Init(
 		50.0,			//半径。 
 		100.0f,			//高さ。
 		m_position		//初期位置。
@@ -80,7 +80,7 @@ void AI::NPCNormal()
 				m_rotation.Multiply(qBias1);
 			}
 			//	m_position += (game->siminUI[iNo]->bekutor)*m_speed;
-			m_position = m_charaCon.Execute(GameTime().GetFrameDeltaTime(), m_forward*m_speed);
+			m_position = A_charaCon.Execute(GameTime().GetFrameDeltaTime(), m_forward*m_speed);
 		}
 	}
 	else {
@@ -92,7 +92,7 @@ void AI::NPCNormal()
 	CVector3 v2 = pl->m_position - m_position;
 	float len1 = v2.Length();//長さ
 	if (Siya(v2, len1) != 0) {
-		Gaizi->point += 1.1f;
+		Gaizi->point += 0.1f;
 		pa = Escape;
 	}
 	FindGameObjectsWithTag(10, [&](IGameObject* go) {
@@ -278,7 +278,7 @@ void AI::NPCZombie_Normal()
 				m_rotation.Multiply(qBias1);
 			}
 			//	m_position += (game->siminUI[iNo]->bekutor)*m_speed;
-			m_position = m_charaCon.Execute(GameTime().GetFrameDeltaTime(), m_forward*m_speed);
+			m_position = A_charaCon.Execute(GameTime().GetFrameDeltaTime(), m_forward*m_speed);
 		}
 	}
 	else {
@@ -329,7 +329,7 @@ void AI::NPCZombie_Chase()
 		CVector3 n = m_position - Tansaku->m_position;
 		n.Normalize();
 		n.y = 0.0f;
-		m_position = m_charaCon.Execute(GameTime().GetFrameDeltaTime(), n*m_speed);
+		m_position = A_charaCon.Execute(GameTime().GetFrameDeltaTime(), n*m_speed);
 			/////////////////////////////////
 			//市民NPCを追跡する処理。
 			/////////////////////////////////
@@ -394,7 +394,7 @@ void AI::NPCFade_Out()//一般市民が退場するときの処理。
 			//	qBias1.SetRotationDeg(rotAxis, angle);
 			//	m_rotation.Multiply(qBias1);
 			//}
-			m_position = m_charaCon.Execute(GameTime().GetFrameDeltaTime(), m_forward*m_speed);//移動。
+			m_position =A_charaCon.Execute(GameTime().GetFrameDeltaTime(), m_forward*m_speed);//移動。
 		}
 		//}
 		//v.Normalize();
@@ -617,7 +617,7 @@ void AI::NPCReturn()
 	float len = v.Length();//長さ
 	if (300 <= len) {
 		//m_position += game->siminUI[iNo]->bekutor*m_speed;
-		m_position=	m_charaCon.Execute(GameTime().GetFrameDeltaTime(), (game->siminUI[iNo]->bekutor)*m_speed);
+		m_position=	A_charaCon.Execute(GameTime().GetFrameDeltaTime(), (game->siminUI[iNo]->bekutor)*m_speed);
 	}
 	else {
 
@@ -641,7 +641,7 @@ void AI::NPCescape()
 		v.Normalize();//正規化して向きベクトルにする。
 		v.y = 0.0f;
 		//m_position += v * m_speed;
-		m_position =m_charaCon.Execute(GameTime().GetFrameDeltaTime(),v*m_speed);
+		m_position =A_charaCon.Execute(GameTime().GetFrameDeltaTime(),v*m_speed);
 	}
 
 	else {

@@ -5,7 +5,6 @@
 #include"Geizi.h"
 class Player;
 class keiroK;
-
 class AI : public Human
 {
 public:
@@ -49,7 +48,7 @@ public:
 		Death               //NPCの死亡。
 	};
 	enum npcpattern pa;
-	CCharacterController m_charaCon;
+	CCharacterController A_charaCon;
 	CSkinModel m_skinModel;					//スキンモデル。
 	CSkinModelData m_skinModelData;			//スキンモデルデータ。
 	CQuaternion m_rotation = CQuaternion::Identity;	//回転。
