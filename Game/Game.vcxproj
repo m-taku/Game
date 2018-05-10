@@ -681,6 +681,7 @@
     <MeshContentTask Include="Assets\modelData\hantei.FBX" />
     <MeshContentTask Include="Assets\modelData\item.FBX" />
     <MeshContentTask Include="Assets\modelData\stage.FBX" />
+    <MeshContentTask Include="Assets\modelData\stage0.FBX" />
     <MeshContentTask Include="Assets\modelData\stage1.FBX" />
     <MeshContentTask Include="Assets\modelData\taieki.FBX" />
     <MeshContentTask Include="Assets\modelData\unityChan.fbx" />
@@ -763,6 +764,7 @@
     <Image Include="Assets\modelData\white.png" />
     <Image Include="Assets\modelData\worktops007.jpg" />
     <Image Include="Assets\sprite\fade.png" />
+    <ImageContentTask Include="Assets\sprite\yaji.png" />
     <ImageContentTask Include="Assets\sprite\kajy.png" />
     <ImageContentTask Include="Assets\sprite\ka-soru.png" />
     <ImageContentTask Include="Assets\sprite\syoujun.png" />

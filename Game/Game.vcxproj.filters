@@ -106,6 +106,9 @@
       <Filter>Assets\modelData</Filter>
     </MeshContentTask>
     <MeshContentTask Include="Assets\modelData\item.FBX" />
+    <MeshContentTask Include="Assets\modelData\stage0.FBX">
+      <Filter>Assets\modelData</Filter>
+    </MeshContentTask>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="Assets\shader\tonemap.fx">
@@ -279,5 +282,8 @@
     </ImageContentTask>
     <ImageContentTask Include="Assets\sprite\ka-soru.png" />
     <ImageContentTask Include="Assets\sprite\kajy.png" />
+    <ImageContentTask Include="Assets\sprite\yaji.png">
+      <Filter>Assets\sprite</Filter>
+    </ImageContentTask>
   </ItemGroup>
 </Project>

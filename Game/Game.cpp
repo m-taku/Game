@@ -21,7 +21,8 @@ Game::Game()
 		siminUI.push_back(NewGO<AImove>(0, "AIm"));
 		simin.push_back(NewGO<AI>(0, "AI"));
 	}
-	stge =NewGO<Stage>(0, "stage");
+	stge=NewGO<Stage>(0, "stage");
+
 	camera1 =NewGO<camera>(0, "camera");
 /*
 	m_level[0].Build(L"lever/leval001.tks");*/

@@ -14,6 +14,8 @@ public:
 	CSkinModel m_skinModel;					//スキンモデル。
 	CSkinModelData m_skinModelData;			//スキンモデルデータ。
 	CMeshCollider m_meshCollider;	//メッシュコライダー。
-	CRigidBody m_rigidBody;			//剛体。
+	CRigidBody m_rigidBody;			//剛体
+	int No = 0;
+private:
 };
 

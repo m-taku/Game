@@ -63,7 +63,7 @@ void AI::NPCNormal()
 			rotAxis.Cross(forward, v);
 			rotAxis.Normalize();
 			CQuaternion qBias1;
-			qBias1.SetRotationDeg(rotAxis, 3.0f);
+			qBias1.SetRotationDeg(rotAxis, 10.0f);
 			m_rotation.Multiply(qBias1);
 		}
 		else {
@@ -104,7 +104,7 @@ void AI::NPCNormal()
 				if (Siya(kyori1, f)) { //距離が攻撃範囲以内だったら
 
 					CQuaternion qBias1;
-					qBias1.SetRotationDeg(CVector3::AxisY, 1.0f);
+					qBias1.SetRotationDeg(CVector3::AxisY, 3.0f);
 					m_rotation.Multiply(qBias1);
 
 				}
@@ -620,7 +620,6 @@ void AI::NPCReturn()
 		m_position=	A_charaCon.Execute(GameTime().GetFrameDeltaTime(), (game->siminUI[iNo]->bekutor)*m_speed);
 	}
 	else {
-
 		if (da >= Size) {//元の位置にもどった
 			ima--;
 			pa = Normal;//パターンをノーマルにかえる。
