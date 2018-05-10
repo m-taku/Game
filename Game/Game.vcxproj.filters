@@ -58,11 +58,11 @@
     <ClCompile Include="Geizi.cpp" />
     <ClCompile Include="item.cpp" />
     <ClCompile Include="GameEnd.cpp" />
+    <ClCompile Include="Osu.cpp" />
+    <ClCompile Include="Mes.cpp" />
+    <ClCompile Include="Dog.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <CLInclude Include="resource.h">
-      <Filter>Resource Files</Filter>
-    </CLInclude>
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Taitor.h" />
@@ -83,11 +83,9 @@
     <ClInclude Include="Geizi.h" />
     <ClInclude Include="item.h" />
     <ClInclude Include="GameEnd.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="Game.rc">
-      <Filter>Resource Files</Filter>
-    </ResourceCompile>
+    <ClInclude Include="Osu.h" />
+    <ClInclude Include="Mes.h" />
+    <ClInclude Include="Dog.h" />
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\unityChan.fbx">

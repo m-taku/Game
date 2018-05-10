@@ -622,6 +622,7 @@
     <ClCompile Include="AI.cpp" />
     <ClCompile Include="AImove.cpp" />
     <ClCompile Include="camera.cpp" />
+    <ClCompile Include="Dog.cpp" />
     <ClCompile Include="Fade.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameEnd.cpp" />
@@ -633,6 +634,8 @@
     <ClCompile Include="Level.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MapChip.cpp" />
+    <ClCompile Include="Mes.cpp" />
+    <ClCompile Include="Osu.cpp" />
     <ClCompile Include="Pasu.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Stage.cpp" />
@@ -652,6 +655,7 @@
     <ClInclude Include="AI.h" />
     <ClInclude Include="AImove.h" />
     <ClInclude Include="camera.h" />
+    <ClInclude Include="Dog.h" />
     <ClInclude Include="GameEnd.h" />
     <ClInclude Include="Geizi.h" />
     <ClInclude Include="Human.h" />
@@ -660,6 +664,8 @@
     <ClInclude Include="keiroK.h" />
     <ClInclude Include="Level.h" />
     <ClInclude Include="MapChip.h" />
+    <ClInclude Include="Mes.h" />
+    <ClInclude Include="Osu.h" />
     <ClInclude Include="Pasu.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Stage.h" />
@@ -673,9 +679,7 @@
     <CustomBuild Include="Assets\shader\sampleBRDF.h" />
     <ClInclude Include="Fade.h" />
     <ClInclude Include="Game.h" />
-    <CLInclude Include="resource.h" />
     <ClInclude Include="stdafx.h" />
-    <ResourceCompile Include="Game.rc" />
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\hantei.FBX" />
