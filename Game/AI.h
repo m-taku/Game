@@ -3,6 +3,8 @@
 #include"Human.h"
 #include"Game.h"
 #include"Geizi.h"
+#define REACH 500.0  //ゾンビの攻撃範囲。この距離まで近づいたら攻撃する。
+#define PI 3.141592653589793 
 class Player;
 class keiroK;
 
@@ -17,7 +19,9 @@ public:
 	void NPCNormal();//市民の通常行動の処理。
 	//void NPCEscape_NPC();//市民がゾンビNPCから逃げるときの処理。
 	//void NPCEscape_Player();//市民がゾンビプレイヤーから逃げるときの処理。
-	void NPCDamage();//攻撃を受けてからゾンビNPCになるまでの処理。
+	void NPCResistance_NPC();  //ゾンビに抵抗しているときの処理。
+	void NPCResistance_Player();  //ゾンビに抵抗しているときの処理。
+	void NPCDamage();//やられてからゾンビNPCになるまでの処理。
 	void NPCFade_Out();//一般市民がステージから出ていくまでの処理。
 	void NPCZombie_Normal();//ゾンビNPCの通常行動の処理。
 	void NPCZombie_Chase();//ゾンビNPCが市民を追跡するときの処理。
@@ -38,6 +42,8 @@ public:
 	enum npcpattern { //switch文に使う。
 		Normal,             //市民の通常状態。
 		Damage,             //ダメージを受けたとき。
+		Resistance_NPC, //ゾンビに捕まって、抵抗しているとき。
+		Resistance_Player,
 		Escape,				//逃げてるとき。
 		//Escape_NPC,             //市民のNPCからの逃走状態。
 		//Escape_Player,       //市民のプレイヤーからの逃走状態。
@@ -48,6 +54,8 @@ public:
 		Zombie_Attack,      //ゾンビ化NPCの攻撃状態。
 		Death               //NPCの死亡。
 	};
+
+
 	enum npcpattern pa;
 	CCharacterController m_charaCon;
 	CSkinModel m_skinModel;					//スキンモデル。

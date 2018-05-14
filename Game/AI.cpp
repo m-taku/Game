@@ -6,8 +6,8 @@
 #include"Game.h"
 #include"Geizi.h"
 #include"tekihei.h"
-#define REACH 100.0  //ゾンビの攻撃範囲。この距離まで近づいたら攻撃する。
-#define PI 3.141592653589793 
+
+
 
 //今回はmを引用するNPCのハンドルとして、jを特殊部隊のハンドルとして代用する。これは後に直しておくように。
 //NPCとNPCゾンビの両方を処理する。
@@ -28,8 +28,9 @@ bool AI::Start()
 	iNo = game->No++;
 	m_position= game->pasu.m_pointList[game->da[iNo][0] - 1];
 	m_position.y = 0.0f;
-	m_skinModelData.Load(L"modelData/unityChan.cmo");//プレイヤーを書け
-	m_skinModel.Init(m_skinModelData);
+	//キャラのスキンモデルのロードは各自サブクラスで行う。
+	//m_skinModelData.Load(L"modelData/unityChan.cmo");//プレイヤーを書け
+	//m_skinModel.Init(m_skinModelData);
 
 	CMatrix mRot;
 	//mRot.MakeRotationFromQuaternion();
@@ -176,22 +177,29 @@ void AI::NPCNormal()
 	//	//	
 	//	//}
 }
+
+void AI::NPCResistance_NPC()//NPCゾンビへの抵抗に関する処理。オーバーライドさせる。
+{
+	pa = Damage;
+}
+
+void AI::NPCResistance_Player()//プレイヤーへの抵抗に関する処理。オーバーライドさせる。
+{
+	pa = Damage;
+}
+
 void AI::NPCDamage()
 {
-	if (DamageFlag == true) {//プレイヤーからの攻撃を受けたら
-		static int i = 0; //30フレームをカウントする。
-		if (i >= 30) {
-			//30フレーム経過したらゾンビ化。
-			pa = Zombie_Normal; //パターンをゾンビノーマルに変える。
-			m_movespeed = { 0.5f, 0.0f, 0.0f }; //ゾンビノーマル状態のときの移動速度に変える。
-			Zonbe = 1;
-			DamageFlag = false;
-			m_position.y += 50;
-		}
-		else {
-			i++; //1フレーム経過をカウントする。
-		}
-		
+	static int i = 0; //30フレームをカウントする。
+	if (i >= 30) {
+		//30フレーム経過したらゾンビ化。
+		pa = Zombie_Normal; //パターンをゾンビノーマルに変える。
+		m_movespeed = { 0.5f, 0.0f, 0.0f }; //ゾンビノーマル状態のときの移動速度に変える。
+		Zonbe = 1;
+		m_position.y += 50;
+	}
+	else {
+		i++; //1フレーム経過をカウントする。
 	}
 
 }
@@ -466,6 +474,7 @@ float AI::VectorAngleDeg(CVector3 c)
 
 	return degree;
 }
+
 void AI::DamageHantei() //全てのゾンビと距離でダメージ判定をする。
 {
 	FindGameObjectsWithTag(10, [&](IGameObject* go) {
@@ -474,8 +483,7 @@ void AI::DamageHantei() //全てのゾンビと距離でダメージ判定をする。
 			if (ai->Zonbe == 1) {   //それがゾンビだったら
 				float kyori = GetKyori(this->m_position, ai->m_position);//自分との距離を求める。
 				if (kyori < REACH) {  //距離が攻撃範囲以内だったら
-					pa = Damage; //パターンをダメージにかえる。
-					DamageFlag = true;//ダメージフラグをtrueにする。
+					pa = Resistance_NPC; //パターンを抵抗にかえる。
 				}
 			}
 		}
@@ -483,14 +491,15 @@ void AI::DamageHantei() //全てのゾンビと距離でダメージ判定をする。
 
 	float kyori = GetKyori(this->m_position, pl->m_position);//自分との距離を求める。
 	if (kyori < REACH) {  //距離が攻撃範囲以内だったら
-		pa = Damage; //パターンをダメージにかえる。
-		DamageFlag = true;//ダメージフラグをtrueにする。
+		pa = Resistance_Player; //パターンを抵抗にかえる。
 	}
 }
+
 void AI::NPCDeath()//死亡、消滅処理。
 {
 //	DeleteGO(this);//自己消滅。
 }
+
 void AI::Update()
 {
 	//pa = Normal; //ここはプレイヤーの行動によって変化するようにする。
@@ -550,6 +559,12 @@ void AI::Update()
 		break;
 	case Fade_Out:
 		NPCFade_Out();
+		break;
+	case Resistance_NPC:
+		NPCResistance_NPC();
+		break;
+	case Resistance_Player:
+		NPCResistance_Player();
 		break;
 	case Damage:
 		NPCDamage();
