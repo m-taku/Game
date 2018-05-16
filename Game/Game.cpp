@@ -13,6 +13,9 @@
 #include"tekihei.h"
 #include"Geizi.h"
 #include"item.h"
+#include"Osu.h"
+#include"Mes.h"
+#include"Dog.h"
 Game::Game()
 {
 	gaizi=NewGO<Geizi>(1, "Geizi");

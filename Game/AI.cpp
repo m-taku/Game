@@ -29,8 +29,8 @@ bool AI::Start()
 	m_position= game->pasu.m_pointList[game->da[iNo][0] - 1];
 	m_position.y = 0.0f;
 	//キャラのスキンモデルのロードは各自サブクラスで行う。
-	//m_skinModelData.Load(L"modelData/unityChan.cmo");//プレイヤーを書け
-	//m_skinModel.Init(m_skinModelData);
+	m_skinModelData.Load(L"modelData/unityChan.cmo");//プレイヤーを書け
+	m_skinModel.Init(m_skinModelData);
 
 	CMatrix mRot;
 	//mRot.MakeRotationFromQuaternion();
@@ -194,9 +194,7 @@ void AI::NPCDamage()
 	if (i >= 30) {
 		//30フレーム経過したらゾンビ化。
 		pa = Zombie_Normal; //パターンをゾンビノーマルに変える。
-		m_movespeed = { 0.5f, 0.0f, 0.0f }; //ゾンビノーマル状態のときの移動速度に変える。
 		Zonbe = 1;
-		m_position.y += 50;
 	}
 	else {
 		i++; //1フレーム経過をカウントする。
@@ -415,12 +413,14 @@ void AI::NPCFade_Out()//一般市民が退場するときの処理。
 		}
 	}
 }
+
 float AI::GetKyori(CVector3 a, CVector3 b) //2つのオブジェクトの座標を受け取り、オブジェクト間の距離を返す。
 {
 	CVector3 v = a - b;
 	float len = v.Length();//長さ
 	return len;  //2つのオブジェクトの距離を返す。
 }
+
 void AI::Turn()//ここ
 {
 	if (fabsf(m_movespeed.x) < 0.001f
@@ -438,10 +438,12 @@ void AI::Turn()//ここ
 	//SetRotationDegではなくSetRotationを使用する。
 	m_rotation.SetRotation(CVector3::AxisY, angle);
 }
+
 void AI::NPCRuet()//NPCルート
 {
 
 }
+
 float AI::VectorAngleDeg2(CVector3 c)
 {
 	c.Normalize();//向きVectorにする。
@@ -451,6 +453,7 @@ float AI::VectorAngleDeg2(CVector3 c)
 
 	return degree;
 }
+
 float AI::Siya(CVector3 h, float g)
 {
 
@@ -465,6 +468,7 @@ float AI::Siya(CVector3 h, float g)
 	}
 	return 0;
 }
+
 float AI::VectorAngleDeg(CVector3 c)
 {
 	c.Normalize();//向きVectorにする。
@@ -514,8 +518,18 @@ void AI::Update()
 	m_rite.y = k_tekirot.m[0][1];
 	m_rite.z = k_tekirot.m[0][2];
 	m_rite.Normalize();
+	
+	if (muteki_Flag == true) {
+		muteki_count++;
+		if (muteki_count > 300) {//無敵化してから300フレームが経過したら
+			muteki_Flag = false;
+		}
+	}
+
 	if (Zonbe == 0) { //自分がゾンビではなかったら
-		DamageHantei(); //ゾンビとの当たり判定をとる。
+		if (muteki_Flag == false) {//無敵ではなかったら
+			DamageHantei(); //ゾンビとの当たり判定をとる。
+		}
 	}
 	
 	if (Gaizi->furag == 1&& ForceFlag == 0) {//特殊部隊が出現したら、
