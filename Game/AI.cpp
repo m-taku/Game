@@ -28,6 +28,7 @@ bool AI::Start()
 	iNo = game->No++;
 	m_position= game->pasu.m_pointList[game->da[iNo][0] - 1];
 	m_position.y = 0.0f;
+	//キャラのスキンモデルのロードは各自サブクラスで行う。
 	m_skinModelData.Load(L"modelData/unityChan.cmo");//プレイヤーを書け
 	m_skinModel.Init(m_skinModelData);
 
@@ -123,10 +124,6 @@ void AI::NPCNormal()
 	//		//プレイヤーから逃げる。
 	//	}
 	//}
-	if (len1 < REACH) {//攻撃を受ける範囲まで近づいたら確実にダメージを受けるので
-		pa = Damage;
-		DamageFlag = true;//ダメージフラグをtrueにする。
-	}
 	//	/////////////////////////////////
 	//	//一定のルートをうろうろする処理。
 	//	/////////////////////////////////
@@ -181,21 +178,27 @@ void AI::NPCNormal()
 	//	//	
 	//	//}
 }
+
+void AI::NPCResistance_NPC()//NPCゾンビへの抵抗に関する処理。オーバーライドさせる。
+{
+	pa = Damage;
+}
+
+void AI::NPCResistance_Player()//プレイヤーへの抵抗に関する処理。オーバーライドさせる。
+{
+	pa = Damage;
+}
+
 void AI::NPCDamage()
 {
-	if (DamageFlag == true) {//プレイヤーからの攻撃を受けたら
-		static int i = 0; //30フレームをカウントする。
-		if (i >= 30) {
-			//30フレーム経過したらゾンビ化。
-			pa = Zombie_Normal; //パターンをゾンビノーマルに変える。
-			m_movespeed = { 0.5f, 0.0f, 0.0f }; //ゾンビノーマル状態のときの移動速度に変える。
-			Zonbe = 1;
-			DamageFlag = false;
-		}
-		else {
-			i++; //1フレーム経過をカウントする。
-		}
-		
+	static int i = 0; //30フレームをカウントする。
+	if (i >= 30) {
+		//30フレーム経過したらゾンビ化。
+		pa = Zombie_Normal; //パターンをゾンビノーマルに変える。
+		Zonbe = 1;
+	}
+	else {
+		i++; //1フレーム経過をカウントする。
 	}
 
 }
@@ -248,7 +251,6 @@ void AI::NPCDamage()
 //	}
 void AI::NPCZombie_Normal()
 {
-
 	CVector3 v = game->siminUI[iNo]->K - m_position; //Kが次の目的地
 	float len = v.Length();//長さ
 	if (30 <= len) {
@@ -288,8 +290,6 @@ void AI::NPCZombie_Normal()
 			ima = 0;
 		game->siminUI[iNo]->kyorikeisan(game->da[iNo][ima++] - 1);
 	}
-
-
 	/////////////////////////////////
 	//一定のルートをうろうろする処理。
 	/////////////////////////////////
@@ -411,12 +411,14 @@ void AI::NPCFade_Out()//一般市民が退場するときの処理。
 		}
 	}
 }
+
 float AI::GetKyori(CVector3 a, CVector3 b) //2つのオブジェクトの座標を受け取り、オブジェクト間の距離を返す。
 {
 	CVector3 v = a - b;
 	float len = v.Length();//長さ
 	return len;  //2つのオブジェクトの距離を返す。
 }
+
 void AI::Turn()//ここ
 {
 	if (fabsf(m_movespeed.x) < 0.001f
@@ -434,10 +436,12 @@ void AI::Turn()//ここ
 	//SetRotationDegではなくSetRotationを使用する。
 	m_rotation.SetRotation(CVector3::AxisY, angle);
 }
+
 void AI::NPCRuet()//NPCルート
 {
 
 }
+
 float AI::VectorAngleDeg2(CVector3 c)
 {
 	c.Normalize();//向きVectorにする。
@@ -447,6 +451,7 @@ float AI::VectorAngleDeg2(CVector3 c)
 
 	return degree;
 }
+
 float AI::Siya(CVector3 h, float g)
 {
 
@@ -461,6 +466,7 @@ float AI::Siya(CVector3 h, float g)
 	}
 	return 0;
 }
+
 float AI::VectorAngleDeg(CVector3 c)
 {
 	c.Normalize();//向きVectorにする。
@@ -470,6 +476,7 @@ float AI::VectorAngleDeg(CVector3 c)
 
 	return degree;
 }
+
 void AI::DamageHantei() //全てのゾンビと距離でダメージ判定をする。
 {
 	FindGameObjectsWithTag(10, [&](IGameObject* go) {
@@ -478,8 +485,7 @@ void AI::DamageHantei() //全てのゾンビと距離でダメージ判定をする。
 			if (ai->Zonbe == 1) {   //それがゾンビだったら
 				float kyori = GetKyori(this->m_position, ai->m_position);//自分との距離を求める。
 				if (kyori < REACH) {  //距離が攻撃範囲以内だったら
-					pa = Damage; //パターンをダメージにかえる。
-					DamageFlag = true;//ダメージフラグをtrueにする。
+					pa = Resistance_NPC; //パターンを抵抗にかえる。
 				}
 			}
 		}
@@ -487,14 +493,15 @@ void AI::DamageHantei() //全てのゾンビと距離でダメージ判定をする。
 
 	float kyori = GetKyori(this->m_position, pl->m_position);//自分との距離を求める。
 	if (kyori < REACH) {  //距離が攻撃範囲以内だったら
-		pa = Damage; //パターンをダメージにかえる。
-		DamageFlag = true;//ダメージフラグをtrueにする。
+		pa = Resistance_Player; //パターンを抵抗にかえる。
 	}
 }
+
 void AI::NPCDeath()//死亡、消滅処理。
 {
 //	DeleteGO(this);//自己消滅。
 }
+
 void AI::Update()
 {
 	//pa = Normal; //ここはプレイヤーの行動によって変化するようにする。
@@ -509,8 +516,18 @@ void AI::Update()
 	m_rite.y = k_tekirot.m[0][1];
 	m_rite.z = k_tekirot.m[0][2];
 	m_rite.Normalize();
+	
+	if (muteki_Flag == true) {
+		muteki_count++;
+		if (muteki_count > 300) {//無敵化してから300フレームが経過したら
+			muteki_Flag = false;
+		}
+	}
+
 	if (Zonbe == 0) { //自分がゾンビではなかったら
-		DamageHantei(); //ゾンビとの当たり判定をとる。
+		if (muteki_Flag == false) {//無敵ではなかったら
+			DamageHantei(); //ゾンビとの当たり判定をとる。
+		}
 	}
 	
 	if (Gaizi->GatFragu() >= 1.0f&& ForceFlag == 0) {//特殊部隊が出現したら、
@@ -554,6 +571,12 @@ void AI::Update()
 		break;
 	case Fade_Out:
 		NPCFade_Out();
+		break;
+	case Resistance_NPC:
+		NPCResistance_NPC();
+		break;
+	case Resistance_Player:
+		NPCResistance_Player();
 		break;
 	case Damage:
 		NPCDamage();

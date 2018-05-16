@@ -3,6 +3,8 @@
 #include"Human.h"
 #include"Game.h"
 #include"Geizi.h"
+#define REACH 500.0  //ゾンビの攻撃範囲。この距離まで近づいたら攻撃する。
+#define PI 3.141592653589793 
 class Player;
 class keiroK;
 class AI : public Human
@@ -16,7 +18,9 @@ public:
 	void NPCNormal();//市民の通常行動の処理。
 	//void NPCEscape_NPC();//市民がゾンビNPCから逃げるときの処理。
 	//void NPCEscape_Player();//市民がゾンビプレイヤーから逃げるときの処理。
-	void NPCDamage();//攻撃を受けてからゾンビNPCになるまでの処理。
+	void NPCResistance_NPC();  //ゾンビに抵抗しているときの処理。
+	void NPCResistance_Player();  //ゾンビに抵抗しているときの処理。
+	void NPCDamage();//やられてからゾンビNPCになるまでの処理。
 	void NPCFade_Out();//一般市民がステージから出ていくまでの処理。
 	void NPCZombie_Normal();//ゾンビNPCの通常行動の処理。
 	void NPCZombie_Chase();//ゾンビNPCが市民を追跡するときの処理。
@@ -33,10 +37,14 @@ public:
 	float VectorAngleDeg(CVector3 c);  //2つのベクトルの角度を角度表記(degree)で返す。
 	float Siya(CVector3 h, float g);
 	float VectorAngleDeg2(CVector3 c);
+
+protected:
 	//メンバ変数
 	enum npcpattern { //switch文に使う。
 		Normal,             //市民の通常状態。
 		Damage,             //ダメージを受けたとき。
+		Resistance_NPC, //ゾンビに捕まって、抵抗しているとき。
+		Resistance_Player,
 		Escape,				//逃げてるとき。
 		//Escape_NPC,             //市民のNPCからの逃走状態。
 		//Escape_Player,       //市民のプレイヤーからの逃走状態。
@@ -47,6 +55,8 @@ public:
 		Zombie_Attack,      //ゾンビ化NPCの攻撃状態。
 		Death               //NPCの死亡。
 	};
+
+
 	enum npcpattern pa;
 	CCharacterController A_charaCon;
 	CSkinModel m_skinModel;					//スキンモデル。
@@ -77,6 +87,8 @@ public:
 	int kore = 0;
 	int modori = 0;
 	int da = 1;
+	int muteki_count = 0;//無敵時間のカウント。
+	bool muteki_Flag = false;//無敵になっているかどうかを表すフラグ。
 	std::vector<int> jyunban;
 	AI* Tansaku = nullptr;  //探索結果のオブジェクトを格納する。
 	AI*Chase_Zombie;  //追跡してくるキャラを格納する。
