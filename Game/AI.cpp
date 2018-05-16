@@ -36,7 +36,8 @@ bool AI::Start()
 	A_charaCon.Init(
 		50.0,			//半径。 
 		100.0f,			//高さ。
-		m_position		//初期位置。
+		m_position,		//初期位置。
+		1
 	);
 	game->siminUI[iNo]->kyorikeisan(game->da[iNo][1] - 1);
 	m_tekirot.MakeRotationFromQuaternion(m_rotation);

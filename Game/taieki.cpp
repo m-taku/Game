@@ -6,39 +6,38 @@
 
 taieki::taieki()
 {
+	effect = NewGO<prefab::CEffect>(0);
 }
 
 
 taieki::~taieki()
 {
+	effect->Release();
 }
 
 bool taieki::Start()
 {
-	
 	for (int i = 0;i < teki;i++)
 	{
 		taieki_to_tekipos[i] = CVector3::Zero;
-
 	}
 	player = FindGO<Player>("Player");
-	tekip = FindGO<tekihei>("tekihei");
+	tekip = FindGO<tekihei>("tekihei");/*
 	m_taiekiModelData.Load(L"modelData/taieki.cmo");
-	m_taieki.Init(m_taiekiModelData);
+	m_taieki.Init(m_taiekiModelData);*/
 	CF = MainCamera().GetForward();
 	CF.Normalize();
 	tpos = player->m_position;
 	tpos.y += 70.0f;
 	PS = player->m_moveSpeed;
+	effect->Play(L"effect/aura1.efk");
+	effect->SetPosition(tpos);
+	effect->SetScale({ 10.0f,10.0f,10.0f });
 	return true;
 }
 void taieki::Update()
 {
-	
-	
-
-		tpos += (CF * 80.0f)+PS/25.0f;
-	
+	tpos += (CF * 80.0f)+PS/25.0f;
 	TS.y -= 50.0f * GameTime().GetFrameDeltaTime();
 	tpos.y += TS.y;
 
@@ -73,7 +72,7 @@ void taieki::Update()
 		effect->Play(L"effect/aura.efk");*/
 		DeleteGO(this);
 	}
-	m_taieki.Update(tpos, CQuaternion::Identity, { 2.0f, 2.0f,2.0f });
+	effect->SetPosition(tpos);
 }
 void taieki::Render(CRenderContext& rc)
 {

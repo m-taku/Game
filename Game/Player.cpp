@@ -8,14 +8,12 @@
 
 Player::Player()
 {
-
 	hakaba=NewGO<prefab::CEffect>(0);
 }
 
 
 Player::~Player()
 {
-
 	DeleteGO(FindGO<taieki>("taieki"));
 	
 }
@@ -27,7 +25,8 @@ bool Player::Start()
 	m_charaCon.Init(
 		30.0,			//半径。 
 		100.0f,			//高さ。
-		m_position		//初期位置。
+		m_position,		//初期位置。
+		0
 	);
 	landpos.x = 2600.0f;
 	landpos.z = -5000.0f;

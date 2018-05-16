@@ -27,7 +27,7 @@ namespace tkEngine{
 		 *@param[in]	height		カプセルコライダーの高さ。
 		 *@param[in]	position	初期位置。
 		 */
-		void Init(float radius, float height, const CVector3& position);
+		void Init(float radius, float height, const CVector3& position,int CharaFlag);
 		/*!
 		 * @brief	実行。
 		 *@param[in]	deltaTime		経過時間。単位は秒。
@@ -98,5 +98,6 @@ namespace tkEngine{
 		float				m_radius = 0.0f;
 		float				m_height = 0.0f;		
 		CRigidBody			m_rigidBody;					//剛体。
+		int Flag = 0;										//キャラクターのフラグ
 	};
 }

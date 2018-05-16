@@ -56,6 +56,7 @@ namespace tkEngine {
 		//衝突したときに呼ばれる関数オブジェクト(壁用)
 		struct SweepResultWall : public btCollisionWorld::ConvexResultCallback
 		{
+			int NPCFlag = 0;						//NPCかどうかのフラグ
 			bool isHit = false;						//衝突フラグ。
 			CVector3 hitPos = CVector3::Zero;		//衝突点。
 			CVector3 startPos = CVector3::Zero;		//レイの始点。
@@ -65,7 +66,8 @@ namespace tkEngine {
 													//衝突したときに呼ばれるコールバック関数。
 			virtual	btScalar	addSingleResult(btCollisionWorld::LocalConvexResult& convexResult, bool normalInWorldSpace)
 			{
-				if (convexResult.m_hitCollisionObject == me) {
+				if (convexResult.m_hitCollisionObject == me|| NPCFlag==1
+					) {
 					//自分に衝突した。or 地面に衝突した。
 					return 0.0f;
 				}
@@ -98,14 +100,14 @@ namespace tkEngine {
 	}
 
 
-	void CCharacterController::Init(float radius, float height, const CVector3& position)
+	void CCharacterController::Init(float radius, float height,const CVector3& position,int CharaFlag)
 	{
 		m_position = position;
 		//コリジョン作成。
 		m_radius = radius;
 		m_height = height;
 		m_collider.Create(radius, height);
-
+		Flag = CharaFlag;
 		//剛体を初期化。
 		RigidBodyInfo rbInfo;
 		rbInfo.collider = &m_collider;
@@ -157,10 +159,11 @@ namespace tkEngine {
 				start.setOrigin(btVector3(posTmp.x, posTmp.y, posTmp.z));
 				//終点は次の移動先。XZ平面での衝突を調べるので、yはposTmp.yを設定する。
 				end.setOrigin(btVector3(nextPosition.x, posTmp.y, nextPosition.z));
-
+				int NPC = Flag;
 				SweepResultWall callback;
 				callback.me = m_rigidBody.GetBody();
 				callback.startPos = posTmp;
+				callback.NPCFlag = NPC;
 				//衝突検出。
 				PhysicsWorld().ConvexSweepTest((const btConvexShape*)m_collider.GetBody(), start, end, callback);
 

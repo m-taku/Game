@@ -56,7 +56,8 @@ bool tekihei::Start()
 		m_charaCon[i].Init(
 			50.0,			//半径。
 			100.0f,			//高さ。
-			tekipos[i]		//初期位置。
+			tekipos[i], 	//初期位置。
+			0
 		);
 	}
 
