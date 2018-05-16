@@ -16,7 +16,7 @@ void MapChip::Init(
 ) {
 	m_position = pos;
 	m_rotation = rotation;
-#if BUILD_LEVEL != BUILD_LEVEL_MASTER
+//#if BUILD_LEVEL != BUILD_LEVEL_MASTER
 
 	m_skinModelRender = NewGO<prefab::CSkinModelRender>(0);
 	m_skinModelRender->Init(modelFilePath);
@@ -25,6 +25,6 @@ void MapChip::Init(
 	m_physicsStaticObject.CreateMeshObject(m_skinModelRender, m_position, m_rotation);
 	m_skinModelRender->SetPosition(m_position);
 	m_skinModelRender->SetRotation(m_rotation);
-#endif
+//#endif
 }
 

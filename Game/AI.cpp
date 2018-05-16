@@ -63,22 +63,22 @@ void AI::NPCNormal()
 			rotAxis.Cross(forward, v);
 			rotAxis.Normalize();
 			CQuaternion qBias1;
-			qBias1.SetRotationDeg(rotAxis, 10.0f);
+			qBias1.SetRotationDeg(rotAxis, 3.0f);
 			m_rotation.Multiply(qBias1);
 		}
 		else {
-			if (angle >= 2.0f) {
-				v.y = 0.0f;
-				v.Normalize();
-				CVector3 forward = this->m_forward;
-				//回転軸を求める。
-				CVector3 rotAxis;
-				rotAxis.Cross(forward, v);
-				rotAxis.Normalize();
-				CQuaternion qBias1;
-				qBias1.SetRotationDeg(rotAxis, angle);
-				m_rotation.Multiply(qBias1);
-			}
+			//if (angle >= 2.0f) {
+			//	v.y = 0.0f;
+			//	v.Normalize();
+			//	CVector3 forward = this->m_forward;
+			//	//回転軸を求める。
+			//	CVector3 rotAxis;
+			//	rotAxis.Cross(forward, v);
+			//	rotAxis.Normalize();
+			//	CQuaternion qBias1;
+			//	qBias1.SetRotationDeg(rotAxis, angle);
+			//	m_rotation.Multiply(qBias1);
+			//}
 			//	m_position += (game->siminUI[iNo]->bekutor)*m_speed;
 			m_position = A_charaCon.Execute(GameTime().GetFrameDeltaTime(), m_forward*m_speed);
 		}
@@ -95,23 +95,23 @@ void AI::NPCNormal()
 		Gaizi->Satpoint(0.1);
 		pa = Escape;
 	}
-	FindGameObjectsWithTag(10, [&](IGameObject* go) {
-		if (go != this) {            //自分からの距離を計測するため、検索結果から自分を除外する。
-			AI* ai = (AI*)go;
-			if (ai->Zonbe == 0) {  //それがゾンビでなかったら
-				CVector3 kyori1 =   ai->m_position - this->m_position;//自分との距離を求める。
-				float f = kyori1.Length();
-				if (Siya(kyori1, f)) { //距離が攻撃範囲以内だったら
+	//FindGameObjectsWithTag(10, [&](IGameObject* go) {
+	//	if (go != this) {            //自分からの距離を計測するため、検索結果から自分を除外する。
+	//		AI* ai = (AI*)go;
+	//		if (ai->Zonbe == 0) {  //それがゾンビでなかったら
+	//			CVector3 kyori1 =   ai->m_position - this->m_position;//自分との距離を求める。
+	//			float f = kyori1.Length();
+	//			if (Siya(kyori1, f)) { //距離が攻撃範囲以内だったら
 
-					CQuaternion qBias1;
-					qBias1.SetRotationDeg(CVector3::AxisY, 3.0f);
-					m_rotation.Multiply(qBias1);
+	//				CQuaternion qBias1;
+	//				qBias1.SetRotationDeg(CVector3::AxisY, 3.0f);
+	//				m_rotation.Multiply(qBias1);
 
-				}
-			}
-		}
+	//			}
+	//		}
+	//	}
 
-	});
+	//});
 	//if (len1 < 500.0f) {//プレイヤーを見つけたら
 	//	if (fabsf(VectorAngleDeg(v2)) <= 45.0f) {
 	//		Gaizi->point += 0.1f;
@@ -524,7 +524,7 @@ void AI::Update()
 			keiro.tansa(m_position, game->pasu.m_pointList[0], &jyunban);
 			game->siminUI[iNo]->kyorikeisan(jyunban[0] - 1);
 			da = 1;
-			m_speed = 1000.0;
+			m_speed = 100.0;
 			pa = Fade_Out; //パターンをフェードアウトに切り替える。
 		}
 		ForceFlag = 2;//1回しか実行したくないのでフラグをさげる。
@@ -611,13 +611,28 @@ void AI::Update()
 }
 void AI::NPCReturn()
 {
-	int Size= jyunban.size();
+	int Size = jyunban.size();
 
 	CVector3 v = game->siminUI[iNo]->K - m_position;
 	float len = v.Length();//長さ
 	if (300 <= len) {
-		//m_position += game->siminUI[iNo]->bekutor*m_speed;
-		m_position=	A_charaCon.Execute(GameTime().GetFrameDeltaTime(), (game->siminUI[iNo]->bekutor)*m_speed);
+		float angle = VectorAngleDeg(v);
+		if (angle >= 2.0) {//10度より上なら回転
+			v.y = 0.0f; //パスまでベクトルをXZ平面上での向きにする。
+			v.Normalize();
+			CVector3 forward = this->m_forward;
+			//回転軸を求める。
+			CVector3 rotAxis;
+			rotAxis.Cross(forward, v);
+			rotAxis.Normalize();
+			CQuaternion qBias1;
+			qBias1.SetRotationDeg(rotAxis, 3.0);
+			m_rotation.Multiply(qBias1);
+		}
+		else {
+			//m_position += game->siminUI[iNo]->bekutor*m_speed;
+			m_position = A_charaCon.Execute(GameTime().GetFrameDeltaTime(), m_forward*m_speed);
+		}
 	}
 	else {
 		if (da >= Size) {//元の位置にもどった
