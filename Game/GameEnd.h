@@ -7,14 +7,11 @@ public:
 	bool Start();
 	void Update();
 	void Render(CRenderContext& rc);
-	int furgu = 0,taim=0;
-
-	CSprite GameOuba;				//スプライト(枠)。
-	CShaderResourceView Ouba;	//テクスチャ。
-
-	CSprite GameKuria;				//スプライト(枠)。
-	CShaderResourceView kuria;	//テクスチャ。
+private:
+	int furgu = 0;
+	int taim = 0;
+	CSprite syuuryou;				//スプライト(枠)。
+	CShaderResourceView you;	//テクスチャ。
 	CVector3 m_position;
-
 };
 

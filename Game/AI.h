@@ -7,7 +7,6 @@
 #define PI 3.141592653589793 
 class Player;
 class keiroK;
-
 class AI : public Human
 {
 public:
@@ -59,7 +58,7 @@ protected:
 
 
 	enum npcpattern pa;
-	CCharacterController m_charaCon;
+	CCharacterController A_charaCon;
 	CSkinModel m_skinModel;					//スキンモデル。
 	CSkinModelData m_skinModelData;			//スキンモデルデータ。
 	CQuaternion m_rotation = CQuaternion::Identity;	//回転。

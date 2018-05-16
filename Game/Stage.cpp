@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "Stage.h"
+#include"Game.h"
 
 
 Stage::Stage()
@@ -16,7 +17,10 @@ void Stage::OnDestroy()
 }
 bool Stage::Start()
 {
-	m_skinModelData.Load(L"modelData/stage1.cmo");
+	No = FindGO<Game>("Game")->stag;
+	wchar_t moveFilePath[256];
+	swprintf_s(moveFilePath,L"modelData/stage%d.cmo", No);
+	m_skinModelData.Load(moveFilePath);
 	m_skinModel.Init(m_skinModelData);
 	//メッシュコライダーを作成。
 	m_meshCollider.CreateFromSkinModel(m_skinModel, nullptr);

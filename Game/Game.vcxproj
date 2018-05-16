@@ -685,6 +685,7 @@
     <MeshContentTask Include="Assets\modelData\hantei.FBX" />
     <MeshContentTask Include="Assets\modelData\item.FBX" />
     <MeshContentTask Include="Assets\modelData\stage.FBX" />
+    <MeshContentTask Include="Assets\modelData\stage0.FBX" />
     <MeshContentTask Include="Assets\modelData\stage1.FBX" />
     <MeshContentTask Include="Assets\modelData\taieki.FBX" />
     <MeshContentTask Include="Assets\modelData\unityChan.fbx" />
@@ -762,11 +763,13 @@
     <CustomBuild Include="Assets\effect\Texture\aura3_type2.png" />
     <CustomBuild Include="Assets\effect\Texture\glow.png" />
     <CustomBuild Include="Assets\effect\Texture\magma.png" />
+    <CustomBuild Include="Assets\effect\Texture\sdfs.png" />
     <Image Include="Assets\modelData\ao.png" />
     <Image Include="Assets\modelData\livingbuildings.png" />
     <Image Include="Assets\modelData\white.png" />
     <Image Include="Assets\modelData\worktops007.jpg" />
     <Image Include="Assets\sprite\fade.png" />
+    <ImageContentTask Include="Assets\sprite\yaji.png" />
     <ImageContentTask Include="Assets\sprite\kajy.png" />
     <ImageContentTask Include="Assets\sprite\ka-soru.png" />
     <ImageContentTask Include="Assets\sprite\syoujun.png" />
@@ -778,6 +781,12 @@
       <FileType>Document</FileType>
     </CustomBuild>
     <CustomBuild Include="Assets\effect\aura.efk">
+      <FileType>Document</FileType>
+    </CustomBuild>
+    <CustomBuild Include="Assets\effect\aura1.efk">
+      <FileType>Document</FileType>
+    </CustomBuild>
+    <CustomBuild Include="Assets\effect\aura2.efk">
       <FileType>Document</FileType>
     </CustomBuild>
     <None Include="Assets\lever\larer_01.tks" />
