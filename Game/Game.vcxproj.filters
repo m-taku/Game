@@ -159,9 +159,6 @@
     <CustomBuild Include="Assets\shader\shadowBlur.fx">
       <Filter>Assets\shader</Filter>
     </CustomBuild>
-    <CustomBuild Include="Assets\effect\test.efk">
-      <Filter>Assets\effect</Filter>
-    </CustomBuild>
     <CustomBuild Include="Assets\effect\Texture\Burst01.png">
       <Filter>Assets\effect\Texture</Filter>
     </CustomBuild>
@@ -248,6 +245,18 @@
     </CustomBuild>
     <CustomBuild Include="Assets\lever\leval001.tks">
       <Filter>Assets\lever</Filter>
+    </CustomBuild>
+    <CustomBuild Include="Assets\effect\test.efk">
+      <Filter>Assets\effect</Filter>
+    </CustomBuild>
+    <CustomBuild Include="Assets\effect\aura1.efk">
+      <Filter>Assets\effect</Filter>
+    </CustomBuild>
+    <CustomBuild Include="Assets\effect\aura2.efk">
+      <Filter>Assets\effect</Filter>
+    </CustomBuild>
+    <CustomBuild Include="Assets\effect\Texture\sdfs.png">
+      <Filter>Assets\effect\Texture</Filter>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>

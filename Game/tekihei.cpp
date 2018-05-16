@@ -147,7 +147,7 @@ void tekihei::Update()
 					if (tama_to_player_vector[i] <= 50.0f&& damageflag[i] == 0)
 					{
 						damageflag[i] = 1;
-						gaizi->HP += 0.1;
+						gaizi->satHP(0.1);
 					}
 					if (damageflag[i] == 1)
 					{

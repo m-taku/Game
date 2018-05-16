@@ -92,7 +92,7 @@ void AI::NPCNormal()
 	CVector3 v2 = pl->m_position - m_position;
 	float len1 = v2.Length();//長さ
 	if (Siya(v2, len1) != 0) {
-		Gaizi->point += 0.1f;
+		Gaizi->Satpoint(0.1);
 		pa = Escape;
 	}
 	FindGameObjectsWithTag(10, [&](IGameObject* go) {
@@ -512,7 +512,7 @@ void AI::Update()
 		DamageHantei(); //ゾンビとの当たり判定をとる。
 	}
 	
-	if (Gaizi->furag == 1&& ForceFlag == 0) {//特殊部隊が出現したら、
+	if (Gaizi->GatFragu() >= 1.0f&& ForceFlag == 0) {//特殊部隊が出現したら、
 		ForceFlag = 1;//出現フラグを立てる。
 	}
 	if (ForceFlag == 1) {//特殊部隊が出現したら

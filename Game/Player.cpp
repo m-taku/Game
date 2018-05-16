@@ -31,9 +31,9 @@ bool Player::Start()
 	);
 	landpos.x = 2600.0f;
 	landpos.z = -5000.0f;
-	hakaba->Play(L"effect/aura.efk");
+	hakaba->Play(L"effect/aura1.efk");
 	hakaba->SetPosition(landpos);
-	hakaba->SetScale({ 100.0f,100.0f,100.0f });
+	hakaba->SetScale({ 50.0f,50.0f,50.0f });
 	return true;
 }
 void Player::Update()
@@ -97,7 +97,7 @@ void Player::Update()
 		if (Pad(0).IsTrigger(enButtonA))
 		{
 			DeleteGO(hakaba);
-			FindGO<Geizi>("Geizi")->point += 1.0f;
+			FindGO<Geizi>("Geizi")->Satpoint(1.0f);
 		}
 		if (Pad(0).IsTrigger(enButtonB))
 		{
