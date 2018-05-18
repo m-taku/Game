@@ -682,13 +682,45 @@
     <ClInclude Include="stdafx.h" />
   </ItemGroup>
   <ItemGroup>
+    <MeshContentTask Include="Assets\modelData\Building Sky_big_color1.FBX" />
+    <MeshContentTask Include="Assets\modelData\Building Sky_big_color2.FBX" />
+    <MeshContentTask Include="Assets\modelData\Building Sky_big_color3.FBX" />
+    <MeshContentTask Include="Assets\modelData\Building Sky_small_color1.FBX" />
+    <MeshContentTask Include="Assets\modelData\Building Sky_small_color2.FBX" />
+    <MeshContentTask Include="Assets\modelData\Building Sky_small_color3.FBX" />
+    <MeshContentTask Include="Assets\modelData\Building_Auto Service.FBX" />
+    <MeshContentTask Include="Assets\modelData\Building_Bar.FBX" />
+    <MeshContentTask Include="Assets\modelData\Building_Clothing.FBX" />
+    <MeshContentTask Include="Assets\modelData\Building_Coffee Shop.FBX" />
+    <MeshContentTask Include="Assets\modelData\Building_Fruits  Shop.FBX" />
+    <MeshContentTask Include="Assets\modelData\Building_Gas Station.FBX" />
+    <MeshContentTask Include="Assets\modelData\Building_House_01_color1.FBX" />
+    <MeshContentTask Include="Assets\modelData\Building_House_01_color2.FBX" />
+    <MeshContentTask Include="Assets\modelData\Building_House_01_color3.FBX" />
+    <MeshContentTask Include="Assets\modelData\Building_Music Store.FBX" />
+    <MeshContentTask Include="Assets\modelData\Building_Pizza.FBX" />
+    <MeshContentTask Include="Assets\modelData\Building_Super Market.FBX" />
     <MeshContentTask Include="Assets\modelData\hantei.FBX" />
     <MeshContentTask Include="Assets\modelData\item.FBX" />
+    <MeshContentTask Include="Assets\modelData\Natures_Big Tree.FBX" />
+    <MeshContentTask Include="Assets\modelData\Natures_Pot Bush_big.FBX" />
+    <MeshContentTask Include="Assets\modelData\Props_Bench.FBX" />
+    <MeshContentTask Include="Assets\modelData\Props_BillBoard_medium.FBX" />
     <MeshContentTask Include="Assets\modelData\stage.FBX" />
     <MeshContentTask Include="Assets\modelData\stage0.FBX" />
     <MeshContentTask Include="Assets\modelData\stage1.FBX" />
+    <MeshContentTask Include="Assets\modelData\stage3.FBX" />
     <MeshContentTask Include="Assets\modelData\taieki.FBX" />
     <MeshContentTask Include="Assets\modelData\unityChan.fbx" />
+    <MeshContentTask Include="Assets\modelData\Vehicle_Car1.FBX" />
+    <MeshContentTask Include="Assets\modelData\Vehicle_Car2.FBX" />
+    <MeshContentTask Include="Assets\modelData\Vehicle_Car3.FBX" />
+    <MeshContentTask Include="Assets\modelData\Vehicle_Pick up Truck1.FBX" />
+    <MeshContentTask Include="Assets\modelData\Vehicle_Pick up Truck2.FBX" />
+    <MeshContentTask Include="Assets\modelData\Vehicle_Pick up Truck3.FBX" />
+    <MeshContentTask Include="Assets\modelData\Vehicle_SUV1.FBX" />
+    <MeshContentTask Include="Assets\modelData\Vehicle_SUV2.FBX" />
+    <MeshContentTask Include="Assets\modelData\Vehicle_SUV3.FBX" />
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="Assets\modelData\unityChan.tks">

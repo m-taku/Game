@@ -107,15 +107,6 @@
     <MeshContentTask Include="Assets\modelData\stage0.FBX">
       <Filter>Assets\modelData</Filter>
     </MeshContentTask>
-    <MeshContentTask Include="Assets\modelData\stage3.FBX">
-      <Filter>Assets\modelData</Filter>
-    </MeshContentTask>
-    <MeshContentTask Include="Assets\modelData\Building Sky_big_color1.FBX">
-      <Filter>Assets\modelData</Filter>
-    </MeshContentTask>
-    <MeshContentTask Include="Assets\modelData\Building Sky_big_color2.FBX">
-      <Filter>Assets\modelData</Filter>
-    </MeshContentTask>
     <MeshContentTask Include="Assets\modelData\Building Sky_big_color3.FBX">
       <Filter>Assets\modelData</Filter>
     </MeshContentTask>
@@ -140,6 +131,21 @@
     <MeshContentTask Include="Assets\modelData\Building_Coffee Shop.FBX">
       <Filter>Assets\modelData</Filter>
     </MeshContentTask>
+    <MeshContentTask Include="Assets\modelData\Building Sky_big_color1.FBX">
+      <Filter>Assets\modelData</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Assets\modelData\Building Sky_big_color2.FBX">
+      <Filter>Assets\modelData</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Assets\modelData\Building_Music Store.FBX">
+      <Filter>Assets\modelData</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Assets\modelData\Building_Pizza.FBX">
+      <Filter>Assets\modelData</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Assets\modelData\Building_Super Market.FBX">
+      <Filter>Assets\modelData</Filter>
+    </MeshContentTask>
     <MeshContentTask Include="Assets\modelData\Building_Fruits  Shop.FBX">
       <Filter>Assets\modelData</Filter>
     </MeshContentTask>
@@ -155,13 +161,10 @@
     <MeshContentTask Include="Assets\modelData\Building_House_01_color3.FBX">
       <Filter>Assets\modelData</Filter>
     </MeshContentTask>
-    <MeshContentTask Include="Assets\modelData\Building_Music Store.FBX">
+    <MeshContentTask Include="Assets\modelData\Props_Bench.FBX">
       <Filter>Assets\modelData</Filter>
     </MeshContentTask>
-    <MeshContentTask Include="Assets\modelData\Building_Pizza.FBX">
-      <Filter>Assets\modelData</Filter>
-    </MeshContentTask>
-    <MeshContentTask Include="Assets\modelData\Building_Super Market.FBX">
+    <MeshContentTask Include="Assets\modelData\Props_BillBoard_medium.FBX">
       <Filter>Assets\modelData</Filter>
     </MeshContentTask>
     <MeshContentTask Include="Assets\modelData\Natures_Big Tree.FBX">
@@ -170,28 +173,7 @@
     <MeshContentTask Include="Assets\modelData\Natures_Pot Bush_big.FBX">
       <Filter>Assets\modelData</Filter>
     </MeshContentTask>
-    <MeshContentTask Include="Assets\modelData\Props_Bench.FBX">
-      <Filter>Assets\modelData</Filter>
-    </MeshContentTask>
-    <MeshContentTask Include="Assets\modelData\Props_BillBoard_medium.FBX">
-      <Filter>Assets\modelData</Filter>
-    </MeshContentTask>
-    <MeshContentTask Include="Assets\modelData\saku.FBX">
-      <Filter>Assets\modelData</Filter>
-    </MeshContentTask>
-    <MeshContentTask Include="Assets\modelData\stadiwalu.FBX">
-      <Filter>Assets\modelData</Filter>
-    </MeshContentTask>
-    <MeshContentTask Include="Assets\modelData\Vehicle_Car1.FBX">
-      <Filter>Assets\modelData</Filter>
-    </MeshContentTask>
-    <MeshContentTask Include="Assets\modelData\Vehicle_Car2.FBX">
-      <Filter>Assets\modelData</Filter>
-    </MeshContentTask>
-    <MeshContentTask Include="Assets\modelData\Vehicle_Car3.FBX">
-      <Filter>Assets\modelData</Filter>
-    </MeshContentTask>
-    <MeshContentTask Include="Assets\modelData\Vehicle_Pick up Truck1.FBX">
+    <MeshContentTask Include="Assets\modelData\stage3.FBX">
       <Filter>Assets\modelData</Filter>
     </MeshContentTask>
     <MeshContentTask Include="Assets\modelData\Vehicle_Pick up Truck2.FBX">
@@ -207,6 +189,18 @@
       <Filter>Assets\modelData</Filter>
     </MeshContentTask>
     <MeshContentTask Include="Assets\modelData\Vehicle_SUV3.FBX">
+      <Filter>Assets\modelData</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Assets\modelData\Vehicle_Car1.FBX">
+      <Filter>Assets\modelData</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Assets\modelData\Vehicle_Car2.FBX">
+      <Filter>Assets\modelData</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Assets\modelData\Vehicle_Car3.FBX">
+      <Filter>Assets\modelData</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Assets\modelData\Vehicle_Pick up Truck1.FBX">
       <Filter>Assets\modelData</Filter>
     </MeshContentTask>
   </ItemGroup>
@@ -357,9 +351,6 @@
     </CustomBuild>
     <CustomBuild Include="Assets\effect\Texture\sdfs.png">
       <Filter>Assets\effect\Texture</Filter>
-    </CustomBuild>
-    <CustomBuild Include="Assets\lever\matilevel001.tks">
-      <Filter>Assets\lever</Filter>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
