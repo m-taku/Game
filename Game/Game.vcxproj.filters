@@ -271,6 +271,9 @@
       <Filter>Assets\sprite</Filter>
     </Image>
     <Image Include="Assets\modelData\ao.png" />
+    <Image Include="Assets\modelData\download.png">
+      <Filter>Assets\modelData</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\lever\larer_01.tks">
