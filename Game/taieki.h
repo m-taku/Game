@@ -24,7 +24,10 @@ public:
 	CVector3 taieki_to_tekipos[teki];
 	CVector3 tekipos2[teki];
 	float tekikyori[teki];
-
+private:
+	int Lever = 2;
+	int Taim = 0;
+	int teikonFrag = 0;
 	prefab::CEffect* effect = nullptr;
 };
 

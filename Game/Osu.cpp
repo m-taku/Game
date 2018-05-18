@@ -1,5 +1,8 @@
 #include "stdafx.h"
+#include"Game.h"
+#include "AIMove.h"
 #include "Osu.h"
+
 
 
 Osu::Osu()
@@ -57,4 +60,35 @@ void Osu::NPCResistance_Player()
 			pa = Return;//パターンをリターンに変える。
 		}
 	
+}
+
+
+void Osu::Start_Walk_Animation()//キャラクターが歩き始める時のアニメーションの処理。
+{
+
+}
+
+void Osu::Loop_Walk_Animation()//キャラクターが歩き続ける時のアニメーションの処理。
+{
+
+}
+
+void Osu::Start_Run_Animation()//キャラクターが走り始める時のアニメーションの処理。
+{
+
+}
+
+void Osu::Loop_Run_Animation()//キャラクターが走り続ける時のアニメーションの処理。
+{
+
+}
+
+void Osu::Resistance_Animation()//キャラクターが抵抗している時のアニメーションの処理。
+{
+
+}
+
+void Osu::Zombie_Attack_Animation()//ゾンビ化キャラクターが攻撃しているのアニメーションの処理。
+{
+
 }

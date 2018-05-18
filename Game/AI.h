@@ -16,6 +16,7 @@ public:
 	void Update();
 
 	void NPCNormal();//市民の通常行動の処理。
+	void NPCNormal_Search();//市民が警戒する処理。
 	//void NPCEscape_NPC();//市民がゾンビNPCから逃げるときの処理。
 	//void NPCEscape_Player();//市民がゾンビプレイヤーから逃げるときの処理。
 	void NPCResistance_NPC();  //ゾンビに抵抗しているときの処理。
@@ -37,6 +38,22 @@ public:
 	float VectorAngleDeg(CVector3 c);  //2つのベクトルの角度を角度表記(degree)で返す。
 	float Siya(CVector3 h, float g);
 	float VectorAngleDeg2(CVector3 c);
+
+	void Animation_Walk();//歩き始めと歩き続けの一連のアニメーションの処理。
+	void Animation_Run();//走り始めと走り続けの一連のアニメーションの処理。
+
+	////////////////////////////////////////////////////////////////////////
+	////アニメーション関連のメンバ関数(メソッド)。                      ////
+	////各サブクラスでのオーバーライドを前提とするため、中身は書かない。////
+	////////////////////////////////////////////////////////////////////////
+	void Start_Walk_Animation();//歩き始めの処理。
+	void Loop_Walk_Animation();//歩き続けるときの処理。
+	void Start_Run_Animation();//走り始めの処理。
+	void Loop_Run_Animation();//走り続けるときの処理。
+	void Resistance_Animation();//抵抗しているときの処理。
+	void Zombie_Attack_Animation();//ゾンビ化NPCが攻撃するときの処理。
+	/////////////////////////////////////////////////////////////////////////
+	/////////////////////////////////////////////////////////////////////////
 
 protected:
 	//メンバ変数
