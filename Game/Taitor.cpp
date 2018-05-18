@@ -15,7 +15,7 @@ bool Taitor::Start()
 	n_sprite.Init(n_texture, 1280, 720);
 	n_sprite.Update(n_position, CQuaternion::Identity, { 1.0f,1.0f,1.0f });
 	fase = FindGO<Fade>("Fade");
-	y_texture.CreateFromDDSTextureFromFile(L"sprite/ge-ji.dds");
+	y_texture.CreateFromDDSTextureFromFile(L"sprite/yaji.dds");
 	y_sprite.Init(y_texture, 100, 50);
 	y_sprite.Update(n_position, Quaternion, { 1.0f,1.0f,1.0f });
 	//	fase->StartFadeOut();
