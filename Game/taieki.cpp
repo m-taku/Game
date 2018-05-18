@@ -39,10 +39,6 @@ bool taieki::Start()
 }
 void taieki::Update()
 {
-	tpos += (CF * 80.0f)+PS/25.0f;
-	TS.y -= 50.0f * GameTime().GetFrameDeltaTime();
-	tpos.y += TS.y;
-
 	for (int i = 0;i < teki;i++)
 	{
 		if (tekip != NULL)
@@ -64,14 +60,36 @@ void taieki::Update()
 			}
 		}
 	}
-
-	if (tpos.y <= 0.0f)
+	if (tpos.y <= 10.0f)
 	{
-		/*effect = NewGO<prefab::CEffect>(0);
-		e_pos = tpos;
-		effect->SetPosition(e_pos);
-		effect->SetScale({100.0f,100.0f,100.0f});
-		effect->Play(L"effect/aura.efk");*/
+		if (teikonFrag < 1) {
+			if (Lever >= 2) {
+				effect->Release();
+				effect->Play(L"effect/aura2.efk");
+				effect->SetScale({ 100.0f,100.0f,100.0f });
+			}
+			else {
+				Taim = 120;
+			}
+			/*effect = NewGO<prefab::CEffect>(0);
+			e_pos = tpos;
+			effect->SetPosition(e_pos);
+			effect->SetScale({100.0f,100.0f,100.0f});
+			effect->Play(L"effect/aura.efk");*/
+
+			teikonFrag = 1;
+		}
+	}
+	else {
+		tpos += (CF * 80.0f) + PS / 25.0f;
+		TS.y -= 50.0f * GameTime().GetFrameDeltaTime();
+		tpos.y += TS.y;
+		effect->SetPosition(tpos);
+	}
+	if (effect->IsPlay() != 1) {
+		DeleteGO(this);
+	}
+	if (teikonFrag == 1 && Taim++ >= 70) {
 		DeleteGO(this);
 	}
 	effect->SetPosition(tpos);

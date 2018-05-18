@@ -41,5 +41,6 @@ public:
 private:
 	void InitSceneLight();
 	float g = 0.0f, f = 0.0;
+	prefab::CDirectionLight* m_sunLig = nullptr;	//	‘¾—zƒ‰ƒCƒgB
 };
 

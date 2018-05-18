@@ -44,14 +44,14 @@ void Taitor::Update()
 		}
 	}
 	if (fase->toumeiodo <= 0.0f&&Triggeer >= 1) {
-		if (Pad(0).GetLStickXF() < 0.0&&Target > 0) {
+		if (Pad(0).GetLStickXF() < 0.0&&Target < 1) {
 			n_position.x -= 100.00f;
-			Target--;
-			hyouji = 
+			Target = 3;
+			hyouji = 0;
 			taim = 0;
-		}if (Pad(0).GetLStickXF() > 0.0&&Target < 1) {
+		}if (Pad(0).GetLStickXF() > 0.0&&Target > 0) {
 			n_position.x += 100.00f;
-			Target++;
+			Target = 0;
 			hyouji = 0;
 			taim = 0;
 		}

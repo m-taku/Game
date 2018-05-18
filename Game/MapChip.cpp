@@ -25,6 +25,8 @@ void MapChip::Init(
 	m_physicsStaticObject.CreateMeshObject(m_skinModelRender, m_position, m_rotation);
 	m_skinModelRender->SetPosition(m_position);
 	m_skinModelRender->SetRotation(m_rotation);
+	m_skinModelRender->SetShadowCasterFlag(true);
+	m_skinModelRender->SetShadowReceiverFlag(true);
 //#endif
 }
 

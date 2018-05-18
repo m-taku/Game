@@ -16,6 +16,8 @@
 #include"Osu.h"
 #include"Mes.h"
 #include"Dog.h"
+#include "tkEngine\light\tkDirectionLight.h"
+
 Game::Game()
 {
 	gaizi=NewGO<Geizi>(1, "Geizi");
@@ -27,11 +29,19 @@ Game::Game()
 	stge=NewGO<Stage>(0, "stage");
 
 	camera1 =NewGO<camera>(0, "camera");
-/*
-	m_level[0].Build(L"lever/leval001.tks");*/
+
+
+	m_level[0].Build(L"lever/matilevel001.tks");
 	wchar_t moveFilePath[256];
 	swprintf_s(moveFilePath, L"lever/leval00%d.tks", 2);
 	pasu.Load(moveFilePath);
+
+	m_sunLig = NewGO<prefab::CDirectionLight>(0);
+	CVector3 lightDir = { 0.707f, -0.707f, 0.0f };
+	m_sunLig->SetDirection(lightDir);
+	m_sunLig->SetColor({10.0f, 10.0f, 10.0f, 1.0f});
+	LightManager().SetAmbientLight({ 1.0f, 1.0f, 1.0f });
+	GraphicsEngine().GetShadowMap().SetLightDirection(lightDir);
 	//m_level[1].X = 5.0f;
 	//m_level[1].Z=  5.0f;
 	//m_level[1].Build(L"lever/leval01.tks");

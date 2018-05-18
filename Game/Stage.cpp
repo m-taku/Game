@@ -22,6 +22,7 @@ bool Stage::Start()
 	swprintf_s(moveFilePath,L"modelData/stage%d.cmo", No);
 	m_skinModelData.Load(moveFilePath);
 	m_skinModel.Init(m_skinModelData);
+	m_skinModel.SetShadowReceiverFlag(true);
 	//メッシュコライダーを作成。
 	m_meshCollider.CreateFromSkinModel(m_skinModel, nullptr);
 	RigidBodyInfo rbInfo;

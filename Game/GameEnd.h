@@ -9,6 +9,7 @@ public:
 	void Render(CRenderContext& rc);
 private:
 	int furgu = 0;
+
 	int taim = 0;
 	CSprite syuuryou;				//スプライト(枠)。
 	CShaderResourceView you;	//テクスチャ。
