@@ -92,7 +92,6 @@ void AI::NPCNormal()
 			ima = 0;
 		game->siminUI[iNo]->kyorikeisan(game->da[iNo][ima++] - 1);
 	}
-	
 	//FindGameObjectsWithTag(10, [&](IGameObject* go) {
 	//	if (go != this) {            //自分からの距離を計測するため、検索結果から自分を除外する。
 	//		AI* ai = (AI*)go;
@@ -497,7 +496,7 @@ void AI::DamageHantei() //全てのゾンビと距離でダメージ判定をする。
 		}
 	});
 
-	float kyori = GetKyori(this->m_position, pl->m_position);//自分との距離を求める。
+	float kyori = GetKyori(this->m_position, pl->GetPosition());//自分との距離を求める。
 	if (kyori < REACH) {  //距離が攻撃範囲以内だったら
 		pa = Resistance_Player; //パターンを抵抗にかえる。
 	}
@@ -720,7 +719,7 @@ void AI::NPCReturn()
 void AI::NPCescape()
 {
 
-	CVector3 v = m_position - pl->m_position;
+	CVector3 v = m_position - pl->GetPosition();
 	float len = v.Length();//長さ
 	if (len < 2000.0) {
 		v.Normalize();//正規化して向きベクトルにする。
