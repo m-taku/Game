@@ -46,7 +46,7 @@ bool tekihei::Start()
 		tekipos[i] = CVector3::Zero;
 		tekipos[i].x = 3600.0f;
 		tekipos[i].z = -4800.0f;
-		tekiskinModelData[i].Load(L"modelData/unityChan.cmo");//プレイヤーを書け
+		tekiskinModelData[i].Load(L"modelData/liam.cmo");//プレイヤーを書け
 		tekiskinModel[i].Init(tekiskinModelData[i]);
 		trot[i].SetRotationDeg(CVector3::AxisY, -90.0f);//回転
 		tekirot[i].Multiply(trot[i]);
@@ -177,7 +177,7 @@ void tekihei::Update()
 
 			}
 			tekipos[i] = m_charaCon[i].Execute(GameTime().GetFrameDeltaTime(), tekispeed[i]);
-			tekiskinModel[i].Update(tekipos[i], tekirot[i], CVector3::One);
+			tekiskinModel[i].Update(tekipos[i], tekirot[i], {20.0f,20.0f,20.0f});
 		}
 		if (tekiheiflag[i] == 0)
 		{

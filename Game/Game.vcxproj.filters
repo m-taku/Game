@@ -107,6 +107,8 @@
     <MeshContentTask Include="Assets\modelData\stage0.FBX">
       <Filter>Assets\modelData</Filter>
     </MeshContentTask>
+    <MeshContentTask Include="Assets\modelData\mati.FBX" />
+    <MeshContentTask Include="Assets\modelData\liam.FBX" />
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="Assets\shader\tonemap.fx">
@@ -256,6 +258,7 @@
     <CustomBuild Include="Assets\effect\Texture\sdfs.png">
       <Filter>Assets\effect\Texture</Filter>
     </CustomBuild>
+    <CustomBuild Include="Assets\modelData\liam.tks" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\modelData\livingbuildings.png">

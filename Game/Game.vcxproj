@@ -684,6 +684,7 @@
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\hantei.FBX" />
     <MeshContentTask Include="Assets\modelData\item.FBX" />
+    <MeshContentTask Include="Assets\modelData\liam.FBX" />
     <MeshContentTask Include="Assets\modelData\mati.FBX" />
     <MeshContentTask Include="Assets\modelData\stage.FBX" />
     <MeshContentTask Include="Assets\modelData\stage0.FBX" />
@@ -804,6 +805,9 @@
       <FileType>Document</FileType>
     </CustomBuild>
     <CustomBuild Include="Assets\lever\leval002.tks">
+      <FileType>Document</FileType>
+    </CustomBuild>
+    <CustomBuild Include="Assets\modelData\liam.tks">
       <FileType>Document</FileType>
     </CustomBuild>
   </ItemGroup>
