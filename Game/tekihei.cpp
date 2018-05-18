@@ -56,7 +56,8 @@ bool tekihei::Start()
 		m_charaCon[i].Init(
 			50.0,			//半径。
 			100.0f,			//高さ。
-			tekipos[i]		//初期位置。
+			tekipos[i], 	//初期位置。
+			0
 		);
 	}
 
@@ -147,7 +148,7 @@ void tekihei::Update()
 					if (tama_to_player_vector[i] <= 50.0f&& damageflag[i] == 0)
 					{
 						damageflag[i] = 1;
-						gaizi->HP += 0.1;
+						gaizi->satHP(0.1);
 					}
 					if (damageflag[i] == 1)
 					{

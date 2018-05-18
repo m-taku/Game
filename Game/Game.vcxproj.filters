@@ -58,11 +58,11 @@
     <ClCompile Include="Geizi.cpp" />
     <ClCompile Include="item.cpp" />
     <ClCompile Include="GameEnd.cpp" />
+    <ClCompile Include="Osu.cpp" />
+    <ClCompile Include="Mes.cpp" />
+    <ClCompile Include="Dog.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <CLInclude Include="resource.h">
-      <Filter>Resource Files</Filter>
-    </CLInclude>
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Taitor.h" />
@@ -83,11 +83,9 @@
     <ClInclude Include="Geizi.h" />
     <ClInclude Include="item.h" />
     <ClInclude Include="GameEnd.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="Game.rc">
-      <Filter>Resource Files</Filter>
-    </ResourceCompile>
+    <ClInclude Include="Osu.h" />
+    <ClInclude Include="Mes.h" />
+    <ClInclude Include="Dog.h" />
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\unityChan.fbx">
@@ -106,7 +104,9 @@
       <Filter>Assets\modelData</Filter>
     </MeshContentTask>
     <MeshContentTask Include="Assets\modelData\item.FBX" />
-    <MeshContentTask Include="Assets\modelData\mati.FBX" />
+    <MeshContentTask Include="Assets\modelData\stage0.FBX">
+      <Filter>Assets\modelData</Filter>
+    </MeshContentTask>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="Assets\shader\tonemap.fx">
@@ -156,9 +156,6 @@
     </CustomBuild>
     <CustomBuild Include="Assets\shader\shadowBlur.fx">
       <Filter>Assets\shader</Filter>
-    </CustomBuild>
-    <CustomBuild Include="Assets\effect\test.efk">
-      <Filter>Assets\effect</Filter>
     </CustomBuild>
     <CustomBuild Include="Assets\effect\Texture\Burst01.png">
       <Filter>Assets\effect\Texture</Filter>
@@ -247,6 +244,18 @@
     <CustomBuild Include="Assets\lever\leval001.tks">
       <Filter>Assets\lever</Filter>
     </CustomBuild>
+    <CustomBuild Include="Assets\effect\test.efk">
+      <Filter>Assets\effect</Filter>
+    </CustomBuild>
+    <CustomBuild Include="Assets\effect\aura1.efk">
+      <Filter>Assets\effect</Filter>
+    </CustomBuild>
+    <CustomBuild Include="Assets\effect\aura2.efk">
+      <Filter>Assets\effect</Filter>
+    </CustomBuild>
+    <CustomBuild Include="Assets\effect\Texture\sdfs.png">
+      <Filter>Assets\effect\Texture</Filter>
+    </CustomBuild>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\modelData\livingbuildings.png">
@@ -280,5 +289,8 @@
     </ImageContentTask>
     <ImageContentTask Include="Assets\sprite\ka-soru.png" />
     <ImageContentTask Include="Assets\sprite\kajy.png" />
+    <ImageContentTask Include="Assets\sprite\yaji.png">
+      <Filter>Assets\sprite</Filter>
+    </ImageContentTask>
   </ItemGroup>
 </Project>

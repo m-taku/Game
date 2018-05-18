@@ -8,7 +8,6 @@
 
 Player::Player()
 {
-
 	hakaba=NewGO<prefab::CEffect>(0);
 }
 
@@ -26,13 +25,14 @@ bool Player::Start()
 	m_charaCon.Init(
 		30.0,			//半径。 
 		100.0f,			//高さ。
-		m_position		//初期位置。
+		m_position,		//初期位置。
+		0
 	);
 	landpos.x = 2600.0f;
 	landpos.z = -5000.0f;
-	hakaba->Play(L"effect/aura.efk");
+	hakaba->Play(L"effect/aura1.efk");
 	hakaba->SetPosition(landpos);
-	hakaba->SetScale({ 100.0f,100.0f,100.0f });
+	hakaba->SetScale({ 50.0f,50.0f,50.0f });
 	return true;
 }
 void Player::Update()
@@ -40,8 +40,8 @@ void Player::Update()
 	m_moveSpeed.z = 0.0f;
 	m_moveSpeed.x = 0.0f;
 	//左スティックの入力量を受け取る。
-	float lStick_x = Pad(0).GetLStickXF()*500.0f;
-	float lStick_y = Pad(0).GetLStickYF()*500.0f;
+	float lStick_x = Pad(0).GetLStickXF()*800.0f;
+	float lStick_y = Pad(0).GetLStickYF()*800.0f;
 	//右スティックの入力量を受け取る。
 	float rStick_x = Pad(0).GetRStickXF();
 	float rStick_y = Pad(0).GetRStickYF();
@@ -96,7 +96,7 @@ void Player::Update()
 		if (Pad(0).IsTrigger(enButtonA))
 		{
 			DeleteGO(hakaba);
-			FindGO<Geizi>("Geizi")->point += 1.0f;
+			FindGO<Geizi>("Geizi")->Satpoint(1.0f);
 		}
 		if (Pad(0).IsTrigger(enButtonB))
 		{

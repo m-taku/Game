@@ -8,19 +8,17 @@
 #include"tekihei.h"
 #define REACH 100.0  //ゾンビの攻撃範囲。この距離まで近づいたら攻撃する。
 #define PI 3.141592653589793 
-AI NPC;
+//AI NPC;
 //今回はmを引用するNPCのハンドルとして、jを特殊部隊のハンドルとして代用する。これは後に直しておくように。
 //NPCとNPCゾンビの両方を処理する。
 AI::AI()
 {
 	pa = Normal; //ここはプレイヤーの行動によって変化するようにする。
-	m_speed = 1000.0f; //ノーマル状態のときの移動速度。
+	m_speed = 500.0f; //ノーマル状態のときの移動速度。
 }
-
-
 AI::~AI()
 {
-	m_charaCon.RemoveRigidBoby();
+	//m_charaCon.RemoveRigidBoby();
 }
 bool AI::Start()
 {
@@ -30,15 +28,17 @@ bool AI::Start()
 	iNo = game->No++;
 	m_position= game->pasu.m_pointList[game->da[iNo][0] - 1];
 	m_position.y = 0.0f;
+	//キャラのスキンモデルのロードは各自サブクラスで行う。
 	m_skinModelData.Load(L"modelData/unityChan.cmo");//プレイヤーを書け
 	m_skinModel.Init(m_skinModelData);
 
 	CMatrix mRot;
 	//mRot.MakeRotationFromQuaternion();
-	m_charaCon.Init(
+	A_charaCon.Init(
 		50.0,			//半径。 
 		100.0f,			//高さ。
-		m_position		//初期位置。
+		m_position,		//初期位置。
+		1
 	);
 	game->siminUI[iNo]->kyorikeisan(game->da[iNo][1] - 1);
 	m_tekirot.MakeRotationFromQuaternion(m_rotation);
@@ -69,20 +69,20 @@ void AI::NPCNormal()
 			m_rotation.Multiply(qBias1);
 		}
 		else {
-			if (angle >= 2.0f) {
-				v.y = 0.0f;
-				v.Normalize();
-				CVector3 forward = this->m_forward;
-				//回転軸を求める。
-				CVector3 rotAxis;
-				rotAxis.Cross(forward, v);
-				rotAxis.Normalize();
-				CQuaternion qBias1;
-				qBias1.SetRotationDeg(rotAxis, angle);
-				m_rotation.Multiply(qBias1);
-			}
+			//if (angle >= 2.0f) {
+			//	v.y = 0.0f;
+			//	v.Normalize();
+			//	CVector3 forward = this->m_forward;
+			//	//回転軸を求める。
+			//	CVector3 rotAxis;
+			//	rotAxis.Cross(forward, v);
+			//	rotAxis.Normalize();
+			//	CQuaternion qBias1;
+			//	qBias1.SetRotationDeg(rotAxis, angle);
+			//	m_rotation.Multiply(qBias1);
+			//}
 			//	m_position += (game->siminUI[iNo]->bekutor)*m_speed;
-			m_position = m_charaCon.Execute(GameTime().GetFrameDeltaTime(), m_forward*m_speed);
+			m_position = A_charaCon.Execute(GameTime().GetFrameDeltaTime(), m_forward*m_speed);
 		}
 	}
 	else {
@@ -94,26 +94,26 @@ void AI::NPCNormal()
 	CVector3 v2 = pl->GetPosition() - m_position;
 	float len1 = v2.Length();//長さ
 	if (Siya(v2, len1) != 0) {
-		Gaizi->point += 1.1f;
+		Gaizi->Satpoint(0.1);
 		pa = Escape;
 	}
-	FindGameObjectsWithTag(10, [&](IGameObject* go) {
-		if (go != this) {            //自分からの距離を計測するため、検索結果から自分を除外する。
-			AI* ai = (AI*)go;
-			if (ai->Zonbe == 0) {  //それがゾンビでなかったら
-				CVector3 kyori1 =   ai->m_position - this->m_position;//自分との距離を求める。
-				float f = kyori1.Length();
-				if (Siya(kyori1, f)) { //距離が攻撃範囲以内だったら
+	//FindGameObjectsWithTag(10, [&](IGameObject* go) {
+	//	if (go != this) {            //自分からの距離を計測するため、検索結果から自分を除外する。
+	//		AI* ai = (AI*)go;
+	//		if (ai->Zonbe == 0) {  //それがゾンビでなかったら
+	//			CVector3 kyori1 =   ai->m_position - this->m_position;//自分との距離を求める。
+	//			float f = kyori1.Length();
+	//			if (Siya(kyori1, f)) { //距離が攻撃範囲以内だったら
 
-					CQuaternion qBias1;
-					qBias1.SetRotationDeg(CVector3::AxisY, 1.0f);
-					m_rotation.Multiply(qBias1);
+	//				CQuaternion qBias1;
+	//				qBias1.SetRotationDeg(CVector3::AxisY, 3.0f);
+	//				m_rotation.Multiply(qBias1);
 
-				}
-			}
-		}
+	//			}
+	//		}
+	//	}
 
-	});
+	//});
 	//if (len1 < 500.0f) {//プレイヤーを見つけたら
 	//	if (fabsf(VectorAngleDeg(v2)) <= 45.0f) {
 	//		Gaizi->point += 0.1f;
@@ -124,10 +124,6 @@ void AI::NPCNormal()
 	//		//プレイヤーから逃げる。
 	//	}
 	//}
-	if (len1 < REACH) {//攻撃を受ける範囲まで近づいたら確実にダメージを受けるので
-		pa = Damage;
-		DamageFlag = true;//ダメージフラグをtrueにする。
-	}
 	//	/////////////////////////////////
 	//	//一定のルートをうろうろする処理。
 	//	/////////////////////////////////
@@ -183,27 +179,30 @@ void AI::NPCNormal()
 	//	//}
 }
 
+void AI::NPCResistance_NPC()//NPCゾンビへの抵抗に関する処理。オーバーライドさせる。
+{
+	pa = Damage;
+}
+
+void AI::NPCResistance_Player()//プレイヤーへの抵抗に関する処理。オーバーライドさせる。
+{
+	pa = Damage;
+}
+
 void AI::NPCDamage()
 {
-	if (DamageFlag == true) {//プレイヤーからの攻撃を受けたら
-		static int i = 0; //30フレームをカウントする。
-		if (i >= 30) {
-			//30フレーム経過したらゾンビ化。
-			pa = Zombie_Normal; //パターンをゾンビノーマルに変える。
-			m_movespeed = { 0.5f, 0.0f, 0.0f }; //ゾンビノーマル状態のときの移動速度に変える。
-			Zonbe = 1;
-			DamageFlag = false;
-		}
-		else {
-			i++; //1フレーム経過をカウントする。
-		}
-		
+	static int i = 0; //30フレームをカウントする。
+	if (i >= 30) {
+		//30フレーム経過したらゾンビ化。
+		pa = Zombie_Normal; //パターンをゾンビノーマルに変える。
+		Zonbe = 1;
+	}
+	else {
+		i++; //1フレーム経過をカウントする。
 	}
 
 }
-
-//void AI::NPCEscape_NPC() //NPCからの逃走
-//{
+//void AI::NPCEscape_NPC() //NPCからの逃
 //	static bool LostFlag = false;  //見失ったかどうかを示すフラグ。
 //								   ///////////////////
 //								   //逃走に関する処理。
@@ -226,7 +225,6 @@ void AI::NPCDamage()
 //
 //	}
 //}
-
 //void AI::NPCEscape_Player() //プレイヤーからの逃走
 //{
 //	///////////////////
@@ -251,10 +249,47 @@ void AI::NPCDamage()
 //		}
 //
 //	}
-//}
-
 void AI::NPCZombie_Normal()
 {
+	CVector3 v = game->siminUI[iNo]->K - m_position; //Kが次の目的地
+	float len = v.Length();//長さ
+	if (30 <= len) {
+		float angle = VectorAngleDeg(v);
+		if (angle >= 3.0) {
+			v.y = 0.0f;
+			v.Normalize();
+			CVector3 forward = this->m_forward;
+			//回転軸を求める。
+			CVector3 rotAxis;
+			rotAxis.Cross(forward, v);
+			rotAxis.Normalize();
+			CQuaternion qBias1;
+			qBias1.SetRotationDeg(rotAxis, 3.0f);
+			m_rotation.Multiply(qBias1);
+		}
+		else {
+			if (angle >= 2.0f) {
+				v.y = 0.0f;
+				v.Normalize();
+				CVector3 forward = this->m_forward;
+				//回転軸を求める。
+				CVector3 rotAxis;
+				rotAxis.Cross(forward, v);
+				rotAxis.Normalize();
+				CQuaternion qBias1;
+				qBias1.SetRotationDeg(rotAxis, angle);
+				m_rotation.Multiply(qBias1);
+			}
+			//	m_position += (game->siminUI[iNo]->bekutor)*m_speed;
+			m_position = A_charaCon.Execute(GameTime().GetFrameDeltaTime(), m_forward*m_speed);
+		}
+	}
+	else {
+		if (ima >= 6)//今のポジションが6なら
+					 //0にリセットする。0,1,2,3,4,5の順番。
+			ima = 0;
+		game->siminUI[iNo]->kyorikeisan(game->da[iNo][ima++] - 1);
+	}
 	/////////////////////////////////
 	//一定のルートをうろうろする処理。
 	/////////////////////////////////
@@ -266,7 +301,7 @@ void AI::NPCZombie_Normal()
 				float kyori = GetKyori(this->m_position, ai->m_position);//自分との距離を求める。
 				if (kyori < 60.0f) {  //距離が視界範囲以内だったら
 					float angle = VectorAngleDeg(ai->m_position); //検索対象の座標を引数にする。
-					if (angle <= 45.0f&&angle >= -45.0f) { //角度が視界内だったら
+					if (angle <= 45.0f) { //角度が視界内だったら
 						if (kyori < min_Nagasa) { //自分に一番近いのなら
 							min_Nagasa = kyori;
 							Tansaku = ai;
@@ -281,31 +316,30 @@ void AI::NPCZombie_Normal()
 		pa = Zombie_Chase; //パターンをゾンビチェイスに変える。
 	}
 }
-
 void AI::NPCZombie_Chase()
 {
-	//float len = GetKyori(m_position, m->m_position);
-	//if (len>80.0f||HitFlag == true) {//他のNPCを見失った(距離が80以上あいた)、あるいは攻撃を与えたら
-	//	//元の位置に戻る。
-
-	//	if (ZombieChaseNumber = MyNumber) {//元の位置の番号に戻ったら
-	//		pa = Zombie_Normal; //パターンをゾンビノーマルに変える。
-	//		HitFlag == false;
-	//	}
-	//}
-		//else {
-		//	/////////////////////////////////
-		//	//市民NPCを追跡する処理。
-		//	/////////////////////////////////
-		//}
-	//if (len<REACH) {//NPCに追いついたら
-	//	//攻撃する(確実に当たる仕様)。
-
-	//		HitFlag = true; //「NPCに攻撃を当てた」というフラグをたてる。
-	//	}
-	
+	float len = GetKyori(m_position, Tansaku->m_position);
+	if (len>80.0f||HitFlag == true) {//他のNPCを見失った(距離が80以上あいた)、あるいは攻撃を与えたら
+		//元の位置に戻る。
+		if (ZombieChaseNumber == MyNumber) {//元の位置の番号に戻ったら
+			Tansaku = nullptr; //検索結果を初期化する。
+			pa = Zombie_Normal; //パターンをゾンビノーマルに変える。
+			HitFlag = false;
+		}
+	}else {//NPCを見失っておらず、見つけていたら
+		CVector3 n = m_position - Tansaku->m_position;
+		n.Normalize();
+		n.y = 0.0f;
+		m_position = A_charaCon.Execute(GameTime().GetFrameDeltaTime(), n*m_speed);
+			/////////////////////////////////
+			//市民NPCを追跡する処理。
+			/////////////////////////////////
+		if (len<REACH) {//NPCに追いついたら
+						//攻撃する(確実に当たる仕様)。
+			HitFlag = true; //「NPCに攻撃を当てた」というフラグをたてる。
+		}
+	}	
 }
-
 void AI::NPCZombie_Attack()//vs特殊部隊
 {
 	
@@ -327,7 +361,6 @@ void AI::NPCZombie_Attack()//vs特殊部隊
 	//}
 	
 }
-
 void AI::NPCFade_Out()//一般市民が退場するときの処理。
 {
 
@@ -362,7 +395,7 @@ void AI::NPCFade_Out()//一般市民が退場するときの処理。
 			//	qBias1.SetRotationDeg(rotAxis, angle);
 			//	m_rotation.Multiply(qBias1);
 			//}
-			m_position = m_charaCon.Execute(GameTime().GetFrameDeltaTime(), m_forward*m_speed);//移動。
+			m_position =A_charaCon.Execute(GameTime().GetFrameDeltaTime(), m_forward*m_speed);//移動。
 		}
 		//}
 		//v.Normalize();
@@ -414,10 +447,11 @@ float AI::VectorAngleDeg2(CVector3 c)
 	c.Normalize();//向きVectorにする。
 	float kaku = atanf(c.Dot(m_rite));//２つのべクトルの内積のアークコサインを求める。(ラジアン)
 
-	float degree = CMath::RadToDeg(kaku);
+	float degree = CMath::RadToDeg(kaku);//求めたラジアンを度に変える。
 
 	return degree;
 }
+
 float AI::Siya(CVector3 h, float g)
 {
 
@@ -432,6 +466,7 @@ float AI::Siya(CVector3 h, float g)
 	}
 	return 0;
 }
+
 float AI::VectorAngleDeg(CVector3 c)
 {
 	c.Normalize();//向きVectorにする。
@@ -441,6 +476,7 @@ float AI::VectorAngleDeg(CVector3 c)
 
 	return degree;
 }
+
 void AI::DamageHantei() //全てのゾンビと距離でダメージ判定をする。
 {
 	FindGameObjectsWithTag(10, [&](IGameObject* go) {
@@ -449,7 +485,7 @@ void AI::DamageHantei() //全てのゾンビと距離でダメージ判定をする。
 			if (ai->Zonbe == 1) {   //それがゾンビだったら
 				float kyori = GetKyori(this->m_position, ai->m_position);//自分との距離を求める。
 				if (kyori < REACH) {  //距離が攻撃範囲以内だったら
-					pa = Damage; //パターンをダメージにかえる。
+					pa = Resistance_NPC; //パターンを抵抗にかえる。
 				}
 			}
 		}
@@ -457,7 +493,7 @@ void AI::DamageHantei() //全てのゾンビと距離でダメージ判定をする。
 
 	float kyori = GetKyori(this->m_position, pl->GetPosition());//自分との距離を求める。
 	if (kyori < REACH) {  //距離が攻撃範囲以内だったら
-		pa = Damage; //パターンをダメージにかえる。
+		pa = Resistance_Player; //パターンを抵抗にかえる。
 	}
 }
 
@@ -480,11 +516,21 @@ void AI::Update()
 	m_rite.y = k_tekirot.m[0][1];
 	m_rite.z = k_tekirot.m[0][2];
 	m_rite.Normalize();
+	
+	if (muteki_Flag == true) {
+		muteki_count++;
+		if (muteki_count > 300) {//無敵化してから300フレームが経過したら
+			muteki_Flag = false;
+		}
+	}
+
 	if (Zonbe == 0) { //自分がゾンビではなかったら
-		DamageHantei(); //ゾンビとの当たり判定をとる。
+		if (muteki_Flag == false) {//無敵ではなかったら
+			DamageHantei(); //ゾンビとの当たり判定をとる。
+		}
 	}
 	
-	if (Gaizi->furag == 1&& ForceFlag == 0) {//特殊部隊が出現したら、
+	if (Gaizi->GatFragu() >= 1.0f&& ForceFlag == 0) {//特殊部隊が出現したら、
 		ForceFlag = 1;//出現フラグを立てる。
 	}
 	if (ForceFlag == 1) {//特殊部隊が出現したら
@@ -496,7 +542,7 @@ void AI::Update()
 			keiro.tansa(m_position, game->pasu.m_pointList[0], &jyunban);
 			game->siminUI[iNo]->kyorikeisan(jyunban[0] - 1);
 			da = 1;
-			m_speed = 1000.0;
+			m_speed = 100.0;
 			pa = Fade_Out; //パターンをフェードアウトに切り替える。
 		}
 		ForceFlag = 2;//1回しか実行したくないのでフラグをさげる。
@@ -526,11 +572,17 @@ void AI::Update()
 	case Fade_Out:
 		NPCFade_Out();
 		break;
+	case Resistance_NPC:
+		NPCResistance_NPC();
+		break;
+	case Resistance_Player:
+		NPCResistance_Player();
+		break;
 	case Damage:
 		NPCDamage();
 		break;
 	case Zombie_Normal:
-		//NPCZombie_Normal();
+		NPCZombie_Normal();
 		break;
 	case Zombie_Chase:
 		//他のNPCを見つけた時の処理を書く。
@@ -581,19 +633,32 @@ void AI::Update()
 	//	keiro->tansa(k, b);
 	m_skinModel.Update(m_position, m_rotation, { 0.5f, 0.5f,0.5f });
 }
-
 void AI::NPCReturn()
 {
-	int Size= jyunban.size();
+	int Size = jyunban.size();
 
 	CVector3 v = game->siminUI[iNo]->K - m_position;
 	float len = v.Length();//長さ
 	if (300 <= len) {
-		//m_position += game->siminUI[iNo]->bekutor*m_speed;
-		m_position=	m_charaCon.Execute(GameTime().GetFrameDeltaTime(), (game->siminUI[iNo]->bekutor)*m_speed);
+		float angle = VectorAngleDeg(v);
+		if (angle >= 2.0) {//10度より上なら回転
+			v.y = 0.0f; //パスまでベクトルをXZ平面上での向きにする。
+			v.Normalize();
+			CVector3 forward = this->m_forward;
+			//回転軸を求める。
+			CVector3 rotAxis;
+			rotAxis.Cross(forward, v);
+			rotAxis.Normalize();
+			CQuaternion qBias1;
+			qBias1.SetRotationDeg(rotAxis, 3.0);
+			m_rotation.Multiply(qBias1);
+		}
+		else {
+			//m_position += game->siminUI[iNo]->bekutor*m_speed;
+			m_position = A_charaCon.Execute(GameTime().GetFrameDeltaTime(), m_forward*m_speed);
+		}
 	}
 	else {
-
 		if (da >= Size) {//元の位置にもどった
 			ima--;
 			pa = Normal;//パターンをノーマルにかえる。
@@ -614,7 +679,7 @@ void AI::NPCescape()
 		v.Normalize();//正規化して向きベクトルにする。
 		v.y = 0.0f;
 		//m_position += v * m_speed;
-		m_position =m_charaCon.Execute(GameTime().GetFrameDeltaTime(),v*m_speed);
+		m_position =A_charaCon.Execute(GameTime().GetFrameDeltaTime(),v*m_speed);
 	}
 
 	else {
@@ -624,7 +689,6 @@ void AI::NPCescape()
 		pa = Return;
 	}
 }
-
 void AI::Render(CRenderContext& rc)
 {
 	m_skinModel.Draw(rc, MainCamera().GetViewMatrix(), MainCamera().GetProjectionMatrix());

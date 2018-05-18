@@ -206,10 +206,10 @@ void keiroK::tansa(CVector3 i, CVector3 Ta, std::vector<int> *a)
 	for (int goulo = 0; goulo < jyunban.size(); goulo++) {
 		a->push_back(jyunban[goulo]);
 	}
-		open.erase(open.begin(), open.end());
-		close.erase(close.begin(), close.end());
-		resuto1.erase(resuto1.begin(), resuto1.end());
-		jyunban.erase(jyunban.begin(), jyunban.end());
+		open.clear();
+		close.clear();
+		resuto1.clear();
+		jyunban.clear();
 		f = 1;
 		N = 1;
 		sum = 0;

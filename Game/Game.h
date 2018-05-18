@@ -36,7 +36,8 @@ public:
 	keiroK* keiro;
 	int No = 0;
 	int da[5][6] = {  {10,27,25,1,6,7},{ 35,11,8,29,27,34 }, { 11, 26,30,18,16,9},{13,16,4,2,23,24} ,{ 1, 5, 17, 14, 11, 12 } };
-	int a=2;							//レベル。
+	int a=2;		
+	int stag = 0;					//レベル。
 private:
 	void InitSceneLight();
 	float g = 0.0f, f = 0.0;

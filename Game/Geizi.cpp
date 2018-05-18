@@ -54,10 +54,8 @@ void Geizi::Update()
 	}
 	n_sprite.Update(n_position, CQuaternion::Identity, { point,0.8f,1.0f }, { 0.0f,1.0f });
 	m_sprite.Update(m_position, CQuaternion::Identity, { 1.0f,1.0f,1.0f }, { 0.0f,1.0f });
-
 	hn_sprite.Update(hn_position, CQuaternion::Identity, { 0.95f-HP,0.8f,1.0f }, { 0.0f,1.0f });
 	hm_sprite.Update(hm_position, CQuaternion::Identity, { 1.0f,1.0f,1.0f }, { 0.0f,1.0f });
-
 	hy_sprite.Update(CVector3::Zero, CQuaternion::Identity, { 0.5f,0.5f,1.0f }, { 0.5f,0.5f });
 }
 void Geizi::Render(CRenderContext& rc)

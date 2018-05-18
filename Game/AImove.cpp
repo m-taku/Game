@@ -28,6 +28,5 @@ void AImove::kyorikeisan(int bangou)
 	bekutor.y = 0.0f;
 	K = game->pasu.m_pointList[bangou];
 	K.y = 0.0f;
-	//bekutor.Normalize();
 	j = bangou;
 }
