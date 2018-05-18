@@ -19,6 +19,6 @@ private:
 	int Triggeer = 0;
 	int hyouji = 11;
 	int taim = 11;
-	int Target = 0;
+	int Target = 3;
 };
 

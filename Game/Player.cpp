@@ -21,6 +21,7 @@ bool Player::Start()
 {
 	m_skinModelData.Load(L"modelData/unityChan.cmo");//プレイヤーを書け
 	m_skinModel.Init(m_skinModelData);
+	m_skinModel.SetShadowCasterFlag(true);
 	//キャラクターコントローラーを初期化。
 	m_charaCon.Init(
 		30.0,			//半径。 
@@ -30,9 +31,9 @@ bool Player::Start()
 	);
 	landpos.x = 2600.0f;
 	landpos.z = -5000.0f;
-	hakaba->Play(L"effect/aura1.efk");
+	hakaba->Play(L"effect/aura2.efk");
 	hakaba->SetPosition(landpos);
-	hakaba->SetScale({ 50.0f,50.0f,50.0f });
+	hakaba->SetScale({ 40.0f,40.0f,40.0f });
 	return true;
 }
 void Player::Update()
