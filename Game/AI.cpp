@@ -48,6 +48,7 @@ bool AI::Start()
 	m_forward.Normalize();
 	m_rotation.SetRotationDeg(CVector3::AxisY,VectorAngleDeg(game->siminUI[iNo]->bekutor));
 	SetTags(10);
+	m_skinModel.SetShadowCasterFlag(true);
 	return true;
 }
 void AI::NPCNormal()
@@ -90,12 +91,6 @@ void AI::NPCNormal()
 			//0にリセットする。0,1,2,3,4,5の順番。
 			ima = 0;
 		game->siminUI[iNo]->kyorikeisan(game->da[iNo][ima++] - 1);
-	}
-	CVector3 v2 = pl->m_position - m_position;
-	float len1 = v2.Length();//長さ
-	if (Siya(v2, len1) != 0) {
-		Gaizi->Satpoint(0.1);
-		pa = Escape;
 	}
 	//FindGameObjectsWithTag(10, [&](IGameObject* go) {
 	//	if (go != this) {            //自分からの距離を計測するため、検索結果から自分を除外する。
@@ -177,6 +172,16 @@ void AI::NPCNormal()
 	//	//	}
 	//	//	
 	//	//}
+}
+
+void AI::NPCNormal_Search()//NPCの警戒処理。
+{
+	CVector3 v2 = pl->m_position - m_position;
+	float len1 = v2.Length();//長さ
+	if (Siya(v2, len1) != 0) {
+		Gaizi->Satpoint(0.1);
+		pa = Escape;
+	}
 }
 
 void AI::NPCResistance_NPC()//NPCゾンビへの抵抗に関する処理。オーバーライドさせる。
@@ -281,7 +286,7 @@ void AI::NPCZombie_Normal()
 				m_rotation.Multiply(qBias1);
 			}
 			//	m_position += (game->siminUI[iNo]->bekutor)*m_speed;
-			m_position = A_charaCon.Execute(GameTime().GetFrameDeltaTime(), m_forward*m_speed);
+			m_position = A_charaCon.Execute(GameTime().GetFrameDeltaTime(), m_forward*m_speed);//移動。
 		}
 	}
 	else {
@@ -491,7 +496,7 @@ void AI::DamageHantei() //全てのゾンビと距離でダメージ判定をする。
 		}
 	});
 
-	float kyori = GetKyori(this->m_position, pl->m_position);//自分との距離を求める。
+	float kyori = GetKyori(this->m_position, pl->GetPosition());//自分との距離を求める。
 	if (kyori < REACH) {  //距離が攻撃範囲以内だったら
 		pa = Resistance_Player; //パターンを抵抗にかえる。
 	}
@@ -501,6 +506,46 @@ void AI::NPCDeath()//死亡、消滅処理。
 {
 //	DeleteGO(this);//自己消滅。
 }
+
+void AI::Animation_Walk()//歩き始めと歩き続けの一連のアニメーションの処理。
+{
+	
+}
+void AI::Animation_Run()//走り始めと走り続けの一連のアニメーションの処理。
+{
+
+}
+
+void AI::Start_Walk_Animation()//キャラクターが歩き始める時のアニメーションの処理。
+{
+
+}
+
+void AI::Loop_Walk_Animation()//キャラクターが歩き続ける時のアニメーションの処理。
+{
+
+}
+
+void AI::Start_Run_Animation()//キャラクターが走り始める時のアニメーションの処理。
+{
+
+}
+
+void AI::Loop_Run_Animation()//キャラクターが走り続ける時のアニメーションの処理。
+{
+
+}
+
+void AI::Resistance_Animation()//キャラクターが抵抗している時のアニメーションの処理。
+{
+
+}
+
+void AI::Zombie_Attack_Animation()//ゾンビ化キャラクターが攻撃している時のアニメーションの処理。
+{
+
+}
+
 
 void AI::Update()
 {
@@ -556,6 +601,7 @@ void AI::Update()
 	case Normal:
 		//NPCの動きを書く。
 		NPCNormal();
+		NPCNormal_Search();
 		break;
 	//case Escape_NPC:
 	//	NPCEscape_NPC();
@@ -673,7 +719,7 @@ void AI::NPCReturn()
 void AI::NPCescape()
 {
 
-	CVector3 v = m_position - pl->m_position;
+	CVector3 v = m_position - pl->GetPosition();
 	float len = v.Length();//長さ
 	if (len < 2000.0) {
 		v.Normalize();//正規化して向きベクトルにする。

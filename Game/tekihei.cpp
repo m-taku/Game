@@ -82,7 +82,7 @@ void tekihei::Update()
 			tekifoward[i].z = m_tekirot[i].m[2][2];
 			tekifoward[i].Normalize();
 
-			ppos = Pp->m_position;
+			ppos = Pp->GetPosition();
 			teki_to_player[i] = ppos - tekipos[i];
 
 			teki_to_player_vector[i] = sqrt(teki_to_player[i].x*teki_to_player[i].x + teki_to_player[i].y*teki_to_player[i].y + teki_to_player[i].z*teki_to_player[i].z);
@@ -131,7 +131,7 @@ void tekihei::Update()
 				}
 				if (tamaflag[i] == 1)
 				{
-					playerpos = Pp->m_position;
+					playerpos = Pp->GetPosition();
 					playerpos.y += 50.0f;
 					tama_to_player[i] = playerpos - tamapos[i];
 					tama_to_player_vector[i] = sqrt(tama_to_player[i].x*tama_to_player[i].x + tama_to_player[i].y*tama_to_player[i].y + tama_to_player[i].z*tama_to_player[i].z);

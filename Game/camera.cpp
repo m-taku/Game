@@ -23,8 +23,10 @@ void camera::Update()
 	//プレイヤーのインスタンスを探す。
 	m_player = FindGO<Player>("Player");
 	if (m_player != NULL){
-		target = m_player->m_position + m_player->m_forward * 100.0f;
-		target.y = m_player->m_position.y + 70.0f;
+
+		position_of_player = m_player->GetPosition();
+		target = position_of_player + m_player->GetFoeward() * 100.0f;
+		target.y = position_of_player.y + 70.0f;
 		
 		d += rStick_y*5.0f;
 		d = max(d, -50.0f);
@@ -32,8 +34,8 @@ void camera::Update()
 		target.y = target.y + d;
 		/*target.z = m_player->m_position.z + m_player->m_forward.z + 50.0f;
 		target.y = m_player->m_position.y + m_player->m_forward.y + 50.0f;*/
-		Ppos = m_player->m_position + m_player->m_forward * 10.0f;
-		Ppos.y = m_player->m_position.y + 70.0f;
+		Ppos = m_player->GetPosition() + m_player->GetFoeward() * 10.0f;
+		Ppos.y = position_of_player.y + 70.0f;
 	}
 		
 	//カメラのニアクリップとファークリップを設定する。
