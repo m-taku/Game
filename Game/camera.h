@@ -15,5 +15,6 @@ public:
 	CVector3 target = CVector3::Zero;
 	CVector3 Ppos = CVector3::Zero;
 	float d = 0.0f;
+	CVector3 position_of_player;
 };
 

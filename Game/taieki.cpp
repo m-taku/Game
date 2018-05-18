@@ -27,9 +27,9 @@ bool taieki::Start()
 	m_taieki.Init(m_taiekiModelData);
 	CF = MainCamera().GetForward();
 	CF.Normalize();
-	tpos = player->m_position;
+	tpos = player->GetPosition();
 	tpos.y += 70.0f;
-	PS = player->m_moveSpeed;
+	PS = player->GetMoveSpeed();
 	return true;
 }
 void taieki::Update()

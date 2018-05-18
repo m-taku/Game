@@ -91,7 +91,7 @@ void AI::NPCNormal()
 			ima = 0;
 		game->siminUI[iNo]->kyorikeisan(game->da[iNo][ima++] - 1);
 	}
-	CVector3 v2 = pl->m_position - m_position;
+	CVector3 v2 = pl->GetPosition() - m_position;
 	float len1 = v2.Length();//長さ
 	if (Siya(v2, len1) != 0) {
 		Gaizi->point += 1.1f;
@@ -455,7 +455,7 @@ void AI::DamageHantei() //全てのゾンビと距離でダメージ判定をする。
 		}
 	});
 
-	float kyori = GetKyori(this->m_position, pl->m_position);//自分との距離を求める。
+	float kyori = GetKyori(this->m_position, pl->GetPosition());//自分との距離を求める。
 	if (kyori < REACH) {  //距離が攻撃範囲以内だったら
 		pa = Damage; //パターンをダメージにかえる。
 	}
@@ -608,7 +608,7 @@ void AI::NPCReturn()
 void AI::NPCescape()
 {
 
-	CVector3 v = m_position - pl->m_position;
+	CVector3 v = m_position - pl->GetPosition();
 	float len = v.Length();//長さ
 	if (len < 2000.0) {
 		v.Normalize();//正規化して向きベクトルにする。

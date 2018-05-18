@@ -11,14 +11,30 @@ public:
 	bool Start();
 	void Update();
 	void Render(CRenderContext& rc);
+	CVector3 GetPosition()
+	{
+		return m_position;
+	}
+	CVector3 GetFoeward()
+	{
+		return m_forward;
+	}
+	CVector3 GetMoveSpeed()
+	{
+		return m_moveSpeed;
+	}
+	
+private:
 	CSkinModel m_skinModel;					//スキンモデル。
 	CSkinModelData m_skinModelData;			//スキンモデルデータ。
 	CAnimation m_animation;
 	prefab::CDirectionLight* m_charaLight = nullptr;	//!<キャラクタ用のライト。
-	CCharacterController m_charaCon;		//キャラクタコントローラ。
-	CVector3 m_moveSpeed = CVector3::Zero;
+	CCharacterController m_charaCon;
 	CShaderResourceView m_normalMap;		//法線マップ。
-	CShaderResourceView m_specMap;			//スペキュラマップ。
+	CShaderResourceView m_specMap;
+			//キャラクタコントローラ。
+	CVector3 m_moveSpeed = CVector3::Zero;
+				//スペキュラマップ。
 	CVector3 m_forward;						//プレイヤーの前方。
 	CVector3 m_rite;						//プレイヤーの右方向
 	float rotY = 0.0f; //回転
