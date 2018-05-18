@@ -256,6 +256,9 @@
     <CustomBuild Include="Assets\effect\Texture\sdfs.png">
       <Filter>Assets\effect\Texture</Filter>
     </CustomBuild>
+    <CustomBuild Include="Assets\lever\matilevel001.tks">
+      <Filter>Assets\lever</Filter>
+    </CustomBuild>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\modelData\livingbuildings.png">
