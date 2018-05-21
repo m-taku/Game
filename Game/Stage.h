@@ -17,5 +17,8 @@ public:
 	CRigidBody m_rigidBody;			//剛体
 	int No = 0;
 private:
+
+	CSkinModel s_skinModel;					//スキンモデル。
+	CSkinModelData s_skinModelData;			//スキンモデルデータ。
 };
 

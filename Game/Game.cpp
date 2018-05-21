@@ -22,8 +22,7 @@ Game::Game()
 {
 	gaizi=NewGO<Geizi>(1, "Geizi");
 	player =NewGO<Player>(0, "Player");
-	for (int k = 0; k < 5; k++) {
-		siminUI.push_back(NewGO<AImove>(0, "AIm"));
+	for (int k = 0; k < 1; k++) {
 		simin.push_back(NewGO<AI>(0, "AI"));
 	}
 	stge=NewGO<Stage>(0, "stage");
@@ -31,15 +30,19 @@ Game::Game()
 	camera1 =NewGO<camera>(0, "camera");
 
 
-	m_level[0].Build(L"lever/matilevel001.tks");
 	wchar_t moveFilePath[256];
-	swprintf_s(moveFilePath, L"lever/leval00%d.tks", 2);
+	swprintf_s(moveFilePath, L"lever/levalAI0%d.tks", 2);
 	pasu.Load(moveFilePath);
-
+	swprintf_s(moveFilePath, L"lever/matilevel%d0%d.tks",0,1);
+	m_level[0].Build(moveFilePath);
+	swprintf_s(moveFilePath, L"lever/matilevel%d0%d.tks", 1, 1);
+	m_level[1].Build(moveFilePath);
+	swprintf_s(moveFilePath, L"lever/matilevel%d0%d.tks", 2, 1);
+	m_level[2].Build(moveFilePath);
 	m_sunLig = NewGO<prefab::CDirectionLight>(0);
 	CVector3 lightDir = { 0.707f, -0.707f, 0.0f };
 	m_sunLig->SetDirection(lightDir);
-	m_sunLig->SetColor({10.0f, 10.0f, 10.0f, 1.0f});
+	m_sunLig->SetColor({5.0f, 5.0f, 5.0f, 1.0f});
 	LightManager().SetAmbientLight({ 1.0f, 1.0f, 1.0f });
 	GraphicsEngine().GetShadowMap().SetLightDirection(lightDir);
 	//m_level[1].X = 5.0f;
@@ -61,7 +64,6 @@ void Game::OnDestroy()
 	DeleteGO(player);
 	//Ç±Ç±Ç≈ç≈èIìIÇ…ÇcÇÖÇåÇÖÇîÇÖÇfÇnÇê‚ëŒÇµÇ´ÇÈÅB	
 	for (int k = 0; k < 5; k++) {
-		DeleteGO(siminUI[k]);
 		DeleteGO(simin[k]);
 	}
 	DeleteGO(gaizi);

@@ -41,11 +41,12 @@ public:
 	//	return &m_edgeList[no];
 	//}
 	std::vector<CVector3> m_pointList;	//!<座標のリスト。
-	std::vector<unsigned int> pointNo;
-	std::vector<kanren*> resuto;
-	kanren* kan;
+	kanren kan;
+	std::vector<kanren> Pasuresuto;
 private:
+	std::vector<int> No2;
 
+	std::vector<std::vector<int>> No12;
 	//std::vector<PathEdge> m_edgeList;		//!<エッジのリスト。
 };
 

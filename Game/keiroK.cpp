@@ -7,8 +7,6 @@
 keiroK::keiroK()
 {
 }
-
-
 keiroK::~keiroK()
 {
 }
@@ -43,7 +41,7 @@ int keiroK::BackTrace(int x)
 int keiroK::Kans(int count)
 {
 	if (open.empty())return -10000;
-	ando nodes[4];
+	ando nodes[8];
 	resuto1;
 	std::vector<ando>::iterator it;
 	std::vector<ando>::iterator itmix;
@@ -74,7 +72,7 @@ int keiroK::Kans(int count)
 	open.erase(open.begin() + kesu);
 	sum--;
 	goulkost = BackTrace(n.tunagi);
-	kanren* ka = resuto1[n.ime-1];
+	kanren* ka = &resuto1[n.ime-1];
 	for (int i = 0; i < ka->No.size(); i++) {
 		Satando(
 			&nodes[i],
@@ -82,10 +80,9 @@ int keiroK::Kans(int count)
 			n.m_position,
 			ka->No[i],
 			n.ime,		
-			resuto1[ka->No[i]-1]->No,
+			resuto1[ka->No[i]-1].No,
 			goulkost + GetDistance(ka->m_position[i], ga) + 1
 		);
-
 		std::vector<ando>::iterator tmp = open.begin();
 		for (int d = 0; d < open.size(); d++) {
 			if (nodes[i].ime == tmp->tunagi) {
@@ -156,25 +153,25 @@ int keiroK::GetDistance(CVector3 iP ,CVector3 GP)
 void keiroK::tansa(CVector3 i, CVector3 Ta, std::vector<int> *a)
 {
 	Game *game = FindGO<Game>("Game");
-	for (int l = 0; l < game->pasu.resuto.size(); l++) {
-		resuto1.push_back(game->pasu.resuto[l]);
+	for (int l = 0; l < game->pasu.Pasuresuto.size(); l++) {
+		resuto1.push_back(game->pasu.Pasuresuto[l]);
 	}
-	CVector3 ko = game->pasu.m_pointList[0]-i;
+	CVector3 ko = game->pasu.m_pointList[0] - i;
 	float sa = ko.Length();
 
-	CVector3 koj = game->pasu.m_pointList[0]-Ta;
+	CVector3 koj = game->pasu.m_pointList[0] - Ta;
 	float saj = koj.Length();
 	int l = resuto1.size();
 	for (int h = 1; h < l; h++) {
-		CVector3 k = game->pasu.m_pointList[h]-i;
-		float saa =k.Length();
-		CVector3 kf = game->pasu.m_pointList[h]-Ta;
+		CVector3 k = game->pasu.m_pointList[h] - i;
+		float saa = k.Length();
+		CVector3 kf = game->pasu.m_pointList[h] - Ta;
 		float san = kf.Length();
 		if (sa > saa) {
 			sa = saa;
 			f = h;
 		}
-		if (saj>san) {
+		if (saj > san) {
 			saj = san;
 			N = h;
 		}
@@ -187,7 +184,7 @@ void keiroK::tansa(CVector3 i, CVector3 Ta, std::vector<int> *a)
 		ga,
 		f,
 		-1,
-		resuto1[f - 1]->No,
+		resuto1[f - 1].No,
 		0
 	);
 	open.insert(open.begin() + sum++, stuyt);
@@ -206,13 +203,13 @@ void keiroK::tansa(CVector3 i, CVector3 Ta, std::vector<int> *a)
 	for (int goulo = 0; goulo < jyunban.size(); goulo++) {
 		a->push_back(jyunban[goulo]);
 	}
-		open.clear();
-		close.clear();
-		resuto1.clear();
-		jyunban.clear();
-		f = 1;
-		N = 1;
-		sum = 0;
-		sumd = 0;
-		fghjkl = 0;
+	open.clear();
+	close.clear();
+	resuto1.clear();
+	jyunban.clear();
+	f = 1;
+	N = 1;
+	sum = 0;
+	sumd = 0;
+	fghjkl = 0;
 }

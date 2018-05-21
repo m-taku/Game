@@ -5,6 +5,7 @@
 #include "Player.h"
 #include"Game.h"
 #include"Geizi.h"
+#include"Pasu.h"
 #include"tekihei.h"
 #define REACH 100.0  //ƒ]ƒ“ƒr‚ÌUŒ‚”ÍˆÍB‚±‚Ì‹——£‚Ü‚Å‹ß‚Ã‚¢‚½‚çUŒ‚‚·‚éB
 #define PI 3.141592653589793 
@@ -14,14 +15,16 @@
 AI::AI()
 {
 	pa = Normal; //‚±‚±‚ÍƒvƒŒƒCƒ„[‚Ìs“®‚É‚æ‚Á‚Ä•Ï‰»‚·‚é‚æ‚¤‚É‚·‚éB
-	m_speed = 500.0f; //ƒm[ƒ}ƒ‹ó‘Ô‚Ì‚Æ‚«‚ÌˆÚ“®‘¬“xB
+	m_speed = 1.0f; //ƒm[ƒ}ƒ‹ó‘Ô‚Ì‚Æ‚«‚Ìí‚É“®‚­ˆÚ“®‘¬“xiŠî–{1jB
 }
 AI::~AI()
 {
 	//m_charaCon.RemoveRigidBoby();
+	DeleteGO(work);
 }
 bool AI::Start()
 {
+	work = NewGO<AImove>(0, "AImove");
 	pl = FindGO<Player>("Player");
 	Gaizi = FindGO<Geizi>("Geizi");
 	game=FindGO<Game>("Game");
@@ -38,60 +41,67 @@ bool AI::Start()
 		50.0,			//”¼ŒaB 
 		100.0f,			//‚‚³B
 		m_position,		//‰ŠúˆÊ’uB
-		1
+		0
 	);
-	game->siminUI[iNo]->kyorikeisan(game->da[iNo][1] - 1);
 	m_tekirot.MakeRotationFromQuaternion(m_rotation);
 	m_forward.x = m_tekirot.m[2][0];
 	m_forward.y = m_tekirot.m[2][1];
 	m_forward.z = m_tekirot.m[2][2];
 	m_forward.Normalize();
-	m_rotation.SetRotationDeg(CVector3::AxisY,VectorAngleDeg(game->siminUI[iNo]->bekutor));
+
+	m_rotation.SetRotationDeg(CVector3::AxisY,VectorAngleDeg(game->pasu.m_pointList[game->da[iNo][1] - 1]));
 	SetTags(10);
 	m_skinModel.SetShadowCasterFlag(true);
 	return true;
 }
 void AI::NPCNormal()
 {
-	CVector3 v = game->siminUI[iNo]->K - m_position; //K‚ªŸ‚Ì–Ú“I’n
-	float len = v.Length();//’·‚³
-	if (30 <= len) {
-		float angle = VectorAngleDeg(v);
-		if (angle>=3.0) {
-			v.y = 0.0f;
-			v.Normalize();
-			CVector3 forward = this->m_forward;
-			//‰ñ“]²‚ğ‹‚ß‚éB
-			CVector3 rotAxis;
-			rotAxis.Cross(forward, v);
-			rotAxis.Normalize();
-			CQuaternion qBias1;
-			qBias1.SetRotationDeg(rotAxis, 3.0f);
-			m_rotation.Multiply(qBias1);
+
+	//CVector3 v = game->siminUI[iNo]->K - m_position; //K‚ªŸ‚Ì–Ú“I’n
+	//float len = v.Length();//’·‚³
+	//if (30 <= len) {
+	//	float angle = VectorAngleDeg(v);
+	//	if (angle >= 3.0) {
+	//		v.y = 0.0f;
+	//		v.Normalize();
+	//		CVector3 forward = this->m_forward;
+	//		//‰ñ“]²‚ğ‹‚ß‚éB
+	//		CVector3 rotAxis;
+	//		rotAxis.Cross(forward, v);
+	//		rotAxis.Normalize();
+	//		CQuaternion qBias1;
+	//		qBias1.SetRotationDeg(rotAxis, 3.0f);
+	//		m_rotation.Multiply(qBias1);
+	//	}
+	//	else {
+	//	//	//if (angle >= 2.0f) {
+	//	//	//	v.y = 0.0f;
+	//	//	//	v.Normalize();
+	//	//	//	CVector3 forward = this->m_forward;
+	//	//	//	//‰ñ“]²‚ğ‹‚ß‚éB
+	//	//	//	CVector3 rotAxis;
+	//	//	//	rotAxis.Cross(forward, v);
+	//	//	//	rotAxis.Normalize();
+	//	//	//	CQuaternion qBias1;
+	//	//	//	qBias1.SetRotationDeg(rotAxis, angle);
+	//	//	//	m_rotation.Multiply(qBias1);
+	//	//	//}
+	//	//	//	m_position += (game->siminUI[iNo]->bekutor)*m_speed;
+	//	//	
+	work->kyorikeisan(game->da[iNo][ima] - 1, m_position, m_forward);
+	m_rotation.Multiply(work->Gatkaku());
+	m_position = A_charaCon.Execute(GameTime().GetFrameDeltaTime(), m_forward*(work->Gatmuve()*m_speed));
+	if (15.0f > work->Gatlen()) {
+		if (ima >= 10) {//¡‚Ìƒ|ƒWƒVƒ‡ƒ“‚ª6‚È‚ç
+					  //0‚ÉƒŠƒZƒbƒg‚·‚éB0,1,2,3,4,5‚Ì‡”ÔB
+			ima = 0;
 		}
 		else {
-			//if (angle >= 2.0f) {
-			//	v.y = 0.0f;
-			//	v.Normalize();
-			//	CVector3 forward = this->m_forward;
-			//	//‰ñ“]²‚ğ‹‚ß‚éB
-			//	CVector3 rotAxis;
-			//	rotAxis.Cross(forward, v);
-			//	rotAxis.Normalize();
-			//	CQuaternion qBias1;
-			//	qBias1.SetRotationDeg(rotAxis, angle);
-			//	m_rotation.Multiply(qBias1);
-			//}
-			//	m_position += (game->siminUI[iNo]->bekutor)*m_speed;
-			m_position = A_charaCon.Execute(GameTime().GetFrameDeltaTime(), m_forward*m_speed);
+			ima++;
 		}
+
 	}
-	else {
-		if (ima >= 6)//¡‚Ìƒ|ƒWƒVƒ‡ƒ“‚ª6‚È‚ç
-			//0‚ÉƒŠƒZƒbƒg‚·‚éB0,1,2,3,4,5‚Ì‡”ÔB
-			ima = 0;
-		game->siminUI[iNo]->kyorikeisan(game->da[iNo][ima++] - 1);
-	}
+
 	//FindGameObjectsWithTag(10, [&](IGameObject* go) {
 	//	if (go != this) {            //©•ª‚©‚ç‚Ì‹——£‚ğŒv‘ª‚·‚é‚½‚ßAŒŸõŒ‹‰Ê‚©‚ç©•ª‚ğœŠO‚·‚éB
 	//		AI* ai = (AI*)go;
@@ -173,13 +183,13 @@ void AI::NPCNormal()
 	//	//	
 	//	//}
 }
-
 void AI::NPCNormal_Search()//NPC‚ÌŒx‰úˆ—B
 {
 	CVector3 v2 = pl->m_position - m_position;
 	float len1 = v2.Length();//’·‚³
 	if (Siya(v2, len1) != 0) {
 		Gaizi->Satpoint(0.1);
+		m_speed = 1.5f;
 		pa = Escape;
 	}
 }
@@ -256,48 +266,49 @@ void AI::NPCDamage()
 //	}
 void AI::NPCZombie_Normal()
 {
-	CVector3 v = game->siminUI[iNo]->K - m_position; //K‚ªŸ‚Ì–Ú“I’n
-	float len = v.Length();//’·‚³
-	if (30 <= len) {
-		float angle = VectorAngleDeg(v);
-		if (angle >= 3.0) {
-			v.y = 0.0f;
-			v.Normalize();
-			CVector3 forward = this->m_forward;
-			//‰ñ“]²‚ğ‹‚ß‚éB
-			CVector3 rotAxis;
-			rotAxis.Cross(forward, v);
-			rotAxis.Normalize();
-			CQuaternion qBias1;
-			qBias1.SetRotationDeg(rotAxis, 3.0f);
-			m_rotation.Multiply(qBias1);
-		}
-		else {
-			if (angle >= 2.0f) {
-				v.y = 0.0f;
-				v.Normalize();
-				CVector3 forward = this->m_forward;
-				//‰ñ“]²‚ğ‹‚ß‚éB
-				CVector3 rotAxis;
-				rotAxis.Cross(forward, v);
-				rotAxis.Normalize();
-				CQuaternion qBias1;
-				qBias1.SetRotationDeg(rotAxis, angle);
-				m_rotation.Multiply(qBias1);
-			}
-			//	m_position += (game->siminUI[iNo]->bekutor)*m_speed;
-			m_position = A_charaCon.Execute(GameTime().GetFrameDeltaTime(), m_forward*m_speed);//ˆÚ“®B
-		}
-	}
-	else {
-		if (ima >= 6)//¡‚Ìƒ|ƒWƒVƒ‡ƒ“‚ª6‚È‚ç
-					 //0‚ÉƒŠƒZƒbƒg‚·‚éB0,1,2,3,4,5‚Ì‡”ÔB
-			ima = 0;
-		game->siminUI[iNo]->kyorikeisan(game->da[iNo][ima++] - 1);
-	}
-	/////////////////////////////////
-	//ˆê’è‚Ìƒ‹[ƒg‚ğ‚¤‚ë‚¤‚ë‚·‚éˆ—B
-	/////////////////////////////////
+	//CVector3 v = game->siminUI[iNo]->K - m_position; //K‚ªŸ‚Ì–Ú“I’n
+	//float len = v.Length();//’·‚³
+	//if (30 <= len) {
+	//	float angle = VectorAngleDeg(v);
+	//	if (angle >= 3.0) {
+	//		v.y = 0.0f;
+	//		v.Normalize();
+	//		CVector3 forward = this->m_forward;
+	//		//‰ñ“]²‚ğ‹‚ß‚éB
+	//		CVector3 rotAxis;
+	//		rotAxis.Cross(forward, v);
+	//		rotAxis.Normalize();
+	//		CQuaternion qBias1;
+	//		qBias1.SetRotationDeg(rotAxis, 3.0f);
+	//		m_rotation.Multiply(qBias1);
+	//	}
+	//	else {
+	//		if (angle >= 2.0f) {
+	//			v.y = 0.0f;
+	//			v.Normalize();
+	//			CVector3 forward = this->m_forward;
+	//			//‰ñ“]²‚ğ‹‚ß‚éB
+	//			CVector3 rotAxis;
+	//			rotAxis.Cross(forward, v);
+	//			rotAxis.Normalize();
+	//			CQuaternion qBias1;
+	//			qBias1.SetRotationDeg(rotAxis, angle);
+	//			m_rotation.Multiply(qBias1);
+	//		}
+	//		//	m_position += (game->siminUI[iNo]->bekutor)*m_speed;
+	//		m_position = A_charaCon.Execute(GameTime().GetFrameDeltaTime(), m_forward*m_speed);//ˆÚ“®B
+	//	}
+	//}
+	//else {
+	//	if (ima >= 6)//¡‚Ìƒ|ƒWƒVƒ‡ƒ“‚ª6‚È‚ç
+	//				 //0‚ÉƒŠƒZƒbƒg‚·‚éB0,1,2,3,4,5‚Ì‡”ÔB
+	//		ima = 0;
+	//	game->siminUI[iNo]->kyorikeisan(game->da[iNo][ima++] - 1);
+	//}
+	///////////////////////////////////
+	////ˆê’è‚Ìƒ‹[ƒg‚ğ‚¤‚ë‚¤‚ë‚·‚éˆ—B
+	///////////////////////////////////
+	NPCNormal();
 	float min_Nagasa = 9999.0f;
 	FindGameObjectsWithTag(10, [&](IGameObject* go) {
 		if (go != this) {            //©•ª‚©‚ç‚Ì‹——£‚ğŒv‘ª‚·‚é‚½‚ßAŒŸõŒ‹‰Ê‚©‚ç©•ª‚ğœŠO‚·‚éB
@@ -341,6 +352,7 @@ void AI::NPCZombie_Chase()
 			/////////////////////////////////
 		if (len<REACH) {//NPC‚É’Ç‚¢‚Â‚¢‚½‚ç
 						//UŒ‚‚·‚é(ŠmÀ‚É“–‚½‚éd—l)B
+			NPC_Attack_Animation();//UŒ‚ƒAƒjƒ[ƒVƒ‡ƒ“‚ğ—¬‚·B
 			HitFlag = true; //uNPC‚ÉUŒ‚‚ğ“–‚Ä‚½v‚Æ‚¢‚¤ƒtƒ‰ƒO‚ğ‚½‚Ä‚éB
 		}
 	}	
@@ -368,53 +380,65 @@ void AI::NPCZombie_Attack()//vs“Áê•”‘à
 }
 void AI::NPCFade_Out()//ˆê”Ês–¯‚ª‘Şê‚·‚é‚Æ‚«‚Ìˆ—B
 {
-
-	CVector3 v = game->siminUI[iNo]->K - m_position; //K‚ªŸ‚Ì–Ú“I’n
-	float len = v.Length();//’·‚³
-	if (100 <= len) {
-		float angle = VectorAngleDeg(v);
-		if (angle >= 2.0) {//10“x‚æ‚èã‚È‚ç‰ñ“]
-			//ƒpƒX‚Ü‚ÅƒxƒNƒgƒ‹‚ğXZ•½–Êã‚Å‚ÌŒü‚«‚É‚·‚éB
-			v.y = 0.0f;
-			v.Normalize();
-			CVector3 forward = this->m_forward;
-			//‰ñ“]²‚ğ‹‚ß‚éB
-			CVector3 rotAxis;
-			rotAxis.Cross(forward, v);
-			rotAxis.Normalize();
-			CQuaternion qBias1;
-			qBias1.SetRotationDeg(rotAxis, 3.0);
-			m_rotation.Multiply(qBias1);
-		}
-		else {//10“x–¢–‚Å‚©‚Â-10“xˆÈã‚È‚ç
-			//	m_position += (game->siminUI[iNo]->bekutor)*m_speed;
-			//if (angle != 0) {
-			//	v.y = 0.0f;
-			//	v.Normalize();
-			//	CVector3 forward = this->m_forward;
-			//	//‰ñ“]²‚ğ‹‚ß‚éB
-			//	CVector3 rotAxis;
-			//	rotAxis.Cross(forward, v);
-			//	rotAxis.Normalize();
-			//	CQuaternion qBias1;
-			//	qBias1.SetRotationDeg(rotAxis, angle);
-			//	m_rotation.Multiply(qBias1);
-			//}
-			m_position =A_charaCon.Execute(GameTime().GetFrameDeltaTime(), m_forward*m_speed);//ˆÚ“®B
-		}
-		//}
-		//v.Normalize();
-		//m_position = m_charaCon.Execute(GameTime().GetFrameDeltaTime(), v*m_speed);//ˆÚ“®
-	}
-	else {//ƒpƒX‚É’…‚¢‚½‚ç
+	work->kyorikeisan(jyunban[da] - 1, m_position, m_forward);
+	m_rotation.Multiply(work->Gatkaku());
+	CVector3 v = work->Gatmokuteki() - m_position;
+	m_position = A_charaCon.Execute(GameTime().GetFrameDeltaTime(), m_forward*(work->Gatmuve()*m_speed));
+	if (float len = v.Length() < 100.0f) {
 		if (da >= jyunban.size()) {//w’è‚³‚ê‚½ƒpƒX‚ÌÅŒã‚Ü‚Å’…‚¢‚½‚ç
 			pa = Death;
 			da = 1;
 		}
 		else {
-			game->siminUI[iNo]->kyorikeisan(jyunban[da++] - 1);
+			da++;
 		}
 	}
+	//CVector3 v = game->siminUI[iNo]->K - m_position; //K‚ªŸ‚Ì–Ú“I’n
+	//float len = v.Length();//’·‚³
+	//if (100 <= len) {
+	//	float angle = VectorAngleDeg(v);
+	//	if (angle >= 2.0) {//10“x‚æ‚èã‚È‚ç‰ñ“]
+	//		//ƒpƒX‚Ü‚ÅƒxƒNƒgƒ‹‚ğXZ•½–Êã‚Å‚ÌŒü‚«‚É‚·‚éB
+	//		v.y = 0.0f;
+	//		v.Normalize();
+	//		CVector3 forward = this->m_forward;
+	//		//‰ñ“]²‚ğ‹‚ß‚éB
+	//		CVector3 rotAxis;
+	//		rotAxis.Cross(forward, v);
+	//		rotAxis.Normalize();
+	//		CQuaternion qBias1;
+	//		qBias1.SetRotationDeg(rotAxis, 3.0);
+	//		m_rotation.Multiply(qBias1);
+	//	}
+	//	else {//10“x–¢–‚Å‚©‚Â-10“xˆÈã‚È‚ç
+	//		//	m_position += (game->siminUI[iNo]->bekutor)*m_speed;
+	//		//if (angle != 0) {
+	//		//	v.y = 0.0f;
+	//		//	v.Normalize();
+	//		//	CVector3 forward = this->m_forward;
+	//		//	//‰ñ“]²‚ğ‹‚ß‚éB
+	//		//	CVector3 rotAxis;
+	//		//	rotAxis.Cross(forward, v);
+	//		//	rotAxis.Normalize();
+	//		//	CQuaternion qBias1;
+	//		//	qBias1.SetRotationDeg(rotAxis, angle);
+	//		//	m_rotation.Multiply(qBias1);
+	//		//}
+	//		m_position =A_charaCon.Execute(GameTime().GetFrameDeltaTime(), m_forward*m_speed);//ˆÚ“®B
+	//	}
+	//	//}
+	//	//v.Normalize();
+	//	//m_position = m_charaCon.Execute(GameTime().GetFrameDeltaTime(), v*m_speed);//ˆÚ“®
+	//}
+	//else {//ƒpƒX‚É’…‚¢‚½‚ç
+	//	if (da >= jyunban.size()) {//w’è‚³‚ê‚½ƒpƒX‚ÌÅŒã‚Ü‚Å’…‚¢‚½‚ç
+	//		pa = Death;
+	//		da = 1;
+	//	}
+	//	else {
+	//		game->siminUI[iNo]->kyorikeisan(jyunban[da++] - 1);
+	//	}
+	//}
 }
 
 float AI::GetKyori(CVector3 a, CVector3 b) //2‚Â‚ÌƒIƒuƒWƒFƒNƒg‚ÌÀ•W‚ğó‚¯æ‚èAƒIƒuƒWƒFƒNƒgŠÔ‚Ì‹——£‚ğ•Ô‚·B
@@ -474,6 +498,7 @@ float AI::Siya(CVector3 h, float g)
 
 float AI::VectorAngleDeg(CVector3 c)
 {
+	c.y = 0.0f;
 	c.Normalize();//Œü‚«Vector‚É‚·‚éB
 	float kaku = acosf(c.Dot(m_forward));//‚Q‚Â‚Ì‚×ƒNƒgƒ‹‚Ì“àÏ‚ÌƒA[ƒNƒRƒTƒCƒ“‚ğ‹‚ß‚éB(ƒ‰ƒWƒAƒ“)
 
@@ -541,7 +566,7 @@ void AI::Resistance_Animation()//ƒLƒƒƒ‰ƒNƒ^[‚ª’ïR‚µ‚Ä‚¢‚é‚ÌƒAƒjƒ[ƒVƒ‡ƒ“‚Ì
 
 }
 
-void AI::Zombie_Attack_Animation()//ƒ]ƒ“ƒr‰»ƒLƒƒƒ‰ƒNƒ^[‚ªUŒ‚‚µ‚Ä‚¢‚é‚ÌƒAƒjƒ[ƒVƒ‡ƒ“‚Ìˆ—B
+void AI::NPC_Attack_Animation()//ƒ]ƒ“ƒr‰»ƒLƒƒƒ‰ƒNƒ^[‚ªUŒ‚‚µ‚Ä‚¢‚é‚ÌƒAƒjƒ[ƒVƒ‡ƒ“‚Ìˆ—B
 {
 
 }
@@ -577,26 +602,23 @@ void AI::Update()
 	
 	if (Gaizi->GatFragu() >= 1.0f&& ForceFlag == 0) {//“Áê•”‘à‚ªoŒ»‚µ‚½‚çA
 		ForceFlag = 1;//oŒ»ƒtƒ‰ƒO‚ğ—§‚Ä‚éB
-	}
-	if (ForceFlag == 1) {//“Áê•”‘à‚ªoŒ»‚µ‚½‚ç
 		if (Zonbe == 1) {//©•ª‚ªƒ]ƒ“ƒr‚¾‚Á‚½‚ç
 			pa = Zombie_Attack; //ƒpƒ^[ƒ“‚ğƒ]ƒ“ƒrƒAƒ^ƒbƒN‚ÉØ‚è‘Ö‚¦‚éB
 		}
 		else {//®Š‚ÂA©•ª‚ªƒ]ƒ“ƒr‚Å‚Í‚È‚©‚Á‚½‚ç
 			jyunban.erase(jyunban.begin(), jyunban.end());
 			keiro.tansa(m_position, game->pasu.m_pointList[0], &jyunban);
-			game->siminUI[iNo]->kyorikeisan(jyunban[0] - 1);
+			jyunban[0] - 1;
 			da = 1;
-			m_speed = 100.0;
+			m_speed = 1.2;
 			pa = Fade_Out; //ƒpƒ^[ƒ“‚ğƒtƒF[ƒhƒAƒEƒg‚ÉØ‚è‘Ö‚¦‚éB
 		}
-		ForceFlag = 2;//1‰ñ‚µ‚©Às‚µ‚½‚­‚È‚¢‚Ì‚Åƒtƒ‰ƒO‚ğ‚³‚°‚éB
+	}
+	if (ForceFlag == 1) {//“Áê•”‘à‚ªoŒ»‚µ‚½‚ç
+	
+		ForceFlag = 1;//1‰ñ‚µ‚©Às‚µ‚½‚­‚È‚¢‚Ì‚Åƒtƒ‰ƒO‚ğ‚³‚°‚éB
 
 	}
-
-	CQuaternion qBias;
-	qBias = rotation(270);
-
 	switch (pa) {
 	case Normal:
 		//NPC‚Ì“®‚«‚ğ‘‚­B
@@ -644,77 +666,55 @@ void AI::Update()
 		NPCZombie_Normal();
 		break;
 	}
-
-	
-
-	
-	//Muve(m_movespeed);//ƒ€[ƒ”ƒXƒs[ƒh“ü‚ê‚é‚Æ“®‚­
-	//m_movespeed.x += 0.001;
-	// //qRot‰ñ“]‚ÆƒLƒƒƒ‰‚Ì‰ñ“]‚ğæZ‚µ‚Ä‡¬‚·‚éB
-	//qBias.Multiply(m_rotation, qBias);
-
-	//NPC‚Ì‘O•ûŒü‚ğŒvZ
-
-	//mRot.MakeRotationFromQuaternion(m_rotation);
-	//m_forward.x = mRot.m[2][0];
-	//m_forward.y = mRot.m[2][1];
-	//m_forward.z = mRot.m[2][2];
-	//m_forward.Normalize();
-	//m_rite.x = mRot.m[0][0];
-	//m_rite.y = mRot.m[0][1];
-	//m_rite.z = mRot.m[0][2];
-	//m_rite.Normalize();
-	//m_position += m_forward *  m_speed;
-	//m_position += m_rite * 10 * m_speed;		
-	//CVector3 k = { 8881.04883
-	//		,- 221.356491
-	//		,9464.60547 };
-	//	CVector3 b = {
-	//		4190.29980
-	//		,- 221.356491
-	//		,4564.60596 };
-	//	keiro=NewGO<keiroK>(0);
-
-
-	//	keiro->tansa(k, b);
 	m_skinModel.Update(m_position, m_rotation, { 0.5f, 0.5f,0.5f });
 }
 void AI::NPCReturn()
 {
 	int Size = jyunban.size();
-
-	CVector3 v = game->siminUI[iNo]->K - m_position;
-	float len = v.Length();//’·‚³
-	if (300 <= len) {
-		float angle = VectorAngleDeg(v);
-		if (angle >= 2.0) {//10“x‚æ‚èã‚È‚ç‰ñ“]
-			v.y = 0.0f; //ƒpƒX‚Ü‚ÅƒxƒNƒgƒ‹‚ğXZ•½–Êã‚Å‚ÌŒü‚«‚É‚·‚éB
-			v.Normalize();
-			CVector3 forward = this->m_forward;
-			//‰ñ“]²‚ğ‹‚ß‚éB
-			CVector3 rotAxis;
-			rotAxis.Cross(forward, v);
-			rotAxis.Normalize();
-			CQuaternion qBias1;
-			qBias1.SetRotationDeg(rotAxis, 3.0);
-			m_rotation.Multiply(qBias1);
-		}
-		else {
-			//m_position += game->siminUI[iNo]->bekutor*m_speed;
-			m_position = A_charaCon.Execute(GameTime().GetFrameDeltaTime(), m_forward*m_speed);
-		}
-	}
-	else {
-		if (da >= Size) {//Œ³‚ÌˆÊ’u‚É‚à‚Ç‚Á‚½
-			ima--;
+	work->kyorikeisan(jyunban[da] - 1, m_position, m_forward);
+	m_rotation.Multiply(work->Gatkaku());
+	CVector3 v = work->Gatmokuteki() - m_position;
+	m_position = A_charaCon.Execute(GameTime().GetFrameDeltaTime(), m_forward*(work->Gatmuve()*m_speed));
+	if (15.0f > work->Gatlen()) {
+		if (da >= jyunban.size()-1) {//w’è‚³‚ê‚½ƒpƒX‚ÌÅŒã‚Ü‚Å’…‚¢‚½‚ç
 			pa = Normal;//ƒpƒ^[ƒ“‚ğƒm[ƒ}ƒ‹‚É‚©‚¦‚éB
 			da = 1;
 		}
 		else {
-			game->siminUI[iNo]->kyorikeisan(jyunban[da++] - 1);
-			modori = 0;
+			da++;
 		}
 	}
+	//CVector3 v = game->siminUI[iNo]->K - m_position;
+	//float len = v.Length();//’·‚³
+	//if (300 <= len) {
+	//	float angle = VectorAngleDeg(v);
+	//	if (angle >= 2.0) {//10“x‚æ‚èã‚È‚ç‰ñ“]
+	//		v.y = 0.0f; //ƒpƒX‚Ü‚ÅƒxƒNƒgƒ‹‚ğXZ•½–Êã‚Å‚ÌŒü‚«‚É‚·‚éB
+	//		v.Normalize();
+	//		CVector3 forward = this->m_forward;
+	//		//‰ñ“]²‚ğ‹‚ß‚éB
+	//		CVector3 rotAxis;
+	//		rotAxis.Cross(forward, v);
+	//		rotAxis.Normalize();
+	//		CQuaternion qBias1;
+	//		qBias1.SetRotationDeg(rotAxis, 3.0);
+	//		m_rotation.Multiply(qBias1);
+	//	}
+	//	else {
+	//		//m_position += game->siminUI[iNo]->bekutor*m_speed;
+	//		m_position = A_charaCon.Execute(GameTime().GetFrameDeltaTime(), m_forward*m_speed);
+	//	}
+	//}
+	//else {
+	//	if (da >= Size) {//Œ³‚ÌˆÊ’u‚É‚à‚Ç‚Á‚½
+	//		ima--;
+	//		da = 1;
+	//	}
+	//	else {
+	//		game->siminUI[iNo]->kyorikeisan(jyunban[da++] - 1);
+	//		modori = 0;
+	//	}
+	//}
 }
 void AI::NPCescape()
 {
@@ -725,13 +725,12 @@ void AI::NPCescape()
 		v.Normalize();//³‹K‰»‚µ‚ÄŒü‚«ƒxƒNƒgƒ‹‚É‚·‚éB
 		v.y = 0.0f;
 		//m_position += v * m_speed;
-		m_position =A_charaCon.Execute(GameTime().GetFrameDeltaTime(),v*m_speed);
+		m_position = A_charaCon.Execute(GameTime().GetFrameDeltaTime(), v*(work->Gatmuve()*m_speed));
 	}
-
 	else {
 		jyunban.erase(jyunban.begin(), jyunban.end());
 		keiro.tansa(m_position, retu_position,&jyunban);
-		game->siminUI[iNo]->kyorikeisan(jyunban[0]-1);
+		m_speed = 1.0;
 		pa = Return;
 	}
 }

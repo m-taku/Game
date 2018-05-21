@@ -1,5 +1,6 @@
 #pragma once
 #include "tkEngine/character/tkCharacterController.h"
+#include "tkEngine/graphics/animation/tkAnimation.h" //アニメーション
 #include"Human.h"
 #include"Game.h"
 #include"Geizi.h"
@@ -51,7 +52,7 @@ public:
 	void Start_Run_Animation();//走り始めの処理。
 	void Loop_Run_Animation();//走り続けるときの処理。
 	void Resistance_Animation();//抵抗しているときの処理。
-	void Zombie_Attack_Animation();//ゾンビ化NPCが攻撃するときの処理。
+	void NPC_Attack_Animation();//ゾンビ化NPCが攻撃するときの処理。
 	/////////////////////////////////////////////////////////////////////////
 	/////////////////////////////////////////////////////////////////////////
 
@@ -73,6 +74,15 @@ protected:
 		Death               //NPCの死亡。
 	};
 
+	enum AnimationClip {//各アニメーションのクリップ。
+		Start_Walk,        //歩き始め
+		Loop_Walk,         //歩き続け
+		Start_Run,         //走り始め
+		Loop_Run,          //走り続け
+		Resistance,        //抵抗
+		NPC_Attack      //ゾンビ化NPCの攻撃
+	};
+
 
 	enum npcpattern pa;
 	CCharacterController A_charaCon;
@@ -91,6 +101,7 @@ protected:
 
 	CMatrix k_tekirot;
 	CVector3 retu_position;
+
 	Game* game;
 	bool DamageFlag = false;      //ダメージを受けたかを示すフラグ。
 	bool HitFlag = false;      //ダメージを与えたかを示すフラグ。
@@ -107,7 +118,15 @@ protected:
 	int muteki_count = 0;//無敵時間のカウント。
 	bool muteki_Flag = false;//無敵になっているかどうかを表すフラグ。
 	std::vector<int> jyunban;
-	AI* Tansaku = nullptr;  //探索結果のオブジェクトを格納する。
-	AI*Chase_Zombie;  //追跡してくるキャラを格納する。
+
+	AI* Tansaku = nullptr;  //探索結果のオブジェクトを格納する。o
+	AI*Chawse_Zombie;  //追跡してくるキャラを格納する。
+
+
+	CAnimation ai_NPCAnimation;				//アニメーション。
+	CAnimationClip ai_NPCAnimationClips[6];	//アニメーションクリップ。
+private:
+	AImove* work;
+
 };
 

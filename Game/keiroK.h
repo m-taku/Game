@@ -22,7 +22,7 @@ public:
 	ando stuyt;
 	std::vector<ando> open;
 	std::vector<ando> close;
-	std::vector<kanren*> resuto1;
+	std::vector<kanren> resuto1;
 	std::vector<int> jyunban;
 private:	
 	int f = 0;
