@@ -1,5 +1,6 @@
 #pragma once
 #include "tkEngine/character/tkCharacterController.h"
+#include "tkEngine/graphics/animation/tkAnimation.h" //アニメーション
 #include"Human.h"
 #include"Game.h"
 #include"Geizi.h"
@@ -51,7 +52,7 @@ public:
 	void Start_Run_Animation();//走り始めの処理。
 	void Loop_Run_Animation();//走り続けるときの処理。
 	void Resistance_Animation();//抵抗しているときの処理。
-	void Zombie_Attack_Animation();//ゾンビ化NPCが攻撃するときの処理。
+	void NPC_Attack_Animation();//ゾンビ化NPCが攻撃するときの処理。
 	/////////////////////////////////////////////////////////////////////////
 	/////////////////////////////////////////////////////////////////////////
 
@@ -71,6 +72,15 @@ protected:
 		Zombie_Chase,       //ゾンビ化NPCの追跡状態。
 		Zombie_Attack,      //ゾンビ化NPCの攻撃状態。
 		Death               //NPCの死亡。
+	};
+
+	enum AnimationClip {//各アニメーションのクリップ。
+		Start_Walk,        //歩き始め
+		Loop_Walk,         //歩き続け
+		Start_Run,         //走り始め
+		Loop_Run,          //走り続け
+		Resistance,        //抵抗
+		NPC_Attack      //ゾンビ化NPCの攻撃
 	};
 
 
@@ -109,5 +119,9 @@ protected:
 	std::vector<int> jyunban;
 	AI* Tansaku = nullptr;  //探索結果のオブジェクトを格納する。
 	AI*Chase_Zombie;  //追跡してくるキャラを格納する。
+
+	CAnimation ai_NPCAnimation;				//アニメーション。
+	CAnimationClip ai_NPCAnimationClips[6];	//アニメーションクリップ。
+
 };
 
