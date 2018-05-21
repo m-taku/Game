@@ -91,6 +91,7 @@ protected:
 
 	CMatrix k_tekirot;
 	CVector3 retu_position;
+
 	Game* game;
 	bool DamageFlag = false;      //ダメージを受けたかを示すフラグ。
 	bool HitFlag = false;      //ダメージを与えたかを示すフラグ。
@@ -107,7 +108,9 @@ protected:
 	int muteki_count = 0;//無敵時間のカウント。
 	bool muteki_Flag = false;//無敵になっているかどうかを表すフラグ。
 	std::vector<int> jyunban;
-	AI* Tansaku = nullptr;  //探索結果のオブジェクトを格納する。
-	AI*Chase_Zombie;  //追跡してくるキャラを格納する。
+	AI* Tansaku = nullptr;  //探索結果のオブジェクトを格納する。o
+	AI*Chawse_Zombie;  //追跡してくるキャラを格納する。
+private:
+	AImove* work;
 };
 

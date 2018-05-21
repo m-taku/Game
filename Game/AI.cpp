@@ -5,6 +5,7 @@
 #include "Player.h"
 #include"Game.h"
 #include"Geizi.h"
+#include"Pasu.h"
 #include"tekihei.h"
 #define REACH 100.0  //ゾンビの攻撃範囲。この距離まで近づいたら攻撃する。
 #define PI 3.141592653589793 
@@ -14,14 +15,16 @@
 AI::AI()
 {
 	pa = Normal; //ここはプレイヤーの行動によって変化するようにする。
-	m_speed = 500.0f; //ノーマル状態のときの移動速度。
+	m_speed = 1.0f; //ノーマル状態のときの常に動く移動速度（基本1）。
 }
 AI::~AI()
 {
 	//m_charaCon.RemoveRigidBoby();
+	DeleteGO(work);
 }
 bool AI::Start()
 {
+	work = NewGO<AImove>(0, "AImove");
 	pl = FindGO<Player>("Player");
 	Gaizi = FindGO<Geizi>("Geizi");
 	game=FindGO<Game>("Game");
@@ -38,60 +41,67 @@ bool AI::Start()
 		50.0,			//半径。 
 		100.0f,			//高さ。
 		m_position,		//初期位置。
-		1
+		0
 	);
-	game->siminUI[iNo]->kyorikeisan(game->da[iNo][1] - 1);
 	m_tekirot.MakeRotationFromQuaternion(m_rotation);
 	m_forward.x = m_tekirot.m[2][0];
 	m_forward.y = m_tekirot.m[2][1];
 	m_forward.z = m_tekirot.m[2][2];
 	m_forward.Normalize();
-	m_rotation.SetRotationDeg(CVector3::AxisY,VectorAngleDeg(game->siminUI[iNo]->bekutor));
+
+	m_rotation.SetRotationDeg(CVector3::AxisY,VectorAngleDeg(game->pasu.m_pointList[game->da[iNo][1] - 1]));
 	SetTags(10);
 	m_skinModel.SetShadowCasterFlag(true);
 	return true;
 }
 void AI::NPCNormal()
 {
-	CVector3 v = game->siminUI[iNo]->K - m_position; //Kが次の目的地
-	float len = v.Length();//長さ
-	if (30 <= len) {
-		float angle = VectorAngleDeg(v);
-		if (angle>=3.0) {
-			v.y = 0.0f;
-			v.Normalize();
-			CVector3 forward = this->m_forward;
-			//回転軸を求める。
-			CVector3 rotAxis;
-			rotAxis.Cross(forward, v);
-			rotAxis.Normalize();
-			CQuaternion qBias1;
-			qBias1.SetRotationDeg(rotAxis, 3.0f);
-			m_rotation.Multiply(qBias1);
+
+	//CVector3 v = game->siminUI[iNo]->K - m_position; //Kが次の目的地
+	//float len = v.Length();//長さ
+	//if (30 <= len) {
+	//	float angle = VectorAngleDeg(v);
+	//	if (angle >= 3.0) {
+	//		v.y = 0.0f;
+	//		v.Normalize();
+	//		CVector3 forward = this->m_forward;
+	//		//回転軸を求める。
+	//		CVector3 rotAxis;
+	//		rotAxis.Cross(forward, v);
+	//		rotAxis.Normalize();
+	//		CQuaternion qBias1;
+	//		qBias1.SetRotationDeg(rotAxis, 3.0f);
+	//		m_rotation.Multiply(qBias1);
+	//	}
+	//	else {
+	//	//	//if (angle >= 2.0f) {
+	//	//	//	v.y = 0.0f;
+	//	//	//	v.Normalize();
+	//	//	//	CVector3 forward = this->m_forward;
+	//	//	//	//回転軸を求める。
+	//	//	//	CVector3 rotAxis;
+	//	//	//	rotAxis.Cross(forward, v);
+	//	//	//	rotAxis.Normalize();
+	//	//	//	CQuaternion qBias1;
+	//	//	//	qBias1.SetRotationDeg(rotAxis, angle);
+	//	//	//	m_rotation.Multiply(qBias1);
+	//	//	//}
+	//	//	//	m_position += (game->siminUI[iNo]->bekutor)*m_speed;
+	//	//	
+	work->kyorikeisan(game->da[iNo][ima] - 1, m_position, m_forward);
+	m_rotation.Multiply(work->Gatkaku());
+	m_position = A_charaCon.Execute(GameTime().GetFrameDeltaTime(), m_forward*(work->Gatmuve()*m_speed));
+	if (15.0f > work->Gatlen()) {
+		if (ima >= 10) {//今のポジションが6なら
+					  //0にリセットする。0,1,2,3,4,5の順番。
+			ima = 0;
 		}
 		else {
-			//if (angle >= 2.0f) {
-			//	v.y = 0.0f;
-			//	v.Normalize();
-			//	CVector3 forward = this->m_forward;
-			//	//回転軸を求める。
-			//	CVector3 rotAxis;
-			//	rotAxis.Cross(forward, v);
-			//	rotAxis.Normalize();
-			//	CQuaternion qBias1;
-			//	qBias1.SetRotationDeg(rotAxis, angle);
-			//	m_rotation.Multiply(qBias1);
-			//}
-			//	m_position += (game->siminUI[iNo]->bekutor)*m_speed;
-			m_position = A_charaCon.Execute(GameTime().GetFrameDeltaTime(), m_forward*m_speed);
+			ima++;
 		}
+
 	}
-	else {
-		if (ima >= 6)//今のポジションが6なら
-			//0にリセットする。0,1,2,3,4,5の順番。
-			ima = 0;
-		game->siminUI[iNo]->kyorikeisan(game->da[iNo][ima++] - 1);
-	}
+
 	//FindGameObjectsWithTag(10, [&](IGameObject* go) {
 	//	if (go != this) {            //自分からの距離を計測するため、検索結果から自分を除外する。
 	//		AI* ai = (AI*)go;
@@ -173,13 +183,13 @@ void AI::NPCNormal()
 	//	//	
 	//	//}
 }
-
 void AI::NPCNormal_Search()//NPCの警戒処理。
 {
 	CVector3 v2 = pl->m_position - m_position;
 	float len1 = v2.Length();//長さ
 	if (Siya(v2, len1) != 0) {
 		Gaizi->Satpoint(0.1);
+		m_speed = 1.5f;
 		pa = Escape;
 	}
 }
@@ -256,48 +266,49 @@ void AI::NPCDamage()
 //	}
 void AI::NPCZombie_Normal()
 {
-	CVector3 v = game->siminUI[iNo]->K - m_position; //Kが次の目的地
-	float len = v.Length();//長さ
-	if (30 <= len) {
-		float angle = VectorAngleDeg(v);
-		if (angle >= 3.0) {
-			v.y = 0.0f;
-			v.Normalize();
-			CVector3 forward = this->m_forward;
-			//回転軸を求める。
-			CVector3 rotAxis;
-			rotAxis.Cross(forward, v);
-			rotAxis.Normalize();
-			CQuaternion qBias1;
-			qBias1.SetRotationDeg(rotAxis, 3.0f);
-			m_rotation.Multiply(qBias1);
-		}
-		else {
-			if (angle >= 2.0f) {
-				v.y = 0.0f;
-				v.Normalize();
-				CVector3 forward = this->m_forward;
-				//回転軸を求める。
-				CVector3 rotAxis;
-				rotAxis.Cross(forward, v);
-				rotAxis.Normalize();
-				CQuaternion qBias1;
-				qBias1.SetRotationDeg(rotAxis, angle);
-				m_rotation.Multiply(qBias1);
-			}
-			//	m_position += (game->siminUI[iNo]->bekutor)*m_speed;
-			m_position = A_charaCon.Execute(GameTime().GetFrameDeltaTime(), m_forward*m_speed);//移動。
-		}
-	}
-	else {
-		if (ima >= 6)//今のポジションが6なら
-					 //0にリセットする。0,1,2,3,4,5の順番。
-			ima = 0;
-		game->siminUI[iNo]->kyorikeisan(game->da[iNo][ima++] - 1);
-	}
-	/////////////////////////////////
-	//一定のルートをうろうろする処理。
-	/////////////////////////////////
+	//CVector3 v = game->siminUI[iNo]->K - m_position; //Kが次の目的地
+	//float len = v.Length();//長さ
+	//if (30 <= len) {
+	//	float angle = VectorAngleDeg(v);
+	//	if (angle >= 3.0) {
+	//		v.y = 0.0f;
+	//		v.Normalize();
+	//		CVector3 forward = this->m_forward;
+	//		//回転軸を求める。
+	//		CVector3 rotAxis;
+	//		rotAxis.Cross(forward, v);
+	//		rotAxis.Normalize();
+	//		CQuaternion qBias1;
+	//		qBias1.SetRotationDeg(rotAxis, 3.0f);
+	//		m_rotation.Multiply(qBias1);
+	//	}
+	//	else {
+	//		if (angle >= 2.0f) {
+	//			v.y = 0.0f;
+	//			v.Normalize();
+	//			CVector3 forward = this->m_forward;
+	//			//回転軸を求める。
+	//			CVector3 rotAxis;
+	//			rotAxis.Cross(forward, v);
+	//			rotAxis.Normalize();
+	//			CQuaternion qBias1;
+	//			qBias1.SetRotationDeg(rotAxis, angle);
+	//			m_rotation.Multiply(qBias1);
+	//		}
+	//		//	m_position += (game->siminUI[iNo]->bekutor)*m_speed;
+	//		m_position = A_charaCon.Execute(GameTime().GetFrameDeltaTime(), m_forward*m_speed);//移動。
+	//	}
+	//}
+	//else {
+	//	if (ima >= 6)//今のポジションが6なら
+	//				 //0にリセットする。0,1,2,3,4,5の順番。
+	//		ima = 0;
+	//	game->siminUI[iNo]->kyorikeisan(game->da[iNo][ima++] - 1);
+	//}
+	///////////////////////////////////
+	////一定のルートをうろうろする処理。
+	///////////////////////////////////
+	NPCNormal();
 	float min_Nagasa = 9999.0f;
 	FindGameObjectsWithTag(10, [&](IGameObject* go) {
 		if (go != this) {            //自分からの距離を計測するため、検索結果から自分を除外する。
@@ -368,53 +379,65 @@ void AI::NPCZombie_Attack()//vs特殊部隊
 }
 void AI::NPCFade_Out()//一般市民が退場するときの処理。
 {
-
-	CVector3 v = game->siminUI[iNo]->K - m_position; //Kが次の目的地
-	float len = v.Length();//長さ
-	if (100 <= len) {
-		float angle = VectorAngleDeg(v);
-		if (angle >= 2.0) {//10度より上なら回転
-			//パスまでベクトルをXZ平面上での向きにする。
-			v.y = 0.0f;
-			v.Normalize();
-			CVector3 forward = this->m_forward;
-			//回転軸を求める。
-			CVector3 rotAxis;
-			rotAxis.Cross(forward, v);
-			rotAxis.Normalize();
-			CQuaternion qBias1;
-			qBias1.SetRotationDeg(rotAxis, 3.0);
-			m_rotation.Multiply(qBias1);
-		}
-		else {//10度未満でかつ-10度以上なら
-			//	m_position += (game->siminUI[iNo]->bekutor)*m_speed;
-			//if (angle != 0) {
-			//	v.y = 0.0f;
-			//	v.Normalize();
-			//	CVector3 forward = this->m_forward;
-			//	//回転軸を求める。
-			//	CVector3 rotAxis;
-			//	rotAxis.Cross(forward, v);
-			//	rotAxis.Normalize();
-			//	CQuaternion qBias1;
-			//	qBias1.SetRotationDeg(rotAxis, angle);
-			//	m_rotation.Multiply(qBias1);
-			//}
-			m_position =A_charaCon.Execute(GameTime().GetFrameDeltaTime(), m_forward*m_speed);//移動。
-		}
-		//}
-		//v.Normalize();
-		//m_position = m_charaCon.Execute(GameTime().GetFrameDeltaTime(), v*m_speed);//移動
-	}
-	else {//パスに着いたら
+	work->kyorikeisan(jyunban[da] - 1, m_position, m_forward);
+	m_rotation.Multiply(work->Gatkaku());
+	CVector3 v = work->Gatmokuteki() - m_position;
+	m_position = A_charaCon.Execute(GameTime().GetFrameDeltaTime(), m_forward*(work->Gatmuve()*m_speed));
+	if (float len = v.Length() < 100.0f) {
 		if (da >= jyunban.size()) {//指定されたパスの最後まで着いたら
 			pa = Death;
 			da = 1;
 		}
 		else {
-			game->siminUI[iNo]->kyorikeisan(jyunban[da++] - 1);
+			da++;
 		}
 	}
+	//CVector3 v = game->siminUI[iNo]->K - m_position; //Kが次の目的地
+	//float len = v.Length();//長さ
+	//if (100 <= len) {
+	//	float angle = VectorAngleDeg(v);
+	//	if (angle >= 2.0) {//10度より上なら回転
+	//		//パスまでベクトルをXZ平面上での向きにする。
+	//		v.y = 0.0f;
+	//		v.Normalize();
+	//		CVector3 forward = this->m_forward;
+	//		//回転軸を求める。
+	//		CVector3 rotAxis;
+	//		rotAxis.Cross(forward, v);
+	//		rotAxis.Normalize();
+	//		CQuaternion qBias1;
+	//		qBias1.SetRotationDeg(rotAxis, 3.0);
+	//		m_rotation.Multiply(qBias1);
+	//	}
+	//	else {//10度未満でかつ-10度以上なら
+	//		//	m_position += (game->siminUI[iNo]->bekutor)*m_speed;
+	//		//if (angle != 0) {
+	//		//	v.y = 0.0f;
+	//		//	v.Normalize();
+	//		//	CVector3 forward = this->m_forward;
+	//		//	//回転軸を求める。
+	//		//	CVector3 rotAxis;
+	//		//	rotAxis.Cross(forward, v);
+	//		//	rotAxis.Normalize();
+	//		//	CQuaternion qBias1;
+	//		//	qBias1.SetRotationDeg(rotAxis, angle);
+	//		//	m_rotation.Multiply(qBias1);
+	//		//}
+	//		m_position =A_charaCon.Execute(GameTime().GetFrameDeltaTime(), m_forward*m_speed);//移動。
+	//	}
+	//	//}
+	//	//v.Normalize();
+	//	//m_position = m_charaCon.Execute(GameTime().GetFrameDeltaTime(), v*m_speed);//移動
+	//}
+	//else {//パスに着いたら
+	//	if (da >= jyunban.size()) {//指定されたパスの最後まで着いたら
+	//		pa = Death;
+	//		da = 1;
+	//	}
+	//	else {
+	//		game->siminUI[iNo]->kyorikeisan(jyunban[da++] - 1);
+	//	}
+	//}
 }
 
 float AI::GetKyori(CVector3 a, CVector3 b) //2つのオブジェクトの座標を受け取り、オブジェクト間の距離を返す。
@@ -474,6 +497,7 @@ float AI::Siya(CVector3 h, float g)
 
 float AI::VectorAngleDeg(CVector3 c)
 {
+	c.y = 0.0f;
 	c.Normalize();//向きVectorにする。
 	float kaku = acosf(c.Dot(m_forward));//２つのべクトルの内積のアークコサインを求める。(ラジアン)
 
@@ -577,26 +601,23 @@ void AI::Update()
 	
 	if (Gaizi->GatFragu() >= 1.0f&& ForceFlag == 0) {//特殊部隊が出現したら、
 		ForceFlag = 1;//出現フラグを立てる。
-	}
-	if (ForceFlag == 1) {//特殊部隊が出現したら
 		if (Zonbe == 1) {//自分がゾンビだったら
 			pa = Zombie_Attack; //パターンをゾンビアタックに切り替える。
 		}
 		else {//尚且つ、自分がゾンビではなかったら
 			jyunban.erase(jyunban.begin(), jyunban.end());
 			keiro.tansa(m_position, game->pasu.m_pointList[0], &jyunban);
-			game->siminUI[iNo]->kyorikeisan(jyunban[0] - 1);
+			jyunban[0] - 1;
 			da = 1;
-			m_speed = 100.0;
+			m_speed = 1.2;
 			pa = Fade_Out; //パターンをフェードアウトに切り替える。
 		}
-		ForceFlag = 2;//1回しか実行したくないのでフラグをさげる。
+	}
+	if (ForceFlag == 1) {//特殊部隊が出現したら
+	
+		ForceFlag = 1;//1回しか実行したくないのでフラグをさげる。
 
 	}
-
-	CQuaternion qBias;
-	qBias = rotation(270);
-
 	switch (pa) {
 	case Normal:
 		//NPCの動きを書く。
@@ -644,77 +665,55 @@ void AI::Update()
 		NPCZombie_Normal();
 		break;
 	}
-
-	
-
-	
-	//Muve(m_movespeed);//ムーヴスピード入れると動く
-	//m_movespeed.x += 0.001;
-	// //qRot回転とキャラの回転を乗算して合成する。
-	//qBias.Multiply(m_rotation, qBias);
-
-	//NPCの前方向を計算
-
-	//mRot.MakeRotationFromQuaternion(m_rotation);
-	//m_forward.x = mRot.m[2][0];
-	//m_forward.y = mRot.m[2][1];
-	//m_forward.z = mRot.m[2][2];
-	//m_forward.Normalize();
-	//m_rite.x = mRot.m[0][0];
-	//m_rite.y = mRot.m[0][1];
-	//m_rite.z = mRot.m[0][2];
-	//m_rite.Normalize();
-	//m_position += m_forward *  m_speed;
-	//m_position += m_rite * 10 * m_speed;		
-	//CVector3 k = { 8881.04883
-	//		,- 221.356491
-	//		,9464.60547 };
-	//	CVector3 b = {
-	//		4190.29980
-	//		,- 221.356491
-	//		,4564.60596 };
-	//	keiro=NewGO<keiroK>(0);
-
-
-	//	keiro->tansa(k, b);
 	m_skinModel.Update(m_position, m_rotation, { 0.5f, 0.5f,0.5f });
 }
 void AI::NPCReturn()
 {
 	int Size = jyunban.size();
-
-	CVector3 v = game->siminUI[iNo]->K - m_position;
-	float len = v.Length();//長さ
-	if (300 <= len) {
-		float angle = VectorAngleDeg(v);
-		if (angle >= 2.0) {//10度より上なら回転
-			v.y = 0.0f; //パスまでベクトルをXZ平面上での向きにする。
-			v.Normalize();
-			CVector3 forward = this->m_forward;
-			//回転軸を求める。
-			CVector3 rotAxis;
-			rotAxis.Cross(forward, v);
-			rotAxis.Normalize();
-			CQuaternion qBias1;
-			qBias1.SetRotationDeg(rotAxis, 3.0);
-			m_rotation.Multiply(qBias1);
-		}
-		else {
-			//m_position += game->siminUI[iNo]->bekutor*m_speed;
-			m_position = A_charaCon.Execute(GameTime().GetFrameDeltaTime(), m_forward*m_speed);
-		}
-	}
-	else {
-		if (da >= Size) {//元の位置にもどった
-			ima--;
+	work->kyorikeisan(jyunban[da] - 1, m_position, m_forward);
+	m_rotation.Multiply(work->Gatkaku());
+	CVector3 v = work->Gatmokuteki() - m_position;
+	m_position = A_charaCon.Execute(GameTime().GetFrameDeltaTime(), m_forward*(work->Gatmuve()*m_speed));
+	if (15.0f > work->Gatlen()) {
+		if (da >= jyunban.size()-1) {//指定されたパスの最後まで着いたら
 			pa = Normal;//パターンをノーマルにかえる。
 			da = 1;
 		}
 		else {
-			game->siminUI[iNo]->kyorikeisan(jyunban[da++] - 1);
-			modori = 0;
+			da++;
 		}
 	}
+	//CVector3 v = game->siminUI[iNo]->K - m_position;
+	//float len = v.Length();//長さ
+	//if (300 <= len) {
+	//	float angle = VectorAngleDeg(v);
+	//	if (angle >= 2.0) {//10度より上なら回転
+	//		v.y = 0.0f; //パスまでベクトルをXZ平面上での向きにする。
+	//		v.Normalize();
+	//		CVector3 forward = this->m_forward;
+	//		//回転軸を求める。
+	//		CVector3 rotAxis;
+	//		rotAxis.Cross(forward, v);
+	//		rotAxis.Normalize();
+	//		CQuaternion qBias1;
+	//		qBias1.SetRotationDeg(rotAxis, 3.0);
+	//		m_rotation.Multiply(qBias1);
+	//	}
+	//	else {
+	//		//m_position += game->siminUI[iNo]->bekutor*m_speed;
+	//		m_position = A_charaCon.Execute(GameTime().GetFrameDeltaTime(), m_forward*m_speed);
+	//	}
+	//}
+	//else {
+	//	if (da >= Size) {//元の位置にもどった
+	//		ima--;
+	//		da = 1;
+	//	}
+	//	else {
+	//		game->siminUI[iNo]->kyorikeisan(jyunban[da++] - 1);
+	//		modori = 0;
+	//	}
+	//}
 }
 void AI::NPCescape()
 {
@@ -725,13 +724,12 @@ void AI::NPCescape()
 		v.Normalize();//正規化して向きベクトルにする。
 		v.y = 0.0f;
 		//m_position += v * m_speed;
-		m_position =A_charaCon.Execute(GameTime().GetFrameDeltaTime(),v*m_speed);
+		m_position = A_charaCon.Execute(GameTime().GetFrameDeltaTime(), v*(work->Gatmuve()*m_speed));
 	}
-
 	else {
 		jyunban.erase(jyunban.begin(), jyunban.end());
 		keiro.tansa(m_position, retu_position,&jyunban);
-		game->siminUI[iNo]->kyorikeisan(jyunban[0]-1);
+		m_speed = 1.0;
 		pa = Return;
 	}
 }

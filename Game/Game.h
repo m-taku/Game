@@ -25,17 +25,16 @@ public:
 	CAnimation m_animation;
 	CVector3 m_pos = CVector3::Zero;
 	std::vector<AI*> simin;
-	std::vector<AImove*> siminUI;
 	Fade* m_Fade;
 	Geizi* gaizi;
 	Player* player;
 	Stage* stge;
 	camera* camera1;
-	Level m_level[3];
+	Level m_level[10];
 	Pasu  pasu;
 	keiroK* keiro;
 	int No = 0;
-	int da[5][6] = {  {10,27,25,1,6,7},{ 35,11,8,29,27,34 }, { 11, 26,30,18,16,9},{13,16,4,2,23,24} ,{ 1, 5, 17, 14, 11, 12 } };
+	int da[2][11] = { {26,25,17,16,15,14,19,18,24,28,27},{1,1,1,1,1,1,1,1,1,1,1} };
 	int a=2;		
 	int stag = 0;					//ƒŒƒxƒ‹B
 private:

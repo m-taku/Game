@@ -23,6 +23,8 @@ bool Stage::Start()
 	m_skinModelData.Load(moveFilePath);
 	m_skinModel.Init(m_skinModelData);
 	m_skinModel.SetShadowReceiverFlag(true);
+	s_skinModelData.Load(L"modelData/sora.cmo");
+	s_skinModel.Init(s_skinModelData);
 	//メッシュコライダーを作成。
 	m_meshCollider.CreateFromSkinModel(m_skinModel, nullptr);
 	RigidBodyInfo rbInfo;
@@ -38,8 +40,10 @@ bool Stage::Start()
 void Stage::Update()
 {
 	m_skinModel.Update(CVector3::Zero, CQuaternion::Identity, CVector3::One);
+	s_skinModel.Update(CVector3::Zero, CQuaternion::Identity, CVector3::One);
 }
 void Stage::Render(CRenderContext& rc)
 {
 	m_skinModel.Draw(rc, MainCamera().GetViewMatrix(), MainCamera().GetProjectionMatrix());
+	s_skinModel.Draw(rc, MainCamera().GetViewMatrix(), MainCamera().GetProjectionMatrix());
 }

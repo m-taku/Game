@@ -41,8 +41,8 @@ void Player::Update()
 	m_moveSpeed.z = 0.0f;
 	m_moveSpeed.x = 0.0f;
 	//左スティックの入力量を受け取る。
-	float lStick_x = Pad(0).GetLStickXF()*800.0f;
-	float lStick_y = Pad(0).GetLStickYF()*800.0f;
+	float lStick_x = Pad(0).GetLStickXF()*8000.0f;
+	float lStick_y = Pad(0).GetLStickYF()*8000.0f;
 	//右スティックの入力量を受け取る。
 	float rStick_x = Pad(0).GetRStickXF();
 	float rStick_y = Pad(0).GetRStickYF();
