@@ -352,6 +352,7 @@ void AI::NPCZombie_Chase()
 			/////////////////////////////////
 		if (len<REACH) {//NPC‚É’Ç‚¢‚Â‚¢‚½‚ç
 						//UŒ‚‚·‚é(ŠmŽÀ‚É“–‚½‚éŽd—l)B
+			NPC_Attack_Animation();//UŒ‚ƒAƒjƒ[ƒVƒ‡ƒ“‚ð—¬‚·B
 			HitFlag = true; //uNPC‚ÉUŒ‚‚ð“–‚Ä‚½v‚Æ‚¢‚¤ƒtƒ‰ƒO‚ð‚½‚Ä‚éB
 		}
 	}	
@@ -565,7 +566,7 @@ void AI::Resistance_Animation()//ƒLƒƒƒ‰ƒNƒ^[‚ª’ïR‚µ‚Ä‚¢‚éŽž‚ÌƒAƒjƒ[ƒVƒ‡ƒ“‚Ì
 
 }
 
-void AI::Zombie_Attack_Animation()//ƒ]ƒ“ƒr‰»ƒLƒƒƒ‰ƒNƒ^[‚ªUŒ‚‚µ‚Ä‚¢‚éŽž‚ÌƒAƒjƒ[ƒVƒ‡ƒ“‚Ìˆ—B
+void AI::NPC_Attack_Animation()//ƒ]ƒ“ƒr‰»ƒLƒƒƒ‰ƒNƒ^[‚ªUŒ‚‚µ‚Ä‚¢‚éŽž‚ÌƒAƒjƒ[ƒVƒ‡ƒ“‚Ìˆ—B
 {
 
 }
