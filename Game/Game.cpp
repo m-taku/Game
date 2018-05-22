@@ -22,7 +22,7 @@ Game::Game()
 {
 	gaizi=NewGO<Geizi>(1, "Geizi");
 	player =NewGO<Player>(0, "Player");
-	for (int k = 0; k < 1; k++) {
+	for (int k = 0; k < 4; k++) {
 		simin.push_back(NewGO<AI>(0, "AI"));
 	}
 	stge=NewGO<Stage>(0, "stage");
