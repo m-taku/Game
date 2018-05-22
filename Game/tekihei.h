@@ -12,6 +12,7 @@ public:
 	bool Start();
 	void Update();
 	void Render(CRenderContext& rc);
+
 	CSkinModel tekiskinModel[teki];					//スキンモデル。
 	CSkinModelData tekiskinModelData[teki];
 	CCharacterController m_charaCon[teki];		//キャラクタコントローラ。
@@ -44,4 +45,7 @@ public:
 	int tekiHP[teki];
 	int clearcount = 0;
 	int soma = 0;
+	CAnimation tekianimation[teki];
+	CAnimationClip animclip[2];
+
 };

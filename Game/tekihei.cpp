@@ -22,11 +22,17 @@ tekihei::~tekihei()
 
 bool tekihei::Start()
 {
+	
 	gaizi = FindGO<Geizi>("Geizi");
+	animclip[0].Load(L"animData/walk.tka");
+	animclip[1].Load(L"animData/run.tka");
+	animclip[0].SetLoopFlag(true);
+	animclip[1].SetLoopFlag(true);
 
 	NewGO<item>(0, "item");
 	for (int i = 0;i < teki;i++)
 	{
+		
 		tekiHP[i] = 5;
 		tekiheiflag[i] = 1;
 		damageflag[i] = 0;
@@ -45,11 +51,17 @@ bool tekihei::Start()
 		tekirot[i] = CQuaternion::Identity;
 		tekipos[i] = CVector3::Zero;
 		tekipos[i].x = 3600.0f;
-		tekipos[i].z = -4800.0f;
-		tekiskinModelData[i].Load(L"modelData/unityChan.cmo");//プレイヤーを書け
+		tekipos[i].z = 0.0f;
+		tekiskinModelData[i].Load(L"modelData/liam.cmo");//プレイヤーを書け
 		tekiskinModel[i].Init(tekiskinModelData[i]);
 		trot[i].SetRotationDeg(CVector3::AxisY, -90.0f);//回転
 		tekirot[i].Multiply(trot[i]);
+
+		tekianimation[i].Init(
+			tekiskinModel[i],
+			animclip,
+			2
+		);
 		
 		tekipos[i].y += 1000.0f;
 		tekipos[i].z += i * 150;
@@ -61,6 +73,8 @@ bool tekihei::Start()
 		);
 	}
 
+	
+
 	Pp = FindGO<Player>("Player");
 	return true;
 }
@@ -69,6 +83,8 @@ void tekihei::Update()
 {
 	for (int i = 0;i < teki;i++)
 	{
+		tekianimation[i].Play(0);
+		
 		if (tekiheiflag[i] == 1)
 		{
 			m_tekirot[i].MakeRotationFromQuaternion(tekirot[i]);
@@ -177,7 +193,7 @@ void tekihei::Update()
 
 			}
 			tekipos[i] = m_charaCon[i].Execute(GameTime().GetFrameDeltaTime(), tekispeed[i]);
-			tekiskinModel[i].Update(tekipos[i], tekirot[i], CVector3::One);
+			tekiskinModel[i].Update(tekipos[i], tekirot[i], {20.0f,20.0f,20.0f});
 		}
 		if (tekiheiflag[i] == 0)
 		{
