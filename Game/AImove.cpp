@@ -11,6 +11,7 @@
 float VectorAngleDeg(CVector3 c, CVector3 forward);
 AImove::AImove()
 {
+	game = FindGO<Game>("Game");
 }
 
 
@@ -19,13 +20,12 @@ AImove::~AImove()
 }
 bool AImove::Start()
 {
-	game = FindGO<Game>("Game");
 	return true;
 }
 int AImove::kyorikeisan(int bangou, CVector3 m_pos, CVector3 m_forward)
 {
 
-	game = FindGO<Game>("Game");
+	//game = FindGO<Game>("Game");
 	qBias1 = CQuaternion::Identity;
 	muve = 0;
 	m_pos.y = 0.0f;

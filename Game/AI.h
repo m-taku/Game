@@ -47,12 +47,12 @@ public:
 	////アニメーション関連のメンバ関数(メソッド)。                      ////
 	////各サブクラスでのオーバーライドを前提とするため、中身は書かない。////
 	////////////////////////////////////////////////////////////////////////
-	void Start_Walk_Animation();//歩き始めの処理。
-	void Loop_Walk_Animation();//歩き続けるときの処理。
-	void Start_Run_Animation();//走り始めの処理。
-	void Loop_Run_Animation();//走り続けるときの処理。
-	void Resistance_Animation();//抵抗しているときの処理。
-	void NPC_Attack_Animation();//ゾンビ化NPCが攻撃するときの処理。
+	//void Start_Walk_Animation();//歩き始めの処理。
+	//void Loop_Walk_Animation();//歩き続けるときの処理。
+	//void Start_Run_Animation();//走り始めの処理。
+	//void Loop_Run_Animation();//走り続けるときの処理。
+	//void Resistance_Animation();//抵抗しているときの処理。
+	//void NPC_Attack_Animation();//ゾンビ化NPCが攻撃するときの処理。
 	/////////////////////////////////////////////////////////////////////////
 	/////////////////////////////////////////////////////////////////////////
 
@@ -123,8 +123,8 @@ protected:
 	AI*Chawse_Zombie;  //追跡してくるキャラを格納する。
 
 
-	CAnimation ai_NPCAnimation;				//アニメーション。
-	CAnimationClip ai_NPCAnimationClips[6];	//アニメーションクリップ。
+	//CAnimation ai_NPCAnimation;				//アニメーション。
+	//CAnimationClip ai_NPCAnimationClips[6];	//アニメーションクリップ。
 private:
 	AImove* work;
 
