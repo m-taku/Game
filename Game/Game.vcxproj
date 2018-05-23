@@ -622,6 +622,7 @@
     <ClCompile Include="AI.cpp" />
     <ClCompile Include="AImove.cpp" />
     <ClCompile Include="camera.cpp" />
+    <ClCompile Include="car.cpp" />
     <ClCompile Include="Dog.cpp" />
     <ClCompile Include="Fade.cpp" />
     <ClCompile Include="Game.cpp" />
@@ -655,6 +656,7 @@
     <ClInclude Include="AI.h" />
     <ClInclude Include="AImove.h" />
     <ClInclude Include="camera.h" />
+    <ClInclude Include="car.h" />
     <ClInclude Include="Dog.h" />
     <ClInclude Include="GameEnd.h" />
     <ClInclude Include="Geizi.h" />

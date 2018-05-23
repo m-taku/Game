@@ -29,7 +29,6 @@ bool AI::Start()
 	pl = FindGO<Player>("Player");
 	Gaizi = FindGO<Geizi>("Geizi");
 	game=FindGO<Game>("Game");
-	tekip = FindGO<tekihei>("tekihei");
 	iNo = game->incNo();
 	m_position= game->pasu.m_pointList[game->da[iNo][0] - 1];
 	m_position.y = 0.0f;
@@ -658,7 +657,8 @@ void AI::Update()
 		}
 	}
 	
-	if (Gaizi->GatFragu() >= 1.0f&& ForceFlag == 0) {//特殊部隊が出現したら、
+	if (Gaizi->GatFragu() >= 1.0f&& ForceFlag == true) {//特殊部隊が出現したら、
+		tekip = FindGO<tekihei>("tekihei");
 		ForceFlag = 1;//出現フラグを立てる。
 		if (Zonbe == 1) {//自分がゾンビだったら
 			float min = 99999999999999999.0;
@@ -686,9 +686,9 @@ void AI::Update()
 			pa = Fade_Out; //パターンをフェードアウトに切り替える。
 		}
 	}
-	if (ForceFlag == 1) {//特殊部隊が出現したら
+	if (ForceFlag == true) {//特殊部隊が出現したら
 	
-		ForceFlag = 1;//1回しか実行したくないのでフラグをさげる。
+		ForceFlag = false;//1回しか実行したくないのでフラグをさげる。
 
 	}
 	switch (pa) {
