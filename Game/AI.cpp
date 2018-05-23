@@ -625,35 +625,35 @@ void AI::NPCDeath()//死亡、消滅処理。
 //	}
 //}
 
-//void AI::Start_Walk_Animation()//キャラクターが歩き始める時のアニメーションの処理。
-//{
-//	ai_NPCAnimation.Play(Start_Walk);
-//}
-//
-//void AI::Loop_Walk_Animation()//キャラクターが歩き続ける時のアニメーションの処理。
-//{
-//	ai_NPCAnimation.Play(Loop_Walk);
-//}
-//
-//void AI::Start_Run_Animation()//キャラクターが走り始める時のアニメーションの処理。
-//{
-//	ai_NPCAnimation.Play(Start_Run);
-//}
-//
-//void AI::Loop_Run_Animation()//キャラクターが走り続ける時のアニメーションの処理。
-//{
-//	ai_NPCAnimation.Play(Loop_Run);
-//}
-//
-//void AI::Resistance_Animation()//キャラクターが抵抗している時のアニメーションの処理。
-//{
-//	ai_NPCAnimation.Play(Resistance);
-//}
-//
-//void AI::NPC_Attack_Animation()//ゾンビ化キャラクターが攻撃している時のアニメーションの処理。
-//{
-//	ai_NPCAnimation.Play(NPC_Attack);
-//}
+void AI::Start_Walk_Animation()//キャラクターが歩き始める時のアニメーションの処理。
+{
+	ai_NPCAnimation.Play(Start_Walk);
+}
+
+void AI::Loop_Walk_Animation()//キャラクターが歩き続ける時のアニメーションの処理。
+{
+	ai_NPCAnimation.Play(Loop_Walk);
+}
+
+void AI::Start_Run_Animation()//キャラクターが走り始める時のアニメーションの処理。
+{
+	ai_NPCAnimation.Play(Start_Run);
+}
+
+void AI::Loop_Run_Animation()//キャラクターが走り続ける時のアニメーションの処理。
+{
+	ai_NPCAnimation.Play(Loop_Run);
+}
+
+void AI::Resistance_Animation()//キャラクターが抵抗している時のアニメーションの処理。
+{
+	ai_NPCAnimation.Play(Resistance);
+}
+
+void AI::NPC_Attack_Animation()//ゾンビ化キャラクターが攻撃している時のアニメーションの処理。
+{
+	ai_NPCAnimation.Play(NPC_Attack);
+}
 
 
 void AI::Update()
