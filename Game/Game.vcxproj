@@ -703,6 +703,7 @@
     <MeshContentTask Include="Assets\modelData\Building_Super Market.FBX" />
     <MeshContentTask Include="Assets\modelData\hantei.FBX" />
     <MeshContentTask Include="Assets\modelData\item.FBX" />
+    <MeshContentTask Include="Assets\modelData\liam.FBX" />
     <MeshContentTask Include="Assets\modelData\Natures_Big Tree.FBX" />
     <MeshContentTask Include="Assets\modelData\Natures_Pot Bush_big.FBX" />
     <MeshContentTask Include="Assets\modelData\Props_Bench.FBX" />
@@ -716,6 +717,7 @@
     <MeshContentTask Include="Assets\modelData\stage1.FBX" />
     <MeshContentTask Include="Assets\modelData\stage3.FBX" />
     <MeshContentTask Include="Assets\modelData\taieki.FBX" />
+    <MeshContentTask Include="Assets\modelData\teki.FBX" />
     <MeshContentTask Include="Assets\modelData\unityChan.fbx" />
     <MeshContentTask Include="Assets\modelData\Vehicle_Car1.FBX" />
     <MeshContentTask Include="Assets\modelData\Vehicle_Car2.FBX" />
@@ -806,6 +808,8 @@
     <Image Include="Assets\modelData\white.png" />
     <Image Include="Assets\modelData\worktops007.jpg" />
     <Image Include="Assets\sprite\fade.png" />
+    <ImageContentTask Include="Assets\sprite\GameClear.png" />
+    <ImageContentTask Include="Assets\sprite\GameOver.png" />
     <ImageContentTask Include="Assets\sprite\yaji.png" />
     <ImageContentTask Include="Assets\sprite\kajy.png" />
     <ImageContentTask Include="Assets\sprite\ka-soru.png" />
@@ -824,6 +828,9 @@
       <FileType>Document</FileType>
     </CustomBuild>
     <CustomBuild Include="Assets\effect\aura2.efk">
+      <FileType>Document</FileType>
+    </CustomBuild>
+    <CustomBuild Include="Assets\animData\tekiidle.tka">
       <FileType>Document</FileType>
     </CustomBuild>
     <None Include="Assets\lever\larer_01.tks" />
@@ -855,6 +862,12 @@
       <FileType>Document</FileType>
     </CustomBuild>
     <CustomBuild Include="Assets\lever\matilevel201.tks">
+      <FileType>Document</FileType>
+    </CustomBuild>
+    <CustomBuild Include="Assets\modelData\liam.tks">
+      <FileType>Document</FileType>
+    </CustomBuild>
+    <CustomBuild Include="Assets\modelData\teki.tks">
       <FileType>Document</FileType>
     </CustomBuild>
   </ItemGroup>

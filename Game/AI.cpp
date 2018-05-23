@@ -385,7 +385,7 @@ void AI::NPCFade_Out()//一般市民が退場するときの処理。
 	CVector3 v = work->Gatmokuteki() - m_position;
 	m_position = A_charaCon.Execute(GameTime().GetFrameDeltaTime(), m_forward*(work->Gatmuve()*m_speed));
 	if (float len = v.Length() < 100.0f) {
-		if (da >= jyunban.size()) {//指定されたパスの最後まで着いたら
+		if (da >= jyunban.size()-1) {//指定されたパスの最後まで着いたら
 			pa = Death;
 			da = 1;
 		}
