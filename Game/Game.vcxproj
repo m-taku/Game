@@ -720,6 +720,7 @@
     <MeshContentTask Include="Assets\modelData\stage3.FBX" />
     <MeshContentTask Include="Assets\modelData\taieki.FBX" />
     <MeshContentTask Include="Assets\modelData\teki.FBX" />
+    <MeshContentTask Include="Assets\modelData\teki2.FBX" />
     <MeshContentTask Include="Assets\modelData\unityChan.fbx" />
     <MeshContentTask Include="Assets\modelData\Vehicle_Car1.FBX" />
     <MeshContentTask Include="Assets\modelData\Vehicle_Car2.FBX" />
@@ -876,6 +877,9 @@
       <FileType>Document</FileType>
     </CustomBuild>
     <CustomBuild Include="Assets\modelData\teki.tks">
+      <FileType>Document</FileType>
+    </CustomBuild>
+    <CustomBuild Include="Assets\modelData\teki2.tks">
       <FileType>Document</FileType>
     </CustomBuild>
   </ItemGroup>
