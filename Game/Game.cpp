@@ -32,8 +32,8 @@ Game::Game()
 	No = 0;
 	pasu2.push_back(movepasu1);
 	pasu2.push_back(movepasu2);
-	pasu2.push_back(movepasu3);
-	for (int i = 0; i < 3; i++) {
+	//pasu2.push_back(movepasu3);
+	for (int i = 0; i < 2; i++) {
 		NewGO<car>(0, "car");
 	}
 	stge = NewGO<Stage>(0, "stage");

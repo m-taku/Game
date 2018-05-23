@@ -588,7 +588,7 @@ void AI::NPCDeath()//死亡、消滅処理。
 {
 //	DeleteGO(this);//自己消滅。
 }
-
+//
 //void AI::Animation_Walk()//歩き始めと歩き続けの一連のアニメーションの処理。
 //{
 //	static int walk_count = 0;//歩き始めてからのカウント
@@ -624,6 +624,7 @@ void AI::NPCDeath()//死亡、消滅処理。
 //		run_count = 0;
 //	}
 //}
+
 
 //void AI::Start_Walk_Animation()//キャラクターが歩き始める時のアニメーションの処理。
 //{

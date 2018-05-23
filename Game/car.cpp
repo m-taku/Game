@@ -52,7 +52,7 @@ bool car::Start()
 	ran->Satkakudo(0.1f);
 	ran->Sathaba(1.0f);
 	m_skinModel.Update(m_position, m_rotation, { 0.5f,0.5f,0.5f });
-	if (game->GatNo() >= 3) {
+	if (game->GatNo() >= 2) {
 		game->risetteNo();
 	}
 	SetTags(20);
