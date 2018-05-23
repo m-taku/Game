@@ -52,7 +52,7 @@ bool tekihei::Start()
 		tekipos[i] = CVector3::Zero;
 		tekipos[i].x = 3600.0f;
 		tekipos[i].z = 0.0f;
-		tekiskinModelData[i].Load(L"modelData/liam.cmo");//プレイヤーを書け
+		tekiskinModelData[i].Load(L"modelData/unityChan.cmo");//プレイヤーを書け
 		tekiskinModel[i].Init(tekiskinModelData[i]);
 		trot[i].SetRotationDeg(CVector3::AxisY, -90.0f);//回転
 		tekirot[i].Multiply(trot[i]);

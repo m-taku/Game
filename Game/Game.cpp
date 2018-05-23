@@ -16,39 +16,60 @@
 #include"Osu.h"
 #include"Mes.h"
 #include"Dog.h"
+#include"car.h"
 #include "tkEngine\light\tkDirectionLight.h"
+#include"tkEngine/graphics/tkLight.h"
+#include "tkEngine\light\tkPointLight.h"
 
 Game::Game()
 {
-	gaizi=NewGO<Geizi>(1, "Geizi");
-	player =NewGO<Player>(0, "Player");
+	gaizi = NewGO<Geizi>(1, "Geizi");
+	player = NewGO<Player>(0, "Player");
+
 	for (int k = 0; k < 4; k++) {
 		simin.push_back(NewGO<AI>(0, "AI"));
 	}
-	stge=NewGO<Stage>(0, "stage");
-
-	camera1 =NewGO<camera>(0, "camera");
+	No = 0;
+	pasu2.push_back(movepasu1);
+	pasu2.push_back(movepasu2);
+	pasu2.push_back(movepasu3);
+	for (int i = 0; i < 3; i++) {
+		NewGO<car>(0, "car");
+	}
+	stge = NewGO<Stage>(0, "stage");
+	camera1 = NewGO<camera>(0, "camera");
 
 
 	wchar_t moveFilePath[256];
 	swprintf_s(moveFilePath, L"lever/levalAI0%d.tks", 2);
 	pasu.Load(moveFilePath);
-	swprintf_s(moveFilePath, L"lever/matilevel%d0%d.tks",0,1);
+	swprintf_s(moveFilePath, L"lever/matilevel%d0%d.tks", 0, 1);
 	m_level[0].Build(moveFilePath);
 	swprintf_s(moveFilePath, L"lever/matilevel%d0%d.tks", 1, 1);
 	m_level[1].Build(moveFilePath);
 	swprintf_s(moveFilePath, L"lever/matilevel%d0%d.tks", 2, 1);
 	m_level[2].Build(moveFilePath);
+	CLocData loc;
+	loc.Load(L"lever/laitLv001.tks");
+	for (int i = 0; i < loc.GetNumObject(); i++) {
+		prefab::CPointLight* point = NewGO<prefab::CPointLight>(0);
+		CVector3 f= loc.GetObjectPosition(i);
+		f.y = 500.0f;
+		point->SetPosition(f);
+		point->SetColor({ 255.0f,255.0f, 0.0f,0.0f });
+		point->SetAttn({ 700.0f,3.0f ,0.0f });
+		 
+	}
 	m_sunLig = NewGO<prefab::CDirectionLight>(0);
 	CVector3 lightDir = { 0.707f, -0.707f, 0.0f };
 	m_sunLig->SetDirection(lightDir);
-	m_sunLig->SetColor({5.0f, 5.0f, 5.0f, 1.0f});
+	m_sunLig->SetColor({ 1.0f, 1.0f, 1.0f, 1.0f });
 	LightManager().SetAmbientLight({ 1.0f, 1.0f, 1.0f });
 	GraphicsEngine().GetShadowMap().SetLightDirection(lightDir);
 	//m_level[1].X = 5.0f;
 	//m_level[1].Z=  5.0f;
 	//m_level[1].Build(L"lever/leval01.tks");
-//ここに基本的な発生を描く
+	//ここに基本的な発生を描く
 }
 
 
@@ -89,6 +110,8 @@ bool Game::Start()
 	}
 	m_Fade=FindGO<Fade>("Fade");
 
+
+
 	/*m_skinModelRender = NewGO<prefab::CSkinModelRender>(0);
 	m_skinModelRender->Init(L"modelData/unityChan.cmo");
 	m_skinModelRender->SetScale({ 0.1f, 0.1f, 0.1f } );*/
@@ -98,6 +121,11 @@ void Game::Update()
 {
 	//クリア関係？？
 
+
+	//if(i < loc.GetNumObject()) {
+	//	CVector3 pos = loc.GetObjectPosition(i);
+	//	//m_point.push_back(m_point);
+	//}
 	if (m_Fade != NULL&& m_Fade->toumeiodo >= 1.0f) {
 		m_Fade->StartFadeIn();
 	}
@@ -122,6 +150,7 @@ void Game::Update()
 	MainCamera().SetFar(50000.0f);
 	MainCamera().SetPosition({ 30.0f, 10.0f, 0.0f });
 	MainCamera().Update();*/
+	//i++;
 }
 void Game::Render(CRenderContext& rc)
 {

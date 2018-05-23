@@ -122,11 +122,11 @@ protected:
 	AI* Tansaku = nullptr;  //探索結果のオブジェクトを格納する。o
 	AI*Chawse_Zombie;  //追跡してくるキャラを格納する。
 
-
 	//CAnimation ai_NPCAnimation;				//アニメーション。
 	//CAnimationClip ai_NPCAnimationClips[6];	//アニメーションクリップ。
 private:
+	int No = 0;
 	AImove* work;
-
+	tekihei* tekip;
 };
 
