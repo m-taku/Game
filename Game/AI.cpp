@@ -102,7 +102,7 @@ void AI::NPCNormal()
 	//	//	
 	work->kyorikeisan(game->da[iNo][ima] - 1, m_position, m_forward,game->pasu.m_pointList);
 	m_rotation.Multiply(work->Gatkaku());//回転
-	m_position = A_charaCon.Execute(GameTime().GetFrameDeltaTime(), m_forward*(work->Gatmuve()*m_speed));
+	m_position = A_charaCon.Execute(GameTime().GetFrameDeltaTime(), m_forward*(work->Gatmuve()*m_speed));//移動
 	if (15.0f > work->Gatlen()) {
 		if (ima >= 10) {//今のポジションが6なら
 					  //0にリセットする。0,1,2,3,4,5の順番。
@@ -591,11 +591,38 @@ void AI::NPCDeath()//死亡、消滅処理。
 
 void AI::Animation_Walk()//歩き始めと歩き続けの一連のアニメーションの処理。
 {
+	static int walk_count = 0;//歩き始めてからのカウント
+	if (work->Gatmuve()!=0) {
+		//動いていたら
+		if (walk_count<50) {
+			Start_Walk_Animation();
+		}
+		else {
+			Loop_Walk_Animation();
+		}
+		walk_count++;
+	}
+	else {//止まったら
+		walk_count = 0;
+	}
 	
 }
 void AI::Animation_Run()//走り始めと走り続けの一連のアニメーションの処理。
 {
-
+	static int run_count = 0;//走り始めてからのカウント
+	if (work->Gatmuve() != 0) {
+		//動いていたら
+		if (run_count<50) {
+			Start_Run_Animation();
+		}
+		else {
+			Loop_Run_Animation();
+		}
+		run_count++;
+	}
+	else {//止まったら
+		run_count = 0;
+	}
 }
 
 //void AI::Start_Walk_Animation()//キャラクターが歩き始める時のアニメーションの処理。
@@ -691,6 +718,7 @@ void AI::Update()
 		ForceFlag = false;//1回しか実行したくないのでフラグをさげる。
 
 	}
+
 	switch (pa) {
 	case Normal:
 		//NPCの動きを書く。
@@ -738,6 +766,14 @@ void AI::Update()
 		NPCZombie_Normal();
 		break;
 	}
+
+	if (pa != Escape) {//NPCが逃げていなかったら
+		Animation_Walk();//歩くアニメーション。
+	}
+	else {//NPCが逃げていたら
+		Animation_Run();//走るアニメーション。
+	}
+
 	m_skinModel.Update(m_position, m_rotation, { 0.5f, 0.5f,0.5f });
 }
 void AI::NPCReturn()
@@ -798,6 +834,7 @@ void AI::NPCescape()
 		v.y = 0.0f;
 		//m_position += v * m_speed;
 		m_position = A_charaCon.Execute(GameTime().GetFrameDeltaTime(), v*(work->Gatmuve()*m_speed));
+
 	}
 	else {
 		jyunban.erase(jyunban.begin(), jyunban.end());
