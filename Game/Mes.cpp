@@ -16,6 +16,26 @@ bool Mes::Start()
 {
 	m_skinModelData.Load(L"modelData/unityChan.cmo");//女性型を書け
 	m_skinModel.Init(m_skinModelData);
+
+	//tkaファイルの読み込み。6種類。
+	//ai_NPCAnimationClips[0].Load(L"Assets/animData/walk.tka");//仮。後で入れろ。
+	//ai_NPCAnimationClips[0].SetLoopFlag(true);
+
+	//ai_NPCAnimationClips[1].Load(L"Assets/animData/walk.tka");//仮。後で入れろ。
+	//ai_NPCAnimationClips[1].SetLoopFlag(true);
+
+	//ai_NPCAnimationClips[2].Load(L"Assets/animData/walk.tka");//仮。後で入れろ。
+	//ai_NPCAnimationClips[2].SetLoopFlag(true);
+
+	//ai_NPCAnimationClips[3].Load(L"Assets/animData/walk.tka");//仮。後で入れろ。
+	//ai_NPCAnimationClips[3].SetLoopFlag(true);
+
+	//ai_NPCAnimationClips[4].Load(L"Assets/animData/walk.tka");//仮。後で入れろ。
+	//ai_NPCAnimationClips[4].SetLoopFlag(true);
+
+	//ai_NPCAnimationClips[5].Load(L"Assets/animData/walk.tka");//仮。後で入れろ。
+	//ai_NPCAnimationClips[5].SetLoopFlag(true);
+
 	AI::Start();
 
 	return true;
@@ -29,35 +49,4 @@ void Mes::NPCNormal_Search()
 		Gaizi->Satpoint(0.1);
 		pa = Escape;
 	}
-}
-
-
-void Mes::Start_Walk_Animation()//キャラクターが歩き始める時のアニメーションの処理。
-{
-
-}
-
-void Mes::Loop_Walk_Animation()//キャラクターが歩き続ける時のアニメーションの処理。
-{
-
-}
-
-void Mes::Start_Run_Animation()//キャラクターが走り始める時のアニメーションの処理。
-{
-
-}
-
-void Mes::Loop_Run_Animation()//キャラクターが走り続ける時のアニメーションの処理。
-{
-
-}
-
-void Mes::Resistance_Animation()//キャラクターが抵抗している時のアニメーションの処理。
-{
-
-}
-
-void Mes::Zombie_Attack_Animation()//ゾンビ化キャラクターが攻撃しているのアニメーションの処理。
-{
-
 }

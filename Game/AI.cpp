@@ -43,6 +43,14 @@ bool AI::Start()
 		m_position,		//初期位置。
 		0
 	);
+
+	////アニメーションの初期化。
+	//ai_NPCAnimation.Init(
+	//	m_skinModel,			//アニメーションを流すスキンモデル。
+	//								//これでアニメーションとスキンモデルが関連付けされる。
+	//	ai_NPCAnimationClips,	//アニメーションクリップの配列。
+	//	6							//アニメーションクリップの数。
+	//);
 	m_tekirot.MakeRotationFromQuaternion(m_rotation);
 	m_forward.x = m_tekirot.m[2][0];
 	m_forward.y = m_tekirot.m[2][1];
@@ -89,7 +97,7 @@ void AI::NPCNormal()
 	//	//	//	m_position += (game->siminUI[iNo]->bekutor)*m_speed;
 	//	//	
 	work->kyorikeisan(game->da[iNo][ima] - 1, m_position, m_forward);
-	m_rotation.Multiply(work->Gatkaku());
+	m_rotation.Multiply(work->Gatkaku());//回転
 	m_position = A_charaCon.Execute(GameTime().GetFrameDeltaTime(), m_forward*(work->Gatmuve()*m_speed));
 	if (15.0f > work->Gatlen()) {
 		if (ima >= 10) {//今のポジションが6なら
@@ -99,7 +107,6 @@ void AI::NPCNormal()
 		else {
 			ima++;
 		}
-
 	}
 
 	//FindGameObjectsWithTag(10, [&](IGameObject* go) {
@@ -352,7 +359,7 @@ void AI::NPCZombie_Chase()
 			/////////////////////////////////
 		if (len<REACH) {//NPCに追いついたら
 						//攻撃する(確実に当たる仕様)。
-			NPC_Attack_Animation();//攻撃アニメーションを流す。
+			//NPC_Attack_Animation();//攻撃アニメーションを流す。
 			HitFlag = true; //「NPCに攻撃を当てた」というフラグをたてる。
 		}
 	}	
@@ -541,35 +548,35 @@ void AI::Animation_Run()//走り始めと走り続けの一連のアニメーションの処理。
 
 }
 
-void AI::Start_Walk_Animation()//キャラクターが歩き始める時のアニメーションの処理。
-{
-
-}
-
-void AI::Loop_Walk_Animation()//キャラクターが歩き続ける時のアニメーションの処理。
-{
-
-}
-
-void AI::Start_Run_Animation()//キャラクターが走り始める時のアニメーションの処理。
-{
-
-}
-
-void AI::Loop_Run_Animation()//キャラクターが走り続ける時のアニメーションの処理。
-{
-
-}
-
-void AI::Resistance_Animation()//キャラクターが抵抗している時のアニメーションの処理。
-{
-
-}
-
-void AI::NPC_Attack_Animation()//ゾンビ化キャラクターが攻撃している時のアニメーションの処理。
-{
-
-}
+//void AI::Start_Walk_Animation()//キャラクターが歩き始める時のアニメーションの処理。
+//{
+//	ai_NPCAnimation.Play(Start_Walk);
+//}
+//
+//void AI::Loop_Walk_Animation()//キャラクターが歩き続ける時のアニメーションの処理。
+//{
+//	ai_NPCAnimation.Play(Loop_Walk);
+//}
+//
+//void AI::Start_Run_Animation()//キャラクターが走り始める時のアニメーションの処理。
+//{
+//	ai_NPCAnimation.Play(Start_Run);
+//}
+//
+//void AI::Loop_Run_Animation()//キャラクターが走り続ける時のアニメーションの処理。
+//{
+//	ai_NPCAnimation.Play(Loop_Run);
+//}
+//
+//void AI::Resistance_Animation()//キャラクターが抵抗している時のアニメーションの処理。
+//{
+//	ai_NPCAnimation.Play(Resistance);
+//}
+//
+//void AI::NPC_Attack_Animation()//ゾンビ化キャラクターが攻撃している時のアニメーションの処理。
+//{
+//	ai_NPCAnimation.Play(NPC_Attack);
+//}
 
 
 void AI::Update()
