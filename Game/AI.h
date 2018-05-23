@@ -111,7 +111,7 @@ protected:
 	int ZombieChaseNumber = 0;      //ゾンビが追跡を始めた時に立っていたパスの番号。
 	float m_speed;
 	int iNo = 0;
-	int ima = 2;
+	int ima = 1;
 	int kore = 0;
 	int modori = 0;
 	int da = 1;
@@ -123,11 +123,11 @@ protected:
 	AI* Tansaku = nullptr;  //探索結果のオブジェクトを格納する。o
 	AI*Chawse_Zombie;  //追跡してくるキャラを格納する。
 
-
-	CAnimation ai_NPCAnimation;				//アニメーション。
-	CAnimationClip ai_NPCAnimationClips[6];	//アニメーションクリップ。
+	//CAnimation ai_NPCAnimation;				//アニメーション。
+	//CAnimationClip ai_NPCAnimationClips[6];	//アニメーションクリップ。
 private:
+	int No = 0;
 	AImove* work;
-
+	tekihei* tekip;
 };
 

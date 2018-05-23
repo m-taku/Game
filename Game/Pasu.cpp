@@ -29,8 +29,6 @@ void Pasu::Load(const wchar_t* filePath)
 		pos.x = mat.m[3][0];
 		pos.z = -mat.m[3][1];
 		pos.y = mat.m[3][2];
-		int j = 0;	
-	
 		for (int f = 8; f > 0; f--) {
 			int u = 0;
 			long long h = 0;
@@ -44,25 +42,29 @@ void Pasu::Load(const wchar_t* filePath)
 				No2.push_back(_wtoll(boan[i]->GetName()) / (pow(100, f)));
 			}
 			else {
-				No2.push_back((_wtoll(boan[i]->GetName())%h)/ (pow(100, f)));
+				No2.push_back((_wtoll(boan[i]->GetName()) % h) / (pow(100, f)));
+			}
+			if (No2[u] == 0) {
+				break;
 			}
 		}
-//#if BUILD_LEVEL != BUILD_LEVEL_MASTER
-//		if (No2[i] == 0) {
-//			TK_WARNING_MESSAGE_BOX("パスのノードのボーンの名前が不正です。");
-//			m_pointList.clear();
-//			return;
-//		}
-//#endif
+
+
+		//#if BUILD_LEVEL != BUILD_LEVEL_MASTER
+		//		if (No2[i] == 0) {
+		//			TK_WARNING_MESSAGE_BOX("パスのノードのボーンの名前が不正です。");
+		//			m_pointList.clear();
+		//			return;
+		//		}
+		//#endif
 		m_pointList[No2[0] - 1] = pos;
-		No12[No2[0]-1] = No2;
+		No12[No2[0] - 1] = No2;
 		No2.clear();
 	}
 	for (int i = 1; i < loc.GetNumBones(); i++)
 	{
-
 		kan.kanrenz(No12[i-1], m_pointList);
 		Pasuresuto.push_back(kan);
 	}
-}
 
+}
