@@ -106,7 +106,6 @@ protected:
 	bool DamageFlag = false;      //ダメージを受けたかを示すフラグ。
 	bool HitFlag = false;      //ダメージを与えたかを示すフラグ。
 	bool BattleFlag = false;     //特殊部隊と戦闘をしているかを示すフラグ。
-	int ForceFlag = 0;     //特殊部隊の出現を表すフラグ。
 	int MyNumber = 0;               //今自分が存在しているパスの番号。
 	int ZombieChaseNumber = 0;      //ゾンビが追跡を始めた時に立っていたパスの番号。
 	float m_speed;
@@ -122,10 +121,14 @@ protected:
 
 	AI* Tansaku = nullptr;  //探索結果のオブジェクトを格納する。o
 	AI*Chawse_Zombie;  //追跡してくるキャラを格納する。
-
-	CAnimation ai_NPCAnimation;				//アニメーション。
-	CAnimationClip ai_NPCAnimationClips[6];	//アニメーションクリップ。
+	int satForceFlag()
+	{
+		 ForceFlag = false;     //特殊部隊の出現を表すフラグ。
+	}
+	//CAnimation ai_NPCAnimation;				//アニメーション。
+	//CAnimationClip ai_NPCAnimationClips[6];	//アニメーションクリップ。
 private:
+	bool ForceFlag = true;     //特殊部隊の出現を表すフラグ。
 	int No = 0;
 	AImove* work;
 	tekihei* tekip;

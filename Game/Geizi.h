@@ -25,6 +25,10 @@ public:
 	{
 		return furag;
 	}
+	void SatFragu()
+	{
+		furag++;
+	}
 	int GatHPfurag()
 	{
 		return HPfurag;

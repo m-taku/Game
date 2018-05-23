@@ -72,9 +72,7 @@ bool tekihei::Start()
 			0
 		);
 	}
-
-	
-
+	gaizi->SatFragu();
 	Pp = FindGO<Player>("Player");
 	return true;
 }

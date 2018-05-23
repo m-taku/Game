@@ -49,7 +49,7 @@ void Geizi::Update()
 		point = 0.95;
 		if (furag <= 0) {
 			haus=NewGO<tekihei>(0, "tekihei");
-			furag++;
+			
 		}
 	}
 	n_sprite.Update(n_position, CQuaternion::Identity, { point,0.8f,1.0f }, { 0.0f,1.0f });
