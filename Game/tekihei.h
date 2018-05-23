@@ -46,6 +46,6 @@ public:
 	int clearcount = 0;
 	int soma = 0;
 	CAnimation tekianimation[teki];
-	CAnimationClip animclip[2];
+	CAnimationClip animclip[1];
 
 };

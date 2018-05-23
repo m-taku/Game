@@ -61,7 +61,6 @@
     <ClCompile Include="Osu.cpp" />
     <ClCompile Include="Mes.cpp" />
     <ClCompile Include="Dog.cpp" />
-    <ClCompile Include="car.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -87,7 +86,6 @@
     <ClInclude Include="Osu.h" />
     <ClInclude Include="Mes.h" />
     <ClInclude Include="Dog.h" />
-    <ClInclude Include="car.h" />
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\unityChan.fbx">
@@ -220,6 +218,8 @@
     <MeshContentTask Include="Assets\modelData\Building_House_02_color01.FBX">
       <Filter>Assets\modelData</Filter>
     </MeshContentTask>
+    <MeshContentTask Include="Assets\modelData\liam.FBX" />
+    <MeshContentTask Include="Assets\modelData\teki.FBX" />
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="Assets\shader\tonemap.fx">
@@ -384,10 +384,9 @@
     <CustomBuild Include="Assets\lever\matilevel201.tks">
       <Filter>Assets\lever</Filter>
     </CustomBuild>
-    <CustomBuild Include="Assets\lever\laitLv001.tks" />
-    <CustomBuild Include="Assets\lever\carLv001.tks">
-      <Filter>Assets\lever</Filter>
-    </CustomBuild>
+    <CustomBuild Include="Assets\modelData\liam.tks" />
+    <CustomBuild Include="Assets\modelData\teki.tks" />
+    <CustomBuild Include="Assets\animData\tekiidle.tka" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\modelData\livingbuildings.png">
@@ -424,5 +423,7 @@
     <ImageContentTask Include="Assets\sprite\yaji.png">
       <Filter>Assets\sprite</Filter>
     </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\GameClear.png" />
+    <ImageContentTask Include="Assets\sprite\GameOver.png" />
   </ItemGroup>
 </Project>
