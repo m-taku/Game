@@ -589,71 +589,71 @@ void AI::NPCDeath()//死亡、消滅処理。
 //	DeleteGO(this);//自己消滅。
 }
 
-void AI::Animation_Walk()//歩き始めと歩き続けの一連のアニメーションの処理。
-{
-	static int walk_count = 0;//歩き始めてからのカウント
-	if (work->Gatmuve()!=0) {
-		//動いていたら
-		if (walk_count<50) {
-			Start_Walk_Animation();
-		}
-		else {
-			Loop_Walk_Animation();
-		}
-		walk_count++;
-	}
-	else {//止まったら
-		walk_count = 0;
-	}
-	
-}
-void AI::Animation_Run()//走り始めと走り続けの一連のアニメーションの処理。
-{
-	static int run_count = 0;//走り始めてからのカウント
-	if (work->Gatmuve() != 0) {
-		//動いていたら
-		if (run_count<50) {
-			Start_Run_Animation();
-		}
-		else {
-			Loop_Run_Animation();
-		}
-		run_count++;
-	}
-	else {//止まったら
-		run_count = 0;
-	}
-}
+//void AI::Animation_Walk()//歩き始めと歩き続けの一連のアニメーションの処理。
+//{
+//	static int walk_count = 0;//歩き始めてからのカウント
+//	if (work->Gatmuve()!=0) {
+//		//動いていたら
+//		if (walk_count<50) {
+//			Start_Walk_Animation();
+//		}
+//		else {
+//			Loop_Walk_Animation();
+//		}
+//		walk_count++;
+//	}
+//	else {//止まったら
+//		walk_count = 0;
+//	}
+//	
+//}
+//void AI::Animation_Run()//走り始めと走り続けの一連のアニメーションの処理。
+//{
+//	static int run_count = 0;//走り始めてからのカウント
+//	if (work->Gatmuve() != 0) {
+//		//動いていたら
+//		if (run_count<50) {
+//			Start_Run_Animation();
+//		}
+//		else {
+//			Loop_Run_Animation();
+//		}
+//		run_count++;
+//	}
+//	else {//止まったら
+//		run_count = 0;
+//	}
+//}
 
-void AI::Start_Walk_Animation()//キャラクターが歩き始める時のアニメーションの処理。
-{
-	ai_NPCAnimation.Play(Start_Walk);
-}
-
-void AI::Loop_Walk_Animation()//キャラクターが歩き続ける時のアニメーションの処理。
-{
-	ai_NPCAnimation.Play(Loop_Walk);
-}
-
-void AI::Start_Run_Animation()//キャラクターが走り始める時のアニメーションの処理。
-{
-	ai_NPCAnimation.Play(Start_Run);
-}
-
-void AI::Loop_Run_Animation()//キャラクターが走り続ける時のアニメーションの処理。
-{
-	ai_NPCAnimation.Play(Loop_Run);
-}
-
-void AI::Resistance_Animation()//キャラクターが抵抗している時のアニメーションの処理。
-{
-	ai_NPCAnimation.Play(Resistance);
-}
-
-void AI::NPC_Attack_Animation()//ゾンビ化キャラクターが攻撃している時のアニメーションの処理。
-{
-	ai_NPCAnimation.Play(NPC_Attack);
-}
+//void AI::Start_Walk_Animation()//キャラクターが歩き始める時のアニメーションの処理。
+//{
+//	ai_NPCAnimation.Play(Start_Walk);
+//}
+//
+//void AI::Loop_Walk_Animation()//キャラクターが歩き続ける時のアニメーションの処理。
+//{
+//	ai_NPCAnimation.Play(Loop_Walk);
+//}
+//
+//void AI::Start_Run_Animation()//キャラクターが走り始める時のアニメーションの処理。
+//{
+//	ai_NPCAnimation.Play(Start_Run);
+//}
+//
+//void AI::Loop_Run_Animation()//キャラクターが走り続ける時のアニメーションの処理。
+//{
+//	ai_NPCAnimation.Play(Loop_Run);
+//}
+//
+//void AI::Resistance_Animation()//キャラクターが抵抗している時のアニメーションの処理。
+//{
+//	ai_NPCAnimation.Play(Resistance);
+//}
+//
+//void AI::NPC_Attack_Animation()//ゾンビ化キャラクターが攻撃している時のアニメーションの処理。
+//{
+//	ai_NPCAnimation.Play(NPC_Attack);
+//}
 
 
 void AI::Update()
@@ -767,12 +767,12 @@ void AI::Update()
 		break;
 	}
 
-	if (pa != Escape) {//NPCが逃げていなかったら
-		Animation_Walk();//歩くアニメーション。
-	}
-	else {//NPCが逃げていたら
-		Animation_Run();//走るアニメーション。
-	}
+	//if (pa != Escape) {//NPCが逃げていなかったら
+	//	Animation_Walk();//歩くアニメーション。
+	//}
+	//else {//NPCが逃げていたら
+	//	Animation_Run();//走るアニメーション。
+	//}
 
 	m_skinModel.Update(m_position, m_rotation, { 0.5f, 0.5f,0.5f });
 }

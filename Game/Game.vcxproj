@@ -835,6 +835,12 @@
     <CustomBuild Include="Assets\animData\tekiidle.tka">
       <FileType>Document</FileType>
     </CustomBuild>
+    <CustomBuild Include="Assets\lever\carLv001.tks">
+      <FileType>Document</FileType>
+    </CustomBuild>
+    <CustomBuild Include="Assets\lever\laitLv001.tks">
+      <FileType>Document</FileType>
+    </CustomBuild>
     <None Include="Assets\lever\larer_01.tks" />
     <CustomBuild Include="Assets\lever\leval00.tks">
       <FileType>Document</FileType>
