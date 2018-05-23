@@ -389,6 +389,12 @@
     <CustomBuild Include="Assets\modelData\liam.tks" />
     <CustomBuild Include="Assets\modelData\teki.tks" />
     <CustomBuild Include="Assets\animData\tekiidle.tka" />
+    <CustomBuild Include="Assets\lever\carLv001.tks">
+      <Filter>Assets\lever</Filter>
+    </CustomBuild>
+    <CustomBuild Include="Assets\lever\laitLv001.tks">
+      <Filter>Assets\lever</Filter>
+    </CustomBuild>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\modelData\livingbuildings.png">

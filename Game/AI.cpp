@@ -624,6 +624,7 @@ void AI::NPCDeath()//死亡、消滅処理。
 //	}
 //}
 
+
 //void AI::Start_Walk_Animation()//キャラクターが歩き始める時のアニメーションの処理。
 //{
 //	ai_NPCAnimation.Play(Start_Walk);
