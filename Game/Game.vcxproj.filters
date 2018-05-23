@@ -61,6 +61,7 @@
     <ClCompile Include="Osu.cpp" />
     <ClCompile Include="Mes.cpp" />
     <ClCompile Include="Dog.cpp" />
+    <ClCompile Include="car.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -86,6 +87,7 @@
     <ClInclude Include="Osu.h" />
     <ClInclude Include="Mes.h" />
     <ClInclude Include="Dog.h" />
+    <ClInclude Include="car.h" />
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\unityChan.fbx">
