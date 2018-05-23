@@ -48,8 +48,8 @@ private:
 	CSprite hy_sprite;				//スプライト(枠)。
 	CShaderResourceView hy_texture;	//テクスチャ。
 	float point = 0.0f;
-	float HP = 0.0;
-	int  furag = 0; //特殊部隊が出たら1になる。
+	float HP = 0.0f;
+	float  furag = 0.0f; //特殊部隊が出たら1になる。
 	int HPfurag = 0;
 };
 

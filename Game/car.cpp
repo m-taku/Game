@@ -97,7 +97,7 @@ void car::Move()
 	m_position += m_forward * ((move*speed)*(GameTime().GetFrameDeltaTime()));
 
 	if (400.0f > ran->Gatlen()) {
-		if (ima >= saidaiNo) {//今のポジションが6なら
+		if (ima >= saidaiNo-1) {//今のポジションが6なら
 						//0にリセットする。0,1,2,3,4,5の順番。
 			ima = 0;
 		}

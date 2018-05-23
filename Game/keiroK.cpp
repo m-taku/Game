@@ -190,14 +190,10 @@ void keiroK::tansa(CVector3 i, CVector3 Ta, std::vector<int> *a)
 	open.insert(open.begin() + sum++, stuyt);
 	if (Kans(0) == -1) {
 		auto han = close.begin();
-		int hairetu = f;
-		jyunban.push_back(hairetu);
+		float hairetu;
 		for (; han < close.end(); han++) {
-			if (han->tunagi == hairetu) {
-				hairetu = han->ime;
-				jyunban.push_back(hairetu);
-				han = close.begin();
-			}
+			hairetu = han->ime;
+			jyunban.push_back(hairetu);
 		}
 	}
 	for (int goulo = 0; goulo < jyunban.size(); goulo++) {
