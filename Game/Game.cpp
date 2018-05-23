@@ -34,7 +34,7 @@ Game::Game()
 	pasu2.push_back(movepasu2);
 	//pasu2.push_back(movepasu3);
 	for (int i = 0; i < 2; i++) {
-		NewGO<car>(0, "car");
+		carv.push_back(NewGO<car>(0, "car"));
 	}
 	stge = NewGO<Stage>(0, "stage");
 	camera1 = NewGO<camera>(0, "camera");
@@ -57,7 +57,7 @@ Game::Game()
 		f.y = 500.0f;
 		point->SetPosition(f);
 		point->SetColor({ 255.0f,255.0f, 0.0f,0.0f });
-		point->SetAttn({ 700.0f,3.0f ,0.0f });
+		point->SetAttn({ 700.0f,4.0f ,0.0f });
 		 
 	}
 	m_sunLig = NewGO<prefab::CDirectionLight>(0);
@@ -84,8 +84,11 @@ void Game::OnDestroy()
 {
 	DeleteGO(player);
 	//‚±‚±‚ÅÅI“I‚É‚c‚…‚Œ‚…‚”‚…‚f‚n‚ğâ‘Î‚µ‚«‚éB	
-	for (int k = 0; k < 1; k++) {
+	for (int k = 0; k < 4; k++) {
 		DeleteGO(simin[k]);
+	}
+	for (int i = 0; i < 2; i++) {
+		DeleteGO(carv[i]);
 	}
 	DeleteGO(gaizi);
 	DeleteGO(stge);
