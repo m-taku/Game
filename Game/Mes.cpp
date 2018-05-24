@@ -46,7 +46,7 @@ void Mes::NPCNormal_Search()
 	CVector3 v2 = pl->m_position - m_position;
 	float len1 = v2.Length();//長さ
 	if (Siya(v2, len1) != 0) {
-		Gaizi->Satpoint(0.1);
+		Gaizi->Satpoint(0.3);//見つかった時のペナルティが通常の3倍。シャア
 		pa = Escape;
 	}
 }

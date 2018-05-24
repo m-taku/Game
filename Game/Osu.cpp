@@ -56,6 +56,7 @@ void Osu::NPCResistance_Player()
 
 	i++;//毎フレーム実行。
 	
+	//Resistance_Animation();
 		
 		if (i > 7) {//8フレーム以上で作動する。
 			count++;
