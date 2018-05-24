@@ -113,7 +113,7 @@ protected:
 	int ima = 1;
 	int kore = 0;
 	int modori = 0;
-	int da = 1;
+	int da = 0;
 	int muteki_count = 0;//無敵時間のカウント。
 	bool muteki_Flag = false;//無敵になっているかどうかを表すフラグ。
 	CVector3 before_m_position = CVector3::Zero;		//一つ前の座標。
@@ -123,12 +123,12 @@ protected:
 	AI*Chawse_Zombie;  //追跡してくるキャラを格納する。
 	int satForceFlag()
 	{
-		 ForceFlag = false;     //特殊部隊の出現を表すフラグ。
+		 ForceFlag = true;     //特殊部隊の出現を表すフラグ。
 	}
 	//CAnimation ai_NPCAnimation;				//アニメーション。
 	//CAnimationClip ai_NPCAnimationClips[6];	//アニメーションクリップ。
 private:
-	bool ForceFlag = true;     //特殊部隊の出現を表すフラグ。
+	bool ForceFlag = false;     //特殊部隊の出現を表すフラグ。
 	int No = 0;
 	AImove* work;
 	tekihei* tekip;

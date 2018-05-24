@@ -63,7 +63,7 @@ void Pasu::Load(const wchar_t* filePath)
 	}
 	for (int i = 1; i < loc.GetNumBones(); i++)
 	{
-		kan.kanrenz(No12[i-1], m_pointList);
+		kan.kanrenz(No12[i - 1], m_pointList);
 		Pasuresuto.push_back(kan);
 	}
 

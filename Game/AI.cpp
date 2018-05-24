@@ -446,9 +446,8 @@ void AI::NPCFade_Out()//一般市民が退場するときの処理。
 {
 	work->kyorikeisan(jyunban[da] - 1, m_position, m_forward, game->pasu.m_pointList);
 	m_rotation.Multiply(work->Gatkaku());
-	CVector3 v = work->Gatmokuteki() - m_position;
 	m_position = A_charaCon.Execute(GameTime().GetFrameDeltaTime(), m_forward*(work->Gatmuve()*m_speed));
-	if (float len = v.Length() < 100.0f) {
+	if (15.0f > work->Gatlen()) {
 		if (da >= jyunban.size()-1) {//指定されたパスの最後まで着いたら
 			pa = Death;
 			da = 1;
@@ -692,9 +691,9 @@ void AI::Update()
 		}
 	}
 	
-	if (Gaizi->GatFragu() >= 1.0f&& ForceFlag == true) {//特殊部隊が出現したら、
+	if (Gaizi->GatFragu() >= 1.0f&& ForceFlag == false) {//特殊部隊が出現したら、
 		tekip = FindGO<tekihei>("tekihei");
-		ForceFlag = 1;//出現フラグを立てる。
+		ForceFlag = true;//出現フラグを立てる。
 		if (Zonbe == 1) {//自分がゾンビだったら
 			float min = 99999999999999999.0;
 			int no = 0;
@@ -715,17 +714,12 @@ void AI::Update()
 		else {//尚且つ、自分がゾンビではなかったら
 			jyunban.erase(jyunban.begin(), jyunban.end());
 			keiro.tansa(m_position, game->pasu.m_pointList[0], &jyunban);
-			jyunban[0] - 1;
 			da = 0;
 			m_speed = 1.2;
 			pa = Fade_Out; //パターンをフェードアウトに切り替える。
 		}
 	}
-	if (ForceFlag == true) {//特殊部隊が出現したら
-	
-		ForceFlag = false;//1回しか実行したくないのでフラグをさげる。
 
-	}
 
 	switch (pa) {
 	case Normal:
@@ -765,7 +759,7 @@ void AI::Update()
 		//NPCZombie_Chase();
 		break;
 	case Zombie_Attack:
-		//NPCZombie_Attack();
+		NPCZombie_Attack();
 		break;
 	case Death:
 		NPCDeath();
@@ -774,7 +768,32 @@ void AI::Update()
 		NPCZombie_Normal();
 		break;
 	}
+	FindGameObjectsWithTag(10, [&](IGameObject* go) {
+		if (go != this) {            //自分からの距離を計測するため、検索結果から自分を除外する。
+			AI* ai = (AI*)go;
+			if (ai->Zonbe == 0) {  //それがゾンビでなかったら
+				CVector3 kyori1 =   ai->m_position - this->m_position;//自分との距離を求める。
+				float f = kyori1.Length();
+				if (Siya(kyori1, f)) { //距離が攻撃範囲以内だったら
+					kyori1 /= 5.0f;
+					kyori1.y = 0.0f;
+					m_position = A_charaCon.Execute(GameTime().GetFrameDeltaTime(), kyori1*m_speed*-1);
+				
+					//kyori1.Normalize();
+					//		CVector3 forward = this->m_forward;
+					//		//回転軸を求める。
+					//		CVector3 rotAxis;
+					//		rotAxis.Cross(forward, kyori1);
+					//		rotAxis.Normalize();
+					//		CQuaternion qBias1;
+					//		qBias1.SetRotationDeg(rotAxis, 1.0);
+					//		m_rotation.Multiply(qBias1);
 
+				}
+			}
+		}
+
+	});
 	//if (pa != Escape) {//NPCが逃げていなかったら
 	//	Animation_Walk();//歩くアニメーション。
 	//}
@@ -794,7 +813,7 @@ void AI::NPCReturn()
 	if (15.0f > work->Gatlen()) {
 		if (da >= jyunban.size()-1) {//指定されたパスの最後まで着いたら
 			pa = Normal;//パターンをノーマルにかえる。
-			da = 1;
+			da = 0;
 		}
 		else {
 			da++;
