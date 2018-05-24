@@ -24,6 +24,7 @@ private:
 	int saidaiNo = 0;
 	int ima = 0;
 	void Stop();
+	int fa = 0;
 	int frag = 0;
 };
 

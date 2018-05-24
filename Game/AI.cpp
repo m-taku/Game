@@ -67,6 +67,13 @@ bool AI::Start()
 	if (game->GatNo() >= 4) {
 		game->risetteNo();
 	}
+	/*ai_NPCAnimationClips[0].SetLoopFlag(false);
+	ai_NPCAnimationClips[0].SetLoopFlag(true);
+	ai_NPCAnimationClips[0].SetLoopFlag(false);
+	ai_NPCAnimationClips[0].SetLoopFlag(true);
+	ai_NPCAnimationClips[0].SetLoopFlag(true);
+	ai_NPCAnimationClips[0].SetLoopFlag(false);*/
+
 	return true;
 }
 void AI::NPCNormal()

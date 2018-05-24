@@ -45,7 +45,7 @@ public:
 	int tekiHP[teki];
 	int clearcount = 0;
 	int soma = 0;
-	CAnimation tekianimation[teki];
-	CAnimationClip animclip[1];
+	//CAnimation tekianimation[teki];
+	//CAnimationClip animclip[1];
 
 };
