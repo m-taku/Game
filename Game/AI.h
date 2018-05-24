@@ -89,7 +89,6 @@ protected:
 	CSkinModel m_skinModel;					//スキンモデル。
 	CSkinModelData m_skinModelData;			//スキンモデルデータ。
 	CQuaternion m_rotation = CQuaternion::Identity;	//回転。
-
 	CQuaternion front = CQuaternion::Identity;
 	CVector3 m_forward;						//キャラの前方。
 	CVector3 m_rite;						//キャラの右方向。
@@ -132,5 +131,6 @@ private:
 	int No = 0;
 	AImove* work;
 	tekihei* tekip;
+	CShaderResourceView zondi;
 };
 

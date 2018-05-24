@@ -12,6 +12,7 @@ cbuffer VSPSCb : register(b0){
 	float4x4 mProj;
 	float4 screenParam;		// スクリーンパラメータ(near, far, screenWidth, screenHeight)
 	int isShadowReceiver;	//シャドウレシーバー？
+	float burend;
 };
 
 /*!
@@ -31,6 +32,7 @@ cbuffer lightCb : register(b1)
 cbuffer MaterialParamCb : register(b2){
 	int hasNormalMap;	//!<法線マップある？
 	int hasSpecularMap;	//!<スペキュラマップある？
+	int haszonbi;		//!ＺＯＭＢＩＥテクスチャがある？
 	float anisotropic;	//異方性反射
 	unsigned int materialID;	//!<マテリアルID。
 

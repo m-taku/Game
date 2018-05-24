@@ -32,7 +32,7 @@ Game::Game()
 	No = 0;
 	pasu2.push_back(movepasu1);
 	pasu2.push_back(movepasu2);
-	//pasu2.push_back(movepasu3);
+
 	for (int i = 0; i < 2; i++) {
 		carv.push_back(NewGO<car>(0, "car"));
 	}
@@ -43,12 +43,12 @@ Game::Game()
 	wchar_t moveFilePath[256];
 	swprintf_s(moveFilePath, L"lever/levalAI0%d.tks", 2);
 	pasu.Load(moveFilePath);
-	swprintf_s(moveFilePath, L"lever/matilevel%d0%d.tks", 0, 1);
-	m_level[0].Build(moveFilePath);
-	swprintf_s(moveFilePath, L"lever/matilevel%d0%d.tks", 1, 1);
-	m_level[1].Build(moveFilePath);
-	swprintf_s(moveFilePath, L"lever/matilevel%d0%d.tks", 2, 1);
-	m_level[2].Build(moveFilePath);
+	//swprintf_s(moveFilePath, L"lever/matilevel%d0%d.tks", 0, 1);
+	//m_level[0].Build(moveFilePath);
+	//swprintf_s(moveFilePath, L"lever/matilevel%d0%d.tks", 1, 1);
+	//m_level[1].Build(moveFilePath);
+	//swprintf_s(moveFilePath, L"lever/matilevel%d0%d.tks", 2, 1);
+	//m_level[2].Build(moveFilePath);
 	CLocData loc;
 	loc.Load(L"lever/laitLv001.tks");
 	for (int i = 0; i < loc.GetNumObject(); i++) {

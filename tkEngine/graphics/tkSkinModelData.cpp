@@ -107,6 +107,11 @@ namespace tkEngine{
 			deviceContext->PSSetShaderResources(enSKinModelSRVReg_Specularmap, 1, &m_specularMap);
 			m_materialParam.hasSpecularMap = 1;
 		}
+		m_materialParam.haszonbi = 0;
+		if (m_zonbi != nullptr) {
+			deviceContext->PSSetShaderResources(enSkinModelSRVReg_zonbi, 1, &m_zonbi);
+			m_materialParam.haszonbi = 1;
+		}
 		deviceContext->UpdateSubresource(m_materialParamCB.GetBody(), 0, NULL, &m_materialParam, 0, 0);
 		deviceContext->PSSetConstantBuffers(enSkinModelCBReg_Material, 1, &m_materialParamCB.GetBody());
 

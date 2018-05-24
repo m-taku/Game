@@ -105,7 +105,6 @@
     <MeshContentTask Include="Assets\modelData\hantei.FBX">
       <Filter>Assets\modelData</Filter>
     </MeshContentTask>
-    <MeshContentTask Include="Assets\modelData\item.FBX" />
     <MeshContentTask Include="Assets\modelData\stage0.FBX">
       <Filter>Assets\modelData</Filter>
     </MeshContentTask>
@@ -220,8 +219,9 @@
     <MeshContentTask Include="Assets\modelData\Building_House_02_color01.FBX">
       <Filter>Assets\modelData</Filter>
     </MeshContentTask>
-    <MeshContentTask Include="Assets\modelData\liam.FBX" />
     <MeshContentTask Include="Assets\modelData\teki.FBX" />
+    <MeshContentTask Include="Assets\modelData\item.FBX" />
+    <MeshContentTask Include="Assets\modelData\liam.FBX" />
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="Assets\shader\tonemap.fx">
@@ -433,5 +433,11 @@
     </ImageContentTask>
     <ImageContentTask Include="Assets\sprite\GameClear.png" />
     <ImageContentTask Include="Assets\sprite\GameOver.png" />
+    <ImageContentTask Include="Assets\modelData\LiamTexZonbi.png">
+      <Filter>Assets\modelData</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\modelData\LiamTexZonbi1.png">
+      <Filter>Assets\modelData</Filter>
+    </ImageContentTask>
   </ItemGroup>
 </Project>

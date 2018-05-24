@@ -7,7 +7,7 @@
 #include"Geizi.h"
 #include"Pasu.h"
 #include"tekihei.h"
-#define REACH 300.0  //ゾンビの攻撃範囲。この距離まで近づいたら攻撃する。
+#define REACH 3000.0  //ゾンビの攻撃範囲。この距離まで近づいたら攻撃する。
 #define PI 3.141592653589793 
 //AI NPC;
 //今回はmを引用するNPCのハンドルとして、jを特殊部隊のハンドルとして代用する。これは後に直しておくように。
@@ -33,7 +33,7 @@ bool AI::Start()
 	m_position= game->pasu.m_pointList[game->da[iNo][0] - 1];
 	m_position.y = 0.0f;
 	//キャラのスキンモデルのロードは各自サブクラスで行う。
-	m_skinModelData.Load(L"modelData/unityChan.cmo");//プレイヤーを書け
+	m_skinModelData.Load(L"modelData/liam.cmo");//プレイヤーを書け
 	m_skinModel.Init(m_skinModelData);
 
 	CMatrix mRot;
@@ -44,7 +44,6 @@ bool AI::Start()
 		m_position,		//初期位置。
 		0
 	);
-
 	////アニメーションの初期化。
 	//ai_NPCAnimation.Init(
 	//	m_skinModel,			//アニメーションを流すスキンモデル。
@@ -58,6 +57,10 @@ bool AI::Start()
 	m_forward.z = m_tekirot.m[2][2];
 	m_forward.Normalize();
 
+	zondi.CreateFromDDSTextureFromFile(L"modelData/LiamTexZonbi.dds");
+	m_skinModel.FindMaterial([&](CModelEffect* material) {
+		material->Setm_zonbi(zondi.GetBody());
+	});
 	m_rotation.SetRotationDeg(CVector3::AxisY,VectorAngleDeg(game->pasu.m_pointList[game->da[iNo][1] - 1]));
 	SetTags(10);
 	m_skinModel.SetShadowCasterFlag(true);
@@ -374,7 +377,7 @@ void AI::NPCZombie_Attack()//vs特殊部隊
 	if (BattleFlag == false) {//部隊と戦っておらず、フリーな状態なら
 		work->kyorikeisan(jyunban[da] - 1, m_position, m_forward, game->pasu.m_pointList);
 		m_rotation.Multiply(work->Gatkaku());
-		CVector3 v = work->Gatmokuteki() - m_position;
+		CVector3 v = work->Gatmokuteki() - m_position;  //一番近い部隊に移動する。
 		m_position = A_charaCon.Execute(GameTime().GetFrameDeltaTime(), m_forward*(work->Gatmuve()*m_speed));
 		if (15.0f > work->Gatlen()) {
 			if (da >= jyunban.size() - 1) {//指定されたパスの最後まで着いたら
@@ -396,12 +399,16 @@ void AI::NPCZombie_Attack()//vs特殊部隊
 			else {
 				da++;
 			}
-		}			  //一番近い部隊に移動する。
+		}		
+		float h = 9999999999999.0f;
 		for (int i = 0; i < 10; i++) {
 			float max = GetKyori(m_position, tekip->tekipos[i]);
 			if (max < REACH) {//部隊に近づいたら
-				BattleFlag == true;//戦闘を開始する。
-				No = i;
+				BattleFlag = true;//戦闘を開始する。
+				if (h > max) {
+					No = i;
+					h = max;
+				}
 			}
 		}
 	}
@@ -417,13 +424,16 @@ void AI::NPCZombie_Attack()//vs特殊部隊
 			CVector3 rotAxis;
 			rotAxis.Cross(m_forward, bekutor);
 			rotAxis.Normalize();
-			m_rotation.SetRotationDeg(rotAxis, 5.0f);
+			CQuaternion qBias1;
+			qBias1.SetRotationDeg(rotAxis, 5.0f);
+			m_rotation.Multiply(qBias1);
 		}
-		else if(15<len){
-			m_position = A_charaCon.Execute(GameTime().GetFrameDeltaTime(), m_forward*m_speed);
+		else if(150<len){
+			m_position = A_charaCon.Execute(GameTime().GetFrameDeltaTime(), m_forward*500*m_speed);
 		}
 		else {
 			//殴る
+			tekip->tekiHP[No] = tekip->tekiHP[No]-5;
      	 //部隊に攻撃する。
 			BattleFlag = false;
 		}
@@ -570,7 +580,7 @@ void AI::DamageHantei() //全てのゾンビと距離でダメージ判定をする。
 			AI* ai = (AI*)go;
 			if (ai->Zonbe == 1) {   //それがゾンビだったら
 				float kyori = GetKyori(this->m_position, ai->m_position);//自分との距離を求める。
-				if (kyori < REACH) {  //距離が攻撃範囲以内だったら
+				if (kyori < 300) {  //距離が攻撃範囲以内だったら
 					pa = Resistance_NPC; //パターンを抵抗にかえる。
 				}
 			}
@@ -578,14 +588,14 @@ void AI::DamageHantei() //全てのゾンビと距離でダメージ判定をする。
 	});
 
 	float kyori = GetKyori(this->m_position, pl->GetPosition());//自分との距離を求める。
-	if (kyori < REACH) {  //距離が攻撃範囲以内だったら
+	if (kyori < 300) {  //距離が攻撃範囲以内だったら
 		pa = Resistance_Player; //パターンを抵抗にかえる。
 	}
 }
 
 void AI::NPCDeath()//死亡、消滅処理。
 {
-//	DeleteGO(this);//自己消滅。
+	DeleteGO(this);//自己消滅。
 }
 //
 //void AI::Animation_Walk()//歩き始めと歩き続けの一連のアニメーションの処理。
@@ -680,6 +690,7 @@ void AI::Update()
 
 	if (Zonbe == 0) { //自分がゾンビではなかったら
 		if (muteki_Flag == false) {//無敵ではなかったら
+			if(pa!=Damage)
 			DamageHantei(); //ゾンビとの当たり判定をとる。
 		}
 	}
@@ -793,8 +804,15 @@ void AI::Update()
 	//else {//NPCが逃げていたら
 	//	Animation_Run();//走るアニメーション。
 	//}
-
-	m_skinModel.Update(m_position, m_rotation, { 0.5f, 0.5f,0.5f });
+	if (Zonbe == 1) {
+		if ((Pad(0).IsTrigger(enButtonA))) {
+			m_skinModel.Satburend(0.1f);
+		}
+	}
+	//if ((Pad(0).GetLStickXF() > 0.0)) {
+	//	m_skinModel.Satburend(0.01);
+	//}
+	m_skinModel.Update(m_position, m_rotation, { 200.0f, 200.0f,200.0f });
 }
 void AI::NPCReturn()
 {

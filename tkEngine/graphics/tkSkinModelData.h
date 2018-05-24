@@ -25,6 +25,7 @@ namespace tkEngine{
 		CShader m_psRenderToDepthShader;	//!<Z値書き込み用のピクセルシェーダー。
 		CShader m_psRenderToGBufferShader;	//!<G-Buffer書き込み用のピクセルシェーダー。
 		ID3D11ShaderResourceView* m_diffuseTex = nullptr;
+		ID3D11ShaderResourceView* m_zonbi = nullptr;
 		ID3D11ShaderResourceView* m_normalMap = nullptr;
 		ID3D11ShaderResourceView* m_specularMap = nullptr;
 		bool isSkining;
@@ -36,6 +37,7 @@ namespace tkEngine{
 		struct MaterialParam {
 			int hasNormalMap;				//!<法線マップある？
 			int hasSpecularMap;				//!<スペキュラマップある？
+			int haszonbi;					//!ＺＯＭＢＩＥテクスチャある？
 			float anisotropic;				//!<異方性反射。
 			unsigned int materialID = 0;	//!<マテリアルID。
 		};
@@ -76,6 +78,10 @@ namespace tkEngine{
 		void SetDiffuseTexture(ID3D11ShaderResourceView* tex)
 		{
 			m_diffuseTex = tex;
+		}
+		void Setm_zonbi(ID3D11ShaderResourceView* tex)
+		{
+			m_zonbi = tex;
 		}
 		void SetNormalMap(ID3D11ShaderResourceView* tex)
 		{

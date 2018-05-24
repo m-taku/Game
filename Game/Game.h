@@ -68,7 +68,7 @@ private:
 	std::vector<car*> carv;
 	std::vector<int> movepasu1 = { 17,12,6,5,13,16,33,36,44,43,42,41,39,30,28,27 };
 	std::vector<int> movepasu2 = { 11,18,22,21,29,40,48,47,46,45,35,34,15,14,4,3 };
-	std::vector<int> movepasu3 = {5,6,11,18,23,24,15,14};
+
 	std::vector<std::vector<int>> pasu2;
 	//{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 }
 

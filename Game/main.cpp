@@ -5,12 +5,41 @@
 #include "Taitor.h"
 #include "Fade.h"
 
+#define USE_LOW_SPEC_SETTINGS	//有効で低スペック向けPCの設定
+
 int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, int nCmdShow)
 {
 	UNREFERENCED_PARAMETER(hPrevInstance);
 	UNREFERENCED_PARAMETER(lpCmdLine);
 
 	srand((unsigned)time(NULL));
+#ifdef USE_LOW_SPEC_SETTINGS
+	//tkEngine2の初期化パラメータを設定する。
+	SInitParam initParam;
+	initParam.nCmdShow = nCmdShow;
+	initParam.hInstance = hInstance;
+	initParam.screenWidth = 1280;
+	initParam.screenHeight = 720;
+	initParam.frameBufferWidth = 640;
+	initParam.frameBufferHeight = 360;
+	initParam.screenWidth2D = 1280;
+	initParam.screenHeight2D = 720;
+	//影の設定。
+	initParam.graphicsConfing.shadowRenderConfig.isEnable = true;
+	initParam.graphicsConfing.shadowRenderConfig.shadowMapWidth = 512;
+	initParam.graphicsConfing.shadowRenderConfig.shadowMapHeight = 512;
+	initParam.graphicsConfing.shadowRenderConfig.lightHeight = UnitM(100.0f);
+	initParam.graphicsConfing.shadowRenderConfig.depthOffset[0] = 0.001f;
+	initParam.graphicsConfing.shadowRenderConfig.depthOffset[1] = 0.001f;
+	initParam.graphicsConfing.shadowRenderConfig.depthOffset[2] = 0.002f;
+	initParam.graphicsConfing.shadowRenderConfig.softShadowLevel = EnSoftShadowQualityLevel::enNone;
+	//アンチ
+	initParam.graphicsConfing.aaConfig.isEnable = false;
+	//Bloom
+	initParam.graphicsConfing.bloomConfig.isEnable = false;
+	//tonemap
+	initParam.graphicsConfing.tonemapConfig.isEnable = true;
+#else
 	//tkEngine2の初期化パラメータを設定する。
 	SInitParam initParam;
 	initParam.nCmdShow = nCmdShow;
@@ -34,7 +63,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 	initParam.graphicsConfing.bloomConfig.isEnable = true;
 	//tonemap
 	initParam.graphicsConfing.tonemapConfig.isEnable = true;
-
+#endif
 	GraphicsEngine().GetShadowMap().SetFar(1000.0f);
 	GraphicsEngine().GetShadowMap().SetNear(50.0f);
 

@@ -313,6 +313,7 @@ float4 PSMain( PSInput In ) : SV_Target0
 #if 0
 	//アルベド。
 	float4 albedo = float4(albedoTexture.Sample(Sampler, In.TexCoord).xyz, 1.0f);
+
 	float4 color = albedo * float4(ambientLight, 1.0f);
 	float2 uv = In.posInProj.xy / In.posInProj.w;
 	uv = (uv * float2(0.5f, -0.5f)) + 0.5f;
@@ -357,6 +358,10 @@ float4 PSMain( PSInput In ) : SV_Target0
 	//アルベド。
 	float4 albedo = float4(albedoTexture.Sample(Sampler, In.TexCoord).xyz, 1.0f);
 	//法線を計算。
+	if (haszonbi >= 1) {
+		float4 zonbi = zonbiTexture.Sample(Sampler, In.TexCoord);
+		albedo = albedo * (1.0f - burend) + zonbi * burend;
+	}
 	float3 normal = CalcNormal( In.Normal, biNormal, In.Tangent, In.TexCoord);
 		
 	float specPow = 0.0f;
