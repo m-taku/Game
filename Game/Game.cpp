@@ -30,12 +30,16 @@ Game::Game()
 		simin.push_back(NewGO<AI>(0, "AI"));
 	}
 	No = 0;
+	//car‚ğ‘‚â‚µ‚½‚Ì‚Ì•ÏX“_
 	pasu2.push_back(movepasu1);
 	pasu2.push_back(movepasu2);
 	pasu2.push_back(movepasu3);
 	pasu2.push_back(movepasu4);
 	pasu2.push_back(movepasu5);
-	for (int i = 0; i <5 ; i++) {
+	pasu2.push_back(movepasu6);
+	pasu2.push_back(movepasu7);
+	pasu2.push_back(movepasu8);
+	for (int i = 0; i <8 ; i++) {
 		carv.push_back(NewGO<car>(0, "car"));
 	}
 	stge = NewGO<Stage>(0, "stage");
