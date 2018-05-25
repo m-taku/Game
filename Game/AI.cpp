@@ -738,12 +738,6 @@ void AI::Update()
 		NPCNormal();
 		NPCNormal_Search();
 		break;
-	//case Escape_NPC:
-	//	NPCEscape_NPC();
-	//	break;
-	//case Escape_Player:
-	//	NPCEscape_Player();
-	//	break;
 	case Escape:
 		NPCescape();
 		break;
@@ -782,28 +776,14 @@ void AI::Update()
 	FindGameObjectsWithTag(10, [&](IGameObject* go) {
 		if (go != this) {            //自分からの距離を計測するため、検索結果から自分を除外する。
 			AI* ai = (AI*)go;
-			if (ai->Zonbe == 0) {  //それがゾンビでなかったら
-				CVector3 kyori1 =   ai->m_position - this->m_position;//自分との距離を求める。
-				float f = kyori1.Length();
-				if (Siya(kyori1, f)) { //距離が攻撃範囲以内だったら
-					kyori1 /= 5.0f;
-					kyori1.y = 0.0f;
-					m_position = A_charaCon.Execute(GameTime().GetFrameDeltaTime(), kyori1*m_speed*-1);
-				
-					//kyori1.Normalize();
-					//		CVector3 forward = this->m_forward;
-					//		//回転軸を求める。
-					//		CVector3 rotAxis;
-					//		rotAxis.Cross(forward, kyori1);
-					//		rotAxis.Normalize();
-					//		CQuaternion qBias1;
-					//		qBias1.SetRotationDeg(rotAxis, 1.0);
-					//		m_rotation.Multiply(qBias1);
-
-				}
+			CVector3 kyori1 = ai->m_position - this->m_position;//自分との距離を求める。
+			float f = kyori1.Length();
+			if (Siya(kyori1, f)) { //距離が攻撃範囲以内だったら
+				kyori1 /= 5.0f;
+				kyori1.y = 0.0f;
+				m_position = A_charaCon.Execute(GameTime().GetFrameDeltaTime(), kyori1*m_speed*-1);
 			}
 		}
-
 	});
 	//if (pa != Escape) {//NPCが逃げていなかったら
 	//	Animation_Walk();//歩くアニメーション。
@@ -819,7 +799,7 @@ void AI::Update()
 	//if ((Pad(0).GetLStickXF() > 0.0)) {
 	//	m_skinModel.Satburend(0.01);
 	//}
-	m_skinModel.Update(m_position, m_rotation, { 200.0f, 200.0f,200.0f });
+	m_skinModel.Update(m_position, m_rotation, { 20.0f, 20.0f,20.0f });
 }
 void AI::NPCReturn()
 {

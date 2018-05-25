@@ -76,7 +76,7 @@ private:
 	std::vector<int> movepasu8 = { 28,27,26,25,15,14,4,3,11,18,31,38,46,45,35,34,24,23,22,21,29,40,48,47,37,32,17,12,2,1,9,20 };
 	std::vector<std::vector<int>> pasu2;
 	//{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 }
-
+	std::vector<prefab::CPointLight*> point;
 	//{ 18, 11, 7, 8, 10, 19, 30, 39, 41, 42, 43, 44, 36, 33, 25, 26 }
 	float g = 0.0f, f = 0.0;
 	prefab::CDirectionLight* m_sunLig = nullptr;	//	‘¾—zƒ‰ƒCƒgB
