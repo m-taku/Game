@@ -38,6 +38,7 @@ Game::Game()
 	for (int i = 0; i <5 ; i++) {
 		carv.push_back(NewGO<car>(0, "car"));
 	}
+//	pasu2.clear();
 	stge = NewGO<Stage>(0, "stage");
 	camera1 = NewGO<camera>(0, "camera");
 
@@ -54,12 +55,12 @@ Game::Game()
 	CLocData loc;
 	loc.Load(L"lever/laitLv001.tks");
 	for (int i = 0; i < loc.GetNumObject(); i++) {
-		prefab::CPointLight* point = NewGO<prefab::CPointLight>(0);
+		point.push_back(NewGO<prefab::CPointLight>(0));
 		CVector3 f= loc.GetObjectPosition(i);
 		f.y = 500.0f;
-		point->SetPosition(f);
-		point->SetColor({ 255.0f,255.0f, 0.0f,0.0f });
-		point->SetAttn({ 700.0f,4.0f ,0.0f });
+		point[i]->SetPosition(f);
+		point[i]->SetColor({ 255.0f,255.0f, 0.0f,0.0f });
+		point[i]->SetAttn({ 700.0f,4.0f ,0.0f });
 		 
 	}
 	m_sunLig = NewGO<prefab::CDirectionLight>(0);
@@ -89,16 +90,18 @@ void Game::OnDestroy()
 	for (int k = 0; k < 4; k++) {
 		DeleteGO(simin[k]);
 	}
-	for (int i = 0; i < 2; i++) {
+	for (int i = 0; i < 5; i++) {
 		DeleteGO(carv[i]);
 	}
 	DeleteGO(gaizi);
 	DeleteGO(stge);
 	DeleteGO(camera1);
 	DeleteGO(FindGO<item>("item"));
-
+	for (int i = 0; i < point.size(); i++) {
+		DeleteGO(point[i]);
+	}
 	//再起動（タイトル表示）
-
+	point.clear();
 	NewGO<Taitor>(0, "Taitor");
 }
 bool Game::Start()
