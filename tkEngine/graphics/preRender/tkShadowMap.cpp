@@ -126,7 +126,7 @@ namespace tkEngine{
 		lightViewRot.m[2][3] = 0.0f;
 
 		float shadowAreaTbl[] = {
-			m_lightHeight * 0.4f,
+			m_lightHeight * 0.1f,
 			m_lightHeight * 0.8f,
 			m_lightHeight * 1.6f
 		};

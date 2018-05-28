@@ -4,6 +4,9 @@
 #include"taieki.h"
 #include"tekihei.h"
 #include"Geizi.h"
+#define counter 10
+#include <string>
+#include<codecvt>
 
 
 Player::Player()
@@ -19,6 +22,19 @@ Player::~Player()
 }
 bool Player::Start()
 {
+	/*m_animclip[idle].Load(L"animData/demoanime/idel.tka");
+	m_animclip[walk].Load(L"animData/demoanime/walk.tka");
+	m_animclip[run].Load(L"animData/demoanime/run.tka");*/
+
+	/*animclip[1].Load(L"animData/demoanime/walk.tka");
+	animclip[2].Load(L"animData/demoanime/run.tka");
+	animclip[0].SetLoopFlag(true);
+	animclip[1].SetLoopFlag(true);
+	animclip[2].SetLoopFlag(true);*/
+	/*std::string hoge("Character1_Head");
+	std::wstring_convert<std::codecvt_utf8<wchar_t>, wchar_t> cv;
+	std::wstring headbone = cv.from_bytes(hoge);*/
+	const wchar_t name[20] = { 'C','h','a','r','a','c','t','e','r','1','_','H','e','a','d' };
 	m_skinModelData.Load(L"modelData/unityChan.cmo");//プレイヤーを書け
 	m_skinModel.Init(m_skinModelData);
 	m_skinModel.SetShadowCasterFlag(true);
@@ -34,10 +50,33 @@ bool Player::Start()
 	hakaba->Play(L"effect/aura2.efk");
 	hakaba->SetPosition(landpos);
 	hakaba->SetScale({ 40.0f,40.0f,40.0f });
+	
+	bonenum = m_skinModelData.GetSkeleton().GetNumBones();
+	for (int i = 1;i < bonenum;i++)
+	{
+		swprintf_s(bonename, m_skinModelData.GetSkeleton().GetBone(i)->GetName());
+		int result = wcscmp(bonename, name);
+		if (result == 0)
+		{
+			boneNo = i;
+			break;
+		}
+	}
+	/*m_animation.Init(
+		m_skinModel,
+		m_animclip,
+		animnum
+	);
+	m_animclip[idle].SetLoopFlag(true);*/
 	return true;
 }
 void Player::Update()
 {
+	
+
+	//m_animation.Play(idle,0.2);
+
+
 	m_moveSpeed.z = 0.0f;
 	m_moveSpeed.x = 0.0f;
 	//左スティックの入力量を受け取る。
@@ -91,6 +130,20 @@ void Player::Update()
 	m_rite.Normalize();
 	m_moveSpeed += m_forward*lStick_y;
 	m_moveSpeed += m_rite * lStick_x;
+	/*if (lStick_y > 0.0f&&(lStick_y > lStick_x&&lStick_y > lStick_x*-1.0f))
+	{
+		if (lStick_y >= 0.5f)
+		{
+			animation.Play(2, 0.2f);
+		}
+		if (lStick_y < 0.5f) {
+			animation.Play(1, 0.2f);
+		}
+	}
+	else {
+		animation.Play(0, 0.2f);
+	}*/
+	
 	if (hakaba->IsPlay()&&landflag == 1 && land_to_player_vector <= 50.0f)
 	{
 		m_moveSpeed = CVector3::Zero;
@@ -116,6 +169,11 @@ void Player::Update()
 	}
 	
 	m_skinModel.Update(m_position, m_rotation, CVector3::One);
+	const CMatrix& boneM = m_skinModelData.GetSkeleton().GetBone(boneNo)->GetWorldMatrix();
+
+	bonepos.x = boneM.m[3][0];
+	bonepos.y = boneM.m[3][1];
+	bonepos.z = boneM.m[3][2];
 	/*FindGameObjectsWithTag(10, [&](IGameObject* go) {
 		CVector3 diff;
 		AI* ai = (AI*)go;

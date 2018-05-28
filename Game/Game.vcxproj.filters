@@ -223,6 +223,7 @@
     <MeshContentTask Include="Assets\modelData\liam.FBX" />
     <MeshContentTask Include="Assets\modelData\teki.FBX" />
     <MeshContentTask Include="Assets\modelData\teki2.FBX" />
+    <MeshContentTask Include="Assets\animData\demoanime\UnityChanAnim.fbx" />
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="Assets\shader\tonemap.fx">
@@ -389,7 +390,6 @@
     </CustomBuild>
     <CustomBuild Include="Assets\modelData\liam.tks" />
     <CustomBuild Include="Assets\modelData\teki.tks" />
-    <CustomBuild Include="Assets\animData\tekiidle.tka" />
     <CustomBuild Include="Assets\lever\carLv001.tks">
       <Filter>Assets\lever</Filter>
     </CustomBuild>
@@ -397,6 +397,10 @@
       <Filter>Assets\lever</Filter>
     </CustomBuild>
     <CustomBuild Include="Assets\modelData\teki2.tks" />
+    <CustomBuild Include="Assets\animData\demoanime\idle.tka" />
+    <CustomBuild Include="Assets\animData\demoanime\jump.tka" />
+    <CustomBuild Include="Assets\animData\demoanime\run.tka" />
+    <CustomBuild Include="Assets\animData\demoanime\walk.tka" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\modelData\livingbuildings.png">
