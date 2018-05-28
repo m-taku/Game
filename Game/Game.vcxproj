@@ -721,7 +721,6 @@
     <MeshContentTask Include="Assets\modelData\stage3.FBX" />
     <MeshContentTask Include="Assets\modelData\taieki.FBX" />
     <MeshContentTask Include="Assets\modelData\teki.FBX" />
-    <MeshContentTask Include="Assets\modelData\teki2.FBX" />
     <MeshContentTask Include="Assets\modelData\unityChan.fbx" />
     <MeshContentTask Include="Assets\modelData\Vehicle_Car1.FBX" />
     <MeshContentTask Include="Assets\modelData\Vehicle_Car2.FBX" />
@@ -808,6 +807,12 @@
     <CustomBuild Include="Assets\effect\Texture\magma.png" />
     <CustomBuild Include="Assets\effect\Texture\sdfs.png" />
     <Image Include="Assets\modelData\ao.png" />
+    <ImageContentTask Include="Assets\modelData\LiamTexZonbi.png">
+      <ContentOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)/Resource/modelData/%(Filename).dds</ContentOutput>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\modelData\LiamTexZonbi1.png">
+      <ContentOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)/Resource/modelData/%(Filename).dds</ContentOutput>
+    </ImageContentTask>
     <Image Include="Assets\modelData\livingbuildings.png" />
     <Image Include="Assets\modelData\white.png" />
     <Image Include="Assets\modelData\worktops007.jpg" />
@@ -887,9 +892,6 @@
       <FileType>Document</FileType>
     </CustomBuild>
     <CustomBuild Include="Assets\modelData\teki.tks">
-      <FileType>Document</FileType>
-    </CustomBuild>
-    <CustomBuild Include="Assets\modelData\teki2.tks">
       <FileType>Document</FileType>
     </CustomBuild>
   </ItemGroup>

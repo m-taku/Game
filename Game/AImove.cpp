@@ -49,6 +49,38 @@ int AImove::kyorikeisan(int bangou, CVector3 m_pos, CVector3 m_forward, std::vec
 	}
 	return muve;
 }
+
+int AImove::kyorikeisan(CVector3 mokuteki1, CVector3 m_pos, CVector3 m_forward)
+{
+
+	//game = FindGO<Game>("Game");
+	kaku = 0.0f;
+	muve = 1.0f;
+	qBias1 = CQuaternion::Identity;
+	m_pos.y = 0.0f;
+	len = 0;
+	mokuteki = mokuteki1;
+	mokuteki.y = 0.0f;
+	bekutor = mokuteki - m_pos;
+	len = bekutor.Length();//í∑Ç≥
+	if (15.0f <= len) {
+		float angle = VectorAngleDeg(bekutor, m_forward);
+		if (angle >= haba) {
+			bekutor.y = 0.0f;
+			bekutor.Normalize();
+			//âÒì]é≤ÇãÅÇﬂÇÈÅB
+			CVector3 rotAxis;
+			rotAxis.Cross(m_forward, bekutor);
+			rotAxis.Normalize();
+			kaku = kakudo;
+			qBias1.SetRotationDeg(rotAxis, kaku);
+		}
+		else {
+			muve = SOKUDO;
+		}
+	}
+	return muve;
+}
 float VectorAngleDeg(CVector3 c,CVector3 forward)
 {
 	c.y = 0.0f;
@@ -58,4 +90,9 @@ float VectorAngleDeg(CVector3 c,CVector3 forward)
 	float degree = CMath::RadToDeg(kaku);
 
 	return degree;
+}
+
+int kyorikeisan(CVector3 mokuteki, CVector3 m_pos, CVector3 m_forward)
+{
+	return 0;
 }

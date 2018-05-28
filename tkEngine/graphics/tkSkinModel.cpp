@@ -135,7 +135,7 @@ namespace tkEngine{
 		vsCb.screenParam.z = static_cast<float>(GraphicsEngine().GetFrameBufferWidth());
 		vsCb.screenParam.w = static_cast<float>(GraphicsEngine().GetFrameBufferHeight());
 		vsCb.isShadowReceiver = m_isShadowReceiver ? 1 : 0;
-		
+		vsCb.burend = m_burend;
 		renderContext.UpdateSubresource(m_cb, &vsCb);
 		renderContext.VSSetConstantBuffer(enSkinModelCBReg_VSPS, m_cb);
 		renderContext.PSSetConstantBuffer(enSkinModelCBReg_VSPS, m_cb);

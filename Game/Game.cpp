@@ -23,19 +23,34 @@
 
 Game::Game()
 {
+	//ここに基本的な発生を描く
 	gaizi = NewGO<Geizi>(1, "Geizi");
 	player = NewGO<Player>(0, "Player");
 
 	for (int k = 0; k < 4; k++) {
 		simin.push_back(NewGO<AI>(0, "AI"));
+		AIseizon.push_back(1);
 	}
 	No = 0;
+	//carを増やした時のの変更点
 	pasu2.push_back(movepasu1);
 	pasu2.push_back(movepasu2);
 	pasu2.push_back(movepasu3);
-	for (int i = 0; i < 2; i++) {
+
+	pasu2.push_back(movepasu4);
+	pasu2.push_back(movepasu5);
+	pasu2.push_back(movepasu6);
+	pasu2.push_back(movepasu7);
+	pasu2.push_back(movepasu8);
+	pasu2.push_back(movepasu9);
+	pasu2.push_back(movepasu10);
+	pasu2.push_back(movepasu11);
+	pasu2.push_back(movepasu12);
+	pasu2.push_back(movepasu13);
+	for (int i = 0; i <13 ; i++) {
 		carv.push_back(NewGO<car>(0, "car"));
 	}
+//	pasu2.clear();
 	stge = NewGO<Stage>(0, "stage");
 	camera1 = NewGO<camera>(0, "camera");
 
@@ -52,12 +67,12 @@ Game::Game()
 	CLocData loc;
 	loc.Load(L"lever/laitLv001.tks");
 	for (int i = 0; i < loc.GetNumObject(); i++) {
-		prefab::CPointLight* point = NewGO<prefab::CPointLight>(0);
+		point.push_back(NewGO<prefab::CPointLight>(0));
 		CVector3 f= loc.GetObjectPosition(i);
 		f.y = 500.0f;
-		point->SetPosition(f);
-		point->SetColor({ 255.0f,255.0f, 0.0f,0.0f });
-		point->SetAttn({ 700.0f,4.0f ,0.0f });
+		point[i]->SetPosition(f);
+		point[i]->SetColor({ 255.0f,255.0f, 0.0f,0.0f });
+		point[i]->SetAttn({ 700.0f,4.0f ,0.0f });
 		 
 	}
 	m_sunLig = NewGO<prefab::CDirectionLight>(0);
@@ -85,18 +100,22 @@ void Game::OnDestroy()
 	DeleteGO(player);
 	//ここで最終的にＤｅｌｅｔｅＧＯを絶対しきる。	
 	for (int k = 0; k < 4; k++) {
-		DeleteGO(simin[k]);
+		if (AIseizon[k] >= 1) {
+			DeleteGO(simin[k]);
+		}
 	}
-	for (int i = 0; i < 2; i++) {
+	for (int i = 0; i < 13; i++) {
 		DeleteGO(carv[i]);
 	}
 	DeleteGO(gaizi);
 	DeleteGO(stge);
 	DeleteGO(camera1);
 	DeleteGO(FindGO<item>("item"));
-
+	for (int i = 0; i < point.size(); i++) {
+		DeleteGO(point[i]);
+	}
 	//再起動（タイトル表示）
-
+	point.clear();
 	NewGO<Taitor>(0, "Taitor");
 }
 bool Game::Start()
@@ -107,12 +126,7 @@ bool Game::Start()
 	MainCamera().SetFar(50000.0f);
 	MainCamera().SetPosition({ 30.0f, 10.0f, 0.0f });
 	MainCamera().Update();
-	//ここに基本的な発生を描く
-	{
-		
-	}
-	m_Fade=FindGO<Fade>("Fade");
-
+	m_Fade = FindGO<Fade>("Fade");
 
 
 	/*m_skinModelRender = NewGO<prefab::CSkinModelRender>(0);

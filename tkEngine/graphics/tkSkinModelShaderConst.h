@@ -28,6 +28,7 @@ namespace tkEngine{
 		enSkinModelSRVReg_ShadowMap_2,				//!<シャドウマップ
 		enSkinModelSRVReg_SilhouetteTexture,		//!<シルエットテクスチャ。
 		enSkinModelSRVReg_SoftShadowMap,			//!<ソフトシャドウマップ。
+		enSkinModelSRVReg_zonbi,					//ＺＯＭＢＩＥテクスチャ。
 
 		enSkinModelSRVReg_DirectionLight = 100,		//!<ディレクションライト。
 		enSkinModelSRVReg_PointLight,				//!<ポイントライトのリスト。

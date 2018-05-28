@@ -33,18 +33,17 @@ bool AI::Start()
 	m_position= game->pasu.m_pointList[game->da[iNo][0] - 1];
 	m_position.y = 0.0f;
 	//キャラのスキンモデルのロードは各自サブクラスで行う。
-	m_skinModelData.Load(L"modelData/unityChan.cmo");//プレイヤーを書け
+	m_skinModelData.Load(L"modelData/liam.cmo");//プレイヤーを書け
 	m_skinModel.Init(m_skinModelData);
 
 	CMatrix mRot;
 	//mRot.MakeRotationFromQuaternion();
-	A_charaCon.Init(
-		50.0,			//半径。 
-		100.0f,			//高さ。
-		m_position,		//初期位置。
-		0
-	);
-
+	//A_charaCon.Init(
+	//	10.0,			//半径。 
+	//	100.0f,			//高さ。
+	//	m_position,		//初期位置。
+	//	0
+	//);
 	////アニメーションの初期化。
 	//ai_NPCAnimation.Init(
 	//	m_skinModel,			//アニメーションを流すスキンモデル。
@@ -58,12 +57,23 @@ bool AI::Start()
 	m_forward.z = m_tekirot.m[2][2];
 	m_forward.Normalize();
 
+	zondi.CreateFromDDSTextureFromFile(L"modelData/LiamTexZonbi.dds");
+	m_skinModel.FindMaterial([&](CModelEffect* material) {
+		material->Setm_zonbi(zondi.GetBody());
+	});
 	m_rotation.SetRotationDeg(CVector3::AxisY,VectorAngleDeg(game->pasu.m_pointList[game->da[iNo][1] - 1]));
 	SetTags(10);
 	m_skinModel.SetShadowCasterFlag(true);
 	if (game->GatNo() >= 4) {
 		game->risetteNo();
 	}
+	/*ai_NPCAnimationClips[0].SetLoopFlag(false);
+	ai_NPCAnimationClips[0].SetLoopFlag(true);
+	ai_NPCAnimationClips[0].SetLoopFlag(false);
+	ai_NPCAnimationClips[0].SetLoopFlag(true);
+	ai_NPCAnimationClips[0].SetLoopFlag(true);
+	ai_NPCAnimationClips[0].SetLoopFlag(false);*/
+
 	return true;
 }
 void AI::NPCNormal()
@@ -102,7 +112,7 @@ void AI::NPCNormal()
 	//	//	
 	work->kyorikeisan(game->da[iNo][ima] - 1, m_position, m_forward,game->pasu.m_pointList);
 	m_rotation.Multiply(work->Gatkaku());//回転
-	m_position = A_charaCon.Execute(GameTime().GetFrameDeltaTime(), m_forward*(work->Gatmuve()*m_speed));//移動
+	m_position += /*A_charaCon.Execute(*/ (m_forward*(work->Gatmuve()*m_speed))*(GameTime().GetFrameDeltaTime());//移動
 	if (15.0f > work->Gatlen()) {
 		if (ima >= 10) {//今のポジションが6なら
 					  //0にリセットする。0,1,2,3,4,5の順番。
@@ -358,7 +368,8 @@ void AI::NPCZombie_Chase()
 		CVector3 n = m_position - Tansaku->m_position;
 		n.Normalize();
 		n.y = 0.0f;
-		m_position = A_charaCon.Execute(GameTime().GetFrameDeltaTime(), n*m_speed);
+		n=n*500.0;
+		m_position += /*A_charaCon.Execute(*/ (n*(work->Gatmuve()*m_speed))*(GameTime().GetFrameDeltaTime());//移動
 			/////////////////////////////////
 			//市民NPCを追跡する処理。
 			/////////////////////////////////
@@ -372,40 +383,47 @@ void AI::NPCZombie_Chase()
 void AI::NPCZombie_Attack()//vs特殊部隊
 {
 	if (BattleFlag == false) {//部隊と戦っておらず、フリーな状態なら
-		work->kyorikeisan(jyunban[da] - 1, m_position, m_forward, game->pasu.m_pointList);
+		if (da >= jyunban.size()) {//指定されたパスの最後まで着いたら
+			if (tekip->tekiheiflag[No] >= 1) {
+				work->kyorikeisan(tekip->tekipos[No], m_position, m_forward);
+			}
+			else {
+				takikennsau();
+			}
+		}
+		else {
+			work->kyorikeisan(jyunban[da] - 1, m_position, m_forward, game->pasu.m_pointList);
+		}
 		m_rotation.Multiply(work->Gatkaku());
-		CVector3 v = work->Gatmokuteki() - m_position;
-		m_position = A_charaCon.Execute(GameTime().GetFrameDeltaTime(), m_forward*(work->Gatmuve()*m_speed));
+		CVector3 v = work->Gatmokuteki() - m_position;  //一番近い部隊に移動する。
+		m_position += /*A_charaCon.Execute(*/ m_forward * (work->Gatmuve()*m_speed)*GameTime().GetFrameDeltaTime();//移動
 		if (15.0f > work->Gatlen()) {
 			if (da >= jyunban.size() - 1) {//指定されたパスの最後まで着いたら
-				float min = 99999999999999999.0;
-				for (int i = 0; i < 10; i++) {
-					if (tekip->tekiheiflag[i] >= 1) {
-						float max = GetKyori(m_position, tekip->tekipos[i]);
-						if (min > max) {
-							min = max;
-							No = i;
-						}
-					}
-					CVector3 posa = tekip->tekipos[No] - m_position;
-					jyunban.erase(jyunban.begin(), jyunban.end());
-					keiro.tansa(m_position, posa, &jyunban);
-					da = 0;//もう一度検索
+				if (tekip->tekiheiflag[No] >= 1) {
+					da++;
+				}
+				else {
+					takikennsau();
 				}
 			}
 			else {
 				da++;
 			}
-		}			  //一番近い部隊に移動する。
+		}
+		float h = 9999999999999.0f;
 		for (int i = 0; i < 10; i++) {
-			float max = GetKyori(m_position, tekip->tekipos[i]);
-			if (max < REACH) {//部隊に近づいたら
-				BattleFlag == true;//戦闘を開始する。
-				No = i;
+			if (tekip->tekiheiflag[i] >= 1) {
+				float max = GetKyori(m_position, tekip->tekipos[i]);
+				if (max < REACH) {//部隊に近づいたら
+					BattleFlag = true;//戦闘を開始する。
+					if (h > max) {
+						No = i;
+						h = max;
+					}
+				}
 			}
 		}
 	}
-
 	if (BattleFlag == true) {//戦闘状態なら
 		CVector3 bekutor = tekip->tekipos[No] - m_position;
 		float len = GetKyori(m_position, tekip->tekipos[No]);
@@ -417,14 +435,18 @@ void AI::NPCZombie_Attack()//vs特殊部隊
 			CVector3 rotAxis;
 			rotAxis.Cross(m_forward, bekutor);
 			rotAxis.Normalize();
-			m_rotation.SetRotationDeg(rotAxis, 5.0f);
+			CQuaternion qBias1;
+			qBias1.SetRotationDeg(rotAxis, 5.0f);
+			m_rotation.Multiply(qBias1);
 		}
-		else if(15<len){
-			m_position = A_charaCon.Execute(GameTime().GetFrameDeltaTime(), m_forward*m_speed);
+		else if(150<len){
+			m_position += /*A_charaCon.Execute(*/ m_forward *500 * m_speed*GameTime().GetFrameDeltaTime();
 		}
 		else {
 			//殴る
+			tekip->tekiHP[No] = tekip->tekiHP[No]-5;
      	 //部隊に攻撃する。
+			takikennsau();
 			BattleFlag = false;
 		}
 	}
@@ -435,11 +457,33 @@ void AI::NPCZombie_Attack()//vs特殊部隊
 	//}
 	
 }
+void AI::takikennsau()
+{
+	float min = 99999999999999999.0;
+	No = -1;
+	if (tekip != NULL) {
+		for (int i = 0; i < 10; i++) {
+			if (tekip->tekiheiflag[i] >= 1) {
+				float max = GetKyori(m_position, tekip->tekipos[i]);
+				if (min > max) {
+					min = max;
+					No = i;
+				}
+			}
+		}
+		if (No >= 0) {
+			CVector3 posa = tekip->tekipos[No] - m_position;
+			jyunban.erase(jyunban.begin(), jyunban.end());
+			keiro.tansa(m_position, tekip->tekipos[No], &jyunban);
+			da = 0;//もう一度検索
+		}
+	}
+}
 void AI::NPCFade_Out()//一般市民が退場するときの処理。
 {
 	work->kyorikeisan(jyunban[da] - 1, m_position, m_forward, game->pasu.m_pointList);
 	m_rotation.Multiply(work->Gatkaku());
-	m_position = A_charaCon.Execute(GameTime().GetFrameDeltaTime(), m_forward*(work->Gatmuve()*m_speed));
+	m_position += /*A_charaCon.Execute(*/ (m_forward*(work->Gatmuve()*m_speed))*(GameTime().GetFrameDeltaTime());//移動
 	if (15.0f > work->Gatlen()) {
 		if (da >= jyunban.size()-1) {//指定されたパスの最後まで着いたら
 			pa = Death;
@@ -570,7 +614,7 @@ void AI::DamageHantei() //全てのゾンビと距離でダメージ判定をする。
 			AI* ai = (AI*)go;
 			if (ai->Zonbe == 1) {   //それがゾンビだったら
 				float kyori = GetKyori(this->m_position, ai->m_position);//自分との距離を求める。
-				if (kyori < REACH) {  //距離が攻撃範囲以内だったら
+				if (kyori < 300) {  //距離が攻撃範囲以内だったら
 					pa = Resistance_NPC; //パターンを抵抗にかえる。
 				}
 			}
@@ -578,14 +622,15 @@ void AI::DamageHantei() //全てのゾンビと距離でダメージ判定をする。
 	});
 
 	float kyori = GetKyori(this->m_position, pl->GetPosition());//自分との距離を求める。
-	if (kyori < REACH) {  //距離が攻撃範囲以内だったら
+	if (kyori < 300) {  //距離が攻撃範囲以内だったら
 		pa = Resistance_Player; //パターンを抵抗にかえる。
 	}
 }
 
 void AI::NPCDeath()//死亡、消滅処理。
 {
-//	DeleteGO(this);//自己消滅。
+	game->SatSaizon(iNo);
+	DeleteGO(this);//自己消滅。
 }
 //
 //void AI::Animation_Walk()//歩き始めと歩き続けの一連のアニメーションの処理。
@@ -680,6 +725,7 @@ void AI::Update()
 
 	if (Zonbe == 0) { //自分がゾンビではなかったら
 		if (muteki_Flag == false) {//無敵ではなかったら
+			if(pa!=Damage)
 			DamageHantei(); //ゾンビとの当たり判定をとる。
 		}
 	}
@@ -688,27 +734,14 @@ void AI::Update()
 		tekip = FindGO<tekihei>("tekihei");
 		ForceFlag = true;//出現フラグを立てる。
 		if (Zonbe == 1) {//自分がゾンビだったら
-			float min = 99999999999999999.0;
-			int no = 0;
-			for (int i = 0; i < 10; i++) {
-				float max = GetKyori(m_position, tekip->tekipos[i]);
-				if (min > max) {
-					min= max;
-					no = i;
-				}
-			}
-			CVector3 posa = tekip->tekipos[no]-m_position;
-			jyunban.erase(jyunban.begin(), jyunban.end());
-			keiro.tansa(m_position, posa, &jyunban);
-			m_speed = 1.5;
-			da = 0;
+			takikennsau();
 			pa = Zombie_Attack; //パターンをゾンビアタックに切り替える。
 		}
 		else {//尚且つ、自分がゾンビではなかったら
 			jyunban.erase(jyunban.begin(), jyunban.end());
 			keiro.tansa(m_position, game->pasu.m_pointList[0], &jyunban);
 			da = 0;
-			m_speed = 1.2;
+			m_speed = 2.0;
 			pa = Fade_Out; //パターンをフェードアウトに切り替える。
 		}
 	}
@@ -720,12 +753,6 @@ void AI::Update()
 		NPCNormal();
 		NPCNormal_Search();
 		break;
-	//case Escape_NPC:
-	//	NPCEscape_NPC();
-	//	break;
-	//case Escape_Player:
-	//	NPCEscape_Player();
-	//	break;
 	case Escape:
 		NPCescape();
 		break;
@@ -764,28 +791,15 @@ void AI::Update()
 	FindGameObjectsWithTag(10, [&](IGameObject* go) {
 		if (go != this) {            //自分からの距離を計測するため、検索結果から自分を除外する。
 			AI* ai = (AI*)go;
-			if (ai->Zonbe == 0) {  //それがゾンビでなかったら
-				CVector3 kyori1 =   ai->m_position - this->m_position;//自分との距離を求める。
-				float f = kyori1.Length();
-				if (Siya(kyori1, f)) { //距離が攻撃範囲以内だったら
-					kyori1 /= 5.0f;
-					kyori1.y = 0.0f;
-					m_position = A_charaCon.Execute(GameTime().GetFrameDeltaTime(), kyori1*m_speed*-1);
+			CVector3 kyori1 = ai->m_position - this->m_position;//自分との距離を求める。
+			float f = kyori1.Length();
+			if (Siya(kyori1, f)) { //距離が攻撃範囲以内だったら
+				kyori1 /= 5.0f;
+				kyori1.y = 0.0f;
+				m_position += /*A_charaCon.Execute(*/ kyori1*m_speed*-1 *GameTime().GetFrameDeltaTime();//移動
 				
-					//kyori1.Normalize();
-					//		CVector3 forward = this->m_forward;
-					//		//回転軸を求める。
-					//		CVector3 rotAxis;
-					//		rotAxis.Cross(forward, kyori1);
-					//		rotAxis.Normalize();
-					//		CQuaternion qBias1;
-					//		qBias1.SetRotationDeg(rotAxis, 1.0);
-					//		m_rotation.Multiply(qBias1);
-
-				}
 			}
 		}
-
 	});
 	//if (pa != Escape) {//NPCが逃げていなかったら
 	//	Animation_Walk();//歩くアニメーション。
@@ -793,8 +807,16 @@ void AI::Update()
 	//else {//NPCが逃げていたら
 	//	Animation_Run();//走るアニメーション。
 	//}
+	if (Zonbe == 1) {
+		if ((Pad(0).IsTrigger(enButtonA))) {
+			m_skinModel.Satburend(0.1f);
+		}
+	}
+	//if ((Pad(0).GetLStickXF() > 0.0)) {
+	//	m_skinModel.Satburend(0.01);
+	//}
 
-	m_skinModel.Update(m_position, m_rotation, { 0.5f, 0.5f,0.5f });
+	m_skinModel.Update(m_position, m_rotation, { 20.0f, 20.0f,20.0f });
 }
 void AI::NPCReturn()
 {
@@ -802,7 +824,7 @@ void AI::NPCReturn()
 	work->kyorikeisan(jyunban[da] - 1, m_position, m_forward, game->pasu.m_pointList);
 	m_rotation.Multiply(work->Gatkaku());
 	CVector3 v = work->Gatmokuteki() - m_position;
-	m_position = A_charaCon.Execute(GameTime().GetFrameDeltaTime(), m_forward*(work->Gatmuve()*m_speed));
+	m_position += /*A_charaCon.Execute(*/ m_forward * (work->Gatmuve()*m_speed)*GameTime().GetFrameDeltaTime();//移動
 	if (15.0f > work->Gatlen()) {
 		if (da >= jyunban.size()-1) {//指定されたパスの最後まで着いたら
 			pa = Normal;//パターンをノーマルにかえる。
@@ -853,7 +875,7 @@ void AI::NPCescape()
 		v.Normalize();//正規化して向きベクトルにする。
 		v.y = 0.0f;
 		//m_position += v * m_speed;
-		m_position = A_charaCon.Execute(GameTime().GetFrameDeltaTime(), v*(work->Gatmuve()*m_speed));
+		m_position = /*A_charaCon.Execute(*/ m_forward * (work->Gatmuve()*m_speed)*GameTime().GetFrameDeltaTime();//移動
 
 	}
 	else {

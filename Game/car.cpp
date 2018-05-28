@@ -9,10 +9,10 @@ car::car()
 
 car::~car()
 {
+	DeleteGO(ran);
 }
 bool car::Start()
 {
-
 	CLocData loc;
 	loc.Load(L"lever/carLv001.tks");
 	No.resize(loc.GetNumObject());
@@ -21,7 +21,7 @@ bool car::Start()
 		No[ka-1] = loc.GetObjectPosition(i);
 	}
 	Game* game=FindGO<Game>("Game");
-	int fa = game->incNo();
+	fa = game->incNo();
 	saidaiNo = game->Gatpasusaiz(fa);
 	pasu = game->getDate(fa);
 	ran = NewGO<AImove>(0, "AImove");
@@ -34,25 +34,38 @@ bool car::Start()
 	m_forward.y = m_tekirot.m[2][1];
 	m_forward.z = m_tekirot.m[2][2];
 	m_forward.y = 0.0f;
+
 	m_forward.Normalize();
+
 	CVector3 c = No[pasu[ima] - 1];
 	CVector3 bekutor =  c-m_position;
 	bekutor.y = 0.0f;
 	bekutor.Normalize();
 	//回転軸を求める。
-	CVector3 rotAxis;
-	rotAxis.Cross(m_forward, bekutor);
-	rotAxis.Normalize();
 	c.y = 0.0f;
 	c.Normalize();//向きVectorにする。
-	float kaku = acosf(c.Dot(m_forward));//２つのべクトルの内積のアークコサインを求める。(ラジアン)
-
-	float degree = CMath::RadToDeg(kaku);
-	m_rotation.SetRotationDeg(rotAxis, degree);
+	CVector3 rotAxis;
+	rotAxis.Cross(m_forward, bekutor);
+	CVector3 l = CVector3::Zero;
+	if (rotAxis.x==0&& rotAxis.y==0&& rotAxis.z==0) {
+		if (bekutor.z > 0) {
+			m_rotation.SetRotationDeg(CVector3::AxisY,0.0f);
+		}
+		else {
+			m_rotation.SetRotationDeg(CVector3::AxisY,-180.0);
+		}
+	}
+	else {
+		float kaku = acosf(c.Dot(m_forward));//２つのべクトルの内積のアークコサインを求める。(ラジアン)
+		float degree = CMath::RadToDeg(kaku);
+		rotAxis.Normalize();
+		m_rotation.SetRotationDeg(rotAxis, degree);
+	}
+	//rotation.Multiply(rotation);
 	ran->Satkakudo(0.1f);
 	ran->Sathaba(1.0f);
 	m_skinModel.Update(m_position, m_rotation, { 0.5f,0.5f,0.5f });
-	if (game->GatNo() >= 2) {
+	if (game->GatNo() >= 13) {//carを増やすときに変える。
 		game->risetteNo();
 	}
 	SetTags(20);
@@ -66,37 +79,43 @@ void car::Update()
 	m_forward.z = m_tekirot.m[2][2];
 	m_forward.y = 0.0f;
 	m_forward.Normalize();
-	frag = 0;
+//	frag = 0;
 	Stop();
-	if (frag <= 0) {
-		Move();
-	}
+//	if (frag <= 0) {
+	Move();
+//	}
 	m_position.y = 0.0f;
-	m_skinModel.Update(m_position, m_rotation, {0.5f,0.5f,0.5f});
+	m_skinModel.Update(m_position,m_rotation, { 0.5f,0.5f,0.5f });
 }
 void car::Move()
 {
 	ran->kyorikeisan(pasu[ima] - 1, m_position, m_forward, No);
+
 	if (ran->Gatkaiten() != 0.0f) {
 		m_rotation.Multiply(ran->Gatkaku());//回転させる
 		if (move > 0.5) {
-			move -= 0.13;
+			move -= 0.05;
 		}
 		else {
-			ran->Satkakudo(1.2f);
-			ran->Sathaba(3.0f);
+			ran->Satkakudo(1.8f);
+			ran->Sathaba(1.0f);
 		}
-	}
-	if (move < 1.0) {
-		move += 0.1;
+
 	}
 	else {
-		ran->Satkakudo(0.1f);
-		ran->Sathaba(1.0f);
+		if (move < 1.0) {
+			if (frag == 0)
+				move += 0.05;
+		}
+		else {
+			ran->Satkakudo(0.1f);
+			ran->Sathaba(1.0f);
+		}
 	}
 	m_position += m_forward * ((move*speed)*(GameTime().GetFrameDeltaTime()));
 
-	if (400.0f > ran->Gatlen()) {
+	if (200.0f > ran->Gatlen()) {
+
 		if (ima >= saidaiNo-1) {//今のポジションが6なら
 						//0にリセットする。0,1,2,3,4,5の順番。
 			ima = 0;
@@ -113,15 +132,19 @@ void car::Stop()
 			car* ai = (car*)go;
 			CVector3 kyori1 = ai->m_position - this->m_position;//自分との距離を求める。
 			float f = kyori1.Length();
-			if (f <= 1000) { //距離が攻撃範囲以内だったら
+			if (f <= 1900) { //距離が視野内だったら
 				kyori1.Normalize();
 				kyori1.y = 0.0f;
 				float kaku = acosf(kyori1.Dot(m_forward));//２つのべクトルの内積のアークコサインを求める。(ラジアン)
 				float degree = CMath::RadToDeg(kaku);
-				if (degree <= 90) {
+				if (degree <= 80) {
 					if (ai->ran->Gatlen() < this->ran->Gatlen())
 					{
-						frag++;
+						if (move > 0.5)
+							move -= 0.11;
+						if (move < 0.)
+							move = 0.5;
+
 					}
 				}
 			}

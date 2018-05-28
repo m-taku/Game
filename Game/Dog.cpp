@@ -34,6 +34,7 @@ bool Dog::Start()
 
 	//ai_NPCAnimationClips[5].Load(L"Assets/animData/walk.tka");//‰¼BŒã‚Å“ü‚ê‚ëB
 	//ai_NPCAnimationClips[5].SetLoopFlag(true);
+
 	AI::Start();
 
 	return true;

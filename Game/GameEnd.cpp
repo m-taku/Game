@@ -2,6 +2,7 @@
 #include "GameEnd.h"
 #include"Geizi.h"
 #include"Game.h"
+#include"Fade.h"
 
 GameEnd::GameEnd()
 {
@@ -13,6 +14,8 @@ GameEnd::~GameEnd()
 }
 bool GameEnd::Start()
 {
+
+	fade = FindGO<Fade>("Fade");
 	Geizi* hama= FindGO<Geizi>("Geizi");
 	if (hama->GatHPfurag() >= 1) {
 		furgu++;
@@ -44,8 +47,11 @@ void GameEnd::Update()
 		taim++;
 	}
 	else {
-		DeleteGO(FindGO<Game>("Game"));
-		DeleteGO(this);
+		fade->StartFadeOut();
+		if (fade->toumeiodo >= 1.0f) {
+			DeleteGO(FindGO<Game>("Game"));
+			DeleteGO(this);
+		}
 	}
 }
 

@@ -139,8 +139,14 @@ namespace tkEngine{
 			m_isShadowReceiver = flag;
 		}
 		/*!
-		 *@brief	ワールド行列を取得。
-		 */
+		* @brief	ブレンド率セット
+		*@param[in]	burend	ブレンド率（0.0～1.0）。
+		*/
+
+		void Satburend(float bai)
+		{
+			m_burend += bai;
+		}
 		const CMatrix& GetWorldMatrix() const
 		{
 			return m_worldMatrix;
@@ -173,6 +179,7 @@ namespace tkEngine{
 			CMatrix mProj;
 			CVector4 screenParam;
 			int isShadowReceiver;
+			float burend;
 		};
 		CAnimation* m_animation = nullptr;
 		CSkinModelData*	m_skinModelData = nullptr;
@@ -181,6 +188,7 @@ namespace tkEngine{
 		CShadowCaster_SkinModel m_shadowCaster;	//!<シャドウキャスター。
 		bool m_isShadowCaster = false;		//!<シャドウキャスター？
 		bool m_isShadowReceiver = false;	//!<シャドウレシーバー？
+		float m_burend = 0.0f;
 		CSamplerState m_samplerState;		//!<サンプラステート。@todo ひとまとめにした方がいい。
 		std::unique_ptr<CMatrix[]>	m_instancingData;		//!<インスタンシング描画用のデータ。
 		CStructuredBuffer	m_instancingDataSB;				//!<インスタンシング描画用のストラクチャーバッファ。
