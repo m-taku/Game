@@ -41,7 +41,12 @@ Game::Game()
 	pasu2.push_back(movepasu6);
 	pasu2.push_back(movepasu7);
 	pasu2.push_back(movepasu8);
-	for (int i = 0; i <8 ; i++) {
+	pasu2.push_back(movepasu9);
+	pasu2.push_back(movepasu10);
+	pasu2.push_back(movepasu11);
+	pasu2.push_back(movepasu12);
+	pasu2.push_back(movepasu13);
+	for (int i = 0; i <13 ; i++) {
 		carv.push_back(NewGO<car>(0, "car"));
 	}
 //	pasu2.clear();
