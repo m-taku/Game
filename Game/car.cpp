@@ -9,10 +9,10 @@ car::car()
 
 car::~car()
 {
+	DeleteGO(ran);
 }
 bool car::Start()
 {
-
 	CLocData loc;
 	loc.Load(L"lever/carLv001.tks");
 	No.resize(loc.GetNumObject());
@@ -132,7 +132,7 @@ void car::Stop()
 			car* ai = (car*)go;
 			CVector3 kyori1 = ai->m_position - this->m_position;//自分との距離を求める。
 			float f = kyori1.Length();
-			if (f <= 1100) { //距離が攻撃範囲以内だったら
+			if (f <= 1900) { //距離が視野内だったら
 				kyori1.Normalize();
 				kyori1.y = 0.0f;
 				float kaku = acosf(kyori1.Dot(m_forward));//２つのべクトルの内積のアークコサインを求める。(ラジアン)
@@ -142,7 +142,7 @@ void car::Stop()
 					{
 						if (move > 0.5)
 							move -= 0.11;
-						if (move < 0.5)
+						if (move < 0.)
 							move = 0.5;
 
 					}

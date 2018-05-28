@@ -1,4 +1,5 @@
 #pragma once
+class Fade;
 class GameEnd : public IGameObject
 {
 public:
@@ -9,7 +10,7 @@ public:
 	void Render(CRenderContext& rc);
 private:
 	int furgu = 0;
-
+	Fade* fade;
 	int taim = 0;
 	CSprite syuuryou;				//スプライト(枠)。
 	CShaderResourceView you;	//テクスチャ。

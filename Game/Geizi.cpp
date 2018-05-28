@@ -16,7 +16,7 @@ bool Geizi::Start()
 
 	m_texture.CreateFromDDSTextureFromFile(L"sprite/waku.dds");
 	m_sprite.Init(m_texture, 400, 100);
-	m_position = {-620.0,300.0,0.0};
+	m_position = {-600.0,300.0,0.0};
 	m_sprite.Update(m_position, CQuaternion::Identity, { 1.0f,1.0f,1.0f }, { 0.0f,1.0f });
 	n_position = m_position;
 	n_position += { 10.0, -10.0, 0.0};
@@ -25,7 +25,7 @@ bool Geizi::Start()
 	n_sprite.Update(n_position, CQuaternion::Identity, { 1.0f,1.0f,1.0f }, { 0.0f,1.0f });
 
 	hm_sprite.Init(m_texture, 400, 100);
-	hm_position = { 250.0f,300.0f,0.0f };
+	hm_position = { 200.0f,300.0f,0.0f };
 	hm_sprite.Update(hm_position, CQuaternion::Identity, { 1.0f,1.0f,1.0f }, { 0.0f,1.0f });
 	hn_sprite.Init(n_texture, 400, 100);
 	hn_position = hm_position;

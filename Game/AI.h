@@ -39,7 +39,7 @@ public:
 	float VectorAngleDeg(CVector3 c);  //2つのベクトルの角度を角度表記(degree)で返す。
 	float Siya(CVector3 h, float g);
 	float VectorAngleDeg2(CVector3 c);
-
+	void takikennsau();
 	void Animation_Walk();//歩き始めと歩き続けの一連のアニメーションの処理。
 	void Animation_Run();//走り始めと走り続けの一連のアニメーションの処理。
 
@@ -85,7 +85,7 @@ protected:
 
 
 	enum npcpattern pa;
-	CCharacterController A_charaCon;
+	//CCharacterController A_charaCon;
 	CSkinModel m_skinModel;					//スキンモデル。
 	CSkinModelData m_skinModelData;			//スキンモデルデータ。
 	CQuaternion m_rotation = CQuaternion::Identity;	//回転。
@@ -129,6 +129,7 @@ protected:
 private:
 	bool ForceFlag = false;     //特殊部隊の出現を表すフラグ。
 	int No = 0;
+	int no = 0;
 	AImove* work;
 	tekihei* tekip;
 	CShaderResourceView zondi;
