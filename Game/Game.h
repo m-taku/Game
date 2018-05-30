@@ -38,10 +38,6 @@ public:
 	int a = 2;
 	int stag = 0;					//ÉåÉxÉãÅB
 
-	int da[4][11] = { { 26,25,17,16,15,14,19,18,24,28,27 }
-		,{ 22,29,28,31,36,35,32,27,26,25,23 },
-	{ 14,15,16,17,18,19,20,23,24,18,19 },
-	{ 6,20,18,19,14,13,11,10,9,8,7 } };
 	int incNo()
 	{
 		return No++;
@@ -65,6 +61,9 @@ public:
 	}
 	std::vector<int>::iterator getDate(int i) {
 		return pasu2[i].begin();
+	}
+	std::vector<int>::iterator getAIDate(int i) {
+		return da[i].begin();
 	}
 private:
 	void InitSceneLight();
@@ -94,7 +93,16 @@ private:
 	std::vector<int> movepasu21 = { 46,45,35,34,24,23,22,21,19,10,8,7,6,5,13,16,24,23,31,38};
 	std::vector<int> movepasu22 = { 19,10,8,7,6,5,13,16,24,23,22,21,29,40,48,47,37,32,22,21 };
 	std::vector<int> movepasu23 = { 33,36,44,43,37,32,26,25,15,14,4,3,2,1,9,20,29,40,48,47,37,32,17,12,6,5,13,16 };
+	std::vector<int> AI1 = { 26,25,17,16,15,14,19,18,24,28,27 };
+	std::vector<int> AI2 = { 22, 29, 28, 31, 36, 35, 32, 27, 26, 25, 23 };
+	std::vector<int> AI3 = { 14, 15, 16, 17, 18, 19, 20, 23, 24, 18, 19 };
+	std::vector<int> AI4 = { 6, 20, 18, 19, 14, 13, 11, 10, 9, 8, 7 };
+	std::vector<int> AI5 = { 1,2,3,4,5,21,22,29,30,37,38,39,40,41,34,33,26,25,17,16,11,10 };
+	std::vector<int> AI6 = { 3,6,20,21,22,23,24,18,19,20,21,5,4 };
+	std::vector<int> AI7 = { 4,5,21,20,19,14,12,11,10,9,8,7,3 };
+	std::vector<int> AI8 = { 20,23,22,29,28,27,26,25,24,18,19 };
 
+	std::vector<std::vector<int>> da;
 	std::vector<std::vector<int>> pasu2;
 
 	std::vector<prefab::CPointLight*> point;

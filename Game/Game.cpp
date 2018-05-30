@@ -27,9 +27,17 @@ Game::Game()
 	//Ç±Ç±Ç…äÓñ{ìIÇ»î≠ê∂Çï`Ç≠
 	gaizi = NewGO<Geizi>(1, "Geizi");
 	player = NewGO<Player>(0, "Player");
-	carRender* kar = NewGO<carRender>(0, nullptr);
 
-	for (int k = 0; k < 4; k++) {
+	carRender* kar = NewGO<carRender>(0, nullptr);
+	da.push_back(AI1);
+	da.push_back(AI2);
+	da.push_back(AI3);
+	da.push_back(AI4);
+	da.push_back(AI5);
+	da.push_back(AI6);
+	da.push_back(AI7);
+	da.push_back(AI8);
+	for (int k = 0; k < 8; k++) {
 		simin.push_back(NewGO<AI>(0, "AI"));
 		AIseizon.push_back(1);
 	}
