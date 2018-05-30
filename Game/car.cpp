@@ -22,7 +22,7 @@ bool car::Start()
 		No[ka-1] = loc.GetObjectPosition(i);
 	}
 	Game* game=FindGO<Game>("Game");
-	fa = game->incNo();
+	fa = game->incNo();//車ができた数だけカウントする関数。
 	saidaiNo = game->Gatpasusaiz(fa);
 	pasu = game->getDate(fa);
 	ran = NewGO<AImove>(0, "AImove");
@@ -64,7 +64,7 @@ bool car::Start()
 	ran->Setkakudo(0.1f);
 	ran->Sethaba(1.0f);
 	m_skinModel.Update(m_position, m_rotation, { 0.5f,0.5f,0.5f });
-	if (game->GatNo() >= 13) {//carを増やすときに変える。
+	if (game->GatNo() >= 23) {//carを増やすときに変える。
 		game->risetteNo();
 	}
 	SetTags(20);
@@ -146,7 +146,10 @@ void car::Stop()
 			car* ai = (car*)go;
 			CVector3 kyori1 = ai->m_position - this->m_position;//自分との距離を求める。
 			float f = kyori1.Length();
-			if (f <= 900) { //距離が視野内だったら
+
+
+			if (f <= 1100) { //距離が車間距離よりも短くなっていたら
+
 				kyori1.Normalize();
 				kyori1.y = 0.0f;
 				float kaku = acosf(kyori1.Dot(m_forward));//２つのべクトルの内積のアークコサインを求める。(ラジアン)
@@ -154,12 +157,14 @@ void car::Stop()
 				if (degree <= 60) {
 					if (ai->ran->Getlen() < this->ran->Getlen())
 					{
-						if (move > 0.2)
-							move -= 0.21;
+		if (move > 0.2)
+					move -= 0.21;
 						if (move < 0.2) {
 							move = -0.1;
 							//frag++;
 						}
+
+
 
 					}
 				}

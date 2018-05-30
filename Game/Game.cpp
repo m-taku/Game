@@ -36,6 +36,7 @@ Game::Game()
 	pasu2.push_back(movepasu1);
 	pasu2.push_back(movepasu2);
 	pasu2.push_back(movepasu3);
+
 	pasu2.push_back(movepasu4);
 	pasu2.push_back(movepasu5);
 	pasu2.push_back(movepasu6);
@@ -46,7 +47,17 @@ Game::Game()
 	pasu2.push_back(movepasu11);
 	pasu2.push_back(movepasu12);
 	pasu2.push_back(movepasu13);
-	for (int i = 0; i <13 ; i++) {
+	pasu2.push_back(movepasu14);
+	pasu2.push_back(movepasu15);
+	pasu2.push_back(movepasu16);
+	pasu2.push_back(movepasu17);
+	pasu2.push_back(movepasu18);
+	pasu2.push_back(movepasu19);
+	pasu2.push_back(movepasu20);
+	pasu2.push_back(movepasu21);
+	pasu2.push_back(movepasu22);
+	pasu2.push_back(movepasu23);
+	for (int i = 0; i <23 ; i++) {
 		carv.push_back(NewGO<car>(0, "car"));
 	}
 //	pasu2.clear();

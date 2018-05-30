@@ -56,6 +56,7 @@ bool tekihei::Start()
 		tekiskinModel[i].Init(tekiskinModelData[i]);
 		trot[i].SetRotationDeg(CVector3::AxisY, -90.0f);//‰ñ“]
 		tekirot[i].Multiply(trot[i]);
+		tekiskinModel[i].SetShadowCasterFlag(true);
 
 		/*tekianimation[i].Init(
 			tekiskinModel[i],
@@ -191,7 +192,7 @@ void tekihei::Update()
 
 			}
 			tekipos[i] = m_charaCon[i].Execute(GameTime().GetFrameDeltaTime(), tekispeed[i]);
-			tekiskinModel[i].Update(tekipos[i], tekirot[i], {3.0f,3.0f,3.0f});
+			tekiskinModel[i].Update(tekipos[i], tekirot[i], {2.0f,2.0f,2.0f});
 		}
 		if (tekiheiflag[i] == 0)
 		{
