@@ -104,7 +104,7 @@ private:
 
 	std::vector<std::vector<int>> da;
 	std::vector<std::vector<int>> pasu2;
-	//{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 }
+
 	std::vector<prefab::CPointLight*> point;
 	//{ 18, 11, 7, 8, 10, 19, 30, 39, 41, 42, 43, 44, 36, 33, 25, 26 }
 	float g = 0.0f, f = 0.0;

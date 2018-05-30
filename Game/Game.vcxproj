@@ -809,21 +809,33 @@
     <Image Include="Assets\modelData\ao.png" />
     <ImageContentTask Include="Assets\modelData\LiamTexZonbi.png">
       <ContentOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)/Resource/modelData/%(Filename).dds</ContentOutput>
+      <ContentOutput Condition="'$(Configuration)|$(Platform)'=='Preview|Win32'">$(ProjectDir)/Resource/modelData/%(Filename).dds</ContentOutput>
     </ImageContentTask>
     <ImageContentTask Include="Assets\modelData\LiamTexZonbi1.png">
       <ContentOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)/Resource/modelData/%(Filename).dds</ContentOutput>
+      <ContentOutput Condition="'$(Configuration)|$(Platform)'=='Preview|Win32'">$(ProjectDir)/Resource/modelData/%(Filename).dds</ContentOutput>
     </ImageContentTask>
     <Image Include="Assets\modelData\livingbuildings.png" />
     <Image Include="Assets\modelData\white.png" />
     <Image Include="Assets\modelData\worktops007.jpg" />
     <Image Include="Assets\sprite\fade.png" />
-    <ImageContentTask Include="Assets\sprite\GameClear.png" />
-    <ImageContentTask Include="Assets\sprite\GameOver.png" />
+    <ImageContentTask Include="Assets\sprite\GameClear.png">
+      <ContentOutput Condition="'$(Configuration)|$(Platform)'=='Preview|Win32'">$(ProjectDir)/Resource/sprite/%(Filename).dds</ContentOutput>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\GameOver.png">
+      <ContentOutput Condition="'$(Configuration)|$(Platform)'=='Preview|Win32'">$(ProjectDir)/Resource/sprite/%(Filename).dds</ContentOutput>
+    </ImageContentTask>
     <ImageContentTask Include="Assets\sprite\yaji.png" />
-    <ImageContentTask Include="Assets\sprite\kajy.png" />
-    <ImageContentTask Include="Assets\sprite\ka-soru.png" />
+    <ImageContentTask Include="Assets\sprite\kajy.png">
+      <ContentOutput Condition="'$(Configuration)|$(Platform)'=='Preview|Win32'">$(ProjectDir)/Resource/sprite/%(Filename).dds</ContentOutput>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\ka-soru.png">
+      <ContentOutput Condition="'$(Configuration)|$(Platform)'=='Preview|Win32'">$(ProjectDir)/Resource/sprite/%(Filename).dds</ContentOutput>
+    </ImageContentTask>
     <ImageContentTask Include="Assets\sprite\syoujun.png" />
-    <ImageContentTask Include="Assets\sprite\ge-ji.png" />
+    <ImageContentTask Include="Assets\sprite\ge-ji.png">
+      <ContentOutput Condition="'$(Configuration)|$(Platform)'=='Preview|Win32'">$(ProjectDir)/Resource/sprite/%(Filename).dds</ContentOutput>
+    </ImageContentTask>
     <ImageContentTask Include="Assets\sprite\waku.png" />
   </ItemGroup>
   <ItemGroup>
