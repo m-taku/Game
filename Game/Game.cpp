@@ -26,8 +26,15 @@ Game::Game()
 	//‚±‚±‚ÉŠî–{“I‚È”­¶‚ğ•`‚­
 	gaizi = NewGO<Geizi>(1, "Geizi");
 	player = NewGO<Player>(0, "Player");
-
-	for (int k = 0; k < 4; k++) {
+	da.push_back(AI1);
+	da.push_back(AI2);
+	da.push_back(AI3);
+	da.push_back(AI4);
+	da.push_back(AI5);
+	da.push_back(AI6);
+	da.push_back(AI7);
+	da.push_back(AI8);
+	for (int k = 0; k < 8; k++) {
 		simin.push_back(NewGO<AI>(0, "AI"));
 		AIseizon.push_back(1);
 	}

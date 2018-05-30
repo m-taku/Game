@@ -222,6 +222,9 @@
     <MeshContentTask Include="Assets\modelData\teki.FBX" />
     <MeshContentTask Include="Assets\modelData\item.FBX" />
     <MeshContentTask Include="Assets\modelData\liam.FBX" />
+    <MeshContentTask Include="Assets\modelData\teki2.FBX">
+      <Filter>Assets\modelData</Filter>
+    </MeshContentTask>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="Assets\shader\tonemap.fx">
@@ -388,7 +391,6 @@
     </CustomBuild>
     <CustomBuild Include="Assets\modelData\liam.tks" />
     <CustomBuild Include="Assets\modelData\teki.tks" />
-    <CustomBuild Include="Assets\animData\tekiidle.tka" />
     <CustomBuild Include="Assets\lever\carLv001.tks">
       <Filter>Assets\lever</Filter>
     </CustomBuild>

@@ -30,7 +30,8 @@ bool AI::Start()
 	Gaizi = FindGO<Geizi>("Geizi");
 	game=FindGO<Game>("Game");
 	iNo = game->incNo();
-	m_position= game->pasu.m_pointList[game->da[iNo][0] - 1];
+	pasu = game->getAIDate(iNo);
+	m_position= game->pasu.m_pointList[pasu[ima++] - 1];
 	m_position.y = 0.0f;
 	//キャラのスキンモデルのロードは各自サブクラスで行う。
 	m_skinModelData.Load(L"modelData/liam.cmo");//プレイヤーを書け
@@ -61,10 +62,10 @@ bool AI::Start()
 	m_skinModel.FindMaterial([&](CModelEffect* material) {
 		material->Setm_zonbi(zondi.GetBody());
 	});
-	m_rotation.SetRotationDeg(CVector3::AxisY,VectorAngleDeg(game->pasu.m_pointList[game->da[iNo][1] - 1]));
+	m_rotation.SetRotationDeg(CVector3::AxisY,VectorAngleDeg(game->pasu.m_pointList[pasu[ima] - 1]));
 	SetTags(10);
 	m_skinModel.SetShadowCasterFlag(true);
-	if (game->GatNo() >= 4) {
+	if (game->GatNo() >= 8) {//AIが増えた時はここを増やす。
 		game->risetteNo();
 	}
 	/*ai_NPCAnimationClips[0].SetLoopFlag(false);
@@ -110,7 +111,7 @@ void AI::NPCNormal()
 	//	//	//}
 	//	//	//	m_position += (game->siminUI[iNo]->bekutor)*m_speed;
 	//	//	
-	work->kyorikeisan(game->da[iNo][ima] - 1, m_position, m_forward,game->pasu.m_pointList);
+	work->kyorikeisan(pasu[ima] - 1, m_position, m_forward,game->pasu.m_pointList);
 	m_rotation.Multiply(work->Gatkaku());//回転
 	m_position += /*A_charaCon.Execute(*/ (m_forward*(work->Gatmuve()*m_speed))*(GameTime().GetFrameDeltaTime());//移動
 	if (15.0f > work->Gatlen()) {

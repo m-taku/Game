@@ -684,7 +684,6 @@
     <ClInclude Include="stdafx.h" />
   </ItemGroup>
   <ItemGroup>
-    <MeshContentTask Include="Assets\animData\demoanime\UnityChanAnim.fbx" />
     <MeshContentTask Include="Assets\modelData\Building Sky_big_color1.FBX" />
     <MeshContentTask Include="Assets\modelData\Building Sky_big_color2.FBX" />
     <MeshContentTask Include="Assets\modelData\Building Sky_big_color3.FBX" />
@@ -721,6 +720,7 @@
     <MeshContentTask Include="Assets\modelData\stage3.FBX" />
     <MeshContentTask Include="Assets\modelData\taieki.FBX" />
     <MeshContentTask Include="Assets\modelData\teki.FBX" />
+    <MeshContentTask Include="Assets\modelData\teki2.FBX" />
     <MeshContentTask Include="Assets\modelData\unityChan.fbx" />
     <MeshContentTask Include="Assets\modelData\Vehicle_Car1.FBX" />
     <MeshContentTask Include="Assets\modelData\Vehicle_Car2.FBX" />
@@ -843,18 +843,6 @@
       <FileType>Document</FileType>
     </CustomBuild>
     <CustomBuild Include="Assets\lever\laitLv001.tks">
-      <FileType>Document</FileType>
-    </CustomBuild>
-    <CustomBuild Include="Assets\animData\demoanime\idle.tka">
-      <FileType>Document</FileType>
-    </CustomBuild>
-    <CustomBuild Include="Assets\animData\demoanime\jump.tka">
-      <FileType>Document</FileType>
-    </CustomBuild>
-    <CustomBuild Include="Assets\animData\demoanime\run.tka">
-      <FileType>Document</FileType>
-    </CustomBuild>
-    <CustomBuild Include="Assets\animData\demoanime\walk.tka">
       <FileType>Document</FileType>
     </CustomBuild>
     <None Include="Assets\lever\larer_01.tks" />
