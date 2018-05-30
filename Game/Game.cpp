@@ -58,11 +58,11 @@ Game::Game()
 	swprintf_s(moveFilePath, L"lever/levalAI0%d.tks", 2);
 	pasu.Load(moveFilePath);
 	swprintf_s(moveFilePath, L"lever/matilevel%d0%d.tks", 0, 1);
-	m_level[0].Build(moveFilePath);
-	swprintf_s(moveFilePath, L"lever/matilevel%d0%d.tks", 1, 1);
-	m_level[1].Build(moveFilePath);
-	swprintf_s(moveFilePath, L"lever/matilevel%d0%d.tks", 2, 1);
-	m_level[2].Build(moveFilePath);
+	//m_level[0].Build(moveFilePath);
+	//swprintf_s(moveFilePath, L"lever/matilevel%d0%d.tks", 1, 1);
+	//m_level[1].Build(moveFilePath);
+	//swprintf_s(moveFilePath, L"lever/matilevel%d0%d.tks", 2, 1);
+	//m_level[2].Build(moveFilePath);
 	CLocData loc;
 	loc.Load(L"lever/laitLv001.tks");
 	for (int i = 0; i < loc.GetNumObject(); i++) {
@@ -103,7 +103,7 @@ void Game::OnDestroy()
 			DeleteGO(simin[k]);
 		}
 	}
-	for (int i = 0; i < 8; i++) {
+	for (int i = 0; i < 13; i++) {
 		DeleteGO(carv[i]);
 	}
 	DeleteGO(gaizi);

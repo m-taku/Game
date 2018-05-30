@@ -2,6 +2,7 @@
 #include "car.h"
 #include"AImove.h"
 #include"Game.h"
+#include"Human.h"
 car::car()
 {
 }
@@ -34,9 +35,7 @@ bool car::Start()
 	m_forward.y = m_tekirot.m[2][1];
 	m_forward.z = m_tekirot.m[2][2];
 	m_forward.y = 0.0f;
-
 	m_forward.Normalize();
-
 	CVector3 c = No[pasu[ima] - 1];
 	CVector3 bekutor =  c-m_position;
 	bekutor.y = 0.0f;
@@ -62,8 +61,8 @@ bool car::Start()
 		m_rotation.SetRotationDeg(rotAxis, degree);
 	}
 	//rotation.Multiply(rotation);
-	ran->Satkakudo(0.1f);
-	ran->Sathaba(1.0f);
+	ran->Setkakudo(0.1f);
+	ran->Sethaba(1.0f);
 	m_skinModel.Update(m_position, m_rotation, { 0.5f,0.5f,0.5f });
 	if (game->GatNo() >= 13) {//carを増やすときに変える。
 		game->risetteNo();
@@ -79,11 +78,11 @@ void car::Update()
 	m_forward.z = m_tekirot.m[2][2];
 	m_forward.y = 0.0f;
 	m_forward.Normalize();
-//	frag = 0;
+	frag = 0;
 	Stop();
-//	if (frag <= 0) {
+	if (frag <= 0) {
 	Move();
-//	}
+	}
 	m_position.y = 0.0f;
 	m_skinModel.Update(m_position,m_rotation, { 0.5f,0.5f,0.5f });
 }
@@ -91,37 +90,51 @@ void car::Move()
 {
 	ran->kyorikeisan(pasu[ima] - 1, m_position, m_forward, No);
 
-	if (ran->Gatkaiten() != 0.0f) {
-		m_rotation.Multiply(ran->Gatkaku());//回転させる
+	if (ran->Getkaiten() != 0.0f) {
+		m_rotation.Multiply(ran->Getkaku());//回転させる
 		if (move > 0.5) {
 			move -= 0.05;
 		}
 		else {
-			ran->Satkakudo(1.8f);
-			ran->Sathaba(1.0f);
+			//if (frag <= 0) {
+				//できたらいいなぁ～～
+			/*	CVector3 k= No[pasu[ima] - 1]-m_position;
+				k.x = k.x*m_forward.x;
+				k.y = k.y*m_forward.y;
+				k.z = k.z*m_forward.z;
+				float K = 90.0f / ((((k * 2)*3.14159) / 4).Length() / (move*speed*GameTime().GetFrameDeltaTime()));*/
+			ran->Setkakudo(1.3f);
+			ran->Sethaba(1.5f);
+			//	frag++;
+			if (move < 0.4) {
+				move += 0.3;
+			}
 		}
-
 	}
 	else {
 		if (move < 1.0) {
-			if (frag == 0)
-				move += 0.05;
-		}
-		else {
-			ran->Satkakudo(0.1f);
-			ran->Sathaba(1.0f);
+			move += 0.1;
+		}else{	
+			ran->Setkakudo(0.3f);
+			ran->Sethaba(1.0f);
+			//frag = 0;
+			move = 1.0;
 		}
 	}
 	m_position += m_forward * ((move*speed)*(GameTime().GetFrameDeltaTime()));
 
-	if (200.0f > ran->Gatlen()) {
+	if (400.0f > ran->Getlen()) {
 
 		if (ima >= saidaiNo-1) {//今のポジションが6なら
 						//0にリセットする。0,1,2,3,4,5の順番。
 			ima = 0;
+			//ran->Setkakudo(0.3f);
+			//ran->Sethaba(1.0f);
 		}
 		else {
 			ima++;
+			//ran->Setkakudo(0.3f);
+			//ran->Sethaba(1.0f);
 		}
 	}
 }
@@ -132,20 +145,57 @@ void car::Stop()
 			car* ai = (car*)go;
 			CVector3 kyori1 = ai->m_position - this->m_position;//自分との距離を求める。
 			float f = kyori1.Length();
-			if (f <= 1900) { //距離が視野内だったら
+			if (f <= 900) { //距離が視野内だったら
 				kyori1.Normalize();
 				kyori1.y = 0.0f;
 				float kaku = acosf(kyori1.Dot(m_forward));//２つのべクトルの内積のアークコサインを求める。(ラジアン)
 				float degree = CMath::RadToDeg(kaku);
-				if (degree <= 80) {
-					if (ai->ran->Gatlen() < this->ran->Gatlen())
+				if (degree <= 60) {
+					if (ai->ran->Getlen() < this->ran->Getlen())
 					{
-						if (move > 0.5)
-							move -= 0.11;
-						if (move < 0.)
-							move = 0.5;
+						if (move > 0.2)
+							move -= 0.21;
+						if (move < 0.2) {
+							move = -0.1;
+							//frag++;
+						}
 
 					}
+				}
+			}
+		}
+	});
+	FindGameObjectsWithTag(1, [&](IGameObject* go) {
+		if (go != this) {            //自分からの距離を計測するため、検索結果から自分を除外する。
+			Human* ai = (Human*)go;
+			CVector3 kyori1 = ai->m_position - this->m_position;//自分との距離を求める。
+			float f = kyori1.Length();
+			if (f <= 900) { //距離が視野内だったら
+				kyori1.Normalize();
+				kyori1.y = 0.0f;
+				float kaku = acosf(kyori1.Dot(m_forward));//２つのべクトルの内積のアークコサインを求める。(ラジアン)
+				float degree = CMath::RadToDeg(kaku);
+				if (degree <= 30)
+				{
+					move = -0.1;
+				}
+			}
+		}
+	});
+	FindGameObjectsWithTag(10, [&](IGameObject* go) {
+		if (go != this) {            //自分からの距離を計測するため、検索結果から自分を除外する。
+			Human* ai = (Human*)go;
+			CVector3 kyori1 = ai->m_position - this->m_position;//自分との距離を求める。
+			float f = kyori1.Length();
+			if (f <= 900) { //距離が視野内だったら
+				kyori1.Normalize();
+				kyori1.y = 0.0f;
+				float kaku = acosf(kyori1.Dot(m_forward));//２つのべクトルの内積のアークコサインを求める。(ラジアン)
+				float degree = CMath::RadToDeg(kaku);
+				if (degree <= 30)
+				{
+					move = -0.1;
+	
 				}
 			}
 		}
