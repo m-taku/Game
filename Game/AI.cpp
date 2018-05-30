@@ -24,7 +24,6 @@ AI::~AI()
 }
 bool AI::Start()
 {
-
 	work = NewGO<AImove>(0, "AImove");
 	pl = FindGO<Player>("Player");
 	Gaizi = FindGO<Geizi>("Geizi");

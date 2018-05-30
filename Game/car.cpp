@@ -28,8 +28,6 @@ bool car::Start()
 	ran = NewGO<AImove>(0, "AImove");
 	m_position = No[pasu[ima++]-1];
 	m_position.y = 0.0f;
-	m_skinModelData.Load(L"modelData/Vehicle_SUV1.cmo");//プレイヤーを書け
-	m_skinModel.Init(m_skinModelData);
 	m_tekirot.MakeRotationFromQuaternion(m_rotation);
 	m_forward.x = m_tekirot.m[2][0];
 	m_forward.y = m_tekirot.m[2][1];
@@ -63,7 +61,6 @@ bool car::Start()
 	//rotation.Multiply(rotation);
 	ran->Setkakudo(0.1f);
 	ran->Sethaba(1.0f);
-	m_skinModel.Update(m_position, m_rotation, { 0.5f,0.5f,0.5f });
 	if (game->GatNo() >= 23) {//carを増やすときに変える。
 		game->risetteNo();
 	}
@@ -78,13 +75,13 @@ void car::Update()
 	m_forward.z = m_tekirot.m[2][2];
 	m_forward.y = 0.0f;
 	m_forward.Normalize();
-	frag = 0;
+	//frag = 0;
 	Stop();
-	if (frag <= 0) {
+	//if (frag <= 0) {
 	Move();
-	}
+	//}
 	m_position.y = 0.0f;
-	m_skinModel.Update(m_position,m_rotation, { 0.5f,0.5f,0.5f });
+	m_Render->UpdateWorldMatrix(m_position, m_rotation, { 1.0f,1.0f,1.0f });
 }
 void car::Move()
 {
@@ -106,9 +103,10 @@ void car::Move()
 			//	float K = 90.0f / ((((k * 2)*3.14159) / 4).Length() / (move*speed*GameTime().GetFrameDeltaTime()));
 			ran->Setkakudo(1.5f);
 			ran->Sethaba(1.5f);
-			frag++;
+			//frag++;
 			if (move < 0.4) {
 				move += 0.3;
+
 			}
 		}
 	}
@@ -146,9 +144,7 @@ void car::Stop()
 			car* ai = (car*)go;
 			CVector3 kyori1 = ai->m_position - this->m_position;//自分との距離を求める。
 			float f = kyori1.Length();
-
-
-			if (f <= 1100) { //距離が車間距離よりも短くなっていたら
+			if (f <= 900) { //距離が車間距離よりも短くなっていたら
 
 				kyori1.Normalize();
 				kyori1.y = 0.0f;
@@ -157,8 +153,8 @@ void car::Stop()
 				if (degree <= 60) {
 					if (ai->ran->Getlen() < this->ran->Getlen())
 					{
-		if (move > 0.2)
-					move -= 0.21;
+						if (move > 0.2)
+							move -= 0.21;
 						if (move < 0.2) {
 							move = -0.1;
 							//frag++;
@@ -207,8 +203,4 @@ void car::Stop()
 		}
 	});
 }
-void car::Render(CRenderContext& rc)
-{
-	m_skinModel.Draw(rc, MainCamera().GetViewMatrix(), MainCamera().GetProjectionMatrix());
-	//m_sprite.Draw(rc, MainCamera2D().GetViewMatrix(), MainCamera2D().GetProjectionMatrix());
-}
+

@@ -18,7 +18,7 @@ AImove::~AImove()
 {
 }
 
-int AImove::kyorikeisan(int bangou, CVector3 m_pos, CVector3 m_forward, std::vector<CVector3> pasu)
+int AImove::kyorikeisan(int bangou, CVector3 m_pos, CVector3 m_forward,std::vector<CVector3> pasu)
 {
 
 	//game = FindGO<Game>("Game");

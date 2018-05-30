@@ -10,6 +10,7 @@
 #include"camera.h"
 #include"Pasu.h"
 #include"keiroK.h"
+#include"carRender.h"
 #include"tekihei.h"
 #include"Geizi.h"
 #include"item.h"
@@ -26,6 +27,7 @@ Game::Game()
 	//Ç±Ç±Ç…äÓñ{ìIÇ»î≠ê∂Çï`Ç≠
 	gaizi = NewGO<Geizi>(1, "Geizi");
 	player = NewGO<Player>(0, "Player");
+	carRender* kar = NewGO<carRender>(0, nullptr);
 
 	for (int k = 0; k < 4; k++) {
 		simin.push_back(NewGO<AI>(0, "AI"));
@@ -36,7 +38,6 @@ Game::Game()
 	pasu2.push_back(movepasu1);
 	pasu2.push_back(movepasu2);
 	pasu2.push_back(movepasu3);
-
 	pasu2.push_back(movepasu4);
 	pasu2.push_back(movepasu5);
 	pasu2.push_back(movepasu6);
@@ -57,8 +58,10 @@ Game::Game()
 	pasu2.push_back(movepasu21);
 	pasu2.push_back(movepasu22);
 	pasu2.push_back(movepasu23);
+	kar->Satcarkosuu(23);
 	for (int i = 0; i <23 ; i++) {
 		carv.push_back(NewGO<car>(0, "car"));
+		carv[i]->gatcarRender(*kar);
 	}
 //	pasu2.clear();
 	stge = NewGO<Stage>(0, "stage");
@@ -69,11 +72,11 @@ Game::Game()
 	swprintf_s(moveFilePath, L"lever/levalAI0%d.tks", 2);
 	pasu.Load(moveFilePath);
 	swprintf_s(moveFilePath, L"lever/matilevel%d0%d.tks", 0, 1);
-	//m_level[0].Build(moveFilePath);
-	//swprintf_s(moveFilePath, L"lever/matilevel%d0%d.tks", 1, 1);
-	//m_level[1].Build(moveFilePath);
-	//swprintf_s(moveFilePath, L"lever/matilevel%d0%d.tks", 2, 1);
-	//m_level[2].Build(moveFilePath);
+	m_level[0].Build(moveFilePath);
+	swprintf_s(moveFilePath, L"lever/matilevel%d0%d.tks", 1, 1);
+	m_level[1].Build(moveFilePath);
+	swprintf_s(moveFilePath, L"lever/matilevel%d0%d.tks", 2, 1);
+	m_level[2].Build(moveFilePath);
 	CLocData loc;
 	loc.Load(L"lever/laitLv001.tks");
 	for (int i = 0; i < loc.GetNumObject(); i++) {
@@ -114,7 +117,7 @@ void Game::OnDestroy()
 			DeleteGO(simin[k]);
 		}
 	}
-	for (int i = 0; i < 13; i++) {
+	for (int i = 0; i < 23; i++) {
 		DeleteGO(carv[i]);
 	}
 	DeleteGO(gaizi);
