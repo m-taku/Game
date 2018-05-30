@@ -23,17 +23,20 @@
 
 Game::Game()
 {
+	//ここに基本的な発生を描く
 	gaizi = NewGO<Geizi>(1, "Geizi");
 	player = NewGO<Player>(0, "Player");
 
 	for (int k = 0; k < 4; k++) {
 		simin.push_back(NewGO<AI>(0, "AI"));
+		AIseizon.push_back(1);
 	}
 	No = 0;
 	//carを増やした時のの変更点
 	pasu2.push_back(movepasu1);
 	pasu2.push_back(movepasu2);
 	pasu2.push_back(movepasu3);
+
 	pasu2.push_back(movepasu4);
 	pasu2.push_back(movepasu5);
 	pasu2.push_back(movepasu6);
@@ -65,12 +68,12 @@ Game::Game()
 	wchar_t moveFilePath[256];
 	swprintf_s(moveFilePath, L"lever/levalAI0%d.tks", 2);
 	pasu.Load(moveFilePath);
-	//swprintf_s(moveFilePath, L"lever/matilevel%d0%d.tks", 0, 1);
-	//m_level[0].Build(moveFilePath);
-	//swprintf_s(moveFilePath, L"lever/matilevel%d0%d.tks", 1, 1);
-	//m_level[1].Build(moveFilePath);
-	//swprintf_s(moveFilePath, L"lever/matilevel%d0%d.tks", 2, 1);
-	//m_level[2].Build(moveFilePath);
+	swprintf_s(moveFilePath, L"lever/matilevel%d0%d.tks", 0, 1);
+	m_level[0].Build(moveFilePath);
+	swprintf_s(moveFilePath, L"lever/matilevel%d0%d.tks", 1, 1);
+	m_level[1].Build(moveFilePath);
+	swprintf_s(moveFilePath, L"lever/matilevel%d0%d.tks", 2, 1);
+	m_level[2].Build(moveFilePath);
 	CLocData loc;
 	loc.Load(L"lever/laitLv001.tks");
 	for (int i = 0; i < loc.GetNumObject(); i++) {
@@ -107,9 +110,11 @@ void Game::OnDestroy()
 	DeleteGO(player);
 	//ここで最終的にＤｅｌｅｔｅＧＯを絶対しきる。	
 	for (int k = 0; k < 4; k++) {
-		DeleteGO(simin[k]);
+		if (AIseizon[k] >= 1) {
+			DeleteGO(simin[k]);
+		}
 	}
-	for (int i = 0; i < 5; i++) {
+	for (int i = 0; i < 13; i++) {
 		DeleteGO(carv[i]);
 	}
 	DeleteGO(gaizi);
@@ -131,12 +136,7 @@ bool Game::Start()
 	MainCamera().SetFar(50000.0f);
 	MainCamera().SetPosition({ 30.0f, 10.0f, 0.0f });
 	MainCamera().Update();
-	//ここに基本的な発生を描く
-	{
-		
-	}
-	m_Fade=FindGO<Fade>("Fade");
-
+	m_Fade = FindGO<Fade>("Fade");
 
 
 	/*m_skinModelRender = NewGO<prefab::CSkinModelRender>(0);

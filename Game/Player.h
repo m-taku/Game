@@ -11,15 +11,21 @@ public:
 	bool Start();
 	void Update();
 	void Render(CRenderContext& rc);
-	CVector3 GetPosition()
+	CVector3& GetPosition()
 	{
 		return m_position;
 	}
-	CVector3 GetFoeward()
+
+	CVector3& Getbonepos()
+	{
+		return bonepos;
+	}
+
+	CVector3& GetFoeward()
 	{
 		return m_forward;
 	}
-	CVector3 GetMoveSpeed()
+	CVector3 &GetMoveSpeed()
 	{
 		return m_moveSpeed;
 	}
@@ -27,7 +33,6 @@ public:
 private:
 	CSkinModel m_skinModel;					//スキンモデル。
 	CSkinModelData m_skinModelData;			//スキンモデルデータ。
-	CAnimation m_animation;
 	prefab::CDirectionLight* m_charaLight = nullptr;	//!<キャラクタ用のライト。
 	CCharacterController m_charaCon;
 	CShaderResourceView m_normalMap;		//法線マップ。
@@ -53,6 +58,17 @@ private:
 	CVector3 land_to_player = CVector3::Zero;
 	float land_to_player_vector = 0.0f;
 	int landflag = 1;
-
+	wchar_t bonename[50];
+	int bonenum = 0;
+	int boneNo = 0;
+	CVector3 bonepos = CVector3::Zero;
+	/*enum animcllip{
+		idle,
+		walk,
+		run,
+		animnum
+	};
+	CAnimation m_animation;
+	CAnimationClip m_animclip[animnum];*/
 };
 

@@ -1,5 +1,6 @@
 #pragma once
 #include "Player.h"
+#include"tkEngine\graphics\tkSkeleton.h"
 class camera:public IGameObject
 {
 public:
@@ -11,10 +12,13 @@ public:
 	/////////////////////////////////////
 	//メンバ変数
 	/////////////////////////////////////
-	Player* m_player;	//プレイヤー。
+	
 	CVector3 target = CVector3::Zero;
 	CVector3 Ppos = CVector3::Zero;
 	float d = 0.0f;
 	CVector3 position_of_player;
+	Player* m_player = nullptr;
+	CSkeleton playerS;
+	
 };
 

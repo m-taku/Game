@@ -7,6 +7,8 @@ public:
 	~AImove();
 	//(行きたいパスの番号,自分の位置,前方向)
 	int kyorikeisan(int bangou, CVector3 m_pos, CVector3 m_forward, std::vector<CVector3> pasu);
+	//(行きたい場所,自分の位置,前方向)
+	int kyorikeisan(CVector3 mokuteki , CVector3 m_pos, CVector3 m_forward);
 	//動く速さ取得
 	float Gatmuve() const
 	{
