@@ -94,18 +94,19 @@ void car::Move()
 		m_rotation.Multiply(ran->Getkaku());//‰ñ“]‚³‚¹‚é
 		if (move > 0.5) {
 			move -= 0.05;
+			frag = 0;
 		}
 		else {
 			//if (frag <= 0) {
-				//‚Å‚«‚½‚ç‚¢‚¢‚È‚Ÿ``
-			/*	CVector3 k= No[pasu[ima] - 1]-m_position;
-				k.x = k.x*m_forward.x;
-				k.y = k.y*m_forward.y;
-				k.z = k.z*m_forward.z;
-				float K = 90.0f / ((((k * 2)*3.14159) / 4).Length() / (move*speed*GameTime().GetFrameDeltaTime()));*/
-			ran->Setkakudo(1.3f);
+			//	//	‚Å‚«‚½‚ç‚¢‚¢‚È‚Ÿ``
+			//	CVector3 k = No[pasu[ima] - 1] - m_position;
+			//	k.x = k.x*m_forward.x;
+			//	k.y = k.y*m_forward.y;
+			//	k.z = k.z*m_forward.z;
+			//	float K = 90.0f / ((((k * 2)*3.14159) / 4).Length() / (move*speed*GameTime().GetFrameDeltaTime()));
+			ran->Setkakudo(1.5f);
 			ran->Sethaba(1.5f);
-			//	frag++;
+			frag++;
 			if (move < 0.4) {
 				move += 0.3;
 			}
@@ -115,7 +116,7 @@ void car::Move()
 		if (move < 1.0) {
 			move += 0.1;
 		}else{	
-			ran->Setkakudo(0.3f);
+			ran->Setkakudo(1.0f);
 			ran->Sethaba(1.0f);
 			//frag = 0;
 			move = 1.0;
