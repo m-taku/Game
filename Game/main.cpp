@@ -34,7 +34,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 	initParam.graphicsConfing.shadowRenderConfig.depthOffset[2] = 0.002f;
 	initParam.graphicsConfing.shadowRenderConfig.softShadowLevel = EnSoftShadowQualityLevel::enNone;
 	//ƒAƒ“ƒ`
-	initParam.graphicsConfing.aaConfig.isEnable = false;
+	initParam.graphicsConfing.aaConfig.isEnable = true;
 	//Bloom
 	initParam.graphicsConfing.bloomConfig.isEnable = false;
 	//tonemap

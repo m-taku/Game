@@ -814,6 +814,7 @@
       <ContentOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)/Resource/modelData/%(Filename).dds</ContentOutput>
     </ImageContentTask>
     <Image Include="Assets\modelData\livingbuildings.png" />
+    <Image Include="Assets\modelData\maps\T_Space_Drone_ALL.png" />
     <Image Include="Assets\modelData\white.png" />
     <Image Include="Assets\modelData\worktops007.jpg" />
     <Image Include="Assets\sprite\fade.png" />
@@ -855,6 +856,9 @@
       <FileType>Document</FileType>
     </CustomBuild>
     <CustomBuild Include="Assets\animData\demoanime\walk.tka">
+      <FileType>Document</FileType>
+    </CustomBuild>
+    <CustomBuild Include="Assets\animData\tekiidle.tka">
       <FileType>Document</FileType>
     </CustomBuild>
     <None Include="Assets\lever\larer_01.tks" />

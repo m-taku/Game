@@ -58,6 +58,15 @@ void taieki::Update()
 				effect->Play(L"effect/aura.efk");*/
 				DeleteGO(this);
 			}
+			if (tekikyori[i] <= 400.0f&&tpos.y<=15.0f)
+			{
+				counter++;
+				if (counter == 30)
+				{
+					tekip->tekiHP[i] -= 5.0f;
+					counter = 0;
+				}
+			}
 		}
 	}
 	if (tpos.y <= 10.0f)
@@ -71,6 +80,8 @@ void taieki::Update()
 			else {
 				Taim = 120;
 			}
+
+			
 			/*effect = NewGO<prefab::CEffect>(0);
 			e_pos = tpos;
 			effect->SetPosition(e_pos);
