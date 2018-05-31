@@ -34,7 +34,11 @@ Game::Game()
 	da.push_back(AI6);
 	da.push_back(AI7);
 	da.push_back(AI8);
-	for (int k = 0; k < 8; k++) {
+	da.push_back(AI9);
+	da.push_back(AI10);
+	da.push_back(AI11);
+	da.push_back(AI12);
+	for (int k = 0; k < 12; k++) {
 		simin.push_back(NewGO<AI>(0, "AI"));
 		AIseizon.push_back(1);
 	}

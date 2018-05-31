@@ -65,7 +65,7 @@ bool AI::Start()
 	m_rotation.SetRotationDeg(CVector3::AxisY,VectorAngleDeg(game->pasu.m_pointList[pasu[ima] - 1]));
 	SetTags(10);
 	m_skinModel.SetShadowCasterFlag(true);
-	if (game->GatNo() >= 8) {//AIが増えた時はここを増やす。
+	if (game->GatNo() >= 12) {//AIが増えた時はここを増やす。
 		game->risetteNo();
 	}
 	/*ai_NPCAnimationClips[0].SetLoopFlag(false);
@@ -113,9 +113,9 @@ void AI::NPCNormal()
 	//	//	
 
 	work->kyorikeisan(pasu[ima] - 1, m_position, m_forward,game->pasu.m_pointList);
-	m_rotation.Multiply(work->Gatkaku());//回転
-	m_position += /*A_charaCon.Execute(*/ (m_forward*(work->Gatmuve()*m_speed))*(GameTime().GetFrameDeltaTime());//移動
-	if (15.0f > work->Gatlen()) {
+	m_rotation.Multiply(work->Getkaku());//回転
+	m_position += /*A_charaCon.Execute(*/ (m_forward*(work->Getmuve()*m_speed))*(GameTime().GetFrameDeltaTime());//移動
+	if (15.0f > work->Getlen()) {
 
 		if (ima >= 10) {//今のポジションが6なら
 					  //0にリセットする。0,1,2,3,4,5の順番。
