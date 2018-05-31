@@ -64,7 +64,7 @@ bool AI::Start()
 	m_rotation.SetRotationDeg(CVector3::AxisY,VectorAngleDeg(game->pasu.m_pointList[pasu[ima] - 1]));
 	SetTags(10);
 	m_skinModel.SetShadowCasterFlag(true);
-	if (game->GatNo() >= 12) {//AI‚ª‘‚¦‚½Žž‚Í‚±‚±‚ð‘‚â‚·B
+	if (game->GatNo() >= 20) {//AI‚ª‘‚¦‚½Žž‚Í‚±‚±‚ð‘‚â‚·B
 		game->risetteNo();
 	}
 	/*ai_NPCAnimationClips[0].SetLoopFlag(false);
