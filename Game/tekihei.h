@@ -42,10 +42,12 @@ public:
 	int time[teki];
 	int damageflag[teki];
 	int tekiheiflag[teki];
-	int tekiHP[teki];
+	float tekiHP[teki];
 	int clearcount = 0;
 	int soma = 0;
-	//CAnimation tekianimation[teki];
-	//CAnimationClip animclip[1];
+	CAnimation tekianimation[teki];
+	CAnimationClip animclip[1];
+	float Dtekiangle[teki];
+	int tekianglecompF[teki];
 
 };

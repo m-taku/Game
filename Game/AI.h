@@ -15,7 +15,6 @@ public:
 	~AI();
 	bool Start();
 	void Update();
-
 	void NPCNormal();//s–¯‚Ì’Êís“®‚Ìˆ—B
 	void NPCNormal_Search();//s–¯‚ªŒx‰ú‚·‚éˆ—B
 	//void NPCEscape_NPC();//s–¯‚ªƒ]ƒ“ƒrNPC‚©‚ç“¦‚°‚é‚Æ‚«‚Ìˆ—B
@@ -131,6 +130,7 @@ private:
 	std::vector<int>::iterator pasu;
 	int No = 0;
 	int no = 0;
+	float sinsoku = 0.0f;
 	AImove* work;
 	tekihei* tekip;
 	CShaderResourceView zondi;

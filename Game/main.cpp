@@ -5,7 +5,7 @@
 #include "Taitor.h"
 #include "Fade.h"
 
-//#define USE_LOW_SPEC_SETTINGS	//有効で低スペック向けPCの設定
+#define USE_LOW_SPEC_SETTINGS	//有効で低スペック向けPCの設定
 
 int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, int nCmdShow)
 {
@@ -34,7 +34,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 	initParam.graphicsConfing.shadowRenderConfig.depthOffset[2] = 0.002f;
 	initParam.graphicsConfing.shadowRenderConfig.softShadowLevel = EnSoftShadowQualityLevel::enNone;
 	//アンチ
-	initParam.graphicsConfing.aaConfig.isEnable = false;
+	initParam.graphicsConfing.aaConfig.isEnable = true;
 	//Bloom
 	initParam.graphicsConfing.bloomConfig.isEnable = false;
 	//tonemap

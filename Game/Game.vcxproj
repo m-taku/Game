@@ -634,6 +634,7 @@
     <ClCompile Include="kanren.cpp" />
     <ClCompile Include="keiroK.cpp" />
     <ClCompile Include="Level.cpp" />
+    <ClCompile Include="LevelRender.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MapChip.cpp" />
     <ClCompile Include="Mes.cpp" />
@@ -667,6 +668,7 @@
     <ClInclude Include="kanren.h" />
     <ClInclude Include="keiroK.h" />
     <ClInclude Include="Level.h" />
+    <ClInclude Include="LevelRender.h" />
     <ClInclude Include="MapChip.h" />
     <ClInclude Include="Mes.h" />
     <ClInclude Include="Osu.h" />

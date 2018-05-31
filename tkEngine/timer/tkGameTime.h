@@ -30,8 +30,8 @@ namespace tkEngine{
 		const float GetFrameDeltaTime() const
 		{
 			//固定FPSにする。可変は要検討。
-			return 1.0f / 30.0f;
-			//return m_frameDeltaTime;
+			//return 1.0f / 30.0f;
+			return m_frameDeltaTime;
 		}
 		void PushFrameDeltaTime(float deltaTime)
 		{
@@ -42,7 +42,7 @@ namespace tkEngine{
 					totalTime += time;
 				}
 				//平均値をとる。
-				m_frameDeltaTime = min(1.0f / 30.0f, totalTime / m_frameDeltaTimeQue.size());
+				m_frameDeltaTime = min(1.0f / 20.0f, totalTime / m_frameDeltaTimeQue.size());
 				m_frameDeltaTimeQue.pop_front();
 			}
 		}

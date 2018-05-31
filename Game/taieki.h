@@ -28,6 +28,7 @@ private:
 	int Lever = 2;
 	int Taim = 0;
 	int teikonFrag = 0;
+	int counter = 0;
 	prefab::CEffect* effect = nullptr;
 };
 

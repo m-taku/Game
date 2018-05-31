@@ -59,6 +59,10 @@ public:
 	{
 		AIseizon[No] = 0;
 	}
+	int gatsiz(int No)
+	{
+		return da[No].size();
+	}
 	std::vector<int>::iterator getDate(int i) {
 		return pasu2[i].begin();
 	}

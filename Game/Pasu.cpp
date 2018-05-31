@@ -34,8 +34,9 @@ void Pasu::Load(const wchar_t* filePath)
 			long long h = 0;
 			for (int g = 8; g > f; g--) {
 				h += No2[u++] * pow(100, g);
-				if (i == 14 && g == 2) {
+				if (i == 13 && g == 2) {
 					h -= 16;
+					//int a = 0;
 				}
 			}
 			if (h <= 0) {

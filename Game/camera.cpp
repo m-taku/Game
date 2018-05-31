@@ -38,10 +38,10 @@ void camera::Update()
 		target.y = m_player->m_position.y + m_player->m_forward.y + 50.0f;*/
 		Ppos = m_player->Getbonepos() + m_player->GetFoeward() * 10.0f;
 		Ppos.y = position_of_player.y + tall;
-		if (m_player->GetPosition().z <= 0.0f)
+		/*if (m_player->GetPosition().z <= 0.0f)
 		{
 			
-		}
+		}*/
 	}
 	//カメラのニアクリップとファークリップを設定する。
 	MainCamera().SetTarget(target);
