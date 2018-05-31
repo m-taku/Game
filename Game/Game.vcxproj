@@ -623,6 +623,7 @@
     <ClCompile Include="AImove.cpp" />
     <ClCompile Include="camera.cpp" />
     <ClCompile Include="car.cpp" />
+    <ClCompile Include="carRender.cpp" />
     <ClCompile Include="Dog.cpp" />
     <ClCompile Include="Fade.cpp" />
     <ClCompile Include="Game.cpp" />
@@ -657,6 +658,7 @@
     <ClInclude Include="AImove.h" />
     <ClInclude Include="camera.h" />
     <ClInclude Include="car.h" />
+    <ClInclude Include="carRender.h" />
     <ClInclude Include="Dog.h" />
     <ClInclude Include="GameEnd.h" />
     <ClInclude Include="Geizi.h" />
@@ -816,6 +818,7 @@
       <ContentOutput Condition="'$(Configuration)|$(Platform)'=='Preview|Win32'">$(ProjectDir)/Resource/modelData/%(Filename).dds</ContentOutput>
     </ImageContentTask>
     <Image Include="Assets\modelData\livingbuildings.png" />
+    <Image Include="Assets\modelData\utc_all2.tga" />
     <Image Include="Assets\modelData\white.png" />
     <Image Include="Assets\modelData\worktops007.jpg" />
     <Image Include="Assets\sprite\fade.png" />
