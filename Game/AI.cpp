@@ -112,18 +112,19 @@ void AI::NPCNormal()
 	//	//	
 
 	work->kyorikeisan(pasu[ima] - 1, m_position, m_forward,game->pasu.m_pointList);
-	m_rotation.Multiply(work->Gatkaku());//回転
-	m_position += /*A_charaCon.Execute(*/ (m_forward*(work->Gatmuve()*m_speed))*(GameTime().GetFrameDeltaTime());//移動
-	if (15.0f > work->Gatlen()) {
+	m_rotation.Multiply(work->Getkaku());//回転
+	m_position += /*A_charaCon.Execute(*/ (m_forward*(work->Getmuve()*m_speed))*(GameTime().GetFrameDeltaTime());//移動
+	if (15.0f > work->Getlen())
 
-		if (ima >= 10) {//今のポジションが6なら
-					  //0にリセットする。0,1,2,3,4,5の順番。
-			ima = 0;
-		}
-		else {
-			ima++;
-		}
+	if (ima >= 10) {//今のポジションが6なら
+				  //0にリセットする。0,1,2,3,4,5の順番。
+		ima = 0;
 	}
+	else {
+		ima++;
+	}
+
+
 
 	//FindGameObjectsWithTag(10, [&](IGameObject* go) {
 	//	if (go != this) {            //自分からの距離を計測するため、検索結果から自分を除外する。
@@ -306,6 +307,11 @@ void AI::NPCZombie_Normal()
 	//		qBias1.SetRotationDeg(rotAxis, 3.0f);
 	//		m_rotation.Multiply(qBias1);
 	//	}
+	//sinsoku += 0.01;
+	//if (sinsoku <= 1.0) {
+	//	m_skinModel.Satburend(sinsoku);
+	//	pa = Damage;
+	//}
 	//	else {
 	//		if (angle >= 2.0f) {
 	//			v.y = 0.0f;
@@ -750,7 +756,7 @@ void AI::Update()
 			CVector3 kyori1 = ai->m_position - this->m_position;//自分との距離を求める。
 			float f = kyori1.Length();
 			if (Siya(kyori1, f)) { //距離が攻撃範囲以内だったら
-				kyori1 /= 5.0f;
+				kyori1 /= 3.0f;
 				kyori1.y = 0.0f;
 				m_position += /*A_charaCon.Execute(*/ kyori1 * m_speed*-1 * GameTime().GetFrameDeltaTime();//移動
 
@@ -765,10 +771,8 @@ void AI::Update()
 	//	Animation_Run();//走るアニメーション。
 	//}
 	if (Zonbe == 1) {
-		if ((Pad(0).IsTrigger(enButtonA))) {
-			m_skinModel.Satburend(0.1f);
-		}
 	}
+	
 	//if ((Pad(0).GetLStickXF() > 0.0)) {
 	//	m_skinModel.Satburend(0.01);
 	//}

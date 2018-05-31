@@ -131,6 +131,7 @@ private:
 	std::vector<int>::iterator pasu;
 	int No = 0;
 	int no = 0;
+	float sinsoku = 0.0f;
 	AImove* work;
 	tekihei* tekip;
 	CShaderResourceView zondi;

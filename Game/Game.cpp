@@ -120,7 +120,7 @@ void Game::OnDestroy()
 {
 	DeleteGO(player);
 	//‚±‚±‚ÅÅI“I‚É‚c‚…‚Œ‚…‚”‚…‚f‚n‚ğâ‘Î‚µ‚«‚éB	
-	for (int k = 0; k < 4; k++) {
+	for (int k = 0; k < 8; k++) {
 		if (AIseizon[k] >= 1) {
 			DeleteGO(simin[k]);
 		}

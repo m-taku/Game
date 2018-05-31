@@ -50,6 +50,9 @@ bool Player::Start()
 	hakaba->Play(L"effect/aura2.efk");
 	hakaba->SetPosition(landpos);
 	hakaba->SetScale({ 40.0f,40.0f,40.0f });
+	hakaba->Release();
+	hakaba->Play(L"effect/aura1.efk");
+	hakaba->SetScale({ 40.0f,40.0f,40.0f });
 	
 	bonenum = m_skinModelData.GetSkeleton().GetNumBones();
 	for (int i = 1;i < bonenum;i++)
