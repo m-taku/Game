@@ -84,12 +84,14 @@ void AI::NPCNormal()
 
 	if (15.0f > work->Getlen()) {
 
-	if (ima >= 10) {//今のポジションが6なら
-				  //0にリセットする。0,1,2,3,4,5の順番。
-		ima = 0;
-	}
-	else {
-		ima++;
+		if (ima >= game->gatsiz(iNo)-1) {//今のポジションが6なら
+					  //0にリセットする。0,1,2,3,4,5の順番。
+			ima = 0;
+
+		}
+		else {
+			ima++;
+		}
 	}
 
 }

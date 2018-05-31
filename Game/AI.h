@@ -15,7 +15,6 @@ public:
 	~AI();
 	bool Start();
 	void Update();
-
 	void NPCNormal();//市民の通常行動の処理。
 	void NPCNormal_Search();//市民が警戒する処理。
 	//void NPCEscape_NPC();//市民がゾンビNPCから逃げるときの処理。
