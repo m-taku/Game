@@ -98,9 +98,15 @@ private:
 	std::vector<int> AI3 = { 14, 15, 16, 17, 18, 19, 20, 23, 24, 18, 19 };
 	std::vector<int> AI4 = { 6, 20, 18, 19, 14, 13, 11, 10, 9, 8, 7 };
 	std::vector<int> AI5 = { 1,2,3,4,5,21,22,29,30,37,38,39,40,41,34,33,26,25,17,16,11,10 };
-	std::vector<int> AI6 = { 3,6,20,21,22,23,24,18,19,20,21,5,4 };
-	std::vector<int> AI7 = { 4,5,21,20,19,14,12,11,10,9,8,7,3 };
-	std::vector<int> AI8 = { 20,23,22,29,28,27,26,25,24,18,19 };
+	std::vector<int> AI6 = { 2,9,8,7,6,20,18,17,16,11,10,1 };
+	std::vector<int> AI7 = { 3,6,20,21,22,23,24,18,19,20,21,5,4 };
+	std::vector<int> AI8 = { 4,5,21,20,19,14,12,11,10,9,8,7,3 };
+	std::vector<int> AI9 = { 20,23,22,29,28,27,26,25,24,18,19 };
+	std::vector<int> AI10 = { 8,7,6,20,18,17,16,11,10,9};
+	std::vector<int> AI11 = { 12,13,14,15 };
+	std::vector<int> AI12 = { 18,24,23,20,19 };
+	//std::vector<int> AI13 = {  };
+
 
 	std::vector<std::vector<int>> da;
 	std::vector<std::vector<int>> pasu2;
