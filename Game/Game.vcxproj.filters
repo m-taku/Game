@@ -62,6 +62,7 @@
     <ClCompile Include="Mes.cpp" />
     <ClCompile Include="Dog.cpp" />
     <ClCompile Include="car.cpp" />
+    <ClCompile Include="carRender.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -88,6 +89,7 @@
     <ClInclude Include="Mes.h" />
     <ClInclude Include="Dog.h" />
     <ClInclude Include="car.h" />
+    <ClInclude Include="carRender.h" />
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\unityChan.fbx">
@@ -222,7 +224,9 @@
     <MeshContentTask Include="Assets\modelData\teki.FBX" />
     <MeshContentTask Include="Assets\modelData\item.FBX" />
     <MeshContentTask Include="Assets\modelData\liam.FBX" />
-    <MeshContentTask Include="Assets\animData\demoanime\UnityChanAnim.fbx" />
+    <MeshContentTask Include="Assets\modelData\teki2.FBX">
+      <Filter>Assets\modelData</Filter>
+    </MeshContentTask>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="Assets\shader\tonemap.fx">
@@ -395,11 +399,6 @@
     <CustomBuild Include="Assets\lever\laitLv001.tks">
       <Filter>Assets\lever</Filter>
     </CustomBuild>
-    <CustomBuild Include="Assets\animData\demoanime\idle.tka" />
-    <CustomBuild Include="Assets\animData\demoanime\jump.tka" />
-    <CustomBuild Include="Assets\animData\demoanime\run.tka" />
-    <CustomBuild Include="Assets\animData\demoanime\walk.tka" />
-    <CustomBuild Include="Assets\animData\tekiidle.tka" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\modelData\livingbuildings.png">
@@ -415,7 +414,9 @@
       <Filter>Assets\sprite</Filter>
     </Image>
     <Image Include="Assets\modelData\ao.png" />
-    <Image Include="Assets\modelData\maps\T_Space_Drone_ALL.png" />
+    <Image Include="Assets\modelData\utc_all2.tga">
+      <Filter>Assets\modelData</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\lever\larer_01.tks">

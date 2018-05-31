@@ -623,6 +623,7 @@
     <ClCompile Include="AImove.cpp" />
     <ClCompile Include="camera.cpp" />
     <ClCompile Include="car.cpp" />
+    <ClCompile Include="carRender.cpp" />
     <ClCompile Include="Dog.cpp" />
     <ClCompile Include="Fade.cpp" />
     <ClCompile Include="Game.cpp" />
@@ -657,6 +658,7 @@
     <ClInclude Include="AImove.h" />
     <ClInclude Include="camera.h" />
     <ClInclude Include="car.h" />
+    <ClInclude Include="carRender.h" />
     <ClInclude Include="Dog.h" />
     <ClInclude Include="GameEnd.h" />
     <ClInclude Include="Geizi.h" />
@@ -684,7 +686,6 @@
     <ClInclude Include="stdafx.h" />
   </ItemGroup>
   <ItemGroup>
-    <MeshContentTask Include="Assets\animData\demoanime\UnityChanAnim.fbx" />
     <MeshContentTask Include="Assets\modelData\Building Sky_big_color1.FBX" />
     <MeshContentTask Include="Assets\modelData\Building Sky_big_color2.FBX" />
     <MeshContentTask Include="Assets\modelData\Building Sky_big_color3.FBX" />
@@ -721,6 +722,7 @@
     <MeshContentTask Include="Assets\modelData\stage3.FBX" />
     <MeshContentTask Include="Assets\modelData\taieki.FBX" />
     <MeshContentTask Include="Assets\modelData\teki.FBX" />
+    <MeshContentTask Include="Assets\modelData\teki2.FBX" />
     <MeshContentTask Include="Assets\modelData\unityChan.fbx" />
     <MeshContentTask Include="Assets\modelData\Vehicle_Car1.FBX" />
     <MeshContentTask Include="Assets\modelData\Vehicle_Car2.FBX" />
@@ -809,22 +811,34 @@
     <Image Include="Assets\modelData\ao.png" />
     <ImageContentTask Include="Assets\modelData\LiamTexZonbi.png">
       <ContentOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)/Resource/modelData/%(Filename).dds</ContentOutput>
+      <ContentOutput Condition="'$(Configuration)|$(Platform)'=='Preview|Win32'">$(ProjectDir)/Resource/modelData/%(Filename).dds</ContentOutput>
     </ImageContentTask>
     <ImageContentTask Include="Assets\modelData\LiamTexZonbi1.png">
       <ContentOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)/Resource/modelData/%(Filename).dds</ContentOutput>
+      <ContentOutput Condition="'$(Configuration)|$(Platform)'=='Preview|Win32'">$(ProjectDir)/Resource/modelData/%(Filename).dds</ContentOutput>
     </ImageContentTask>
     <Image Include="Assets\modelData\livingbuildings.png" />
-    <Image Include="Assets\modelData\maps\T_Space_Drone_ALL.png" />
+    <Image Include="Assets\modelData\utc_all2.tga" />
     <Image Include="Assets\modelData\white.png" />
     <Image Include="Assets\modelData\worktops007.jpg" />
     <Image Include="Assets\sprite\fade.png" />
-    <ImageContentTask Include="Assets\sprite\GameClear.png" />
-    <ImageContentTask Include="Assets\sprite\GameOver.png" />
+    <ImageContentTask Include="Assets\sprite\GameClear.png">
+      <ContentOutput Condition="'$(Configuration)|$(Platform)'=='Preview|Win32'">$(ProjectDir)/Resource/sprite/%(Filename).dds</ContentOutput>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\GameOver.png">
+      <ContentOutput Condition="'$(Configuration)|$(Platform)'=='Preview|Win32'">$(ProjectDir)/Resource/sprite/%(Filename).dds</ContentOutput>
+    </ImageContentTask>
     <ImageContentTask Include="Assets\sprite\yaji.png" />
-    <ImageContentTask Include="Assets\sprite\kajy.png" />
-    <ImageContentTask Include="Assets\sprite\ka-soru.png" />
+    <ImageContentTask Include="Assets\sprite\kajy.png">
+      <ContentOutput Condition="'$(Configuration)|$(Platform)'=='Preview|Win32'">$(ProjectDir)/Resource/sprite/%(Filename).dds</ContentOutput>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\ka-soru.png">
+      <ContentOutput Condition="'$(Configuration)|$(Platform)'=='Preview|Win32'">$(ProjectDir)/Resource/sprite/%(Filename).dds</ContentOutput>
+    </ImageContentTask>
     <ImageContentTask Include="Assets\sprite\syoujun.png" />
-    <ImageContentTask Include="Assets\sprite\ge-ji.png" />
+    <ImageContentTask Include="Assets\sprite\ge-ji.png">
+      <ContentOutput Condition="'$(Configuration)|$(Platform)'=='Preview|Win32'">$(ProjectDir)/Resource/sprite/%(Filename).dds</ContentOutput>
+    </ImageContentTask>
     <ImageContentTask Include="Assets\sprite\waku.png" />
   </ItemGroup>
   <ItemGroup>
@@ -844,21 +858,6 @@
       <FileType>Document</FileType>
     </CustomBuild>
     <CustomBuild Include="Assets\lever\laitLv001.tks">
-      <FileType>Document</FileType>
-    </CustomBuild>
-    <CustomBuild Include="Assets\animData\demoanime\idle.tka">
-      <FileType>Document</FileType>
-    </CustomBuild>
-    <CustomBuild Include="Assets\animData\demoanime\jump.tka">
-      <FileType>Document</FileType>
-    </CustomBuild>
-    <CustomBuild Include="Assets\animData\demoanime\run.tka">
-      <FileType>Document</FileType>
-    </CustomBuild>
-    <CustomBuild Include="Assets\animData\demoanime\walk.tka">
-      <FileType>Document</FileType>
-    </CustomBuild>
-    <CustomBuild Include="Assets\animData\tekiidle.tka">
       <FileType>Document</FileType>
     </CustomBuild>
     <None Include="Assets\lever\larer_01.tks" />

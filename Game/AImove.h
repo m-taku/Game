@@ -10,37 +10,37 @@ public:
 	//(行きたい場所,自分の位置,前方向)
 	int kyorikeisan(CVector3 mokuteki , CVector3 m_pos, CVector3 m_forward);
 	//動く速さ取得
-	float Gatmuve() const
+	float Getmuve() const
 	{
 		return muve;
 	}
 	//目的地取得
-	CVector3 Gatmokuteki() const
+	CVector3 Getmokuteki() const
 	{
 		return mokuteki;
 	}
 	//回転行列取得
-	CQuaternion Gatkaku() const
+	CQuaternion Getkaku() const
 	{
 		return qBias1;
 	}
 	//回転しているかどうか（0：回転していない、それ以外：回転した）
-	float Gatkaiten() const
+	float Getkaiten() const
 	{
 		return kaku;
 	}
 	//回転させたい角度（1フレーム当たり）
-	void Satkakudo(float kku) 
+	void Setkakudo(float kku) 
 	{
 		kakudo = kku;
 	}
 	//目的地までの距離
-	float Gatlen() const
+	float Getlen() const
 	{
 		return len;
 	}
 	//目的地との角度の誤差替え
-	void Sathaba(float kakudo) 
+	void Sethaba(float kakudo) 
 	{
 		haba = kakudo;
 	}

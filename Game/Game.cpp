@@ -10,6 +10,7 @@
 #include"camera.h"
 #include"Pasu.h"
 #include"keiroK.h"
+#include"carRender.h"
 #include"tekihei.h"
 #include"Geizi.h"
 #include"item.h"
@@ -27,7 +28,20 @@ Game::Game()
 	gaizi = NewGO<Geizi>(1, "Geizi");
 	player = NewGO<Player>(0, "Player");
 
-	for (int k = 0; k < 4; k++) {
+	carRender* kar = NewGO<carRender>(0, nullptr);
+	da.push_back(AI1);
+	da.push_back(AI2);
+	da.push_back(AI3);
+	da.push_back(AI4);
+	da.push_back(AI5);
+	da.push_back(AI6);
+	da.push_back(AI7);
+	da.push_back(AI8);
+	da.push_back(AI9);
+	da.push_back(AI10);
+	da.push_back(AI11);
+	da.push_back(AI12);
+	for (int k = 0; k < 12; k++) {
 		simin.push_back(NewGO<AI>(0, "AI"));
 		AIseizon.push_back(1);
 	}
@@ -36,7 +50,6 @@ Game::Game()
 	pasu2.push_back(movepasu1);
 	pasu2.push_back(movepasu2);
 	pasu2.push_back(movepasu3);
-
 	pasu2.push_back(movepasu4);
 	pasu2.push_back(movepasu5);
 	pasu2.push_back(movepasu6);
@@ -47,8 +60,20 @@ Game::Game()
 	pasu2.push_back(movepasu11);
 	pasu2.push_back(movepasu12);
 	pasu2.push_back(movepasu13);
-	for (int i = 0; i <13 ; i++) {
+	pasu2.push_back(movepasu14);
+	pasu2.push_back(movepasu15);
+	pasu2.push_back(movepasu16);
+	pasu2.push_back(movepasu17);
+	pasu2.push_back(movepasu18);
+	pasu2.push_back(movepasu19);
+	pasu2.push_back(movepasu20);
+	pasu2.push_back(movepasu21);
+	pasu2.push_back(movepasu22);
+	pasu2.push_back(movepasu23);
+	kar->Satcarkosuu(23);
+	for (int i = 0; i <23 ; i++) {
 		carv.push_back(NewGO<car>(0, "car"));
+		carv[i]->gatcarRender(*kar);
 	}
 //	pasu2.clear();
 	stge = NewGO<Stage>(0, "stage");
@@ -104,7 +129,7 @@ void Game::OnDestroy()
 			DeleteGO(simin[k]);
 		}
 	}
-	for (int i = 0; i < 13; i++) {
+	for (int i = 0; i < 23; i++) {
 		DeleteGO(carv[i]);
 	}
 	DeleteGO(gaizi);

@@ -36,25 +36,41 @@ bool Geizi::Start()
 	return true;
 }
 void Geizi::Update()
-{
-	if (HP >= 0.95) {
-		HP = 0.95;
+{	
+	if (HP_saiz > HP) {
+		HP_saiz -= 0.01*kasoku;
+		kasoku += 1.5;
+		if (HP_saiz < HP) {
+			HP_saiz = HP;
+			kasoku = 0;
+		}
+	}
+	if (HP_saiz <= 0) {
+		HP_saiz = 0.0;
 		if (HPfurag <= 0) {
 			DeleteGO(haus);
 			HPfurag++;
 			NewGO<GameEnd>(0,"End");
 		}
+	}if (keifou_saiz < point) {
+		keifou_saiz += 0.001*kasoku;
+		kasoku += 0.5;
+		if (keifou_saiz > point) {
+			keifou_saiz = point;
+			kasoku = 0.0;
+		}
 	}
-	if (point >= 0.95) {
-		point = 0.95;
+	if (keifou_saiz >= 0.95) {
+		keifou_saiz = 0.95;
 		if (furag <= 0) {
 			haus=NewGO<tekihei>(0, "tekihei");
 			
 		}
 	}
-	n_sprite.Update(n_position, CQuaternion::Identity, { point,0.8f,1.0f }, { 0.0f,1.0f });
+
+	n_sprite.Update(n_position, CQuaternion::Identity, { keifou_saiz,0.8f,1.0f }, { 0.0f,1.0f });
 	m_sprite.Update(m_position, CQuaternion::Identity, { 1.0f,1.0f,1.0f }, { 0.0f,1.0f });
-	hn_sprite.Update(hn_position, CQuaternion::Identity, { 0.95f-HP,0.8f,1.0f }, { 0.0f,1.0f });
+	hn_sprite.Update(hn_position, CQuaternion::Identity, { HP_saiz,0.8f,1.0f }, { 0.0f,1.0f });
 	hm_sprite.Update(hm_position, CQuaternion::Identity, { 1.0f,1.0f,1.0f }, { 0.0f,1.0f });
 	hy_sprite.Update(CVector3::Zero, CQuaternion::Identity, { 0.5f,0.5f,1.0f }, { 0.5f,0.5f });
 }
