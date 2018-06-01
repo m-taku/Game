@@ -129,7 +129,7 @@ protected:
 	//CAnimationClip ai_NPCAnimationClips[6];	//アニメーションクリップ。
 private:
 	bool ForceFlag = false;     //特殊部隊の出現を表すフラグ。
-	std::vector<int>::iterator pasuNo;
+	std::vector<int>::iterator pasu;
 	int No = 0;
 	int no = 0;
 	float sinsoku = 0.0f;
