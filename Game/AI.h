@@ -135,6 +135,8 @@ private:
 	float sinsoku = 0.0f;
 	AImove* work;
 	tekihei* tekip;
+	int mobe = 100;
+	bool kannkaku = false;
 	int Leftfrag = 0;
 	CShaderResourceView zondi;
 	CObjectFrustumCulling m_objectFrustumCulling;

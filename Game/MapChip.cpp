@@ -5,6 +5,7 @@
 void MapChip::OnDestroy()
 {
 }
+
 void MapChip::Init(
 	CVector3 pos,
 	CQuaternion rotation,
@@ -13,6 +14,9 @@ void MapChip::Init(
 	m_position = pos;
 	m_rotation = rotation;
 	m_scale = scale;
+
+
+#ifndef instansingu_katto
 }
 void MapChip::PostInitAfterInitLevelRender(LevelRender* render)
 {
@@ -23,4 +27,18 @@ void MapChip::Update()
 {
 	m_levelRender->UpdateWorldMatrix(m_position, m_rotation, m_scale);
 }
+#else
+
+	m_skinModel.Init(m_skinModelData);
+	m_physicsStaticObject.CreateMeshObject(m_skinModel, m_position, m_rotation);
+}
+
+void MapChip::Update() {
+	m_skinModel.Update(m_position, m_rotation, m_scale);
+}
+void MapChip::Render(CRenderContext& rc)
+{
+	m_skinModel.Draw(rc, MainCamera().GetViewMatrix(), MainCamera().GetProjectionMatrix());
+}
+#endif
 

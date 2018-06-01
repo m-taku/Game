@@ -167,8 +167,10 @@ void Player::Update()
 		landflag = 1;
 	}
 	m_position = m_charaCon.Execute(GameTime().GetFrameDeltaTime(), m_moveSpeed);
-	m_moveSpeed.z = 0.0f;
-	m_moveSpeed.x = 0.0f;
+	if (m_moveSpeed.Length() >= 500.0f)
+	{
+
+	}
 	if (m_position.y <= -100.0f) {
 		m_position.y = -100.0f;
 	}
