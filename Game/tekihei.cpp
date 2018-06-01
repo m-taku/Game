@@ -220,7 +220,7 @@ void tekihei::Update()
 
 			}
 			tekipos[i] = m_charaCon[i].Execute(GameTime().GetFrameDeltaTime(), tekispeed[i]);
-			tekiskinModel[i].Update(tekipos[i], tekirot[i], {2.5f,2.5f,2.5f});
+			tekiskinModel[i].Update(tekipos[i], tekirot[i], {1.0f,1.0f,1.0f});
 		}
 		if (tekiheiflag[i] == 0)
 		{

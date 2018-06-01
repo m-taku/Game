@@ -74,7 +74,7 @@ bool AI::Start()
 	m_rotation.SetRotationDeg(CVector3::AxisY,VectorAngleDeg(game->pasu[Leftfrag].m_pointList[pasu[ima] - 1]));
 	SetTags(10);
 	m_skinModel.SetShadowCasterFlag(true);
-	if (game->GatNo() >= 12&& Leftfrag==0) {//AIが増えた時はここを増やす。
+	if (game->GatNo() >= 20&& Leftfrag==0) {//AIが増えた時はここを増やす。
 		game->risetteNo();
 		game->SetLeft();
 	}
@@ -98,6 +98,7 @@ void AI::NPCNormal()
 
 	if (15.0f > work->Getlen()) {
 		if (Leftfrag <= 0) {
+
 
 			if (ima >= game->gatsiz(iNo) - 1) {//今のポジションが6なら
 						  //0にリセットする。0,1,2,3,4,5の順番。

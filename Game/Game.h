@@ -79,6 +79,10 @@ public:
 	std::vector<int>::iterator getDate(int i) {
 		return pasu2[i].begin();
 	}
+	int Getsize(int No)
+	{
+		return da[No].size();
+	}
 	std::vector<int>::iterator getAIDate(int i) {
 		return da[i].begin();
 	}
@@ -115,6 +119,7 @@ private:
 	std::vector<int> movepasu21 = { 46,45,35,34,24,23,22,21,19,10,8,7,6,5,13,16,24,23,31,38};
 	std::vector<int> movepasu22 = { 19,10,8,7,6,5,13,16,24,23,22,21,29,40,48,47,37,32,22,21 };
 	std::vector<int> movepasu23 = { 33,36,44,43,37,32,26,25,15,14,4,3,2,1,9,20,29,40,48,47,37,32,17,12,6,5,13,16 };
+
 	std::vector<int> AIR1 = { 26,25,17,16,15,14,19,18,24,28,27 };
 	std::vector<int> AIR2 = { 22, 29, 28, 31, 36, 35, 32, 27, 26, 25, 23 };
 	std::vector<int> AIR3 = { 14, 15, 16, 17, 18, 19, 20, 23, 24, 18, 19 };
@@ -127,7 +132,14 @@ private:
 	std::vector<int> AIR10 = { 8,7,6,20,18,17,16,11,10,9};
 	std::vector<int> AIR11 = { 12,13,14,15 };
 	std::vector<int> AIR12 = { 18,24,23,20,19 };
-	//std::vector<int> AI13 = {  };
+	std::vector<int> AI13 = { 29,30,31,36,35,40,41,34,33,26,27,28 };
+	std::vector<int> AI14 = { 37,36,35,32,33,26,27,28,29,30 };
+	std::vector<int> AI15 = { 33,26,27,28,29,30,37,36,31,32 };
+	std::vector<int> AI16 = { 30,37,36,39,40,35,34,33,32,27,28,31 };
+	std::vector<int> AI17 = { 32,33,26,25,17,16,15,14,19,18,24,23,22,29,28,31 };
+	std::vector<int> AI18 = { 38,39,40,35,32,33,26,27,28,31,30,37};
+	std::vector<int> AI19 = { 39,36,31,28,27,32,35,40 };
+	std::vector<int> AI20 = { 7,8,13,14,19,20,23,24,18,19,20,6 };
 	std::vector<int> AIL1 = { 48,57,56,52 };
 
 	std::vector<std::vector<int>> da2;

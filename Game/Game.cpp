@@ -48,7 +48,15 @@ Game::Game()
 	da.push_back(AIR10);
 	da.push_back(AIR11);
 	da.push_back(AIR12);
-	for (int k = 0; k < 12; k++) {
+	da.push_back(AI13);
+	da.push_back(AI14);
+	da.push_back(AI15);
+	da.push_back(AI16);
+	da.push_back(AI17);
+	da.push_back(AI18);
+	da.push_back(AI19);
+	da.push_back(AI20);
+	for (int k = 0; k < 20; k++) {
 		Rsimin.push_back(NewGO<AI>(0, "AI"));
 		RAIseizon.push_back(1);
 	}
