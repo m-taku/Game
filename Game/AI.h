@@ -108,8 +108,8 @@ protected:
 	int MyNumber = 0;               //今自分が存在しているパスの番号。
 	int ZombieChaseNumber = 0;      //ゾンビが追跡を始めた時に立っていたパスの番号。
 	float m_speed;
-	int iNo = 0;
-	int ima = 0;
+	int iNo= 0;
+	int ima = 1;
 	int kore = 0;
 	int modori = 0;
 	int da = 0;
@@ -128,7 +128,7 @@ protected:
 	//CAnimationClip ai_NPCAnimationClips[6];	//アニメーションクリップ。
 private:
 	bool ForceFlag = false;     //特殊部隊の出現を表すフラグ。
-	std::vector<int>::iterator pasu;
+	std::vector<int>::iterator pasuNo;
 	int No = 0;
 	int no = 0;
 	AImove* work;

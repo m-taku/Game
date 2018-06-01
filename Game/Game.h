@@ -62,6 +62,10 @@ public:
 	std::vector<int>::iterator getDate(int i) {
 		return pasu2[i].begin();
 	}
+	int Getsize(int No)
+	{
+		return da[No].size();
+	}
 	std::vector<int>::iterator getAIDate(int i) {
 		return da[i].begin();
 	}
