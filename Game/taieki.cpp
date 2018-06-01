@@ -31,7 +31,6 @@ bool taieki::Start()
 	tpos.y += 70.0f;
 
 	PS = player->GetMoveSpeed();
-
 	effect->Play(L"effect/aura1.efk");
 	effect->SetPosition(tpos);
 	effect->SetScale({ 10.0f,10.0f,10.0f });

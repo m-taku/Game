@@ -63,6 +63,7 @@
     <ClCompile Include="Dog.cpp" />
     <ClCompile Include="car.cpp" />
     <ClCompile Include="carRender.cpp" />
+    <ClCompile Include="LevelRender.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -90,6 +91,7 @@
     <ClInclude Include="Dog.h" />
     <ClInclude Include="car.h" />
     <ClInclude Include="carRender.h" />
+    <ClInclude Include="LevelRender.h" />
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\unityChan.fbx">

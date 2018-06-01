@@ -15,7 +15,6 @@ public:
 	~AI();
 	bool Start();
 	void Update();
-
 	void NPCNormal();//市民の通常行動の処理。
 	void NPCNormal_Search();//市民が警戒する処理。
 	//void NPCEscape_NPC();//市民がゾンビNPCから逃げるときの処理。
@@ -109,7 +108,7 @@ protected:
 	int ZombieChaseNumber = 0;      //ゾンビが追跡を始めた時に立っていたパスの番号。
 	float m_speed;
 	int iNo= 0;
-	int ima = 1;
+	int ima = 0;
 	int kore = 0;
 	int modori = 0;
 	int da = 0;
@@ -131,6 +130,7 @@ private:
 	std::vector<int>::iterator pasuNo;
 	int No = 0;
 	int no = 0;
+	float sinsoku = 0.0f;
 	AImove* work;
 	tekihei* tekip;
 	CShaderResourceView zondi;

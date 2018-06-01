@@ -41,7 +41,15 @@ Game::Game()
 	da.push_back(AI10);
 	da.push_back(AI11);
 	da.push_back(AI12);
-	for (int k = 0; k < 12; k++) {
+	da.push_back(AI13);
+	da.push_back(AI14);
+	da.push_back(AI15);
+	da.push_back(AI16);
+	da.push_back(AI17);
+	da.push_back(AI18);
+	da.push_back(AI19);
+	da.push_back(AI20);
+	for (int k = 0; k < 20; k++) {
 		simin.push_back(NewGO<AI>(0, "AI"));
 		AIseizon.push_back(1);
 	}
@@ -124,7 +132,7 @@ void Game::OnDestroy()
 {
 	DeleteGO(player);
 	//‚±‚±‚ÅÅI“I‚É‚c‚…‚Œ‚…‚”‚…‚f‚n‚ğâ‘Î‚µ‚«‚éB	
-	for (int k = 0; k < 4; k++) {
+	for (int k = 0; k < 8; k++) {
 		if (AIseizon[k] >= 1) {
 			DeleteGO(simin[k]);
 		}
