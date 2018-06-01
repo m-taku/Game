@@ -48,20 +48,39 @@ Game::Game()
 	da.push_back(AIR10);
 	da.push_back(AIR11);
 	da.push_back(AIR12);
-	da.push_back(AI13);
-	da.push_back(AI14);
-	da.push_back(AI15);
-	da.push_back(AI16);
-	da.push_back(AI17);
-	da.push_back(AI18);
-	da.push_back(AI19);
-	da.push_back(AI20);
+	da.push_back(AIR13);
+	da.push_back(AIR14);
+	da.push_back(AIR15);
+	da.push_back(AIR16);
+	da.push_back(AIR17);
+	da.push_back(AIR18);
+	da.push_back(AIR19);
+	da.push_back(AIR20);
 	for (int k = 0; k < 20; k++) {
 		Rsimin.push_back(NewGO<AI>(0, "AI"));
 		RAIseizon.push_back(1);
 	}
 	da2.push_back(AIL1);
-	for (int k = 0; k < 1; k++) {
+	da2.push_back(AIL2);
+	da2.push_back(AIL3);
+	da2.push_back(AIL4);
+	da2.push_back(AIL5);
+	da2.push_back(AIL6);
+	da2.push_back(AIL7);
+	da2.push_back(AIL8);
+	da2.push_back(AIL9);
+	da2.push_back(AIL10);
+	da2.push_back(AIL11);
+	da2.push_back(AIL12);
+	da2.push_back(AIL13);
+	da2.push_back(AIL14);
+	da2.push_back(AIL15);
+	da2.push_back(AIL16);
+	da2.push_back(AIL17);
+	da2.push_back(AIL18);
+	da2.push_back(AIL19);
+	
+	for (int k = 0; k < 19; k++) {
 		Lsimin.push_back(NewGO<AI>(0, "AI"));
 		LAIseizon.push_back(1);
 	}

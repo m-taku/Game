@@ -110,7 +110,7 @@ protected:
 	int ZombieChaseNumber = 0;      //ゾンビが追跡を始めた時に立っていたパスの番号。
 	float m_speed;
 	int iNo = 0;
-	int ima = 1;
+	int ima = 0;
 	int kore = 0;
 	int modori = 0;
 	int da = 0;

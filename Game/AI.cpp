@@ -78,7 +78,7 @@ bool AI::Start()
 		game->risetteNo();
 		game->SetLeft();
 	}
-	if (game->GatNo() >= 1 && Leftfrag == 1) {
+	if (game->GatNo() >= 19 && Leftfrag == 1) {//¶‘¤‚ÌAI‚ª‘‚¦‚½‚ç‚±ª‚±«‚ð‘‚â‚·B
 		game->risetteNo();
 	}
 	/*ai_NPCAnimationClips[0].SetLoopFlag(false);
