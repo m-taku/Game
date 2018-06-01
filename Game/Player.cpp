@@ -141,9 +141,12 @@ void Player::Update()
 	m_rite.Normalize();
 	m_moveSpeed += m_forward*lStick_y;
 	m_moveSpeed += m_rite * lStick_x;
-	if (lStick_y > 0.0f&&(lStick_y > lStick_x&&lStick_y > lStick_x*-1.0f))
+	if (m_charaCon.IsOnGround())
 	{
-		m_animation.Play(0);
+		if (m_moveSpeed.x != 0.0f&&m_moveSpeed.z != 0.0f) {
+
+		}
+		//m_animation.Play(0);
 	}
 	/*else {
 		animation.Play(0, 0.2f);

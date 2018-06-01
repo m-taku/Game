@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "camera.h"
-#define tall 10.0f
+#define tall 0.0f
 
 
 camera::camera()
@@ -43,7 +43,6 @@ void camera::Update()
 			
 		}*/
 	}
-	Ppos.z += 500.0f;
 	//カメラのニアクリップとファークリップを設定する。
 	MainCamera().SetTarget(target);
 	MainCamera().SetNear(10.0f);
