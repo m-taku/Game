@@ -4,6 +4,8 @@
 #include"Human.h"
 #include"Game.h"
 #include"Geizi.h"
+#include "tkEngine/culling/tkObjectFrustumCulling.h"
+
 #define REACH 500.0  //ゾンビの攻撃範囲。この距離まで近づいたら攻撃する。
 #define PI 3.141592653589793 
 class Player;
@@ -108,7 +110,7 @@ protected:
 	int ZombieChaseNumber = 0;      //ゾンビが追跡を始めた時に立っていたパスの番号。
 	float m_speed;
 	int iNo = 0;
-	int ima = 0;
+	int ima = 1;
 	int kore = 0;
 	int modori = 0;
 	int da = 0;
@@ -133,6 +135,8 @@ private:
 	float sinsoku = 0.0f;
 	AImove* work;
 	tekihei* tekip;
+	int Leftfrag = 0;
 	CShaderResourceView zondi;
+	CObjectFrustumCulling m_objectFrustumCulling;
 };
 

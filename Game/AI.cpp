@@ -29,13 +29,23 @@ bool AI::Start()
 	Gaizi = FindGO<Geizi>("Geizi");
 	game=FindGO<Game>("Game");
 	iNo = game->incNo();
-	pasu = game->getAIDate(iNo);
-	m_position= game->pasu.m_pointList[pasu[ima++] - 1];
+	Leftfrag = game->GetLeft();
+	if (Leftfrag <= 0) {
+		pasu = game->getAIDate(iNo);
+	}
+	else
+	{
+		pasu = game->getLAIDate(iNo);
+	}
+	m_position= game->pasu[Leftfrag].m_pointList[pasu[ima++] - 1];
+	
 	m_position.y = 0.0f;
 	//キャラのスキンモデルのロードは各自サブクラスで行う。
 	m_skinModelData.Load(L"modelData/liam.cmo");//プレイヤーを書け
 	m_skinModel.Init(m_skinModelData);
 
+	//フラスタムカリングを初期化。
+	m_objectFrustumCulling.Init(MainCamera());
 	CMatrix mRot;
 	//mRot.MakeRotationFromQuaternion();
 	//A_charaCon.Init(
@@ -61,10 +71,14 @@ bool AI::Start()
 	m_skinModel.FindMaterial([&](CModelEffect* material) {
 		material->Setm_zonbi(zondi.GetBody());
 	});
-	m_rotation.SetRotationDeg(CVector3::AxisY,VectorAngleDeg(game->pasu.m_pointList[pasu[ima] - 1]));
+	m_rotation.SetRotationDeg(CVector3::AxisY,VectorAngleDeg(game->pasu[Leftfrag].m_pointList[pasu[ima] - 1]));
 	SetTags(10);
 	m_skinModel.SetShadowCasterFlag(true);
-	if (game->GatNo() >= 12) {//AIが増えた時はここを増やす。
+	if (game->GatNo() >= 12&& Leftfrag==0) {//AIが増えた時はここを増やす。
+		game->risetteNo();
+		game->SetLeft();
+	}
+	if (game->GatNo() >= 1 && Leftfrag == 1) {
 		game->risetteNo();
 	}
 	/*ai_NPCAnimationClips[0].SetLoopFlag(false);
@@ -78,22 +92,33 @@ bool AI::Start()
 }
 void AI::NPCNormal()
 {
-	work->kyorikeisan(pasu[ima] - 1, m_position, m_forward,game->pasu.m_pointList);
+	work->kyorikeisan(pasu[ima] - 1, m_position, m_forward, game->pasu[Leftfrag].m_pointList);
 	m_rotation.Multiply(work->Getkaku());//回転
 	m_position += /*A_charaCon.Execute(*/ (m_forward*(work->Getmuve()*m_speed))*(GameTime().GetFrameDeltaTime());//移動
 
 	if (15.0f > work->Getlen()) {
+		if (Leftfrag <= 0) {
 
-		if (ima >= game->gatsiz(iNo)-1) {//今のポジションが6なら
-					  //0にリセットする。0,1,2,3,4,5の順番。
-			ima = 0;
+			if (ima >= game->gatsiz(iNo) - 1) {//今のポジションが6なら
+						  //0にリセットする。0,1,2,3,4,5の順番。
+				ima = 0;
 
+			}
+			else {
+				ima++;
+			}
 		}
 		else {
-			ima++;
+			if (ima >= game->gatLsiz(iNo) - 1) {//今のポジションが6なら
+											   //0にリセットする。0,1,2,3,4,5の順番。
+				ima = 0;
+
+			}
+			else {
+				ima++;
+			}
 		}
 	}
-
 }
 void AI::NPCNormal_Search()//NPCの警戒処理。
 {
@@ -108,12 +133,24 @@ void AI::NPCNormal_Search()//NPCの警戒処理。
 
 void AI::NPCResistance_NPC()//NPCゾンビへの抵抗に関する処理。オーバーライドさせる。
 {
-	pa = Damage;
+	if (sinsoku < 1.0) {
+		m_skinModel.Satburend(sinsoku);
+		sinsoku += 0.01;
+	}
+	else {
+		pa = Damage;
+	}
 }
 
 void AI::NPCResistance_Player()//プレイヤーへの抵抗に関する処理。オーバーライドさせる。
 {
-	pa = Damage;
+	if (sinsoku < 1.0) {
+		m_skinModel.Satburend(sinsoku);
+		sinsoku += 0.01;
+	}
+	else {
+		pa = Damage;
+	}
 }
 
 void AI::NPCDamage()
@@ -196,7 +233,7 @@ void AI::NPCZombie_Attack()//vs特殊部隊
 			}
 		}
 		else {
-			work->kyorikeisan(jyunban[da] - 1, m_position, m_forward, game->pasu.m_pointList);
+			work->kyorikeisan(jyunban[da] - 1, m_position, m_forward, game->pasu[Leftfrag].m_pointList);
 		}
 		m_rotation.Multiply(work->Getkaku());
 		CVector3 v = work->Getmokuteki() - m_position;  //一番近い部隊に移動する。
@@ -278,14 +315,14 @@ void AI::takikennsau()
 		if (No >= 0) {
 			CVector3 posa = tekip->tekipos[No] - m_position;
 			jyunban.erase(jyunban.begin(), jyunban.end());
-			keiro.tansa(m_position, tekip->tekipos[No], &jyunban);
+			keiro.tansa(m_position, tekip->tekipos[No], &jyunban, Leftfrag);
 			da = 0;//もう一度検索
 		}
 	}
 }
 void AI::NPCFade_Out()//一般市民が退場するときの処理。
 {
-	work->kyorikeisan(jyunban[da] - 1, m_position, m_forward, game->pasu.m_pointList);
+	work->kyorikeisan(jyunban[da] - 1, m_position, m_forward, game->pasu[Leftfrag].m_pointList);
 	m_rotation.Multiply(work->Getkaku());
 	m_position += /*A_charaCon.Execute(*/ (m_forward*(work->Getmuve()*m_speed))*(GameTime().GetFrameDeltaTime());//移動
 	if (15.0f > work->Getlen()) {
@@ -497,7 +534,7 @@ void AI::Update()
 		}
 		else {//尚且つ、自分がゾンビではなかったら
 			jyunban.erase(jyunban.begin(), jyunban.end());
-			keiro.tansa(m_position, game->pasu.m_pointList[0], &jyunban);
+			keiro.tansa(m_position, game->pasu[Leftfrag].m_pointList[0], &jyunban, Leftfrag);
 			da = 0;
 			m_speed = 1.5;
 			pa = Fade_Out; //パターンをフェードアウトに切り替える。
@@ -558,17 +595,17 @@ void AI::Update()
 
 			}
 		}
-	});
-
-
-
-	
-	m_skinModel.Update(m_position, m_rotation, { 20.0f, 20.0f,20.0f });
+	});	
+	if (!m_objectFrustumCulling.IsCulling()) {
+		m_skinModel.Update(m_position, m_rotation, { 20.0f, 20.0f,20.0f });
+	}
+	m_skinModel.UpdateBoundingBox();
+	m_objectFrustumCulling.Execute(m_skinModel.GetBoundingBox());
 }
 void AI::NPCReturn()
 {
 	int Size = jyunban.size();
-	work->kyorikeisan(jyunban[da] - 1, m_position, m_forward, game->pasu.m_pointList);
+	work->kyorikeisan(jyunban[da] - 1, m_position, m_forward, game->pasu[Leftfrag].m_pointList);
 	m_rotation.Multiply(work->Getkaku());
 	CVector3 v = work->Getmokuteki() - m_position;
 	m_position += /*A_charaCon.Execute(*/ m_forward * (work->Getmuve()*m_speed)*GameTime().GetFrameDeltaTime();//移動
@@ -597,13 +634,17 @@ void AI::NPCescape()
 	}
 	else {
 		jyunban.erase(jyunban.begin(), jyunban.end());
-		keiro.tansa(m_position, retu_position,&jyunban);
+		keiro.tansa(m_position, retu_position,&jyunban, Leftfrag);
 		m_speed = 1.0;
 		pa = Return;
 	}
 }
 void AI::Render(CRenderContext& rc)
 {
+	if (m_objectFrustumCulling.IsCulling()) {
+		//描画しないンゴ。
+		return;
+	}
 	m_skinModel.Draw(rc, MainCamera().GetViewMatrix(), MainCamera().GetProjectionMatrix());
 	//m_sprite.Draw(rc, MainCamera2D().GetViewMatrix(), MainCamera2D().GetProjectionMatrix());
 }

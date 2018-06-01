@@ -17,7 +17,7 @@ class Pasu
 public:
 	Pasu();
 	~Pasu();
-	void Load(const wchar_t* filePath);
+	void Load(const wchar_t* filePath,int b);
 	int GetNumPoint() const
 	{
 		return static_cast<int>(m_pointList.size());

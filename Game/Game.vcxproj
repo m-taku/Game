@@ -704,6 +704,7 @@
     <MeshContentTask Include="Assets\modelData\Building_House_01_color2.FBX" />
     <MeshContentTask Include="Assets\modelData\Building_House_01_color3.FBX" />
     <MeshContentTask Include="Assets\modelData\Building_House_02_color01.FBX" />
+    <MeshContentTask Include="Assets\modelData\Building_House_03_color1.FBX" />
     <MeshContentTask Include="Assets\modelData\Building_Music Store.FBX" />
     <MeshContentTask Include="Assets\modelData\Building_Pizza.FBX" />
     <MeshContentTask Include="Assets\modelData\Building_Super Market.FBX" />
@@ -897,6 +898,12 @@
       <FileType>Document</FileType>
     </CustomBuild>
     <CustomBuild Include="Assets\modelData\teki.tks">
+      <FileType>Document</FileType>
+    </CustomBuild>
+    <CustomBuild Include="Assets\lever\matilevel002.tks">
+      <FileType>Document</FileType>
+    </CustomBuild>
+    <CustomBuild Include="Assets\lever\levalAI21.tks">
       <FileType>Document</FileType>
     </CustomBuild>
   </ItemGroup>

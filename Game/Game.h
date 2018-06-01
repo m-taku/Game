@@ -26,14 +26,15 @@ public:
 	CAnimationClip m_animClip[1];							//アニメーションクリップ。
 	CAnimation m_animation;
 	CVector3 m_pos = CVector3::Zero;
-	std::vector<AI*> simin;
+	std::vector<AI*> Rsimin;
+	std::vector<AI*> Lsimin;
 	Fade* m_Fade;
 	Geizi* gaizi;
 	Player* player;
 	Stage* stge;
 	camera* camera1;
 	Level m_level[10];
-	Pasu  pasu;
+	Pasu  pasu[10];
 	keiroK* keiro;
 	int a = 2;
 	int stag = 0;					//レベル。
@@ -57,11 +58,23 @@ public:
 	}
 	void SatSaizon(int No)
 	{
-		AIseizon[No] = 0;
+		RAIseizon[No] = 0;
+	}
+	void SetLeft()
+	{
+		Leftfrag = 1;
+	}
+	int GetLeft()
+	{
+		return Leftfrag;
 	}
 	int gatsiz(int No)
 	{
 		return da[No].size();
+	}
+	int gatLsiz(int No)
+	{
+		return da2[No].size();
 	}
 	std::vector<int>::iterator getDate(int i) {
 		return pasu2[i].begin();
@@ -69,10 +82,15 @@ public:
 	std::vector<int>::iterator getAIDate(int i) {
 		return da[i].begin();
 	}
+	std::vector<int>::iterator getLAIDate(int i) {
+		return da2[i].begin();
+	}
 private:
 	void InitSceneLight();
 	int No = 0;
-	std::vector<int> AIseizon;
+	int Leftfrag = 0;
+	std::vector<int> RAIseizon;
+	std::vector<int> LAIseizon;
 	std::vector<car*> carv;
 	std::vector<int> movepasu1 = { 17,12,6,5,13,16,33,36,44,43,42,41,39,30,28,27 };
 	std::vector<int> movepasu2 = { 11,18,22,21,29,40,48,47,46,45,35,34,15,14,4,3 };
@@ -97,21 +115,22 @@ private:
 	std::vector<int> movepasu21 = { 46,45,35,34,24,23,22,21,19,10,8,7,6,5,13,16,24,23,31,38};
 	std::vector<int> movepasu22 = { 19,10,8,7,6,5,13,16,24,23,22,21,29,40,48,47,37,32,22,21 };
 	std::vector<int> movepasu23 = { 33,36,44,43,37,32,26,25,15,14,4,3,2,1,9,20,29,40,48,47,37,32,17,12,6,5,13,16 };
-	std::vector<int> AI1 = { 26,25,17,16,15,14,19,18,24,28,27 };
-	std::vector<int> AI2 = { 22, 29, 28, 31, 36, 35, 32, 27, 26, 25, 23 };
-	std::vector<int> AI3 = { 14, 15, 16, 17, 18, 19, 20, 23, 24, 18, 19 };
-	std::vector<int> AI4 = { 6, 20, 18, 19, 14, 13, 11, 10, 9, 8, 7 };
-	std::vector<int> AI5 = { 1,2,3,4,5,21,22,29,30,37,38,39,40,41,34,33,26,25,17,16,11,10 };
-	std::vector<int> AI6 = { 2,9,8,7,6,20,18,17,16,11,10,1 };
-	std::vector<int> AI7 = { 3,6,20,21,22,23,24,18,19,20,21,5,4 };
-	std::vector<int> AI8 = { 4,5,21,20,19,14,12,11,10,9,8,7,3 };
-	std::vector<int> AI9 = { 20,23,22,29,28,27,26,25,24,18,19 };
-	std::vector<int> AI10 = { 8,7,6,20,18,17,16,11,10,9};
-	std::vector<int> AI11 = { 12,13,14,15 };
-	std::vector<int> AI12 = { 18,24,23,20,19 };
+	std::vector<int> AIR1 = { 26,25,17,16,15,14,19,18,24,28,27 };
+	std::vector<int> AIR2 = { 22, 29, 28, 31, 36, 35, 32, 27, 26, 25, 23 };
+	std::vector<int> AIR3 = { 14, 15, 16, 17, 18, 19, 20, 23, 24, 18, 19 };
+	std::vector<int> AIR4 = { 6, 20, 18, 19, 14, 13, 11, 10, 9, 8, 7 };
+	std::vector<int> AIR5 = { 1,2,3,4,5,21,22,29,30,37,38,39,40,41,34,33,26,25,17,16,11,10 };
+	std::vector<int> AIR6 = { 2,9,8,7,6,20,18,17,16,11,10,1 };
+	std::vector<int> AIR7 = { 3,6,20,21,22,23,24,18,19,20,21,5,4 };
+	std::vector<int> AIR8 = { 4,5,21,20,19,14,12,11,10,9,8,7,3 };
+	std::vector<int> AIR9 = { 20,23,22,29,28,27,26,25,24,18,19 };
+	std::vector<int> AIR10 = { 8,7,6,20,18,17,16,11,10,9};
+	std::vector<int> AIR11 = { 12,13,14,15 };
+	std::vector<int> AIR12 = { 18,24,23,20,19 };
 	//std::vector<int> AI13 = {  };
+	std::vector<int> AIL1 = { 48,57,56,52 };
 
-
+	std::vector<std::vector<int>> da2;
 	std::vector<std::vector<int>> da;
 	std::vector<std::vector<int>> pasu2;
 

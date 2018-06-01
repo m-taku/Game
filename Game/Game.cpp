@@ -28,22 +28,34 @@ Game::Game()
 	gaizi = NewGO<Geizi>(1, "Geizi");
 	player = NewGO<Player>(0, "Player");
 
+	wchar_t moveFilePath[256];
+	swprintf_s(moveFilePath, L"lever/levalAI%d%d.tks", 0, 1);
+	pasu[0].Load(moveFilePath,No);
+	No = 1;
+	swprintf_s(moveFilePath, L"lever/levalAI%d%d.tks", 2, 1);
+	pasu[1].Load(moveFilePath,No);
+	No = 0;
 	carRender* kar = NewGO<carRender>(0, nullptr);
-	da.push_back(AI1);
-	da.push_back(AI2);
-	da.push_back(AI3);
-	da.push_back(AI4);
-	da.push_back(AI5);
-	da.push_back(AI6);
-	da.push_back(AI7);
-	da.push_back(AI8);
-	da.push_back(AI9);
-	da.push_back(AI10);
-	da.push_back(AI11);
-	da.push_back(AI12);
+	da.push_back(AIR1);
+	da.push_back(AIR2);
+	da.push_back(AIR3);
+	da.push_back(AIR4);
+	da.push_back(AIR5);
+	da.push_back(AIR6);
+	da.push_back(AIR7);
+	da.push_back(AIR8);
+	da.push_back(AIR9);
+	da.push_back(AIR10);
+	da.push_back(AIR11);
+	da.push_back(AIR12);
 	for (int k = 0; k < 12; k++) {
-		simin.push_back(NewGO<AI>(0, "AI"));
-		AIseizon.push_back(1);
+		Rsimin.push_back(NewGO<AI>(0, "AI"));
+		RAIseizon.push_back(1);
+	}
+	da2.push_back(AIL1);
+	for (int k = 0; k < 1; k++) {
+		Lsimin.push_back(NewGO<AI>(0, "AI"));
+		LAIseizon.push_back(1);
 	}
 	No = 0;
 	//carÇëùÇ‚ÇµÇΩéûÇÃÇÃïœçXì_
@@ -70,8 +82,8 @@ Game::Game()
 	pasu2.push_back(movepasu21);
 	pasu2.push_back(movepasu22);
 	pasu2.push_back(movepasu23);
-	kar->Satcarkosuu(23);
-	for (int i = 0; i <23 ; i++) {
+	kar->Satcarkosuu(pasu2.size());
+	for (int i = 0; i <pasu2.size(); i++) {
 		carv.push_back(NewGO<car>(0, "car"));
 		carv[i]->gatcarRender(*kar);
 	}
@@ -80,10 +92,8 @@ Game::Game()
 	camera1 = NewGO<camera>(0, "camera");
 
 
-	wchar_t moveFilePath[256];
-	swprintf_s(moveFilePath, L"lever/levalAI0%d.tks", 2);
-	pasu.Load(moveFilePath);
-	swprintf_s(moveFilePath, L"lever/matilevel%d0%d.tks", 0, 1);
+
+	swprintf_s(moveFilePath, L"lever/matilevel%d0%d.tks", 0, 2);
 	m_level[0].Build(moveFilePath);
 	swprintf_s(moveFilePath, L"lever/matilevel%d0%d.tks", 1, 1);
 	m_level[1].Build(moveFilePath);
@@ -124,9 +134,14 @@ void Game::OnDestroy()
 {
 	DeleteGO(player);
 	//Ç±Ç±Ç≈ç≈èIìIÇ…ÇcÇÖÇåÇÖÇîÇÖÇfÇnÇê‚ëŒÇµÇ´ÇÈÅB	
-	for (int k = 0; k < 8; k++) {
-		if (AIseizon[k] >= 1) {
-			DeleteGO(simin[k]);
+	for (int k = 0; k < 12; k++) {
+		if (RAIseizon[k] >= 1) {
+			DeleteGO(Rsimin[k]);
+		}
+	}
+	for (int k = 0; k < 1; k++) {
+		if (LAIseizon[k] >= 1) {
+			DeleteGO(Lsimin[k]);
 		}
 	}
 	for (int i = 0; i < 23; i++) {

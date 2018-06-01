@@ -38,6 +38,8 @@ bool Player::Start()
 	m_skinModelData.Load(L"modelData/unityChan.cmo");//プレイヤーを書け
 	m_skinModel.Init(m_skinModelData);
 	m_skinModel.SetShadowCasterFlag(true);
+	m_position.x = -2910.12085;
+	m_position.z = 3936.80713;
 	//キャラクターコントローラーを初期化。
 	m_charaCon.Init(
 		30.0,			//半径。 

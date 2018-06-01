@@ -229,6 +229,9 @@
     <MeshContentTask Include="Assets\modelData\teki2.FBX">
       <Filter>Assets\modelData</Filter>
     </MeshContentTask>
+    <MeshContentTask Include="Assets\modelData\Building_House_03_color1.FBX">
+      <Filter>Assets\modelData</Filter>
+    </MeshContentTask>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="Assets\shader\tonemap.fx">
@@ -399,6 +402,12 @@
       <Filter>Assets\lever</Filter>
     </CustomBuild>
     <CustomBuild Include="Assets\lever\laitLv001.tks">
+      <Filter>Assets\lever</Filter>
+    </CustomBuild>
+    <CustomBuild Include="Assets\lever\matilevel002.tks">
+      <Filter>Assets\lever</Filter>
+    </CustomBuild>
+    <CustomBuild Include="Assets\lever\levalAI21.tks">
       <Filter>Assets\lever</Filter>
     </CustomBuild>
   </ItemGroup>

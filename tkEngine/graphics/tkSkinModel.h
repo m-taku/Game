@@ -6,6 +6,8 @@
 
 #include "tkEngine/graphics/preRender/tkShadowCaster.h"
 
+#include "tkEngine/math/tkBox.h" 
+
 namespace tkEngine{
 	class CSkinModelData;
 	/*!
@@ -138,15 +140,16 @@ namespace tkEngine{
 		{
 			m_isShadowReceiver = flag;
 		}
+		void Satburend(float bai)
+		{
+			m_burend += bai;
+		}
 		/*!
 		* @brief	ブレンド率セット
 		*@param[in]	burend	ブレンド率（0.0～1.0）。
 		*/
 
-		void Satburend(float bai)
-		{
-			m_burend += bai;
-		}
+		
 		const CMatrix& GetWorldMatrix() const
 		{
 			return m_worldMatrix;
@@ -167,6 +170,20 @@ namespace tkEngine{
 		{
 			m_animation = animation;
 		}
+		void UpdateBoundingBox()
+		{
+			m_boundingBox.Update(m_worldMatrix);
+		}
+		CBox& GetBoundingBox()
+		{
+			return m_boundingBox;
+		}
+	private:
+		/*! @todo
+		*@brief バウンディングボックスの初期化。
+		*/
+		void InitBoudingBox();
+		/*!
 	private:
 		/*!
 		 *@brief	ワールド行列の更新。
@@ -193,6 +210,7 @@ namespace tkEngine{
 		std::unique_ptr<CMatrix[]>	m_instancingData;		//!<インスタンシング描画用のデータ。
 		CStructuredBuffer	m_instancingDataSB;				//!<インスタンシング描画用のストラクチャーバッファ。
 		int m_maxInstance = 1;								//!<インスタンスの最大数
-		int m_numInstance = 0;								//!<インスタンスの数。
+		int m_numInstance = 0;		
+		CBox m_boundingBox;	//!<インスタンスの数。
 	};
 }

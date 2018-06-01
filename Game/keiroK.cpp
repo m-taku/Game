@@ -150,22 +150,22 @@ int keiroK::GetDistance(CVector3 iP ,CVector3 GP)
 		return (sa_Y + (sa_X - sa_Y));
 	}
 }
-void keiroK::tansa(CVector3 i, CVector3 Ta, std::vector<int> *a)
+void keiroK::tansa(CVector3 i, CVector3 Ta, std::vector<int> *a,int Leftfrag)
 {
 	Game *game = FindGO<Game>("Game");
-	for (int l = 0; l < game->pasu.Pasuresuto.size(); l++) {
-		resuto1.push_back(game->pasu.Pasuresuto[l]);
+	for (int l = 0; l < game->pasu[Leftfrag].Pasuresuto.size(); l++) {
+		resuto1.push_back(game->pasu[Leftfrag].Pasuresuto[l]);
 	}
-	CVector3 ko = game->pasu.m_pointList[0] - i;
+	CVector3 ko = game->pasu[Leftfrag].m_pointList[0] - i;
 	float sa = ko.Length();
 
-	CVector3 koj = game->pasu.m_pointList[0] - Ta;
+	CVector3 koj = game->pasu[Leftfrag].m_pointList[0] - Ta;
 	float saj = koj.Length();
 	int l = resuto1.size();
 	for (int h = 1; h < l; h++) {
-		CVector3 k = game->pasu.m_pointList[h] - i;
+		CVector3 k = game->pasu[Leftfrag].m_pointList[h] - i;
 		float saa = k.Length();
-		CVector3 kf = game->pasu.m_pointList[h] - Ta;
+		CVector3 kf = game->pasu[Leftfrag].m_pointList[h] - Ta;
 		float san = kf.Length();
 		if (sa > saa) {
 			sa = saa;
@@ -176,8 +176,8 @@ void keiroK::tansa(CVector3 i, CVector3 Ta, std::vector<int> *a)
 			N = h;
 		}
 	}
-	fa = game->pasu.m_pointList[f++];
-	ga = game->pasu.m_pointList[N++];
+	fa = game->pasu[Leftfrag].m_pointList[f++];
+	ga = game->pasu[Leftfrag].m_pointList[N++];
 	Satando(
 		&stuyt,
 		fa,

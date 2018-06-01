@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "Pasu.h"
 #include"kanren.h"
+#include"Game.h"
 #include <math.h>
 
 
@@ -13,7 +14,7 @@ Pasu::~Pasu()
 {
 
 }
-void Pasu::Load(const wchar_t* filePath)
+void Pasu::Load(const wchar_t* filePath,int b)
 {
 	CSkeleton loc;
 	loc.Load(filePath);
@@ -35,9 +36,19 @@ void Pasu::Load(const wchar_t* filePath)
 			for (int g = 8; g > f; g--) {
 				h += No2[u++] * pow(100, g);
 				if (i == 13 && g == 2) {
+					if(b ==0)
 					h -= 16;
 					//int a = 0;
 				}
+				if (i == 21 && g == 2) {
+					if (b == 1)
+						h -= 16;
+				}
+				if (i == 25 && g == 2) {
+					if (b == 1)
+						h -= 16;
+				}
+				
 			}
 			if (h <= 0) {
 				No2.push_back(_wtoll(boan[i]->GetName()) / (pow(100, f)));
