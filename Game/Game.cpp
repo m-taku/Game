@@ -35,7 +35,10 @@ Game::Game()
 	swprintf_s(moveFilePath, L"lever/levalAI%d%d.tks", 2, 1);
 	pasu[1].Load(moveFilePath,No);
 	No = 0;
+
+#ifndef Mizuki_baka
 	carRender* kar = NewGO<carRender>(0, nullptr);
+#endif // Mizuki_baka
 	da.push_back(AIR1);
 	da.push_back(AIR2);
 	da.push_back(AIR3);
@@ -90,10 +93,16 @@ Game::Game()
 	pasu2.push_back(movepasu21);
 	pasu2.push_back(movepasu22);
 	pasu2.push_back(movepasu23);
+
+#ifndef Mizuki_baka
 	kar->Satcarkosuu(pasu2.size());
-	for (int i = 0; i <pasu2.size(); i++) {
+#endif // Mizuki_baka
+	for (int i = 0; i < pasu2.size(); i++) {
 		carv.push_back(NewGO<car>(0, "car"));
+
+#ifndef Mizuki_baka
 		carv[i]->gatcarRender(*kar);
+#endif // Mizuki_baka
 	}
 //	pasu2.clear();
 	stge = NewGO<Stage>(0, "stage");
@@ -142,12 +151,13 @@ void Game::OnDestroy()
 {
 	DeleteGO(player);
 	//‚±‚±‚ÅÅI“I‚É‚c‚…‚Œ‚…‚”‚…‚f‚n‚ğâ‘Î‚µ‚«‚éB	
-	for (int k = 0; k < 12; k++) {
+	for (int k = 0; k < 20; k++) {
 		if (RAIseizon[k] >= 1) {
 			DeleteGO(Rsimin[k]);
 		}
 	}
 	for (int k = 0; k < 1; k++) {
+
 		if (LAIseizon[k] >= 1) {
 			DeleteGO(Lsimin[k]);
 		}

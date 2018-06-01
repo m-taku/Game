@@ -32,5 +32,6 @@ private:
 	int fghjkl=0;
 	CVector3 fa;
 	CVector3 ga;
+	int No = 0;
 };
 

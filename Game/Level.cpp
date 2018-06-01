@@ -39,9 +39,14 @@ void Level::Build(const wchar_t* levelDataFilePath)
 		wchar_t modelDataFilePath[256];
 		swprintf(modelDataFilePath, L"modelData/%s.cmo", boneName);
 		MapChip* mapChip = NewGO<MapChip>(0);
-		mapChip->Init( position,rotation, CVector3::One);
-		m_mapChipList.push_back(mapChip);
 
+#ifdef instansingu_katto
+		mapChip->Getmama(modelDataFilePath);
+#endif
+		mapChip->Init(position, rotation, CVector3::One);
+
+		m_mapChipList.push_back(mapChip);
+#ifndef instansingu_katto
 		//マップにオブジェクトが存在しているか検索する。
 		auto itObjData = objListDataMap.find(boneName);
 		if (itObjData == objListDataMap.end()) {
@@ -59,6 +64,18 @@ void Level::Build(const wchar_t* levelDataFilePath)
 			mapChip->PostInitAfterInitLevelRender(render);
 		}
 	}
+}
+
+#else
+		m_skinModelData.Load(modelDataFilePath);
+		m_skinModel.Init(m_skinModelData);
+		m_skinModel.SetShadowCasterFlag(true);
+		m_skinModel.SetShadowReceiverFlag(true);
+	}
+}
+
+#endif // Mizuki_baka
+	
 	/*kaunto.push_back(0);
 	L_pos.push_back(CVector3::Zero);
 	L_scale.push_back(CVector3::Zero);
@@ -143,4 +160,4 @@ void Level::Build(const wchar_t* levelDataFilePath)
 		i_AI4 = L_AI4.begin();
 		i_scale = L_scale.begin();
 	}*/
-}
+
