@@ -21,7 +21,7 @@ void kanren::kanrenz(std::vector<int> &a, std::vector<CVector3> &b)
 {
 	m_position.clear();
 	No.clear();
-	for (int i = 1; i < a.size(); i++) {
+	for (int i = 0; i < a.size(); i++) {
 		if (a[i] != 0) {
 			m_position.push_back(b[a[i] - 1]);
 			No.push_back(a[i]);

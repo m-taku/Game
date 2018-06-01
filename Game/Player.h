@@ -51,6 +51,7 @@ private:
 	CQuaternion m_rotation = CQuaternion::Identity;//キャラの回転
 	CQuaternion d_rotation = CQuaternion::Identity;//ダミーの回転（縦）
 	CSkinModel m_taieki;
+
 	CSkinModelData m_taiekiModelData;
 	taieki* Tp = nullptr;
 	prefab::CEffect* hakaba = nullptr;
@@ -62,13 +63,8 @@ private:
 	int bonenum = 0;
 	int boneNo = 0;
 	CVector3 bonepos = CVector3::Zero;
-	/*enum animcllip{
-		idle,
-		walk,
-		run,
-		animnum
-	};
+	
 	CAnimation m_animation;
-	CAnimationClip m_animclip[animnum];*/
+	CAnimationClip m_animclip[1];
 };
 

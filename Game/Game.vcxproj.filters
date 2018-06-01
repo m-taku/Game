@@ -421,9 +421,6 @@
     <Image Include="Assets\modelData\white.png">
       <Filter>Assets\modelData</Filter>
     </Image>
-    <Image Include="Assets\sprite\fade.png">
-      <Filter>Assets\sprite</Filter>
-    </Image>
     <Image Include="Assets\modelData\ao.png" />
     <Image Include="Assets\modelData\utc_all2.tga">
       <Filter>Assets\modelData</Filter>
@@ -432,6 +429,12 @@
   <ItemGroup>
     <None Include="Assets\lever\larer_01.tks">
       <Filter>Assets\font</Filter>
+    </None>
+    <None Include="Assets\animData\shiminwalk.tka">
+      <Filter>Assets\animData</Filter>
+    </None>
+    <None Include="Assets\animData\tekiidle.tka">
+      <Filter>Assets\animData</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -456,6 +459,9 @@
     </ImageContentTask>
     <ImageContentTask Include="Assets\modelData\LiamTexZonbi1.png">
       <Filter>Assets\modelData</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\fade.png">
+      <Filter>Assets\sprite</Filter>
     </ImageContentTask>
   </ItemGroup>
 </Project>

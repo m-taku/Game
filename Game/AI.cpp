@@ -15,7 +15,7 @@
 AI::AI()
 {
 	pa = Normal; //ここはプレイヤーの行動によって変化するようにする。
-	m_speed = 1.0f; //ノーマル状態のときの常に動く移動速度（基本1）。
+	m_speed = 1.0f; //ノーマル状態のときの常に動く移動速度（基本0.8）。
 }
 AI::~AI()
 {
@@ -66,7 +66,7 @@ bool AI::Start()
 	m_forward.y = m_tekirot.m[2][1];
 	m_forward.z = m_tekirot.m[2][2];
 	m_forward.Normalize();
-
+	work->Setkakudo(4.0f);
 	zondi.CreateFromDDSTextureFromFile(L"modelData/LiamTexZonbi.dds");
 	m_skinModel.FindMaterial([&](CModelEffect* material) {
 		material->Setm_zonbi(zondi.GetBody());
@@ -94,7 +94,8 @@ void AI::NPCNormal()
 {
 	work->kyorikeisan(pasu[ima] - 1, m_position, m_forward, game->pasu[Leftfrag].m_pointList);
 	m_rotation.Multiply(work->Getkaku());//回転
-	m_position += /*A_charaCon.Execute(*/ (m_forward*(work->Getmuve()*m_speed))*(GameTime().GetFrameDeltaTime());//移動
+
+	m_position += /*A_charaCon.Execute(*/ (m_forward*(work->Getmuve()*m_speed+ mobe))*(GameTime().GetFrameDeltaTime());//移動
 
 	if (15.0f > work->Getlen()) {
 		if (Leftfrag <= 0) {
@@ -125,16 +126,20 @@ void AI::NPCNormal_Search()//NPCの警戒処理。
 {
 	CVector3 v2 = pl->m_position - m_position;
 	float len1 = v2.Length();//長さ
-	if (Siya(v2, len1) != 0) {
+	float hann = Siya(v2, len1);
+	if (hann == 1) {
 		Gaizi->Satpoint(0.1);
 		m_speed = 1.5f;
 		pa = Escape;
+	}
+	if (hann >= 2) {
+		kannkaku = true;
 	}
 }
 
 void AI::NPCResistance_NPC()//NPCゾンビへの抵抗に関する処理。オーバーライドさせる。
 {
-	if (sinsoku < 1.0) {
+	if (sinsoku < 0.5) {
 		m_skinModel.Satburend(sinsoku);
 		sinsoku += 0.01;
 	}
@@ -211,7 +216,7 @@ void AI::NPCZombie_Chase()
 		n.Normalize();
 		n.y = 0.0f;
 		n=n*500.0;
-		m_position += /*A_charaCon.Execute(*/ (n*(work->Getmuve()*m_speed))*(GameTime().GetFrameDeltaTime());//移動
+		m_position += /*A_charaCon.Execute(*/ (n*(work->Getmuve()*m_speed+ mobe))*(GameTime().GetFrameDeltaTime());//移動
 			/////////////////////////////////
 			//市民NPCを追跡する処理。
 			/////////////////////////////////
@@ -238,7 +243,7 @@ void AI::NPCZombie_Attack()//vs特殊部隊
 		}
 		m_rotation.Multiply(work->Getkaku());
 		CVector3 v = work->Getmokuteki() - m_position;  //一番近い部隊に移動する。
-		m_position += /*A_charaCon.Execute(*/ m_forward * (work->Getmuve()*m_speed)*GameTime().GetFrameDeltaTime();//移動
+		m_position += /*A_charaCon.Execute(*/ m_forward * (work->Getmuve()*m_speed + mobe)*GameTime().GetFrameDeltaTime();//移動
 		if (15.0f > work->Getlen()) {
 			if (da >= jyunban.size() - 1) {//指定されたパスの最後まで着いたら
 				if (tekip->tekiheiflag[No] >= 1) {
@@ -282,7 +287,7 @@ void AI::NPCZombie_Attack()//vs特殊部隊
 			m_rotation.Multiply(qBias1);
 		}
 		else if(150<len){
-			m_position += /*A_charaCon.Execute(*/ m_forward *500 * m_speed*GameTime().GetFrameDeltaTime();
+			m_position += /*A_charaCon.Execute(*/ m_forward * mobe * m_speed*GameTime().GetFrameDeltaTime();
 		}
 		else {
 			//殴る
@@ -325,8 +330,8 @@ void AI::NPCFade_Out()//一般市民が退場するときの処理。
 {
 	work->kyorikeisan(jyunban[da] - 1, m_position, m_forward, game->pasu[Leftfrag].m_pointList);
 	m_rotation.Multiply(work->Getkaku());
-	m_position += /*A_charaCon.Execute(*/ (m_forward*(work->Getmuve()*m_speed))*(GameTime().GetFrameDeltaTime());//移動
-	if (15.0f > work->Getlen()) {
+	m_position += /*A_charaCon.Execute(*/ (m_forward*(work->Getmuve()*m_speed + mobe))*(GameTime().GetFrameDeltaTime());//移動
+	if (200.0f > work->Getlen()) {
 		if (da >= jyunban.size()-1) {//指定されたパスの最後まで着いたら
 			pa = Death;
 			da = 1;
@@ -387,6 +392,15 @@ float AI::Siya(CVector3 h, float g)
 			//DamageFlag = true;
 			//プレイヤーから逃げる。
 			return 1;
+		}
+		else {
+			if (pl->GetMoveSpeed().Length() >= 500.0f)
+			{
+				CQuaternion kaku;
+				kaku.SetRotationDeg(CVector3::AxisY,30.0f);
+				m_rotation.Multiply(kaku);
+			return 2;
+			}
 		}
 	}
 	return 0;
@@ -538,16 +552,18 @@ void AI::Update()
 			keiro.tansa(m_position, game->pasu[Leftfrag].m_pointList[0], &jyunban, Leftfrag);
 			da = 0;
 			m_speed = 1.5;
+			work->Setkakudo(3.0f);
 			pa = Fade_Out; //パターンをフェードアウトに切り替える。
 		}
 	}
 
-
+	kannkaku = false;
 	switch (pa) {
 	case Normal:
 		//NPCの動きを書く。
-		NPCNormal();
 		NPCNormal_Search();
+		if(kannkaku!=true)
+		NPCNormal();
 		break;
 	case Escape:
 		NPCescape();
@@ -572,7 +588,7 @@ void AI::Update()
 		break;
 	case Zombie_Chase:
 		//他のNPCを見つけた時の処理を書く。
-		//NPCZombie_Chase();
+		NPCZombie_Chase();
 		break;
 	case Zombie_Attack:
 		NPCZombie_Attack();
@@ -584,19 +600,21 @@ void AI::Update()
 		NPCZombie_Normal();
 		break;
 	}
-	FindGameObjectsWithTag(10, [&](IGameObject* go) {
-		if (go != this) {            //自分からの距離を計測するため、検索結果から自分を除外する。
-			AI* ai = (AI*)go;
-			CVector3 kyori1 = ai->m_position - this->m_position;//自分との距離を求める。
-			float f = kyori1.Length();
-			if (Siya(kyori1, f)) { //距離が攻撃範囲以内だったら
-				kyori1 /= 3.0f;
-				kyori1.y = 0.0f;
-				m_position += /*A_charaCon.Execute(*/ kyori1 * m_speed*-1 * GameTime().GetFrameDeltaTime();//移動
+	if (pa != Zombie_Chase) {
+		FindGameObjectsWithTag(10, [&](IGameObject* go) {
+			if (go != this) {            //自分からの距離を計測するため、検索結果から自分を除外する。
+				AI* ai = (AI*)go;
+				CVector3 kyori1 = ai->m_position - this->m_position;//自分との距離を求める。
+				float f = kyori1.Length();
+				if (Siya(kyori1, f)) { //距離が攻撃範囲以内だったら
+					kyori1 /= 3.0f;
+					kyori1.y = 0.0f;
+					m_position += /*A_charaCon.Execute(*/ kyori1 * m_speed*-1 * GameTime().GetFrameDeltaTime();//移動
 
+				}
 			}
-		}
-	});	
+		});
+	}
 	if (!m_objectFrustumCulling.IsCulling()) {
 		m_skinModel.Update(m_position, m_rotation, { 20.0f, 20.0f,20.0f });
 	}
@@ -609,7 +627,7 @@ void AI::NPCReturn()
 	work->kyorikeisan(jyunban[da] - 1, m_position, m_forward, game->pasu[Leftfrag].m_pointList);
 	m_rotation.Multiply(work->Getkaku());
 	CVector3 v = work->Getmokuteki() - m_position;
-	m_position += /*A_charaCon.Execute(*/ m_forward * (work->Getmuve()*m_speed)*GameTime().GetFrameDeltaTime();//移動
+	m_position += /*A_charaCon.Execute(*/ m_forward * (work->Getmuve()*m_speed + mobe)*GameTime().GetFrameDeltaTime();//移動
 	if (15.0f > work->Getlen()) {
 		if (da >= jyunban.size()-1) {//指定されたパスの最後まで着いたら
 			pa = Normal;//パターンをノーマルにかえる。
@@ -630,7 +648,7 @@ void AI::NPCescape()
 		v.Normalize();//正規化して向きベクトルにする。
 		v.y = 0.0f;
 		//m_position += v * m_speed;
-		m_position += /*A_charaCon.Execute(*/ v * (work->Getmuve()*m_speed)*GameTime().GetFrameDeltaTime();//移動
+		m_position += /*A_charaCon.Execute(*/ v * (m_speed *(mobe+1000))*GameTime().GetFrameDeltaTime();//移動
 
 	}
 	else {

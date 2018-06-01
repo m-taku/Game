@@ -4,7 +4,7 @@
 #include "MapChip.h"
 
 	//レベル。
-class Level
+class Level:IGameObject
 {
 public:
 	Level();
@@ -13,6 +13,7 @@ public:
 	*@brief	レベルの構築。
 	*@param[in]	levelDataFilePath	読み込むレベルデータのファイルパス。
 	*/
+
 	void Build(const wchar_t* levelDataFilePath);
 	float X = 0.0f, Z = 0.0f;
 	///////////////////////////////////////////////
@@ -21,6 +22,8 @@ public:
 	std::vector<MapChip*> m_mapChipList;		//マップチップのリスト。
 private:
 	std::vector<int> kaunto;
+	CSkinModel m_skinModel;					//スキンモデル。
+	CSkinModelData m_skinModelData;			//スキンモデルデータ。
 	std::list<CVector3> L_pos;
 	std::list<CVector3>::iterator i_pos = L_pos.begin();
 	std::list<CVector3> L_scale;

@@ -64,6 +64,14 @@ bool car::Start()
 	if (game->GatNo() >= 23) {//carを増やすときに変える。
 		game->risetteNo();
 	}
+#ifdef instansingu_katto
+	m_skinModelData.Load(L"modelData/Vehicle_SUV1.cmo");//プレイヤーを書け
+	m_skinModel.Init(m_skinModelData);
+	m_skinModel.SetShadowCasterFlag(true);
+	m_skinModel.SetShadowReceiverFlag(true);
+#else
+
+#endif // Mizuki_baka
 	SetTags(20);
 	return true;
 }
@@ -75,13 +83,18 @@ void car::Update()
 	m_forward.z = m_tekirot.m[2][2];
 	m_forward.y = 0.0f;
 	m_forward.Normalize();
-	//frag = 0;
+	frag = 0;
 	Stop();
 	//if (frag <= 0) {
 	Move();
 	//}
 	m_position.y = 0.0f;
-	m_Render->UpdateWorldMatrix(m_position, m_rotation, { 1.0f,1.0f,1.0f });
+
+#ifdef instansingu_katto
+	m_skinModel.Update(m_position, m_rotation, { 0.5f,0.5f,0.5f });
+#else
+	m_Render->UpdateWorldMatrix(m_position, m_rotation, { 0.5f,0.5f,0.5f });
+#endif // Mizuki_baka
 }
 void car::Move()
 {
@@ -91,7 +104,6 @@ void car::Move()
 		m_rotation.Multiply(ran->Getkaku());//回転させる
 		if (move > 0.5) {
 			move -= 0.05;
-			frag = 0;
 		}
 		else {
 			//if (frag <= 0) {
@@ -101,7 +113,7 @@ void car::Move()
 			//	k.y = k.y*m_forward.y;
 			//	k.z = k.z*m_forward.z;
 			//	float K = 90.0f / ((((k * 2)*3.14159) / 4).Length() / (move*speed*GameTime().GetFrameDeltaTime()));
-			ran->Setkakudo(1.5f);
+			ran->Setkakudo(3.0f);
 			ran->Sethaba(1.5f);
 			//frag++;
 			if (move < 0.4) {
@@ -114,7 +126,7 @@ void car::Move()
 		if (move < 1.0) {
 			move += 0.1;
 		}else{	
-			ran->Setkakudo(1.0f);
+			ran->Setkakudo(0.5f);
 			ran->Sethaba(1.0f);
 			//frag = 0;
 			move = 1.0;
@@ -122,7 +134,7 @@ void car::Move()
 	}
 	m_position += m_forward * ((move*speed)*(GameTime().GetFrameDeltaTime()));
 
-	if (200.0f > ran->Getlen()) {
+	if (400.0f > ran->Getlen()) {
 
 		if (ima >= saidaiNo-1) {//今のポジションが6なら
 						//0にリセットする。0,1,2,3,4,5の順番。
@@ -140,7 +152,7 @@ void car::Move()
 void car::Stop()
 {
 	FindGameObjectsWithTag(20, [&](IGameObject* go) {
-		if (go != this) {            //自分からの距離を計測するため、検索結果から自分を除外する。
+		if (go != this && frag <= 0) {            //自分からの距離を計測するため、検索結果から自分を除外する。
 			car* ai = (car*)go;
 			CVector3 kyori1 = ai->m_position - this->m_position;//自分との距離を求める。
 			float f = kyori1.Length();
@@ -157,50 +169,60 @@ void car::Stop()
 							move -= 0.21;
 						if (move < 0.2) {
 							move = -0.1;
-							//frag++;
 						}
-
-
-
+						frag++;
 					}
 				}
 			}
 		}
 	});
-	FindGameObjectsWithTag(1, [&](IGameObject* go) {
-		if (go != this) {            //自分からの距離を計測するため、検索結果から自分を除外する。
-			Human* ai = (Human*)go;
-			CVector3 kyori1 = ai->m_position - this->m_position;//自分との距離を求める。
-			float f = kyori1.Length();
-			if (f <= 900) { //距離が視野内だったら
-				kyori1.Normalize();
-				kyori1.y = 0.0f;
-				float kaku = acosf(kyori1.Dot(m_forward));//２つのべクトルの内積のアークコサインを求める。(ラジアン)
-				float degree = CMath::RadToDeg(kaku);
-				if (degree <= 30)
-				{
-					move = -0.1;
+	if (frag <= 0) {
+		FindGameObjectsWithTag(1, [&](IGameObject* go) {
+			if (go != this&&frag<=0) {            //自分からの距離を計測するため、検索結果から自分を除外する。
+				Human* ai = (Human*)go;
+				CVector3 kyori1 = ai->m_position - this->m_position;//自分との距離を求める。
+				float f = kyori1.Length();
+				if (f <= 900) { //距離が視野内だったら
+					kyori1.Normalize();
+					kyori1.y = 0.0f;
+					float kaku = acosf(kyori1.Dot(m_forward));//２つのべクトルの内積のアークコサインを求める。(ラジアン)
+					float degree = CMath::RadToDeg(kaku);
+					if (degree <= 30)
+					{
+						move = -0.1;
+						frag++;
+					}
 				}
 			}
-		}
-	});
-	FindGameObjectsWithTag(10, [&](IGameObject* go) {
-		if (go != this) {            //自分からの距離を計測するため、検索結果から自分を除外する。
-			Human* ai = (Human*)go;
-			CVector3 kyori1 = ai->m_position - this->m_position;//自分との距離を求める。
-			float f = kyori1.Length();
-			if (f <= 900) { //距離が視野内だったら
-				kyori1.Normalize();
-				kyori1.y = 0.0f;
-				float kaku = acosf(kyori1.Dot(m_forward));//２つのべクトルの内積のアークコサインを求める。(ラジアン)
-				float degree = CMath::RadToDeg(kaku);
-				if (degree <= 30)
-				{
-					move = -0.1;
-	
+		});
+	}
+	if (frag <= 0) {
+		FindGameObjectsWithTag(10, [&](IGameObject* go) {
+			if (go != this && frag <= 0) {            //自分からの距離を計測するため、検索結果から自分を除外する。
+				Human* ai = (Human*)go;
+				CVector3 kyori1 = ai->m_position - this->m_position;//自分との距離を求める。
+				float f = kyori1.Length();
+				if (f <= 900) { //距離が視野内だったら
+					kyori1.Normalize();
+					kyori1.y = 0.0f;
+					float kaku = acosf(kyori1.Dot(m_forward));//２つのべクトルの内積のアークコサインを求める。(ラジアン)
+					float degree = CMath::RadToDeg(kaku);
+					if (degree <= 30)
+					{
+						move = -0.1;
+						frag++;
+					}
 				}
 			}
-		}
-	});
+		});
+	}
+}
+
+void car::Render(CRenderContext& rc)
+{
+
+#ifdef instansingu_katto
+	m_skinModel.Draw(rc, MainCamera().GetViewMatrix(), MainCamera().GetProjectionMatrix());
+#endif // Mizuki_baka
 }
 

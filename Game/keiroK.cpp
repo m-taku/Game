@@ -72,16 +72,28 @@ int keiroK::Kans(int count)
 	open.erase(open.begin() + kesu);
 	sum--;
 	goulkost = BackTrace(n.tunagi);
-	kanren* ka = &resuto1[n.ime-1];
-	for (int i = 0; i < ka->No.size(); i++) {
+	for (No = 0; No < resuto1.size(); No++) {
+		if (resuto1[No].No[0]== n.ime)
+		{
+			break;
+		}
+	}
+	kanren* ka = &resuto1[No];
+	for (int i = 0; i < ka->No.size()-1; i++) {
+		for (No = 0; No < resuto1.size(); No++) {
+			if (resuto1[No].No[0] == ka->No[i + 1])
+			{
+				break;
+			}
+		}
 		Satando(
 			&nodes[i],
-			ka->m_position[i],
+			ka->m_position[i+1],
 			n.m_position,
-			ka->No[i],
+			ka->No[i+1],
 			n.ime,		
-			resuto1[ka->No[i]-1].No,
-			goulkost + GetDistance(ka->m_position[i], ga) + 1
+			resuto1[No].No,
+			goulkost + GetDistance(ka->m_position[i+1], ga) + 1
 		);
 		std::vector<ando>::iterator tmp = open.begin();
 		for (int d = 0; d < open.size(); d++) {
@@ -154,18 +166,19 @@ void keiroK::tansa(CVector3 i, CVector3 Ta, std::vector<int> *a,int Leftfrag)
 {
 	Game *game = FindGO<Game>("Game");
 	for (int l = 0; l < game->pasu[Leftfrag].Pasuresuto.size(); l++) {
+		if(game->pasu[Leftfrag].Pasuresuto[l].No.size()>1)
 		resuto1.push_back(game->pasu[Leftfrag].Pasuresuto[l]);
 	}
-	CVector3 ko = game->pasu[Leftfrag].m_pointList[0] - i;
+	CVector3 ko = game->pasu[Leftfrag].m_pointList[resuto1[0].No[0]-1] - i;
 	float sa = ko.Length();
 
-	CVector3 koj = game->pasu[Leftfrag].m_pointList[0] - Ta;
+	CVector3 koj = game->pasu[Leftfrag].m_pointList[resuto1[0].No[0]-1] - Ta;
 	float saj = koj.Length();
 	int l = resuto1.size();
 	for (int h = 1; h < l; h++) {
-		CVector3 k = game->pasu[Leftfrag].m_pointList[h] - i;
+		CVector3 k = game->pasu[Leftfrag].m_pointList[resuto1[h].No[0]-1] - i;
 		float saa = k.Length();
-		CVector3 kf = game->pasu[Leftfrag].m_pointList[h] - Ta;
+		CVector3 kf = game->pasu[Leftfrag].m_pointList[resuto1[h].No[0]-1] - Ta;
 		float san = kf.Length();
 		if (sa > saa) {
 			sa = saa;
@@ -178,13 +191,19 @@ void keiroK::tansa(CVector3 i, CVector3 Ta, std::vector<int> *a,int Leftfrag)
 	}
 	fa = game->pasu[Leftfrag].m_pointList[f++];
 	ga = game->pasu[Leftfrag].m_pointList[N++];
+	for (No = 0; No < resuto1.size(); No++) {
+		if (resuto1[No].No[0] == f)
+		{
+			break;
+		}
+	}
 	Satando(
 		&stuyt,
 		fa,
 		ga,
 		f,
 		-1,
-		resuto1[f - 1].No,
+		resuto1[No].No,
 		0
 	);
 	open.insert(open.begin() + sum++, stuyt);

@@ -243,6 +243,11 @@ namespace tkEngine{
 		m_lightManager.EndRender(m_renderContext);
 		
 		//フラーッシュ
-		m_pSwapChain->Present(2, 0);
+		HRESULT hr = m_pSwapChain->Present(2, 0);
+		if (hr == DXGI_ERROR_DEVICE_REMOVED) {
+			char buff[64];
+			sprintf_s(buff, "Device remove reazon code 0x%08x\n", m_pd3dDevice->GetDeviceRemovedReason());
+			TK_LOG(buff);
+		}
 	}
 }

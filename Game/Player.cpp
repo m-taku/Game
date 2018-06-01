@@ -22,9 +22,8 @@ Player::~Player()
 }
 bool Player::Start()
 {
-	/*m_animclip[idle].Load(L"animData/demoanime/idel.tka");
-	m_animclip[walk].Load(L"animData/demoanime/walk.tka");
-	m_animclip[run].Load(L"animData/demoanime/run.tka");*/
+	
+	m_animclip[0].Load(L"animData/shiminwalk.tka");
 
 	/*animclip[1].Load(L"animData/demoanime/walk.tka");
 	animclip[2].Load(L"animData/demoanime/run.tka");
@@ -34,9 +33,15 @@ bool Player::Start()
 	/*std::string hoge("Character1_Head");
 	std::wstring_convert<std::codecvt_utf8<wchar_t>, wchar_t> cv;
 	std::wstring headbone = cv.from_bytes(hoge);*/
-	const wchar_t name[20] = { 'C','h','a','r','a','c','t','e','r','1','_','H','e','a','d' };
-	m_skinModelData.Load(L"modelData/unityChan.cmo");//プレイヤーを書け
+	const wchar_t name[20] = { 'h','e','a','d' };
+	m_skinModelData.Load(L"modelData/liam.cmo");//プレイヤーを書け
 	m_skinModel.Init(m_skinModelData);
+	m_animclip[0].SetLoopFlag(true);
+	m_animation.Init(
+		m_skinModel,
+		m_animclip,
+		1
+	);
 	m_skinModel.SetShadowCasterFlag(true);
 	m_position.x = -2910.12085;
 	m_position.z = 3936.80713;
@@ -67,12 +72,13 @@ bool Player::Start()
 			break;
 		}
 	}
-	/*m_animation.Init(
+	/*m_animclip[walk].SetLoopFlag(true);
+	m_animation.Init(
 		m_skinModel,
 		m_animclip,
 		animnum
-	);
-	m_animclip[idle].SetLoopFlag(true);*/
+	);*/
+	
 	return true;
 }
 void Player::Update()
@@ -135,17 +141,11 @@ void Player::Update()
 	m_rite.Normalize();
 	m_moveSpeed += m_forward*lStick_y;
 	m_moveSpeed += m_rite * lStick_x;
-	/*if (lStick_y > 0.0f&&(lStick_y > lStick_x&&lStick_y > lStick_x*-1.0f))
+	if (lStick_y > 0.0f&&(lStick_y > lStick_x&&lStick_y > lStick_x*-1.0f))
 	{
-		if (lStick_y >= 0.5f)
-		{
-			animation.Play(2, 0.2f);
-		}
-		if (lStick_y < 0.5f) {
-			animation.Play(1, 0.2f);
-		}
+		m_animation.Play(0);
 	}
-	else {
+	/*else {
 		animation.Play(0, 0.2f);
 	}*/
 	
@@ -167,13 +167,15 @@ void Player::Update()
 		landflag = 1;
 	}
 	m_position = m_charaCon.Execute(GameTime().GetFrameDeltaTime(), m_moveSpeed);
-	m_moveSpeed.z = 0.0f;
-	m_moveSpeed.x = 0.0f;
+	if (m_moveSpeed.Length() >= 500.0f)
+	{
+
+	}
 	if (m_position.y <= -100.0f) {
 		m_position.y = -100.0f;
 	}
 	
-	m_skinModel.Update(m_position, m_rotation, CVector3::One);
+	m_skinModel.Update(m_position, m_rotation, CVector3::One*20.0f);
 	const CMatrix& boneM = m_skinModelData.GetSkeleton().GetBone(boneNo)->GetWorldMatrix();
 
 	bonepos.x = boneM.m[3][0];
