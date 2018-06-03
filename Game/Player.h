@@ -64,7 +64,12 @@ private:
 	int boneNo = 0;
 	CVector3 bonepos = CVector3::Zero;
 	
+	enum animation {
+		idle,
+		walk,
+		animnum
+	};
 	CAnimation m_animation;
-	CAnimationClip m_animclip[1];
+	CAnimationClip m_animclip[animnum];
 };
 
