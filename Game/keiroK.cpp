@@ -41,6 +41,7 @@ int keiroK::BackTrace(int x)
 int keiroK::Kans(int count)
 {
 	if (open.empty())return -10000;
+
 	ando nodes[8];
 	resuto1;
 	std::vector<ando>::iterator it;
@@ -164,6 +165,7 @@ int keiroK::GetDistance(CVector3 iP ,CVector3 GP)
 }
 void keiroK::tansa(CVector3 i, CVector3 Ta, std::vector<int> *a,int Leftfrag)
 {
+
 	Game *game = FindGO<Game>("Game");
 	for (int l = 0; l < game->pasu[Leftfrag].Pasuresuto.size(); l++) {
 		if(game->pasu[Leftfrag].Pasuresuto[l].No.size()>1)
@@ -182,21 +184,15 @@ void keiroK::tansa(CVector3 i, CVector3 Ta, std::vector<int> *a,int Leftfrag)
 		float san = kf.Length();
 		if (sa > saa) {
 			sa = saa;
-			f = h;
+			f = resuto1[h].No[0];
 		}
 		if (saj > san) {
 			saj = san;
-			N = h;
+			N = resuto1[h].No[0];
 		}
 	}
-	fa = game->pasu[Leftfrag].m_pointList[f++];
-	ga = game->pasu[Leftfrag].m_pointList[N++];
-	for (No = 0; No < resuto1.size(); No++) {
-		if (resuto1[No].No[0] == f)
-		{
-			break;
-		}
-	}
+	ga = game->pasu[Leftfrag].m_pointList[N-1];
+	fa = game->pasu[Leftfrag].m_pointList[f-1];
 	Satando(
 		&stuyt,
 		fa,

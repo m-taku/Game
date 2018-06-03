@@ -2,6 +2,7 @@
 #include "car.h"
 #include"AImove.h"
 #include"Game.h"
+#include"Geizi.h"
 #include"Human.h"
 car::car()
 {
@@ -22,6 +23,7 @@ bool car::Start()
 		No[ka-1] = loc.GetObjectPosition(i);
 	}
 	Game* game=FindGO<Game>("Game");
+	Gaizi = FindGO<Geizi>("Geizi");
 	fa = game->incNo();//車ができた数だけカウントする関数。
 	saidaiNo = game->Gatpasusaiz(fa);
 	pasu = game->getDate(fa);
@@ -69,27 +71,27 @@ bool car::Start()
 	m_skinModel.Init(m_skinModelData);
 	m_skinModel.SetShadowCasterFlag(true);
 	m_skinModel.SetShadowReceiverFlag(true);
-#else
 
-#endif // Mizuki_baka
+#endif 
 	SetTags(20);
 	return true;
 }
 void car::Update()
 {
-	m_tekirot.MakeRotationFromQuaternion(m_rotation);
-	m_forward.x = m_tekirot.m[2][0];
-	m_forward.y = m_tekirot.m[2][1];
-	m_forward.z = m_tekirot.m[2][2];
-	m_forward.y = 0.0f;
-	m_forward.Normalize();
-	frag = 0;
-	Stop();
-	//if (frag <= 0) {
-	Move();
-	//}
-	m_position.y = 0.0f;
-
+	if (Gaizi->GatFragu() < 1.0f) {
+		m_tekirot.MakeRotationFromQuaternion(m_rotation);
+		m_forward.x = m_tekirot.m[2][0];
+		m_forward.y = m_tekirot.m[2][1];
+		m_forward.z = m_tekirot.m[2][2];
+		m_forward.y = 0.0f;
+		m_forward.Normalize();
+		frag = 0;
+		Stop();
+		//if (frag <= 0) {
+		Move();
+		//}
+		m_position.y = 0.0f;
+	}
 #ifdef instansingu_katto
 	m_skinModel.Update(m_position, m_rotation, { 0.5f,0.5f,0.5f });
 #else

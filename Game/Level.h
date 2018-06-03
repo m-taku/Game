@@ -19,18 +19,15 @@ public:
 	///////////////////////////////////////////////
 	// ここからメンバ変数。
 	///////////////////////////////////////////////
-	std::vector<MapChip*> m_mapChipList;		//マップチップのリスト。
 private:
 	std::vector<int> kaunto;
 	CSkinModel m_skinModel;					//スキンモデル。
 	CSkinModelData m_skinModelData;			//スキンモデルデータ。
-	std::list<CVector3> L_pos;
-	std::list<CVector3>::iterator i_pos = L_pos.begin();
-	std::list<CVector3> L_scale;
-	std::list<CVector3>::iterator i_scale = L_scale.begin();
-	std::list<CQuaternion> L_AI4;
-	std::list<CQuaternion>::iterator i_AI4 = L_AI4.begin();
+
+	std::vector<LevelRender*> render;
 	std::wstring name;
+	int renderNo = 0;
+	std::vector<MapChip*> m_mapChipList;		//マップチップのリスト。
 	std::vector<std::wstring> nameNo;
 	int hairetuNo = 0;
 	int No=0;

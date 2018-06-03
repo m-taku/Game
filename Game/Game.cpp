@@ -175,7 +175,7 @@ void Game::OnDestroy()
 			DeleteGO(Rsimin[k]);
 		}
 	}
-	for (int k = 0; k < 1; k++) {
+	for (int k = 0; k < 19; k++) {
 
 		if (LAIseizon[k] >= 1) {
 			DeleteGO(Lsimin[k]);

@@ -72,7 +72,8 @@ protected:
 		Zombie_Normal,      //ゾンビ化NPCの通常状態。
 		Zombie_Chase,       //ゾンビ化NPCの追跡状態。
 		Zombie_Attack,      //ゾンビ化NPCの攻撃状態。
-		Death               //NPCの死亡。
+		Death,               //NPCの死亡。
+		pa_num				//paの数
 	};
 
 	enum AnimationClip {//各アニメーションのクリップ。
