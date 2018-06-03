@@ -410,6 +410,12 @@
     <CustomBuild Include="Assets\lever\levalAI21.tks">
       <Filter>Assets\lever</Filter>
     </CustomBuild>
+    <CustomBuild Include="Assets\animData\shiminwalk.tka" />
+    <CustomBuild Include="Assets\animData\tekiidle.tka" />
+    <CustomBuild Include="Assets\animData\shiminidle.tka" />
+    <CustomBuild Include="Assets\animData\playeridle.tka" />
+    <CustomBuild Include="Assets\animData\playerwalk.tka" />
+    <CustomBuild Include="Assets\animData\shiminrun.tka" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\modelData\livingbuildings.png">
@@ -429,12 +435,6 @@
   <ItemGroup>
     <None Include="Assets\lever\larer_01.tks">
       <Filter>Assets\font</Filter>
-    </None>
-    <None Include="Assets\animData\shiminwalk.tka">
-      <Filter>Assets\animData</Filter>
-    </None>
-    <None Include="Assets\animData\tekiidle.tka">
-      <Filter>Assets\animData</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

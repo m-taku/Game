@@ -869,6 +869,18 @@
     <CustomBuild Include="Assets\animData\tekiidle.tka">
       <FileType>Document</FileType>
     </CustomBuild>
+    <CustomBuild Include="Assets\animData\shiminidle.tka">
+      <FileType>Document</FileType>
+    </CustomBuild>
+    <CustomBuild Include="Assets\animData\playeridle.tka">
+      <FileType>Document</FileType>
+    </CustomBuild>
+    <CustomBuild Include="Assets\animData\playerwalk.tka">
+      <FileType>Document</FileType>
+    </CustomBuild>
+    <CustomBuild Include="Assets\animData\shiminrun.tka">
+      <FileType>Document</FileType>
+    </CustomBuild>
     <None Include="Assets\lever\larer_01.tks" />
     <CustomBuild Include="Assets\lever\leval00.tks">
       <FileType>Document</FileType>
