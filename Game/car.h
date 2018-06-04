@@ -1,5 +1,6 @@
 #pragma once
 #include"AImove.h"
+
 #include"carRender.h"
 class car : public IGameObject
 {
@@ -18,6 +19,7 @@ private:
 	CSkinModel m_skinModel;					//スキンモデル。
 	CSkinModelData m_skinModelData;			//スキンモデルデータ。
 	AImove* ran;
+	Geizi* Gaizi;
 	CQuaternion m_rotation = CQuaternion::Identity;		//回転
 	CVector3 m_position = CVector3::Zero;				//現在の座標
 	CMatrix m_tekirot;									//行列
