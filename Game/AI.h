@@ -87,7 +87,7 @@ protected:
 
 
 	enum npcpattern pa;
-	//CCharacterController A_charaCon;
+	CCharacterController A_charaCon;
 	CSkinModel m_skinModel;					//スキンモデル。
 	CSkinModelData m_skinModelData;			//スキンモデルデータ。
 	CQuaternion m_rotation = CQuaternion::Identity;	//回転。
@@ -131,6 +131,8 @@ protected:
 private:
 	bool ForceFlag = false;     //特殊部隊の出現を表すフラグ。
 	std::vector<int>::iterator pasu;
+	CVector3 m_movespeed=CVector3::Zero;
+	float gravity = -3*(980.0f * GameTime().GetFrameDeltaTime());
 	int No = 0;
 	int no = 0;
 	float sinsoku = 0.0f;
