@@ -12,6 +12,9 @@ Level::~Level()
 	for (auto& mapChip : m_mapChipList) {
 		DeleteGO(mapChip);
 	}
+	for (auto& LeverRender : render) {
+		DeleteGO(LeverRender);
+	}
 }
 
 /*!
@@ -58,11 +61,12 @@ void Level::Build(const wchar_t* levelDataFilePath)
 		mapChipList.push_back(mapChip);
 	}
 	for (auto& objDataList : objListDataMap) {
-		LevelRender* render = NewGO<LevelRender>(0, nullptr);
-		render->Init(objDataList.first.c_str(), objDataList.second.size());
+		render.push_back(NewGO<LevelRender>(0, nullptr));
+		render[renderNo]->Init(objDataList.first.c_str(), objDataList.second.size());
 		for (auto& mapChip : objDataList.second) {
-			mapChip->PostInitAfterInitLevelRender(render);
+			mapChip->PostInitAfterInitLevelRender(render[renderNo]);
 		}
+		renderNo++;
 	}
 }
 

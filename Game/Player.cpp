@@ -22,8 +22,10 @@ Player::~Player()
 }
 bool Player::Start()
 {
-	
-	m_animclip[0].Load(L"animData/shiminwalk.tka");
+	m_animclip[idle].Load(L"animData/playeridle.tka");
+	m_animclip[walk].Load(L"animData/playerwalk.tka");
+	m_animclip[attack].Load(L"animData/playerattack.tka");
+	m_animclip[attack2].Load(L"animData/playerattack2.tka");
 
 	/*animclip[1].Load(L"animData/demoanime/walk.tka");
 	animclip[2].Load(L"animData/demoanime/run.tka");
@@ -31,16 +33,20 @@ bool Player::Start()
 	animclip[1].SetLoopFlag(true);
 	animclip[2].SetLoopFlag(true);*/
 	/*std::string hoge("Character1_Head");
-	std::wstring_convert<std::codecvt_utf8<wchar_t>, wchar_t> cv;
+	std::wstring_convert<std::codecvt_utf8<wchar_t>, wchar_t> c
+	v;
 	std::wstring headbone = cv.from_bytes(hoge);*/
 	const wchar_t name[20] = { 'h','e','a','d' };
 	m_skinModelData.Load(L"modelData/liam.cmo");//ƒvƒŒƒCƒ„[‚ð‘‚¯
 	m_skinModel.Init(m_skinModelData);
-	m_animclip[0].SetLoopFlag(true);
+	m_animclip[idle].SetLoopFlag(true);
+	m_animclip[walk].SetLoopFlag(true);
+	m_animclip[attack].SetLoopFlag(false);
+	m_animclip[attack2].SetLoopFlag(false);
 	m_animation.Init(
 		m_skinModel,
 		m_animclip,
-		1
+		animnum
 	);
 	m_skinModel.SetShadowCasterFlag(true);
 	m_position.x = -2910.12085;
@@ -141,16 +147,6 @@ void Player::Update()
 	m_rite.Normalize();
 	m_moveSpeed += m_forward*lStick_y;
 	m_moveSpeed += m_rite * lStick_x;
-	if (m_charaCon.IsOnGround())
-	{
-		if (m_moveSpeed.x != 0.0f&&m_moveSpeed.z != 0.0f) {
-
-		}
-		//m_animation.Play(0);
-	}
-	/*else {
-		animation.Play(0, 0.2f);
-	}*/
 	
 	if (hakaba->IsPlay()&&landflag == 1 && land_to_player_vector <= 50.0f)
 	{
@@ -169,13 +165,37 @@ void Player::Update()
 	{
 		landflag = 1;
 	}
-	m_position = m_charaCon.Execute(GameTime().GetFrameDeltaTime(), m_moveSpeed);
-	if (m_moveSpeed.Length() >= 500.0f)
+	if (Pad(0).IsTrigger(enButtonB)&&attackF==0)
 	{
-
+		m_animation.Play(attack, 0.1f);
+		attackF = 1;
 	}
+	if (!(m_animation.IsPlaying())&& attackF == 1)
+	{
+		if (Pad(0).IsTrigger(enButtonB))
+		{
+			m_animation.Play(attack2, 0.3);
+		}
+
+		if (attackcounter == 15)
+		{
+			attackF = 0;
+			attackcounter = 0;
+		}
+		attackcounter++;
+	}
+
+	m_position = m_charaCon.Execute(GameTime().GetFrameDeltaTime(), m_moveSpeed);
 	if (m_position.y <= -100.0f) {
 		m_position.y = -100.0f;
+	}
+	if (m_moveSpeed.x == 0.0f&&m_moveSpeed.z == 0.0f&&m_charaCon.IsOnGround()&&attackF==0)
+	{
+		m_animation.Play(idle, 0.2f);
+	}
+	if (m_moveSpeed.x != 0.0f&&m_moveSpeed.z != 0.0f&&m_charaCon.IsOnGround()&& attackF == 0)
+	{
+		m_animation.Play(walk, 0.2f);
 	}
 	
 	m_skinModel.Update(m_position, m_rotation, CVector3::One*20.0f);

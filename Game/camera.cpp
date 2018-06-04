@@ -43,6 +43,7 @@ void camera::Update()
 			
 		}*/
 	}
+	Ppos.z -= 300.0f;
 	//カメラのニアクリップとファークリップを設定する。
 	MainCamera().SetTarget(target);
 	MainCamera().SetNear(10.0f);

@@ -56,9 +56,13 @@ public:
 	{
 		return  pasu2[i].size();
 	}
-	void SatSaizon(int No)
+	void SatRSaizon(int No)
 	{
 		RAIseizon[No] = 0;
+	}
+	void SatLSaizon(int No)
+	{
+		LAIseizon[No] = 0;
 	}
 	void SetLeft()
 	{
