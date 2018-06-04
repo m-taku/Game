@@ -74,11 +74,11 @@ bool AI::Start()
 	m_rotation.SetRotationDeg(CVector3::AxisY,VectorAngleDeg(game->pasu[Leftfrag].m_pointList[pasu[ima] - 1]));
 	SetTags(10);
 	m_skinModel.SetShadowCasterFlag(true);
-	if (game->GatNo() >= 20&& Leftfrag==0) {//AIが増えた時はここを増やす。
+	if (game->GatNo() >= 25&& Leftfrag==0) {//AIが増えた時はここを増やす。
 		game->risetteNo();
 		game->SetLeft();
 	}
-	if (game->GatNo() >= 19 && Leftfrag == 1) {//左側のAIが増えたらこ↑こ↓を増やす。
+	if (game->GatNo() >= 24 && Leftfrag == 1) {//左側のAIが増えたらこ↑こ↓を増やす。
 		game->risetteNo();
 	}
 	/*ai_NPCAnimationClips[0].SetLoopFlag(false);
