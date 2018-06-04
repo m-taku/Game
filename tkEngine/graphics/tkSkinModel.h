@@ -142,7 +142,7 @@ namespace tkEngine{
 		}
 		void Satburend(float bai)
 		{
-			m_burend += bai;
+			m_burend = bai;
 		}
 		/*!
 		* @brief	ブレンド率セット

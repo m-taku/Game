@@ -416,6 +416,8 @@
     <CustomBuild Include="Assets\animData\playeridle.tka" />
     <CustomBuild Include="Assets\animData\playerwalk.tka" />
     <CustomBuild Include="Assets\animData\shiminrun.tka" />
+    <CustomBuild Include="Assets\animData\playerattack.tka" />
+    <CustomBuild Include="Assets\animData\playerattack2.tka" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\modelData\livingbuildings.png">
