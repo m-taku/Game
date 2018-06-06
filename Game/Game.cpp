@@ -21,9 +21,10 @@
 #include "tkEngine\light\tkDirectionLight.h"
 #include"tkEngine/graphics/tkLight.h"
 #include "tkEngine\light\tkPointLight.h"
-
+Game* game1;
 Game::Game()
 {
+	game1 = this;
 	//Ç±Ç±Ç…äÓñ{ìIÇ»î≠ê∂Çï`Ç≠
 	gaizi = NewGO<Geizi>(1, "Geizi");
 	player = NewGO<Player>(0, "Player");
@@ -59,10 +60,20 @@ Game::Game()
 	da.push_back(AIR18);
 	da.push_back(AIR19);
 	da.push_back(AIR20);
-	for (int k = 0; k < 20; k++) {
-		Rsimin.push_back(NewGO<AI>(0, "AI"));
+	da.push_back(AIR21);
+	da.push_back(AIR22);
+	da.push_back(AIR23);
+	da.push_back(AIR24);
+	da.push_back(AIR25);
+	da.push_back(AIR26);
+	for (int k = 0; k < 26; k++) {
+		AI* AIR = NewGO<AI>(0, "AI");
+		AIR->GetGame(this);
+		Rsimin.push_back(AIR);
 		RAIseizon.push_back(1);
 	}
+	No = 0;
+	Leftfrag = 1;
 	da2.push_back(AIL1);
 	da2.push_back(AIL2);
 	da2.push_back(AIL3);
@@ -82,9 +93,16 @@ Game::Game()
 	da2.push_back(AIL17);
 	da2.push_back(AIL18);
 	da2.push_back(AIL19);
-	
-	for (int k = 0; k < 19; k++) {
-		Lsimin.push_back(NewGO<AI>(0, "AI"));
+	da2.push_back(AIL20);
+	da2.push_back(AIL21);
+	da2.push_back(AIL22);
+	da2.push_back(AIL23);
+	da2.push_back(AIL24);
+	da2.push_back(AIL25);
+	for (int k = 0; k < 25; k++) {
+		AI* AIL = NewGO<AI>(0, "AI");
+		AIL->GetGame(this);
+		Lsimin.push_back(AIL);
 		LAIseizon.push_back(1);
 	}
 	No = 0;
@@ -170,12 +188,12 @@ void Game::OnDestroy()
 {
 	DeleteGO(player);
 	//Ç±Ç±Ç≈ç≈èIìIÇ…ÇcÇÖÇåÇÖÇîÇÖÇfÇnÇê‚ëŒÇµÇ´ÇÈÅB	
-	for (int k = 0; k < 20; k++) {
+	for (int k = 0; k < 26; k++) {
 		if (RAIseizon[k] >= 1) {
 			DeleteGO(Rsimin[k]);
 		}
 	}
-	for (int k = 0; k < 19; k++) {
+	for (int k = 0; k < 25; k++) {
 
 		if (LAIseizon[k] >= 1) {
 			DeleteGO(Lsimin[k]);

@@ -17,6 +17,10 @@ public:
 	~AI();
 	bool Start();
 	void Update();
+	void GetGame(Game* ka)
+	{
+		game = ka;
+	}
 	void NPCNormal();//市民の通常行動の処理。
 	void NPCNormal_Search();//市民が警戒する処理。
 	//void NPCEscape_NPC();//市民がゾンビNPCから逃げるときの処理。
@@ -28,10 +32,11 @@ public:
 	void NPCZombie_Normal();//ゾンビNPCの通常行動の処理。
 	void NPCZombie_Chase();//ゾンビNPCが市民を追跡するときの処理。
 	void NPCZombie_Attack();//特殊部隊とゾンビが戦う時の処理。
+	void NPCzombie_Return();
 	void NPCescape();//市民がゾンビプレイヤーから逃げるときの処理。
 	void NPCReturn();//戻るとき
 	void NPCDeath();//死亡、消滅処理。
-
+	void Zonbesiya();
 	void Render(CRenderContext& rc);
 	void Turn();
 	void DamageHantei();//ダメージ判定。
@@ -48,10 +53,13 @@ public:
 	////アニメーション関連のメンバ関数(メソッド)。                      ////
 	////各サブクラスでのオーバーライドを前提とするため、中身は書かない。////
 	//////////////////////////////////////////////////////////////////////////
-	//void Start_Walk_Animation();//歩き始めの処理。
-	//void Loop_Walk_Animation();//歩き続けるときの処理。
-	//void Start_Run_Animation();//走り始めの処理。
-	//void Loop_Run_Animation();//走り続けるときの処理。
+	void AI_Animation();//AIのアニメーションの移行を処理する。
+
+	void Idle_Animation();
+	
+	void Loop_Walk_Animation();//歩き続けるときの処理。
+
+	void Loop_Run_Animation();//走り続けるときの処理。
 	//void Resistance_Animation();//抵抗しているときの処理。
 	//void NPC_Attack_Animation();//ゾンビ化NPCが攻撃するときの処理。
 	/////////////////////////////////////////////////////////////////////////
@@ -72,14 +80,14 @@ protected:
 		Zombie_Normal,      //ゾンビ化NPCの通常状態。
 		Zombie_Chase,       //ゾンビ化NPCの追跡状態。
 		Zombie_Attack,      //ゾンビ化NPCの攻撃状態。
+		Zombie_Return,		//ゾンビ化NPCの元の位置に戻る
 		Death,               //NPCの死亡。
 		pa_num				//paの数
 	};
 
 	enum AnimationClip {//各アニメーションのクリップ。
-		Start_Walk,        //歩き始め
+		Idle,              //立ち状態
 		Loop_Walk,         //歩き続け
-		Start_Run,         //走り始め
 		Loop_Run,          //走り続け
 		Resistance,        //抵抗
 		NPC_Attack      //ゾンビ化NPCの攻撃
@@ -126,21 +134,23 @@ protected:
 	{
 		 ForceFlag = true;     //特殊部隊の出現を表すフラグ。
 	}
-	//CAnimation ai_NPCAnimation;				//アニメーション。
-	//CAnimationClip ai_NPCAnimationClips[6];	//アニメーションクリップ。
+	CAnimation ai_NPCAnimation;				//アニメーション。
+	CAnimationClip ai_NPCAnimationClips[3];	//アニメーションクリップ。
 private:
 	bool ForceFlag = false;     //特殊部隊の出現を表すフラグ。
 	std::vector<int>::iterator pasu;
-	CVector3 m_movespeed=CVector3::Zero;
+	//CVector3 m_movespeed=CVector3::Zero;
 	float gravity = -3*(980.0f * GameTime().GetFrameDeltaTime());
 	int No = 0;
 	int no = 0;
 	float sinsoku = 0.0f;
 	AImove* work;
 	tekihei* tekip;
-	int mobe = 100;
+	int mobe = 50;
+	std::vector<Human*>::iterator AIrest;
 	bool kannkaku = false;
 	int Leftfrag = 0;
+	bool kaiten = false;
 	CShaderResourceView zondi;
 	CObjectFrustumCulling m_objectFrustumCulling;
 };

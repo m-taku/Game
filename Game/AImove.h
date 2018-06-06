@@ -34,6 +34,10 @@ public:
 	{
 		kakudo = kku;
 	}
+	void Setlen(float ka)
+	{
+		len = ka;
+	}
 	//–Ú“I’n‚Ü‚Å‚Ì‹——£
 	float Getlen() const
 	{

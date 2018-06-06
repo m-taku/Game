@@ -6,7 +6,7 @@
 #include"Pasu.h"
 #include"keiroK.h"
 #include"AI.h"
-#define SOKUDO 300.0f;
+#define SOKUDO 150.0f;
 
 float VectorAngleDeg(CVector3 c, CVector3 forward);
 AImove::AImove()

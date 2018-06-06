@@ -19,6 +19,7 @@ private:
 	CSkinModel m_skinModel;					//スキンモデル。
 	CSkinModelData m_skinModelData;			//スキンモデルデータ。
 	AImove* ran;
+	std::vector<Human*> HumanLest;
 	Geizi* Gaizi;
 	CQuaternion m_rotation = CQuaternion::Identity;		//回転
 	CVector3 m_position = CVector3::Zero;				//現在の座標
@@ -32,7 +33,9 @@ private:
 	int ima = 0;
 	void Stop();
 	int fa = 0;
-	int frag = 0;
+	bool frag = false;
+	float siya = 60.0f;
+	bool Humanfrag = false;
 	carRender* m_Render;
 };
 

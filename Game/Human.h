@@ -20,4 +20,5 @@ public:
 	int Zonbe = 0;//ƒ]ƒ“ƒr‰»‚µ‚½‚Æ‚«‚É+1‚·‚éB
 
 };
+extern std::vector<Human*> Humans;
 
