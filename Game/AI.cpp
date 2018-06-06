@@ -15,7 +15,7 @@
 AI::AI()
 {
 	pa = Normal; //ここはプレイヤーの行動によって変化するようにする。
-	m_speed = 0.5f; //ノーマル状態のときの常に動く移動速度（基本0.8）。
+	m_speed = 0.5f; //ノーマル状態のときの常に動く移動速度（基本0.8）。1.5が走る。
 	iNo = game1->incNo();
 	Leftfrag = game1->GetLeft();
 }
@@ -51,13 +51,20 @@ bool AI::Start()
 		m_position,		//初期位置。
 		0
 	);
-	////アニメーションの初期化。
-	//ai_NPCAnimation.Init(
-	//	m_skinModel,			//アニメーションを流すスキンモデル。
-	//								//これでアニメーションとスキンモデルが関連付けされる。
-	//	ai_NPCAnimationClips,	//アニメーションクリップの配列。
-	//	6							//アニメーションクリップの数。
-	//);
+	ai_NPCAnimationClips[0].Load(L"animData/shiminidle.tka");//仮。後で入れろ。
+	ai_NPCAnimationClips[0].SetLoopFlag(true);
+	ai_NPCAnimationClips[1].Load(L"animData/shiminwalk.tka");//仮。後で入れろ。
+	ai_NPCAnimationClips[1].SetLoopFlag(true);
+	ai_NPCAnimationClips[2].Load(L"animData/shiminrun.tka");//仮。後で入れろ。
+	ai_NPCAnimationClips[2].SetLoopFlag(true);
+
+	//アニメーションの初期化。
+	ai_NPCAnimation.Init(
+		m_skinModel,			//アニメーションを流すスキンモデル。
+									//これでアニメーションとスキンモデルが関連付けされる。
+		ai_NPCAnimationClips,	//アニメーションクリップの配列。
+		3							//アニメーションクリップの数。
+	);
 	m_tekirot.MakeRotationFromQuaternion(m_rotation);
 	m_forward.x = m_tekirot.m[2][0];
 	m_forward.y = m_tekirot.m[2][1];
@@ -71,12 +78,8 @@ bool AI::Start()
 	m_rotation.SetRotationDeg(CVector3::AxisY,VectorAngleDeg(game->pasu[Leftfrag].m_pointList[pasu[ima] - 1]));
 	SetTags(10);
 	m_skinModel.SetShadowCasterFlag(true);
-	/*ai_NPCAnimationClips[0].SetLoopFlag(false);
-	ai_NPCAnimationClips[0].SetLoopFlag(true);
-	ai_NPCAnimationClips[0].SetLoopFlag(false);
-	ai_NPCAnimationClips[0].SetLoopFlag(true);
-	ai_NPCAnimationClips[0].SetLoopFlag(true);
-	ai_NPCAnimationClips[0].SetLoopFlag(false);*/
+
+
 	return true;
 }
 void AI::NPCNormal()
@@ -494,64 +497,33 @@ void AI::NPCDeath()//死亡、消滅処理。
 	}
 	DeleteGO(this);//自己消滅。
 }
-//
-//void AI::Animation_Walk()//歩き始めと歩き続けの一連のアニメーションの処理。
-//{
-//	static int walk_count = 0;//歩き始めてからのカウント
-//	if (work->Gatmuve()!=0) {
-//		//動いていたら
-//		if (walk_count<50) {
-//			Start_Walk_Animation();
-//		}
-//		else {
-//			Loop_Walk_Animation();
-//		}
-//		walk_count++;
-//	}
-//	else {//止まったら
-//		walk_count = 0;
-//	}
-//	
-//}
-//void AI::Animation_Run()//走り始めと走り続けの一連のアニメーションの処理。
-//{
-//	static int run_count = 0;//走り始めてからのカウント
-//	if (work->Gatmuve() != 0) {
-//		//動いていたら
-//		if (run_count<50) {
-//			Start_Run_Animation();
-//		}
-//		else {
-//			Loop_Run_Animation();
-//		}
-//		run_count++;
-//	}
-//	else {//止まったら
-//		run_count = 0;
-//	}
-//}
+
+void AI::AI_Animation()//AIのアニメーション制御
+{
+	if (m_speed<=1.0) {
+		Loop_Walk_Animation();
+	}
+	if (m_speed > 1.0) {
+		Loop_Run_Animation();
+	}
+}
+void AI::Idle_Animation() //キャラクターが歩き続ける時のアニメーションの処理。
+{
+	ai_NPCAnimation.Play(0, 0.2);
+}
 
 
-//void AI::Start_Walk_Animation()//キャラクターが歩き始める時のアニメーションの処理。
-//{
-//	ai_NPCAnimation.Play(Start_Walk);
-//}
-//
-//void AI::Loop_Walk_Animation()//キャラクターが歩き続ける時のアニメーションの処理。
-//{
-//	ai_NPCAnimation.Play(Loop_Walk);
-//}
-//
-//void AI::Start_Run_Animation()//キャラクターが走り始める時のアニメーションの処理。
-//{
-//	ai_NPCAnimation.Play(Start_Run);
-//}
-//
-//void AI::Loop_Run_Animation()//キャラクターが走り続ける時のアニメーションの処理。
-//{
-//	ai_NPCAnimation.Play(Loop_Run);
-//}
-//
+void AI::Loop_Walk_Animation()//キャラクターが歩き続ける時のアニメーションの処理。
+{
+	ai_NPCAnimation.Play(1,0.2);
+}
+
+
+void AI::Loop_Run_Animation()//キャラクターが走り続ける時のアニメーションの処理。
+{
+	ai_NPCAnimation.Play(2,0.2);
+}
+
 //void AI::Resistance_Animation()//キャラクターが抵抗している時のアニメーションの処理。
 //{
 //	ai_NPCAnimation.Play(Resistance);
@@ -663,6 +635,8 @@ void AI::Update()
 			break;
 		}
 	}
+
+	
 	if (pa != Zombie_Chase) {
 		FindGameObjectsWithTag(10, [&](IGameObject* go) {
 			if (go != this) {            //自分からの距離を計測するため、検索結果から自分を除外する。
@@ -683,6 +657,8 @@ void AI::Update()
 	if (!m_objectFrustumCulling.IsCulling()) {
 		m_skinModel.Update(m_position, m_rotation, { 20.0f, 20.0f,20.0f });
 	}
+
+	AI_Animation();
 	m_skinModel.UpdateBoundingBox();
 	m_objectFrustumCulling.Execute(m_skinModel.GetBoundingBox());
 }

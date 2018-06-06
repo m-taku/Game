@@ -67,9 +67,13 @@ private:
 	enum animation {
 		idle,
 		walk,
+		attack,
+		attack2,
 		animnum
 	};
 	CAnimation m_animation;
 	CAnimationClip m_animclip[animnum];
+	int attackF = 0;
+	int attackcounter = 0;
 };
 

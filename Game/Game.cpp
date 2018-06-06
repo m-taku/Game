@@ -60,7 +60,13 @@ Game::Game()
 	da.push_back(AIR18);
 	da.push_back(AIR19);
 	da.push_back(AIR20);
-	for (int k = 0; k < 20; k++) {
+	da.push_back(AIR21);
+	da.push_back(AIR22);
+	da.push_back(AIR23);
+	da.push_back(AIR24);
+	da.push_back(AIR25);
+	da.push_back(AIR26);
+	for (int k = 0; k < 26; k++) {
 		AI* AIR = NewGO<AI>(0, "AI");
 		AIR->GetGame(this);
 		Rsimin.push_back(AIR);
@@ -87,8 +93,13 @@ Game::Game()
 	da2.push_back(AIL17);
 	da2.push_back(AIL18);
 	da2.push_back(AIL19);
-	
-	for (int k = 0; k < 19; k++) {
+	da2.push_back(AIL20);
+	da2.push_back(AIL21);
+	da2.push_back(AIL22);
+	da2.push_back(AIL23);
+	da2.push_back(AIL24);
+	da2.push_back(AIL25);
+	for (int k = 0; k < 25; k++) {
 		AI* AIL = NewGO<AI>(0, "AI");
 		AIL->GetGame(this);
 		Lsimin.push_back(AIL);
@@ -177,12 +188,12 @@ void Game::OnDestroy()
 {
 	DeleteGO(player);
 	//‚±‚±‚ÅÅI“I‚É‚c‚…‚Œ‚…‚”‚…‚f‚n‚ğâ‘Î‚µ‚«‚éB	
-	for (int k = 0; k < 20; k++) {
+	for (int k = 0; k < 26; k++) {
 		if (RAIseizon[k] >= 1) {
 			DeleteGO(Rsimin[k]);
 		}
 	}
-	for (int k = 0; k < 19; k++) {
+	for (int k = 0; k < 25; k++) {
 
 		if (LAIseizon[k] >= 1) {
 			DeleteGO(Lsimin[k]);
