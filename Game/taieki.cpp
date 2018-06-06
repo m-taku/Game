@@ -28,7 +28,7 @@ bool taieki::Start()
 	CF = MainCamera().GetForward();
 	CF.Normalize();
 	tpos = player->GetPosition();
-	tpos.y += 70.0f;
+	tpos.y += 130.0f;
 
 	PS = player->GetMoveSpeed();
 	effect->Play(L"effect/aura1.efk");

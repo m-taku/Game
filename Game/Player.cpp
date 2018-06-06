@@ -204,6 +204,18 @@ void Player::Update()
 	bonepos.x = boneM.m[3][0];
 	bonepos.y = boneM.m[3][1];
 	bonepos.z = boneM.m[3][2];
+	boneforward.x = boneM.m[2][0];
+	boneforward.y = boneM.m[2][1];
+	boneforward.z = boneM.m[2][2];
+	boneright.x = boneM.m[0][0];
+	boneright.y = boneM.m[0][1];
+	boneright.z = boneM.m[0][2];
+	boneup.x = boneM.m[1][0];
+	boneup.y = boneM.m[1][1];
+	boneup.z = boneM.m[1][2];
+	boneforward.Normalize();
+	boneright.Normalize();
+	boneup.Normalize();
 	/*FindGameObjectsWithTag(10, [&](IGameObject* go) {
 		CVector3 diff;
 		AI* ai = (AI*)go;

@@ -48,6 +48,6 @@ public:
 	CAnimation tekianimation[teki];
 	CAnimationClip animclip[1];
 	float Dtekiangle[teki];
-	int tekianglecompF[teki];
+	int tekianglecompF[teki];						//“G‚ªŒü‚«‚«‚Á‚½ƒtƒ‰ƒO
 
 };

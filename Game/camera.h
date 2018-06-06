@@ -19,6 +19,9 @@ public:
 	CVector3 position_of_player;
 	Player* m_player = nullptr;
 	CSkeleton playerS;
-	
+	float cameradeg = 0.0f;
+	CQuaternion Crot = CQuaternion::Identity;
+	CVector3 Pboneforward = CVector3::Zero;
+
 };
 

@@ -15,6 +15,10 @@ public:
 	{
 		return m_position;
 	}
+	CVector3& Getboneforward()
+	{
+		return boneforward;
+	}
 
 	CVector3& Getbonepos()
 	{
@@ -25,6 +29,17 @@ public:
 	{
 		return m_forward;
 	}
+
+	CVector3& Getboneright()
+	{
+		return boneright;
+	}
+
+	CVector3& Getboneup()
+	{
+		return boneup;
+	}
+
 	CVector3 &GetMoveSpeed()
 	{
 		return m_moveSpeed;
@@ -75,5 +90,10 @@ private:
 	CAnimationClip m_animclip[animnum];
 	int attackF = 0;
 	int attackcounter = 0;
+	CQuaternion bonerot = CQuaternion::Identity;
+	CVector3 boneforward = CVector3::Zero;
+	CVector3 boneright = CVector3::Zero;
+	CVector3 boneup = CVector3::Zero;
+	CMatrix bonerot_M;
 };
 
