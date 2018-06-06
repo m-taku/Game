@@ -25,7 +25,7 @@ bool tekihei::Start()
 	
 	gaizi = FindGO<Geizi>("Geizi");
 	//animclip[0].Load(L"animData/tekiidle.tka");
-	///animclip[1].Load(L"animData/run.tka");
+	//animclip[1].Load(L"animData/run.tka");
 	//animclip[0].SetLoopFlag(true);
 	//animclip[1].SetLoopFlag(true);
 

@@ -21,9 +21,10 @@
 #include "tkEngine\light\tkDirectionLight.h"
 #include"tkEngine/graphics/tkLight.h"
 #include "tkEngine\light\tkPointLight.h"
-
+Game* game1;
 Game::Game()
 {
+	game1 = this;
 	//Ç±Ç±Ç…äÓñ{ìIÇ»î≠ê∂Çï`Ç≠
 	gaizi = NewGO<Geizi>(1, "Geizi");
 	player = NewGO<Player>(0, "Player");
@@ -60,9 +61,13 @@ Game::Game()
 	da.push_back(AIR19);
 	da.push_back(AIR20);
 	for (int k = 0; k < 20; k++) {
-		Rsimin.push_back(NewGO<AI>(0, "AI"));
+		AI* AIR = NewGO<AI>(0, "AI");
+		AIR->GetGame(this);
+		Rsimin.push_back(AIR);
 		RAIseizon.push_back(1);
 	}
+	No = 0;
+	Leftfrag = 1;
 	da2.push_back(AIL1);
 	da2.push_back(AIL2);
 	da2.push_back(AIL3);
@@ -84,7 +89,9 @@ Game::Game()
 	da2.push_back(AIL19);
 	
 	for (int k = 0; k < 19; k++) {
-		Lsimin.push_back(NewGO<AI>(0, "AI"));
+		AI* AIL = NewGO<AI>(0, "AI");
+		AIL->GetGame(this);
+		Lsimin.push_back(AIL);
 		LAIseizon.push_back(1);
 	}
 	No = 0;

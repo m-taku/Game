@@ -177,4 +177,4 @@ private:
 	prefab::CPointLight*     m_point;
 	int i = 0;
 };
-
+extern Game* game1;

@@ -17,6 +17,10 @@ public:
 	~AI();
 	bool Start();
 	void Update();
+	void GetGame(Game* ka)
+	{
+		game = ka;
+	}
 	void NPCNormal();//市民の通常行動の処理。
 	void NPCNormal_Search();//市民が警戒する処理。
 	//void NPCEscape_NPC();//市民がゾンビNPCから逃げるときの処理。
@@ -28,10 +32,11 @@ public:
 	void NPCZombie_Normal();//ゾンビNPCの通常行動の処理。
 	void NPCZombie_Chase();//ゾンビNPCが市民を追跡するときの処理。
 	void NPCZombie_Attack();//特殊部隊とゾンビが戦う時の処理。
+	void NPCzombie_Return();
 	void NPCescape();//市民がゾンビプレイヤーから逃げるときの処理。
 	void NPCReturn();//戻るとき
 	void NPCDeath();//死亡、消滅処理。
-
+	void Zonbesiya();
 	void Render(CRenderContext& rc);
 	void Turn();
 	void DamageHantei();//ダメージ判定。
@@ -72,6 +77,7 @@ protected:
 		Zombie_Normal,      //ゾンビ化NPCの通常状態。
 		Zombie_Chase,       //ゾンビ化NPCの追跡状態。
 		Zombie_Attack,      //ゾンビ化NPCの攻撃状態。
+		Zombie_Return,		//ゾンビ化NPCの元の位置に戻る
 		Death,               //NPCの死亡。
 		pa_num				//paの数
 	};
@@ -131,16 +137,18 @@ protected:
 private:
 	bool ForceFlag = false;     //特殊部隊の出現を表すフラグ。
 	std::vector<int>::iterator pasu;
-	CVector3 m_movespeed=CVector3::Zero;
+	//CVector3 m_movespeed=CVector3::Zero;
 	float gravity = -3*(980.0f * GameTime().GetFrameDeltaTime());
 	int No = 0;
 	int no = 0;
 	float sinsoku = 0.0f;
 	AImove* work;
 	tekihei* tekip;
-	int mobe = 100;
+	int mobe = 50;
+	std::vector<Human*>::iterator AIrest;
 	bool kannkaku = false;
 	int Leftfrag = 0;
+	bool kaiten = false;
 	CShaderResourceView zondi;
 	CObjectFrustumCulling m_objectFrustumCulling;
 };
