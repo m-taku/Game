@@ -13,7 +13,7 @@ public:
 	void Render(CRenderContext& rc);
 	CVector3& GetPosition()
 	{
-		return m_position;
+		return Getposition();
 	}
 	CVector3& Getboneforward()
 	{
@@ -44,6 +44,10 @@ public:
 	{
 		return m_moveSpeed;
 	}
+	int GetattackF()
+	{
+		return attackF;
+	}
 	
 private:
 	CSkinModel m_skinModel;					//スキンモデル。
@@ -54,20 +58,20 @@ private:
 	CShaderResourceView m_specMap;
 			//キャラクタコントローラ。
 	CVector3 m_moveSpeed = CVector3::Zero;
+	CVector3 m_position = CVector3::Zero;
 				//スペキュラマップ。
-	CVector3 m_forward;						//プレイヤーの前方。
-	CVector3 m_rite;						//プレイヤーの右方向
+	CVector3 m_forward=CVector3::Zero;						//プレイヤーの前方。
+	CVector3 m_rite= CVector3::Zero;						//プレイヤーの右方向
 	float rotY = 0.0f; //回転
 	float rotX = 0.0f; //回転
-	CQuaternion qBias;
-	CQuaternion qBias1;
-	CQuaternion qrot;
+	CQuaternion qBias=CQuaternion::Identity;
+	CQuaternion qBias1 = CQuaternion::Identity;
+	CQuaternion qrot = CQuaternion::Identity;
 	CMatrix mRot;
 	CQuaternion m_rotation = CQuaternion::Identity;//キャラの回転
 	CQuaternion d_rotation = CQuaternion::Identity;//ダミーの回転（縦）
-	CSkinModel m_taieki;
-
-	CSkinModelData m_taiekiModelData;
+	//CSkinModel m_taieki;
+	//CSkinModelData m_taiekiModelData;
 	taieki* Tp = nullptr;
 	prefab::CEffect* hakaba = nullptr;
 	CVector3 landpos = CVector3::Zero;

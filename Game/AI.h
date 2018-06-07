@@ -60,6 +60,8 @@ public:
 	void Loop_Walk_Animation();//歩き続けるときの処理。
 
 	void Loop_Run_Animation();//走り続けるときの処理。
+
+	void Zombie_Walk_Animation();//ゾンビ化NPCが歩き続けるときの処理。
 	//void Resistance_Animation();//抵抗しているときの処理。
 	//void NPC_Attack_Animation();//ゾンビ化NPCが攻撃するときの処理。
 	/////////////////////////////////////////////////////////////////////////
@@ -89,6 +91,7 @@ protected:
 		Idle,              //立ち状態
 		Loop_Walk,         //歩き続け
 		Loop_Run,          //走り続け
+		Zombie_Walk,       //ゾンビ化NPCの歩き
 		Resistance,        //抵抗
 		NPC_Attack      //ゾンビ化NPCの攻撃
 	};
@@ -112,19 +115,7 @@ protected:
 	CVector3 retu_position;
 
 	Game* game;
-	bool DamageFlag = false;      //ダメージを受けたかを示すフラグ。
-	bool HitFlag = false;      //ダメージを与えたかを示すフラグ。
-	bool BattleFlag = false;     //特殊部隊と戦闘をしているかを示すフラグ。
-	int MyNumber = 0;               //今自分が存在しているパスの番号。
-	int ZombieChaseNumber = 0;      //ゾンビが追跡を始めた時に立っていたパスの番号。
-	float m_speed;
-	int iNo = 0;
-	int ima = 0;
-	int kore = 0;
-	int modori = 0;
-	int da = 0;
-	int muteki_count = 0;//無敵時間のカウント。
-	bool muteki_Flag = false;//無敵になっているかどうかを表すフラグ。
+	
 	CVector3 before_m_position = CVector3::Zero;		//一つ前の座標。
 	std::vector<int> jyunban;
 
@@ -134,9 +125,23 @@ protected:
 	{
 		 ForceFlag = true;     //特殊部隊の出現を表すフラグ。
 	}
+	float m_speed;
+	bool muteki_Flag = false;//無敵になっているかどうかを表すフラグ。
 	CAnimation ai_NPCAnimation;				//アニメーション。
-	CAnimationClip ai_NPCAnimationClips[3];	//アニメーションクリップ。
+	CAnimationClip ai_NPCAnimationClips[4];	//アニメーションクリップ。
 private:
+	bool DamageFlag = false;      //ダメージを受けたかを示すフラグ。
+	bool HitFlag = false;      //ダメージを与えたかを示すフラグ。
+	bool BattleFlag = false;     //特殊部隊と戦闘をしているかを示すフラグ。
+	int MyNumber = 0;               //今自分が存在しているパスの番号。
+	int ZombieChaseNumber = 0;      //ゾンビが追跡を始めた時に立っていたパスの番号。
+
+	int iNo = 0;
+	int ima = 0;
+	int kore = 0;
+	int modori = 0;
+	int da = 0;
+	int muteki_count = 0;//無敵時間のカウント。
 	bool ForceFlag = false;     //特殊部隊の出現を表すフラグ。
 	std::vector<int>::iterator pasu;
 	//CVector3 m_movespeed=CVector3::Zero;
@@ -144,7 +149,12 @@ private:
 	int No = 0;
 	int no = 0;
 	float sinsoku = 0.0f;
+	CVector3 m_movespeed = CVector3::Zero;		//移動速度。
 	AImove* work;
+	CVector3 m_position = CVector3::Zero;
+	float atekfrag = 0;
+	float escapecaku = 30.0f;
+	int radam = 0;
 	tekihei* tekip;
 	int mobe = 50;
 	std::vector<Human*>::iterator AIrest;

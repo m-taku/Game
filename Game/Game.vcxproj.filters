@@ -225,11 +225,13 @@
     </MeshContentTask>
     <MeshContentTask Include="Assets\modelData\teki.FBX" />
     <MeshContentTask Include="Assets\modelData\item.FBX" />
-    <MeshContentTask Include="Assets\modelData\liam.FBX" />
     <MeshContentTask Include="Assets\modelData\teki2.FBX">
       <Filter>Assets\modelData</Filter>
     </MeshContentTask>
     <MeshContentTask Include="Assets\modelData\Building_House_03_color1.FBX">
+      <Filter>Assets\modelData</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Assets\modelData\liam.FBX">
       <Filter>Assets\modelData</Filter>
     </MeshContentTask>
   </ItemGroup>
@@ -396,7 +398,6 @@
     <CustomBuild Include="Assets\lever\matilevel201.tks">
       <Filter>Assets\lever</Filter>
     </CustomBuild>
-    <CustomBuild Include="Assets\modelData\liam.tks" />
     <CustomBuild Include="Assets\modelData\teki.tks" />
     <CustomBuild Include="Assets\lever\carLv001.tks">
       <Filter>Assets\lever</Filter>
@@ -418,6 +419,9 @@
     <CustomBuild Include="Assets\animData\shiminrun.tka" />
     <CustomBuild Include="Assets\animData\playerattack.tka" />
     <CustomBuild Include="Assets\animData\playerattack2.tka" />
+    <CustomBuild Include="Assets\modelData\liam.tks">
+      <Filter>Assets\modelData</Filter>
+    </CustomBuild>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\modelData\livingbuildings.png">
