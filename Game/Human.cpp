@@ -11,7 +11,6 @@ Human::Human()
 
 Human::~Human()
 {
-	
 }
 bool Human::Start()
 {
