@@ -97,9 +97,6 @@ void car::Update()
 		Move();
 		//}
 		m_position.y = 0.0f;
-		if (frag != false) {
-			ran->Setlen(0.0f);
-		}
 		if (Humanfrag != false) {
 
 			ran->Setlen(0.0f);
@@ -167,30 +164,33 @@ void car::Move()
 void car::Stop()
 {
 	for (auto& Humanlest : HumanLest) {
-		if (Humanfrag !=true) {
-			CVector3 kyori1 = Humanlest->m_position - this->m_position;//自分との距離を求める。
+		if (Humanfrag != true) {
+			CVector3 kyori1 = Humanlest->Getposition() - this->m_position;//自分との距離を求める。
 			float f = kyori1.Length();
 			if (f <= 500) { //距離が視野内だったら
 				kyori1.Normalize();
 				kyori1.y = 0.0f;
 				float kaku = acosf(kyori1.Dot(m_forward));//２つのべクトルの内積のアークコサインを求める。(ラジアン)
 				float degree = CMath::RadToDeg(kaku);
-				if (degree <= 45)
+				if (degree <= 60)
 				{
 					move = -0.1;
-					Humanfrag =true;
+					Humanfrag = true;
 				}
 			}
 		}
 	}
-	if (Humanfrag != true) {
-		int ha = 0;
-		FindGameObjectsWithTag(20, [&](IGameObject* go) {
-			if (go != this && ha ==0) {            //自分からの距離を計測するため、検索結果から自分を除外する。
-				car* ai = (car*)go;
-				CVector3 kyori1 = ai->m_position - this->m_position;//自分との距離を求める。
-				float f = kyori1.Length();
-				if (f <= 900) { //距離が車間距離よりも短くなっていたら
+
+	int ha = 0;
+	FindGameObjectsWithTag(20, [&](IGameObject* go) {
+		if (go != this && ha == 0) {            //自分からの距離を計測するため、検索結果から自分を除外する。
+			car* ai = (car*)go;
+			CVector3 kyori1 = ai->m_position - this->m_position;//自分との距離を求める。
+			float f = kyori1.Length();
+			if (f <= 900) { //距離が車間距離よりも短くなっていたら
+				float kaku1 = acosf(ai->m_forward.Dot(this->m_forward));
+				float degree1 = CMath::RadToDeg(kaku1);
+				if (degree1 <= 90) {
 					kyori1.Normalize();
 					kyori1.y = 0.0f;
 					float kaku = acosf(kyori1.Dot(m_forward));//２つのべクトルの内積のアークコサインを求める。(ラジアン)
@@ -198,13 +198,11 @@ void car::Stop()
 					if (degree <= siya) {
 						if (ai->ran->Getlen() <= this->ran->Getlen())
 						{
-
 							if (ai->Humanfrag == true) {
 								move = -0.1;
 								Humanfrag = true;
-								siya = 30.0f;
 							}
-						
+
 							else {
 								if (move <= 0.2) {
 									move = -0.1;
@@ -213,17 +211,15 @@ void car::Stop()
 									move -= 0.31;
 								}
 								ha++;
-								siya = 60.0f;
-
 							}
 						}
 					}
+
 				}
 			}
-		});
-	}
+		}
+	});
 }
-
 void car::Render(CRenderContext& rc)
 {
 

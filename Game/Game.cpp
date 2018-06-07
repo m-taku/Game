@@ -161,8 +161,7 @@ Game::Game()
 		f.y = 500.0f;
 		point[i]->SetPosition(f);
 		point[i]->SetColor({ 255.0f,255.0f, 0.0f,0.0f });
-		point[i]->SetAttn({ 700.0f,4.0f ,0.0f });
-		 
+		point[i]->SetAttn({ 700.0f,4.0f ,0.0f });	 
 	}
 	m_sunLig = NewGO<prefab::CDirectionLight>(0);
 	CVector3 lightDir = { 0.707f, -0.707f, 0.0f };

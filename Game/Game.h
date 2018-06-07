@@ -33,8 +33,9 @@ public:
 	Player* player;
 	Stage* stge;
 	camera* camera1;
-	Level m_level[10];
 	Pasu  pasu[10];
+
+	Level m_level[10];
 	keiroK* keiro;
 	int a = 2;
 	int stag = 0;					//ƒŒƒxƒ‹B
@@ -176,8 +177,6 @@ private:
 	std::vector<int> AIL23 = { 30,27,26,25,24,23,16,17,18,19,20,21,22,3,2,1,10,11,14,28,29,41,42 };
 	std::vector<int> AIL24 = { 31,34,35,37,39,42,30 };
 	std::vector<int> AIL25 = { 32,33,34,31,26,25,24,15,16,7,6,23,24,25 };
-
-
 	std::vector<std::vector<int>> da2;
 	std::vector<std::vector<int>> da;
 	std::vector<std::vector<int>> pasu2;

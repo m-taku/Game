@@ -918,9 +918,6 @@
     <CustomBuild Include="Assets\lever\matilevel201.tks">
       <FileType>Document</FileType>
     </CustomBuild>
-    <CustomBuild Include="Assets\modelData\liam.tks">
-      <FileType>Document</FileType>
-    </CustomBuild>
     <CustomBuild Include="Assets\modelData\teki.tks">
       <FileType>Document</FileType>
     </CustomBuild>
@@ -928,6 +925,9 @@
       <FileType>Document</FileType>
     </CustomBuild>
     <CustomBuild Include="Assets\lever\levalAI21.tks">
+      <FileType>Document</FileType>
+    </CustomBuild>
+    <CustomBuild Include="Assets\modelData\liam.tks">
       <FileType>Document</FileType>
     </CustomBuild>
   </ItemGroup>
