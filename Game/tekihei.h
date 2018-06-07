@@ -50,4 +50,21 @@ public:
 	float Dtekiangle[teki];
 	int tekianglecompF[teki];						//敵が向ききったフラグ
 
+
+
+
+
+
+	//経路探査用プログラム
+
+
+
+	CVector3 EnemyPath[21];
+	int path_f[teki][21];
+	int find_f[teki];
+	CVector3 teki_to_path_vector[teki][21];
+	float teki_to_path[teki][21];
+	int target_num = 0;
+
+
 };
