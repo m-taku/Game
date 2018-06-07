@@ -60,6 +60,8 @@ public:
 	void Loop_Walk_Animation();//歩き続けるときの処理。
 
 	void Loop_Run_Animation();//走り続けるときの処理。
+
+	void Zombie_Walk_Animation();//ゾンビ化NPCが歩き続けるときの処理。
 	//void Resistance_Animation();//抵抗しているときの処理。
 	//void NPC_Attack_Animation();//ゾンビ化NPCが攻撃するときの処理。
 	/////////////////////////////////////////////////////////////////////////
@@ -89,6 +91,7 @@ protected:
 		Idle,              //立ち状態
 		Loop_Walk,         //歩き続け
 		Loop_Run,          //走り続け
+		Zombie_Walk,       //ゾンビ化NPCの歩き
 		Resistance,        //抵抗
 		NPC_Attack      //ゾンビ化NPCの攻撃
 	};
