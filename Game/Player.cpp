@@ -39,6 +39,7 @@ bool Player::Start()
 	const wchar_t name[20] = { 'h','e','a','d' };
 	m_skinModelData.Load(L"modelData/liam.cmo");//ÉvÉåÉCÉÑÅ[ÇèëÇØ
 	m_skinModel.Init(m_skinModelData);
+	
 	m_animclip[idle].SetLoopFlag(true);
 	m_animclip[walk].SetLoopFlag(true);
 	m_animclip[attack].SetLoopFlag(false);
@@ -90,9 +91,8 @@ bool Player::Start()
 void Player::Update()
 {
 	
-
 	//m_animation.Play(idle,0.2);
-
+	
 
 	m_moveSpeed.z = 0.0f;
 	m_moveSpeed.x = 0.0f;
@@ -184,7 +184,6 @@ void Player::Update()
 		}
 		attackcounter++;
 	}
-
 	m_position = m_charaCon.Execute(GameTime().GetFrameDeltaTime(), m_moveSpeed);
 	if (m_position.y <= -100.0f) {
 		m_position.y = -100.0f;
@@ -197,8 +196,8 @@ void Player::Update()
 	{
 		m_animation.Play(walk, 0.2f);
 	}
-	
-	m_skinModel.Update(m_position, m_rotation, CVector3::One*20.0f);
+	Setposition(m_position);
+	m_skinModel.Update(m_position, m_rotation, { 20.0f,20.0f,20.0f });// CVector3::One*20.0f);
 	const CMatrix& boneM = m_skinModelData.GetSkeleton().GetBone(boneNo)->GetWorldMatrix();
 
 	bonepos.x = boneM.m[3][0];

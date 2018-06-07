@@ -6,19 +6,26 @@ public:
 	~Human();
 	bool Start();
 	void Update();
-	CVector3 m_position = CVector3::Zero;		//座標。
-	CVector3 m_movespeed = CVector3::Zero;		//移動速度。
-	CQuaternion qBias_x;
-	CQuaternion qBias_z;
-	CQuaternion rotation(float a) {
-		qBias_x.SetRotationDeg(CVector3::AxisY, 0.0f);
-		qBias_z.SetRotationDeg(CVector3::AxisY, a);
-		qBias_x.Multiply(qBias_z);
-		return qBias_x;
+	void Setposition(CVector3 position)
+	{
+		H_position = position;
 	}
+	CVector3 Getposition()
+	{
+		return H_position;
+	}
+	void SetZonbe()
+	{
+		Zonbe =true;
+	}
+	bool GetZonbi()
+	{
+		return Zonbe;
+	}
+private:
+	CVector3 H_position = CVector3::Zero;		//座標。
 	CVector3 kakudai;
-	int Zonbe = 0;//ゾンビ化したときに+1する。
-
+	bool Zonbe =false;//ゾンビ化したときに+1する。
 };
 extern std::vector<Human*> Humans;
 
