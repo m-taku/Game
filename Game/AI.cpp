@@ -49,7 +49,7 @@ bool AI::Start()
 		40.0,			//”¼ŒaB 
 		150.0f,			//‚‚³B
 		m_position,		//‰ŠúˆÊ’uB
-		1
+		0
 	);
 	ai_NPCAnimationClips[0].Load(L"animData/shiminidle.tka");//‰¼BŒã‚Å“ü‚ê‚ëB
 	ai_NPCAnimationClips[0].SetLoopFlag(true);
@@ -57,8 +57,8 @@ bool AI::Start()
 	ai_NPCAnimationClips[1].SetLoopFlag(true);
 	ai_NPCAnimationClips[2].Load(L"animData/shiminrun.tka");//‰¼BŒã‚Å“ü‚ê‚ëB
 	ai_NPCAnimationClips[2].SetLoopFlag(true);
-	//ai_NPCAnimationClips[3].Load(L"animData/playerwalk.tka");//‰¼BŒã‚Å“ü‚ê‚ëB
-	//ai_NPCAnimationClips[3].SetLoopFlag(true);
+	ai_NPCAnimationClips[3].Load(L"animData/playerwalk.tka");//‰¼BŒã‚Å“ü‚ê‚ëB
+	ai_NPCAnimationClips[3].SetLoopFlag(true);
 
 	//ƒAƒjƒ[ƒVƒ‡ƒ“‚Ì‰Šú‰»B
 	ai_NPCAnimation.Init(
@@ -66,7 +66,7 @@ bool AI::Start()
 									//‚±‚ê‚ÅƒAƒjƒ[ƒVƒ‡ƒ“‚ÆƒXƒLƒ“ƒ‚ƒfƒ‹‚ªŠÖ˜A•t‚¯‚³‚ê‚éB
 		ai_NPCAnimationClips,	//ƒAƒjƒ[ƒVƒ‡ƒ“ƒNƒŠƒbƒv‚Ì”z—ñB
 
-		3						//ƒAƒjƒ[ƒVƒ‡ƒ“ƒNƒŠƒbƒv‚Ì”B
+		4					//ƒAƒjƒ[ƒVƒ‡ƒ“ƒNƒŠƒbƒv‚Ì”B
 	);
 	m_tekirot.MakeRotationFromQuaternion(m_rotation);
 	m_forward.x = m_tekirot.m[2][0];
@@ -583,13 +583,13 @@ void AI::NPCDeath()//€–SAÁ–Åˆ—B
 
 void AI::AI_Animation()//AI‚ÌƒAƒjƒ[ƒVƒ‡ƒ“§Œä
 {
-	if (m_speed <= 1.0) {
+	/*if (m_speed <= 1.0) {
 		Loop_Walk_Animation();
 	}
 	if (m_speed > 1.0) {
 		Loop_Run_Animation();
-	}
-	/*if (Zonbe == 0) {
+	}*/
+	if (GetZonbi()==false) {
 		if (m_speed <= 1.0) {
 			Loop_Walk_Animation();
 		}
@@ -598,10 +598,10 @@ void AI::AI_Animation()//AI‚ÌƒAƒjƒ[ƒVƒ‡ƒ“§Œä
 		}
 	}
 	else {
-		if (m_speed <= 1.0) {
+		
 			Zombie_Walk_Animation();
-		}
-	}*/
+		
+	}
 }
 void AI::Idle_Animation() //ƒLƒƒƒ‰ƒNƒ^[‚ª•à‚«‘±‚¯‚é‚ÌƒAƒjƒ[ƒVƒ‡ƒ“‚Ìˆ—B
 {
@@ -620,10 +620,10 @@ void AI::Loop_Run_Animation()//ƒLƒƒƒ‰ƒNƒ^[‚ª‘–‚è‘±‚¯‚é‚ÌƒAƒjƒ[ƒVƒ‡ƒ“‚Ìˆ—
 	ai_NPCAnimation.Play(2,0.7);
 }
 
-//void AI::Zombie_Walk_Animation()
-//{
-//	ai_NPCAnimation.Play(3, 0.7);
-//}
+void AI::Zombie_Walk_Animation()
+{
+	ai_NPCAnimation.Play(3, 0.7);
+}
 
 //void AI::Resistance_Animation()//ƒLƒƒƒ‰ƒNƒ^[‚ª’ïR‚µ‚Ä‚¢‚é‚ÌƒAƒjƒ[ƒVƒ‡ƒ“‚Ìˆ—B
 //{
