@@ -71,6 +71,7 @@ bool tekihei::Start()
 			tekipos[i], 	//‰ŠúˆÊ’uB
 			0
 		);
+
 	}
 	gaizi->SatFragu();
 	Pp = FindGO<Player>("Player");

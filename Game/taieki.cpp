@@ -73,7 +73,7 @@ void taieki::Update()
 		if (teikonFrag < 1) {
 			if (Lever >= 2) {
 				effect->Release();
-				effect->Play(L"effect/aura2.efk");
+				effect->Play(L"effect/aura3.efk");
 				effect->SetScale({ 100.0f,100.0f,100.0f });
 			}
 			else {

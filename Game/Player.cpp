@@ -61,7 +61,7 @@ bool Player::Start()
 	);
 	landpos.x = 2000.0f;
 	landpos.z = 0.0f;
-	hakaba->Play(L"effect/aura2.efk");
+	hakaba->Play(L"effect/aura3.efk");
 	hakaba->SetPosition(landpos);
 	hakaba->SetScale({ 40.0f,40.0f,40.0f });
 	hakaba->Release();

@@ -442,6 +442,9 @@
     <None Include="Assets\lever\larer_01.tks">
       <Filter>Assets\font</Filter>
     </None>
+    <None Include="Assets\effect\aura3.efk">
+      <Filter>Assets\effect</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ImageContentTask Include="Assets\sprite\ge-ji.png">
