@@ -1043,7 +1043,7 @@
       <Node>
         <CommonValues>
           <MaxGeneration>
-            <Infinite>True</Infinite>
+            <Value>600</Value>
           </MaxGeneration>
           <Life>
             <Center>60</Center>
@@ -1056,9 +1056,9 @@
             <Min>0.3</Min>
           </GenerationTime>
           <GenerationTimeOffset>
-            <Center>300</Center>
-            <Max>300</Max>
-            <Min>300</Min>
+            <Center>20</Center>
+            <Max>20</Max>
+            <Min>20</Min>
           </GenerationTimeOffset>
         </CommonValues>
         <LocationValues>
@@ -1095,14 +1095,14 @@
           <PVA>
             <Scale>
               <X>
-                <Center>0.3</Center>
-                <Max>0.3</Max>
-                <Min>0.3</Min>
+                <Center>0.6</Center>
+                <Max>0.6</Max>
+                <Min>0.6</Min>
               </X>
               <Y>
-                <Center>0.3</Center>
-                <Max>0.3</Max>
-                <Min>0.3</Min>
+                <Center>0.6</Center>
+                <Max>0.6</Max>
+                <Min>0.6</Min>
               </Y>
               <Z>
                 <Center>0.01</Center>
@@ -1124,23 +1124,21 @@
           <EffectsRotation>True</EffectsRotation>
           <Type>1</Type>
           <Sphere>
-            <Radius>
-              <Center>1</Center>
-              <Max>1</Max>
-              <Min>1</Min>
-            </Radius>
             <RotationX>
-              <Max>90</Max>
-              <Min>-90</Min>
+              <Center>-45</Center>
+              <Max>45</Max>
+              <Min>-135</Min>
+              <DrawnAs>0</DrawnAs>
             </RotationX>
             <RotationY>
-              <Max>90</Max>
-              <Min>-90</Min>
+              <Max>360</Max>
+              <Min>-360</Min>
+              <DrawnAs>0</DrawnAs>
             </RotationY>
           </Sphere>
         </GenerationLocationValues>
         <RendererCommonValues>
-          <ColorTexture>../../../../../../Desktop/sdfs.png</ColorTexture>
+          <ColorTexture>Texture/sdfs.png</ColorTexture>
           <AlphaBlend>2</AlphaBlend>
         </RendererCommonValues>
         <DrawingValues>
@@ -1175,7 +1173,6 @@
             </Color_Fixed_LR>
           </Sprite>
         </DrawingValues>
-        <IsRendered>False</IsRendered>
         <Name>Needle</Name>
         <Children />
       </Node>

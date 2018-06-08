@@ -140,6 +140,8 @@ void car::Move()
 		}else{	
 			ran->Setkakudo(0.5f);
 			ran->Sethaba(1.0f);
+
+			siya = 100.0f;
 			//frag = 0;
 			move = 1.0;
 		}
@@ -187,10 +189,10 @@ void car::Stop()
 			car* ai = (car*)go;
 			CVector3 kyori1 = ai->m_position - this->m_position;//自分との距離を求める。
 			float f = kyori1.Length();
-			if (f <= 900) { //距離が車間距離よりも短くなっていたら
+			if (f <= 3000) { //距離が車間距離よりも短くなっていたら
 				float kaku1 = acosf(ai->m_forward.Dot(this->m_forward));
 				float degree1 = CMath::RadToDeg(kaku1);
-				if (degree1 <= 90) {
+				if (degree1 <90) {
 					kyori1.Normalize();
 					kyori1.y = 0.0f;
 					float kaku = acosf(kyori1.Dot(m_forward));//２つのべクトルの内積のアークコサインを求める。(ラジアン)
@@ -200,6 +202,8 @@ void car::Stop()
 						{
 							if (ai->Humanfrag == true) {
 								move = -0.1;
+
+								siya = 5.0f;
 								Humanfrag = true;
 							}
 

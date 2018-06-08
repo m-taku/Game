@@ -23,7 +23,8 @@ public:
 	}
 	void NPCNormal();//市民の通常行動の処理。
 	void NPCNormal_Search();//市民が警戒する処理。
-	//void NPCEscape_NPC();//市民がゾンビNPCから逃げるときの処理。
+	void NPCEscape_NPC();//市民がゾンビNPCから逃げるときの処理。
+	void NPCChase();
 	//void NPCEscape_Player();//市民がゾンビプレイヤーから逃げるときの処理。
 	void NPCResistance_NPC();  //ゾンビに抵抗しているときの処理。
 	void NPCResistance_Player();  //ゾンビに抵抗しているときの処理。
@@ -31,12 +32,15 @@ public:
 	void NPCFade_Out();//一般市民がステージから出ていくまでの処理。
 	void NPCZombie_Normal();//ゾンビNPCの通常行動の処理。
 	void NPCZombie_Chase();//ゾンビNPCが市民を追跡するときの処理。
-	void NPCZombie_Attack();//特殊部隊とゾンビが戦う時の処理。
-	void NPCzombie_Return();
+	void NPCZombie_Attack();//特殊部隊とゾンビが戦う時の処理。//vs特殊部隊
+	void NPCzombie_Return();//殴った後帰る（いらん）
+	void nearestpas();//ランダムの初期化
+//	void NPCzombie_Escape();
 	void NPCescape();//市民がゾンビプレイヤーから逃げるときの処理。
 	void NPCReturn();//戻るとき
 	void NPCDeath();//死亡、消滅処理。
 	void Zonbesiya();
+	void NPCRunangle(CVector3 kyori);
 	void Render(CRenderContext& rc);
 	void Turn();
 	void DamageHantei();//ダメージ判定。
@@ -75,7 +79,8 @@ protected:
 		Resistance_NPC, //ゾンビに捕まって、抵抗しているとき。
 		Resistance_Player,
 		Escape,				//逃げてるとき。
-		//Escape_NPC,             //市民のNPCからの逃走状態。
+		Escape_NPC,             //市民のNPCからの逃走状態。
+		Chase,
 		//Escape_Player,       //市民のプレイヤーからの逃走状態。
 		Return,				//戻るとき。
 		Fade_Out,           //特殊部隊が出現して、一般市民が退場するとき。
@@ -135,13 +140,15 @@ private:
 	bool BattleFlag = false;     //特殊部隊と戦闘をしているかを示すフラグ。
 	int MyNumber = 0;               //今自分が存在しているパスの番号。
 	int ZombieChaseNumber = 0;      //ゾンビが追跡を始めた時に立っていたパスの番号。
-
+	float NPCHP=100.0f;
 	int iNo = 0;
 	int ima = 0;
 	int kore = 0;
 	int modori = 0;
 	int da = 0;
+	int mikata = 0;
 	int muteki_count = 0;//無敵時間のカウント。
+	int Chasefrag = 0;
 	bool ForceFlag = false;     //特殊部隊の出現を表すフラグ。
 	std::vector<int>::iterator pasu;
 	//CVector3 m_movespeed=CVector3::Zero;
@@ -152,10 +159,14 @@ private:
 	CVector3 m_movespeed = CVector3::Zero;		//移動速度。
 	AImove* work;
 	CVector3 m_position = CVector3::Zero;
+	AI* lam;
 	float atekfrag = 0;
 	float escapecaku = 30.0f;
 	int radam = 0;
+	int mokuhyouNo = 0;
 	tekihei* tekip;
+	int mokuhyou=1;
+	std::vector<AI*> mikatalest;
 	int mobe = 50;
 	std::vector<Human*>::iterator AIrest;
 	bool kannkaku = false;
