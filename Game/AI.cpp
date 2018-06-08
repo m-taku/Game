@@ -57,13 +57,16 @@ bool AI::Start()
 	ai_NPCAnimationClips[1].SetLoopFlag(true);
 	ai_NPCAnimationClips[2].Load(L"animData/shiminrun.tka");//仮。後で入れろ。
 	ai_NPCAnimationClips[2].SetLoopFlag(true);
+	//ai_NPCAnimationClips[3].Load(L"animData/playerwalk.tka");//仮。後で入れろ。
+	//ai_NPCAnimationClips[3].SetLoopFlag(true);
 
 	//アニメーションの初期化。
 	ai_NPCAnimation.Init(
 		m_skinModel,			//アニメーションを流すスキンモデル。
 									//これでアニメーションとスキンモデルが関連付けされる。
 		ai_NPCAnimationClips,	//アニメーションクリップの配列。
-		4							//アニメーションクリップの数。
+
+		3						//アニメーションクリップの数。
 	);
 	m_tekirot.MakeRotationFromQuaternion(m_rotation);
 	m_forward.x = m_tekirot.m[2][0];
@@ -580,29 +583,47 @@ void AI::NPCDeath()//死亡、消滅処理。
 
 void AI::AI_Animation()//AIのアニメーション制御
 {
-	if (m_speed<=1.0) {
+	if (m_speed <= 1.0) {
 		Loop_Walk_Animation();
 	}
 	if (m_speed > 1.0) {
 		Loop_Run_Animation();
 	}
+	/*if (Zonbe == 0) {
+		if (m_speed <= 1.0) {
+			Loop_Walk_Animation();
+		}
+		if (m_speed > 1.0) {
+			Loop_Run_Animation();
+		}
+	}
+	else {
+		if (m_speed <= 1.0) {
+			Zombie_Walk_Animation();
+		}
+	}*/
 }
 void AI::Idle_Animation() //キャラクターが歩き続ける時のアニメーションの処理。
 {
-	ai_NPCAnimation.Play(0, 0.2);
+	ai_NPCAnimation.Play(0, 0.7);
 }
 
 
 void AI::Loop_Walk_Animation()//キャラクターが歩き続ける時のアニメーションの処理。
 {
-	ai_NPCAnimation.Play(1,0.2);
+	ai_NPCAnimation.Play(1,0.7);
 }
 
 
 void AI::Loop_Run_Animation()//キャラクターが走り続ける時のアニメーションの処理。
 {
-	ai_NPCAnimation.Play(2,0.2);
+	ai_NPCAnimation.Play(2,0.7);
 }
+
+//void AI::Zombie_Walk_Animation()
+//{
+//	ai_NPCAnimation.Play(3, 0.7);
+//}
 
 //void AI::Resistance_Animation()//キャラクターが抵抗している時のアニメーションの処理。
 //{

@@ -82,6 +82,7 @@ namespace tkEngine{
 		void Setm_zonbi(ID3D11ShaderResourceView* tex)
 		{
 			m_zonbi = tex;
+			m_zonbi->AddRef();
 		}
 		void SetNormalMap(ID3D11ShaderResourceView* tex)
 		{
