@@ -57,14 +57,23 @@ public:
 
 	//Œo˜H’T¸—pƒvƒƒOƒ‰ƒ€
 
-
+	
+	float length(CVector3 vector);
 
 	CVector3 EnemyPath[21];
-	int path_f[teki][21];
+	int path_f[teki];
 	int find_f[teki];
-	CVector3 teki_to_path_vector[teki][21];
+	CVector3 teki_to_path_vector[teki];
 	float teki_to_path[teki][21];
-	int target_num = 0;
-
-
+	int target_num[teki];
+	int old_target_num[teki];
+	int old_old_target_num[teki];
+	int old_old_old_target_num[teki];
+	int moving[teki];
+	CVector3 old_pos[teki];
+	int tekistop_counter[teki];
+	CVector3 oldpos_to_tekipos_vector[teki];
+	float oldpos_to_tekipos[teki];
+	int stop_target_num[teki];
+	int stop_f[teki];
 };
