@@ -79,4 +79,8 @@ void Pasu::Load(const wchar_t* filePath,int b)
 		Pasuresuto.push_back(kan);
 	}
 
+	for (int l = 0; l < Pasuresuto.size(); l++) {
+		if (Pasuresuto[l].No.size()>1)
+			resuto.push_back(Pasuresuto[l]);
+	}
 }

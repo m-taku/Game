@@ -34,7 +34,7 @@ private:
 	void Stop();
 	int fa = 0;
 	bool frag = false;
-	float siya = 60.0f;
+	float siya = 100.0f;
 	bool Humanfrag = false;
 	carRender* m_Render;
 };

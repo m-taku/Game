@@ -40,10 +40,22 @@ public:
 	//{
 	//	return &m_edgeList[no];
 	//}
+	const kanren* Getresuto(int No)
+	{
+		
+		return &resuto[No];
+	}
+	
+	int GetresutoSaiz()
+	{
+
+		return resuto.size();
+	}
 	std::vector<CVector3> m_pointList;	//!<座標のリスト。
 	kanren kan;
 	std::vector<kanren> Pasuresuto;
 private:
+	std::vector<kanren> resuto;
 	std::vector<int> No2;
 
 	std::vector<std::vector<int>> No12;
