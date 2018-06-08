@@ -73,8 +73,8 @@ void taieki::Update()
 				DeleteGO(this);
 			}
 
-			//i番目の敵兵との距離が50以下かつ、体液のY座標が15.0以下(着弾)だったら
-			if (tekikyori[i] <= 400.0f&&tpos.y<=15.0f)
+			//i番目の敵兵との距離が200以下かつ、体液のY座標が15.0以下(着弾)だったら
+			if (tekikyori[i] <= 200.0f&&tpos.y<=15.0f)
 			{
 					tekip->tekiHP[i] -= 1.0f;//i番目の敵兵のHPを毎フレームごとに0.01ずつ減らす。
 			}

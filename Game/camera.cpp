@@ -26,7 +26,7 @@ void camera::Update()
 	
 	if (m_player != NULL){
 		Pboneforward = m_player->Getboneforward();
-		cameradeg += rStick_y*(-5.0f);
+		cameradeg += rStick_y*(-5.0f);//‚±ª‚±«‚ð•Ï‚¦‚é‚±‚Æ‚ÅƒJƒƒ‰‘€ì‚Ìã‰º‚ð•Ï‚¦‚ç‚ê‚éB
 		Crot.SetRotationDeg(m_player->Getboneright(), cameradeg);
 		Crot.Multiply(Pboneforward);
 		position_of_player = m_player->Getbonepos();
