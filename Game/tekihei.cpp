@@ -24,8 +24,8 @@ bool tekihei::Start()
 {
 	
 	gaizi = FindGO<Geizi>("Geizi");
-	animclip[0].Load(L"animData/tekiidle.tka");
-	animclip[0].SetLoopFlag(true);
+	/*animclip[0].Load(L"animData/tekiidle.tka");
+	animclip[0].SetLoopFlag(true);*/
 
 	NewGO<item>(0, "item");
 
@@ -54,12 +54,23 @@ bool tekihei::Start()
 
 	for (int i = 0;i < teki;i++)
 	{
-		find_f[i] = 0;
-
+		stop_target_num[i] = 999;
+		stop_f[i] = 0;
 		for (int j = 0;j < 21;j++)
 		{
-			path_f[i][j] = 0;
+			teki_to_path[i][j]= FLT_MAX;
 		}
+		oldpos_to_tekipos_vector[i] = CVector3::Zero;
+		tekistop_counter[i] = 0;
+
+		old_old_target_num[i] = 100;
+		target_num[i] = 0;
+		old_target_num[i] = 100;
+		old_old_old_target_num[i] = 100;
+		moving[i] = 0;
+		find_f[i] = 0;
+		path_f[i] = 0;
+
 
 		Dtekiangle[i] = 0.0f;
 		tekianglecompF[i] = 0;
@@ -86,13 +97,13 @@ bool tekihei::Start()
 		tekiskinModel[i].Init(tekiskinModelData[i]);
 		trot[i].SetRotationDeg(CVector3::AxisY, -90.0f);//‰ñ“]
 		tekirot[i].Multiply(trot[i]);
-		tekiskinModel[i].SetShadowCasterFlag(true);
+		/*tekiskinModel[i].SetShadowCasterFlag(true);
 
 		tekianimation[i].Init(
 			tekiskinModel[i],
 			animclip,
 			1
-		);
+		);*/
 		
 		tekipos[i].y += 1000.0f;
 		tekipos[i].z += i * 150;
@@ -108,7 +119,12 @@ bool tekihei::Start()
 	Pp = FindGO<Player>("Player");
 	return true;
 }
+float tekihei::length(CVector3 vector)
+{
+	float leng = sqrt(vector.x*vector.x + vector.y*vector.y + vector.z*vector.z);
+	return leng;
 
+}
 void tekihei::Update()
 {
 	for (int i = 0;i < teki;i++)
@@ -118,12 +134,49 @@ void tekihei::Update()
 		
 		if (tekiheiflag[i] == 1)
 		{
+			
 			//“GƒpƒX
 			if (find_f[i] == 0)
 			{
+				
+				
+				
+					for (int j = 0;j < 21;j++)
+					{
 
-				tekianimation[i].Play(0);
+						
+						teki_to_path_vector[i] = EnemyPath[j] - tekipos[i];
 
+						if (length(teki_to_path_vector[i]) < teki_to_path[i][j])
+						{
+							if (j != old_target_num[i] && j != old_old_target_num[i])
+							{
+								teki_to_path[i][j] = length(teki_to_path_vector[i]);//teki_to_path_vector[i].Length();
+								target_num[i] = j;
+							}
+							
+						}
+
+					}
+				
+				
+				
+				
+				
+
+					
+				
+
+				if (teki_to_path_vector[i].Length() < 200.0f)
+				{
+					old_target_num[i] = target_num[i];
+					old_old_target_num[i] = old_target_num[i];
+					stop_f[i] = 0;
+
+				}
+				
+				
+				teki_to_path_vector[i].Normalize();
 				m_tekirot[i].MakeRotationFromQuaternion(tekirot[i]);
 				tekiright[i].x = m_tekirot[i].m[0][0];
 				tekiright[i].y = m_tekirot[i].m[0][1];
@@ -142,39 +195,71 @@ void tekihei::Update()
 
 				teki_to_player[i].Normalize();
 
+
+
 				teki_siya[i] = acosf(tekifoward[i].Dot(teki_to_player[i]));//Ž‹–ì‚ÌŒvŽZ
 				teki_siya[i] = (180.0 / 3.14159)*teki_siya[i];
 				if (teki_siya[i] <= 45.0f&&teki_to_player_vector[i] < 1000.0f)
 				{
 					find_f[i] = 1;
 				}
-				for (int j = 0;j < 21;j++)
-				{
-					teki_to_path_vector[i][j] = EnemyPath[j] - tekipos[i];
-					teki_to_path[i][j] = sqrt(teki_to_path_vector[i][j].x*teki_to_path_vector[i][j].x + teki_to_path_vector[i][j].y*teki_to_path_vector[i][j].y + teki_to_path_vector[i][j].z*teki_to_path_vector[i][j].z);
-					
 
-				}
-				for (int c = 0;c < 20;c++)
+				
+
+				teki_angle[i] = atanf(tekiright[i].Dot(teki_to_path_vector[i]));//ƒvƒŒƒCƒ„[‚ÉŒü‚¯‚éŒvŽZ
+				teki_angle[i] = (180.0 / 3.14159)*teki_angle[i];
+				trot[i].SetRotationDeg(CVector3::AxisY, teki_angle[i]);//‰ñ“]
+				tekirot[i].Multiply(trot[i]);
+
+				if (teki_to_path[i][target_num[i]] > 1.0f)
 				{
-					/*if (teki_to_path[i][c] < teki_to_path[i][c+1])
-					{
-					target_num = c;
-					}*/
-					if (teki_to_path[i][c] > teki_to_path[i][c + 1])
-					{
-						target_num = c + 1;
-					}
-				}
-				teki_to_path_vector[i][target_num].Normalize();
-				if (teki_to_path[i][target_num] > 1.0f)
-				{
-					tekispeed[i] = teki_to_path_vector[i][target_num] * 300.0f;
+					tekispeed[i] = teki_to_path_vector[i] * 300.0f;
 				}
 				tekispeed[i].y -= 980.0f * GameTime().GetFrameDeltaTime();
 				if (m_charaCon[i].IsOnGround()) {
 					//’n–Ê‚É‚Â‚¢‚½B
 					tekispeed[i].y = 0.0f;
+				}
+				if (tamaflag[i] == 1)
+				{
+					playerpos = Pp->GetPosition();
+					playerpos.y += 50.0f;
+					tama_to_player[i] = playerpos - tamapos[i];
+					tama_to_player_vector[i] = sqrt(tama_to_player[i].x*tama_to_player[i].x + tama_to_player[i].y*tama_to_player[i].y + tama_to_player[i].z*tama_to_player[i].z);
+
+					teki_to_tama[i] = tamapos[i] - tekipos[i];
+					teki_to_tama_vector[i] = sqrt(teki_to_tama[i].x*teki_to_tama[i].x + teki_to_tama[i].y*teki_to_tama[i].y + teki_to_tama[i].z*teki_to_tama[i].z);
+					if (tama_to_player_vector[i] > 50.0f && damageflag[i] == 0)
+					{
+						tamapos[i] += tamamuki[i] * 30.0f;
+						tamaEF[i]->SetPosition(tamapos[i]);
+					}
+
+
+					if (tama_to_player_vector[i] <= 50.0f&& damageflag[i] == 0)
+					{
+						damageflag[i] = 1;
+						gaizi->satHP(0.1);
+					}
+					if (damageflag[i] == 1)
+					{
+						tamaEF[i]->SetScale({ 100.0f,100.0f,100.0f });
+						time[i]++;
+
+						if (time[i] >= 10)
+						{
+							tamaEF[i]->Release();
+							tamaflag[i] = 0;
+							time[i] = 0;
+							damageflag[i] = 0;
+						}
+					}
+					if (teki_to_tama_vector[i] >= 1000)
+					{
+						tamaEF[i]->Release();
+						tamaflag[i] = 0;
+					}
+
 				}
 				tekipos[i] = m_charaCon[i].Execute(GameTime().GetFrameDeltaTime(), tekispeed[i]);
 				tekiskinModel[i].Update(tekipos[i], tekirot[i], { 1.0f,1.0f,1.0f });
@@ -186,7 +271,7 @@ void tekihei::Update()
 
 
 			if (find_f[i] == 1){
-			tekianimation[i].Play(0);
+		//	tekianimation[i].Play(0);
 
 			m_tekirot[i].MakeRotationFromQuaternion(tekirot[i]);
 			tekiright[i].x = m_tekirot[i].m[0][0];
