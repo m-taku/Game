@@ -28,7 +28,7 @@ bool taieki::Start()
 	CF = MainCamera().GetForward();
 	CF.Normalize();
 	tpos = player->GetPosition();//体液はプレイヤーから出されるので、体液の座標はプレイヤーと同じ座標にする。
-	tpos.y += 130.0f;//体液を頭から出すために高さを調整。
+	tpos.y += 160.0f;//体液を頭から出すために高さを調整。
 
 	PS = player->GetMoveSpeed();//プレイヤーの移動速度を格納。
 
@@ -51,7 +51,7 @@ void taieki::ThisDelete()
 }
 void taieki::Update()
 {
-	for (int i = 0;i < teki;i++)//10回繰り返す。
+	for (int i = 0; i < teki; i++)//10回繰り返す。
 	{
 		if (tekip != NULL)//敵兵のインスタンスを格納していたら
 		{
@@ -62,7 +62,7 @@ void taieki::Update()
 			taieki_to_tekipos[i].Normalize();
 
 			//i番目の敵兵との距離が50以下かつ、i番目の敵兵が生存していたら
-			if (tekikyori[i] <= 50.0f&&tekip->tekiheiflag[i]==1)
+			if (tekikyori[i] <= 50.0f&&tekip->tekiheiflag[i] == 1)
 			{
 				tekip->tekiHP[i] = tekip->tekiHP[i] - 5.0f; //i番目の敵兵のHPを-1する。
 				/*effect = NewGO<prefab::CEffect>(0);
@@ -73,10 +73,10 @@ void taieki::Update()
 				DeleteGO(this);
 			}
 
-			//i番目の敵兵との距離が200以下かつ、体液のY座標が15.0以下(着弾)だったら
-			if (tekikyori[i] <= 200.0f&&tpos.y<=15.0f)
+			//i番目の敵兵との距離が200以下かつ、体液のY座標が10.0以下(着弾)だったら
+			if ((tekikyori[i] <= 100.0f)&&(tpos.y <= 10.0f))
 			{
-					tekip->tekiHP[i] -= 1.0f;//i番目の敵兵のHPを毎フレームごとに0.01ずつ減らす。
+				tekip->tekiHP[i] -= 5.0f;//i番目の敵兵のHPを毎フレームごとに0.01ずつ減らす。
 			}
 		}
 	}
@@ -93,6 +93,7 @@ void taieki::Update()
 				Taim = 120;
 			}
 
+			
 			
 			/*effect = NewGO<prefab::CEffect>(0);
 			e_pos = tpos;

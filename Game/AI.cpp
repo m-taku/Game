@@ -51,6 +51,7 @@ bool AI::Start()
 		m_position,		//初期位置。
 		0
 	);
+<<<<<<< HEAD
 	ai_NPCAnimationClips[shiminidle].Load(L"animData/shiminidle.tka");//仮。後で入れろ。
 	ai_NPCAnimationClips[shiminidle].SetLoopFlag(true);
 	ai_NPCAnimationClips[shiminwalk].Load(L"animData/shiminwalk.tka");//仮。後で入れろ。
@@ -64,7 +65,6 @@ bool AI::Start()
 	ai_NPCAnimationClips[Zonbiattack].Load(L"animData/playerattack.tka");//仮。後で入れろ。
 	ai_NPCAnimationClips[Zonbiattack].SetLoopFlag(true);
 	
-
 	//アニメーションの初期化。
 	ai_NPCAnimation.Init(
 		m_skinModel,			//アニメーションを流すスキンモデル。

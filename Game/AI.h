@@ -94,7 +94,15 @@ protected:
 		pa_num				//paの数
 	};
 
-
+	enum AnimationClip {//各アニメーションのクリップ。
+		Idle,              //立ち状態
+		Loop_Walk,         //歩き続け
+		Loop_Run,          //走り続け
+		Zombie_Walk,       //ゾンビ化NPCの歩き           
+		//Resistance,        //抵抗
+		//NPC_Attack      //ゾンビ化NPCの攻撃
+		Animnum           //AnimationClipの総数
+	};
 
 	enum npcpattern pa;
 	CCharacterController A_charaCon;

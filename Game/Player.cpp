@@ -99,10 +99,29 @@ void Player::Update()
 	//左スティックの入力量を受け取る。
 	float lStick_x = Pad(0).GetLStickXF()*500.0f;
 	float lStick_y = Pad(0).GetLStickYF()*600.0f;
+
 	//右スティックの入力量を受け取る。
 	float rStick_x = Pad(0).GetRStickXF();
 	float rStick_y = Pad(0).GetRStickYF();
 
+	if (Pad(0).IsTrigger(enButtonX)) //Xボタンが押されたら
+	{
+		switch (X_button_Flag)
+		{
+		case false://まだXボタンを押されていなかったら
+			Log_lStick_x = lStick_x;
+			Log_lStick_y = lStick_y;
+			X_button_Flag = true;//Xボタンが押されて、ロックされた
+			break;
+		case true://既にXボタンが押されていたら
+			Log_lStick_x = 0.0f;
+			Log_lStick_y = 0.0f;
+			X_button_Flag = false;//再度Xボタンが押されたので、ロックを解除
+		default:
+			X_button_Flag = false;//再度Xボタンが押されたので、ロックを解除
+			break;
+		}
+	}
 	
 	/*rotX += rStick_y * 5;*/
 	rotY = rStick_x * 5;
@@ -145,9 +164,15 @@ void Player::Update()
 	m_rite.y = mRot.m[0][1];
 	m_rite.z = mRot.m[0][2];
 	m_rite.Normalize();
-	m_moveSpeed += m_forward*lStick_y;
-	m_moveSpeed += m_rite * lStick_x;
-	
+	if (X_button_Flag == false) {
+		m_moveSpeed += m_forward * lStick_y;
+		m_moveSpeed += m_rite * lStick_x;
+	}
+	else if (X_button_Flag == true) {
+		m_moveSpeed += m_forward * Log_lStick_y;
+		m_moveSpeed += m_rite * lStick_x;
+	}
+
 	if (hakaba->IsPlay()&&landflag == 1 && land_to_player_vector <= 50.0f)
 	{
 		m_moveSpeed = CVector3::Zero;
@@ -184,7 +209,7 @@ void Player::Update()
 		}
 		attackcounter++;
 	}
-	m_position = m_charaCon.Execute(GameTime().GetFrameDeltaTime(), m_moveSpeed);
+	m_position = m_charaCon.Execute(GameTime().GetFrameDeltaTime(), m_moveSpeed);//移動。
 	if (m_position.y <= -100.0f) {
 		m_position.y = -100.0f;
 	}
