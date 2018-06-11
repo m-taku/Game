@@ -26,6 +26,7 @@ public:
 	void NPCEscape_NPC();//市民がゾンビNPCから逃げるときの処理。
 	void NPCChase();
 	//void NPCEscape_Player();//市民がゾンビプレイヤーから逃げるときの処理。
+	void Gathered();				//ゾンビが....集結する！！！！！！
 	void NPCResistance_NPC();  //ゾンビに抵抗しているときの処理。
 	void NPCResistance_Player();  //ゾンビに抵抗しているときの処理。
 	void NPCDamage();//やられてからゾンビNPCになるまでの処理。
@@ -67,7 +68,7 @@ public:
 
 	void Zombie_Walk_Animation();//ゾンビ化NPCが歩き続けるときの処理。
 	//void Resistance_Animation();//抵抗しているときの処理。
-	//void NPC_Attack_Animation();//ゾンビ化NPCが攻撃するときの処理。
+	void NPC_Attack_Animation();//ゾンビ化NPCが攻撃するときの処理。
 	/////////////////////////////////////////////////////////////////////////
 	/////////////////////////////////////////////////////////////////////////
 
@@ -85,6 +86,7 @@ protected:
 		Return,				//戻るとき。
 		Fade_Out,           //特殊部隊が出現して、一般市民が退場するとき。
 		Zombie_Normal,      //ゾンビ化NPCの通常状態。
+		Zonbie_Gathered,    //ゾンビの集結（プレイヤーの位置）
 		Zombie_Chase,       //ゾンビ化NPCの追跡状態。
 		Zombie_Attack,      //ゾンビ化NPCの攻撃状態。
 		Zombie_Return,		//ゾンビ化NPCの元の位置に戻る
@@ -92,14 +94,6 @@ protected:
 		pa_num				//paの数
 	};
 
-	enum AnimationClip {//各アニメーションのクリップ。
-		Idle,              //立ち状態
-		Loop_Walk,         //歩き続け
-		Loop_Run,          //走り続け
-		Zombie_Walk,       //ゾンビ化NPCの歩き
-		Resistance,        //抵抗
-		NPC_Attack      //ゾンビ化NPCの攻撃
-	};
 
 
 	enum npcpattern pa;
@@ -124,23 +118,22 @@ protected:
 	CVector3 before_m_position = CVector3::Zero;		//一つ前の座標。
 	std::vector<int> jyunban;
 
-	AI* Tansaku = nullptr;  //探索結果のオブジェクトを格納する。o
 	AI*Chawse_Zombie;  //追跡してくるキャラを格納する。
 	int satForceFlag()
 	{
 		 ForceFlag = true;     //特殊部隊の出現を表すフラグ。
 	}
 	float m_speed;
-	bool muteki_Flag = false;//無敵になっているかどうかを表すフラグ。
-	CAnimation ai_NPCAnimation;				//アニメーション。
-	CAnimationClip ai_NPCAnimationClips[4];	//アニメーションクリップ。
 private:
+	bool muteki_Flag = false;//無敵になっているかどうかを表すフラグ。
 	bool DamageFlag = false;      //ダメージを受けたかを示すフラグ。
 	bool HitFlag = false;      //ダメージを与えたかを示すフラグ。
 	bool BattleFlag = false;     //特殊部隊と戦闘をしているかを示すフラグ。
+	bool Raifu_f = false;
 	int MyNumber = 0;               //今自分が存在しているパスの番号。
 	int ZombieChaseNumber = 0;      //ゾンビが追跡を始めた時に立っていたパスの番号。
 	float NPCHP=100.0f;
+	float NPCMAXHP = 100.0f;
 	int iNo = 0;
 	int ima = 0;
 	int kore = 0;
@@ -156,6 +149,7 @@ private:
 	int No = 0;
 	int no = 0;
 	float sinsoku = 0.0f;
+	AI* Tansaku = nullptr;  //探索結果のオブジェクトを格納する。o
 	CVector3 m_movespeed = CVector3::Zero;		//移動速度。
 	AImove* work;
 	CVector3 m_position = CVector3::Zero;
@@ -169,6 +163,19 @@ private:
 	std::vector<AI*> mikatalest;
 	int mobe = 50;
 	std::vector<Human*>::iterator AIrest;
+	enum animation {
+		shiminidle,
+		shiminwalk,
+		shiminrun,
+		shiminattack,
+		Zonbiwalk,
+		Zonbiattack,
+		animnum
+	};
+	float atakkukyori = 100.0f;
+	int furag = 0;
+	CAnimation ai_NPCAnimation;				//アニメーション。
+	CAnimationClip ai_NPCAnimationClips[animnum];	//アニメーションクリップ。
 	bool kannkaku = false;
 	int Leftfrag = 0;
 	bool kaiten = false;

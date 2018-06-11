@@ -76,7 +76,7 @@ void Osu::NPCResistance_Player()
 		if (count >= 60) {//countが60以上になったら
 			count = 30;//値を初期化。
 			i = 0;//フレームカウントの値を初期化。
-			muteki_Flag = true;//無敵フラグをあげて、無敵化する。
+		//	muteki_Flag = true;//無敵フラグをあげて、無敵化する。
 			pa = Return;//パターンをリターンに変える。
 		}
 	
