@@ -51,14 +51,14 @@ bool AI::Start()
 		m_position,		//初期位置。
 		0
 	);
-	ai_NPCAnimationClips[0].Load(L"animData/shiminidle.tka");//仮。後で入れろ。
-	ai_NPCAnimationClips[0].SetLoopFlag(true);
-	ai_NPCAnimationClips[1].Load(L"animData/shiminwalk.tka");//仮。後で入れろ。
-	ai_NPCAnimationClips[1].SetLoopFlag(true);
-	ai_NPCAnimationClips[2].Load(L"animData/shiminrun.tka");//仮。後で入れろ。
-	ai_NPCAnimationClips[2].SetLoopFlag(true);
-	ai_NPCAnimationClips[3].Load(L"animData/playerwalk.tka");//仮。後で入れろ。
-	ai_NPCAnimationClips[3].SetLoopFlag(true);
+	ai_NPCAnimationClips[Idle].Load(L"animData/shiminidle.tka");//仮。後で入れろ。
+	ai_NPCAnimationClips[Idle].SetLoopFlag(true);
+	ai_NPCAnimationClips[Loop_Walk].Load(L"animData/shiminwalk.tka");//仮。後で入れろ。
+	ai_NPCAnimationClips[Loop_Walk].SetLoopFlag(true);
+	ai_NPCAnimationClips[Loop_Run].Load(L"animData/shiminrun.tka");//仮。後で入れろ。
+	ai_NPCAnimationClips[Loop_Run].SetLoopFlag(true);
+	ai_NPCAnimationClips[Zombie_Walk].Load(L"animData/playerwalk.tka");//仮。後で入れろ。
+	ai_NPCAnimationClips[Zombie_Walk].SetLoopFlag(true);
 
 	//アニメーションの初期化。
 	ai_NPCAnimation.Init(
@@ -66,7 +66,7 @@ bool AI::Start()
 									//これでアニメーションとスキンモデルが関連付けされる。
 		ai_NPCAnimationClips,	//アニメーションクリップの配列。
 
-		4					//アニメーションクリップの数。
+		Animnum 					//アニメーションクリップの数。
 	);
 	m_tekirot.MakeRotationFromQuaternion(m_rotation);
 	m_forward.x = m_tekirot.m[2][0];
@@ -605,24 +605,24 @@ void AI::AI_Animation()//AIのアニメーション制御
 }
 void AI::Idle_Animation() //キャラクターが歩き続ける時のアニメーションの処理。
 {
-	ai_NPCAnimation.Play(0, 0.7);
+	ai_NPCAnimation.Play(Idle, 0.7);
 }
 
 
 void AI::Loop_Walk_Animation()//キャラクターが歩き続ける時のアニメーションの処理。
 {
-	ai_NPCAnimation.Play(1,0.7);
+	ai_NPCAnimation.Play(Loop_Walk,0.7);
 }
 
 
 void AI::Loop_Run_Animation()//キャラクターが走り続ける時のアニメーションの処理。
 {
-	ai_NPCAnimation.Play(2,0.7);
+	ai_NPCAnimation.Play(Loop_Run,0.7);
 }
 
 void AI::Zombie_Walk_Animation()
 {
-	ai_NPCAnimation.Play(3, 0.7);
+	ai_NPCAnimation.Play(Zombie_Walk, 0.7);
 }
 
 //void AI::Resistance_Animation()//キャラクターが抵抗している時のアニメーションの処理。

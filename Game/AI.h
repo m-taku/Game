@@ -96,9 +96,10 @@ protected:
 		Idle,              //—§‚¿ó‘Ô
 		Loop_Walk,         //•à‚«‘±‚¯
 		Loop_Run,          //‘–‚è‘±‚¯
-		Zombie_Walk,       //ƒ]ƒ“ƒr‰»NPC‚Ì•à‚«
-		Resistance,        //’ïR
-		NPC_Attack      //ƒ]ƒ“ƒr‰»NPC‚ÌUŒ‚
+		Zombie_Walk,       //ƒ]ƒ“ƒr‰»NPC‚Ì•à‚«           
+		//Resistance,        //’ïR
+		//NPC_Attack      //ƒ]ƒ“ƒr‰»NPC‚ÌUŒ‚
+		Animnum           //AnimationClip‚Ì‘”
 	};
 
 
