@@ -189,7 +189,7 @@ void car::Stop()
 			car* ai = (car*)go;
 			CVector3 kyori1 = ai->m_position - this->m_position;//©•ª‚Æ‚Ì‹——£‚ğ‹‚ß‚éB
 			float f = kyori1.Length();
-			if (f <= 3000) { //‹——£‚ªÔŠÔ‹——£‚æ‚è‚à’Z‚­‚È‚Á‚Ä‚¢‚½‚ç
+			if (f <= 1000) { //‹——£‚ªÔŠÔ‹——£‚æ‚è‚à’Z‚­‚È‚Á‚Ä‚¢‚½‚ç
 				float kaku1 = acosf(ai->m_forward.Dot(this->m_forward));
 				float degree1 = CMath::RadToDeg(kaku1);
 				if (degree1 <90) {

@@ -13,6 +13,7 @@ Human::~Human()
 {
 	auto ka= std::find(Humans.begin(), Humans.end(), this);
 	Humans.erase(ka);
+
 }
 bool Human::Start()
 {

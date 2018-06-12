@@ -422,6 +422,7 @@
     <CustomBuild Include="Assets\modelData\liam.tks">
       <Filter>Assets\modelData</Filter>
     </CustomBuild>
+    <CustomBuild Include="Assets\effect\aura3.efk" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\modelData\livingbuildings.png">
@@ -441,9 +442,6 @@
   <ItemGroup>
     <None Include="Assets\lever\larer_01.tks">
       <Filter>Assets\font</Filter>
-    </None>
-    <None Include="Assets\effect\aura3.efk">
-      <Filter>Assets\effect</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
