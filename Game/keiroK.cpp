@@ -185,6 +185,7 @@ void keiroK::tansa(CVector3 i, CVector3 Ta, std::vector<int> *a,int Leftfrag)
 		if (sa > saa) {
 			sa = saa;
 			f = resuto1[h].No[0];
+			No = h;
 		}
 		if (saj > san) {
 			saj = san;

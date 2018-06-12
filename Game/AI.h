@@ -21,30 +21,30 @@ public:
 	{
 		game = ka;
 	}
-	void NPCNormal();//市民の通常行動の処理。
-	void NPCNormal_Search();//市民が警戒する処理。
-	void NPCEscape_NPC();//市民がゾンビNPCから逃げるときの処理。
-	void NPCChase();
-	//void NPCEscape_Player();//市民がゾンビプレイヤーから逃げるときの処理。
-	void Gathered();				//ゾンビが....集結する！！！！！！
-	void NPCResistance_NPC();  //ゾンビに抵抗しているときの処理。
-	void NPCResistance_Player();  //ゾンビに抵抗しているときの処理。
-	void NPCDamage();//やられてからゾンビNPCになるまでの処理。
-	void NPCFade_Out();//一般市民がステージから出ていくまでの処理。
-	void NPCZombie_Normal();//ゾンビNPCの通常行動の処理。
-	void NPCZombie_Chase();//ゾンビNPCが市民を追跡するときの処理。
-	void NPCZombie_Attack();//特殊部隊とゾンビが戦う時の処理。//vs特殊部隊
+	void NPCNormal();							//この時はまだ知らなかった…この街にゾンビがいるなんて…（市民の通常行動の処理）
+	void NPCNormal_Search();				    //おや？あれは？？？？？（市民の視野処理）
+	void NPCEscape_NPC();						//に～げるんだよ～～～（市民がゾンビNPCから逃げるときの処理。）
+	void NPCChase();							//やられる前に殺っちまえ～～～ーーーー（ゾンビを殴る処理）
+	//void NPCEscape_Player();					//市民がゾンビプレイヤーから逃げるときの処理。
+	void Gathered();							//主人様～～いまいきま～～す（ゾンビが集結する処理）
+	void NPCResistance_NPC();					//俺は…こんな奴なんかに…（市民ゾンビにやられたときの処理）
+	void NPCResistance_Player();				//我が人生に、一片の悔いなし！！！！（プレイヤーゾンビにやられた時の処理）
+	void NPCDamage();							//俺は人間をやめるぞ～～～～～（ゾンビ化処理。）
+	void NPCFade_Out();							//こんな町…もうおさらばだ（市民が町から出ていくまでの処理）
+	void NPCZombie_Normal();					//ここは…どこだ（ゾンビNPCランダム徘徊の処理）
+	void NPCZombie_Chase();						//お前が、死ぬまで、殴るのをやめない！！！（ゾンビNPCが市民を殴るの処理）
+	void NPCZombie_Attack();					//主人様にたてつく奴は許さね～～～（特殊部隊とゾンビが戦う時の処理）//vs特殊部隊
 	void NPCzombie_Return();//殴った後帰る（いらん）
-	void nearestpas();//ランダムの初期化
+	void nearestpas();							//ド～コ行こうかな～～～（ランダム徘徊処理の初期化）
 //	void NPCzombie_Escape();
-	void NPCescape();//市民がゾンビプレイヤーから逃げるときの処理。
-	void NPCReturn();//戻るとき
-	void NPCDeath();//死亡、消滅処理。
-	void Zonbesiya();
+	void NPCescape();							//こ、こんなの勝てるはずがねぇ、逃げるしかねぇ（ゾンビプレイヤーから逃げるときの処理）
+	void NPCReturn();							//あそこには、何かあるはずだ！！！（指定したパスまで移行する処理）
+	void NPCDeath();							//俺は、、こん、なところで、、、（死亡、消滅処理）
+	void Zonbesiya();							//獲物はどこだ～～～（ゾンビの視野判定）
 	void NPCRunangle(CVector3 kyori);
 	void Render(CRenderContext& rc);
 	void Turn();
-	void DamageHantei();//ダメージ判定。
+	void NPC_Search_Zonbi();					//こ、怖くなんかねぇし(市民がゾンビを探す処理)
 	void NPCRuet(); //NPCの移動ルートを格納する。
 	float GetKyori(CVector3 a, CVector3 b);  //2つのオブジェクトの距離を計測する。
 	float VectorAngleDeg(CVector3 c);  //2つのベクトルの角度を角度表記(degree)で返す。
