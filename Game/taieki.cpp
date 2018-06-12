@@ -64,7 +64,7 @@ void taieki::Update()
 			//i”Ô–Ú‚Ì“G•º‚Æ‚Ì‹——£‚ª50ˆÈ‰º‚©‚ÂAi”Ô–Ú‚Ì“G•º‚ª¶‘¶‚µ‚Ä‚¢‚½‚ç
 			if (tekikyori[i] <= 50.0f&&tekip->tekiheiflag[i] == 1)
 			{
-				tekip->tekiHP[i] = tekip->tekiHP[i] - 5.0f; //i”Ô–Ú‚Ì“G•º‚ÌHP‚ğ-1‚·‚éB
+				tekip->tekiHP[i] = 0.0f; //i”Ô–Ú‚Ì“G•º‚ÌHP‚ğ-1‚·‚éB
 				/*effect = NewGO<prefab::CEffect>(0);
 				e_pos = tpos;
 				effect->SetPosition(e_pos);
