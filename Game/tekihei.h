@@ -4,6 +4,7 @@
 #include "tkEngine/graphics/effect/tkEffect.h"
 #include "tkEngine/character/tkCharacterController.h"
 #define teki 10
+#define path 45
 class tekihei : public IGameObject
 {
 public:
@@ -60,11 +61,11 @@ public:
 	
 	float length(CVector3 vector);
 
-	CVector3 EnemyPath[21];
+	CVector3 EnemyPath[path];
 	int path_f[teki];
 	int find_f[teki];
-	CVector3 teki_to_path_vector[teki];
-	float teki_to_path[teki][21];
+	CVector3 teki_to_path_vector[teki][path];
+	float teki_to_path[teki][path];
 	int target_num[teki];
 	int old_target_num[teki];
 	int old_old_target_num[teki];
@@ -76,4 +77,5 @@ public:
 	float oldpos_to_tekipos[teki];
 	int stop_target_num[teki];
 	int stop_f[teki];
+	int min_f[teki];
 };
