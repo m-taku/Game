@@ -31,12 +31,12 @@ public:
 	}
 	void Render(CRenderContext& rc);
 #endif
-	CPhysicsStaticObject m_physicsStaticObject;	//!<静的物理オブジェクト。
 	CVector3 m_position;				//!<座標。
 	CVector3 m_scale;
 	CQuaternion m_rotation;				//!<回転。
 private:
 
+	CPhysicsStaticObject m_physicsStaticObject;	//!<静的物理オブジェクト。
 	CSkinModel m_skinModel;					//スキンモデル。
 	CSkinModelData m_skinModelData;			//スキンモデルデータ。
 	LevelRender* m_levelRender = nullptr;	//!<レベルレンダラー。

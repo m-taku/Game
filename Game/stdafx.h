@@ -8,6 +8,5 @@
 #include "resource.h"
 #include"user.h"
 
-//#define instansingu_katto
 #include "tkEngine/tkEnginePreCompile.h"
 using namespace tkEngine;

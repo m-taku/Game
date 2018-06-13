@@ -438,7 +438,7 @@ void AI::NPCFade_Out()//一般市民が退場するときの処理。
 	m_movespeed = m_forward*(work->Getmuve()*m_speed + mobe);
 	m_movespeed.y += gravity;
 	m_position = A_charaCon.Execute(GameTime().GetFrameDeltaTime(),m_movespeed);//移動
-	if (200.0f > work->Getlen()) {
+	if (150.0f > work->Getlen()) {
 		if (da >= jyunban.size()-1) {//指定されたパスの最後まで着いたら
 			pa = Death;
 			da = 1;
@@ -523,6 +523,7 @@ void AI::NPCChase()
 		keiro.tansa(m_position,retu_position, &jyunban, Leftfrag);
 		escapecaku = 30.0f;
 		Chasefrag = 0;
+		m_speed = 1.0f;
 		lam = nullptr;
 		HitFlag = false;
 	}
@@ -531,7 +532,7 @@ void AI::NPCChase()
 			m_speed = 0.0f;
 			HitFlag = true;
 			if (lam->muteki_Flag == false) {
-				lam->NPCHP -= 10.0f;
+				lam->NPCHP -= 20.0f;
 			}
 			atakkukyori = 200.0f;
 		}
@@ -589,7 +590,7 @@ void AI::NPC_Search_Zonbi() //全てのゾンビと距離でダメージ判定をする。
 								}
 							}
 						}
-						if (mikata <= 2) {
+						if (mikata <= -1) {
 							m_speed = 3.0f;
 							retu_position = m_position;
 							pa = Escape_NPC;

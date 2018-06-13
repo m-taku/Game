@@ -423,6 +423,9 @@
       <Filter>Assets\modelData</Filter>
     </CustomBuild>
     <CustomBuild Include="Assets\effect\aura3.efk" />
+    <CustomBuild Include="Assets\lever\levalAI22.tks">
+      <Filter>Assets\lever</Filter>
+    </CustomBuild>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\modelData\livingbuildings.png">
