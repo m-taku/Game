@@ -50,7 +50,7 @@ public:
 	float VectorAngleDeg(CVector3 c);  //2つのベクトルの角度を角度表記(degree)で返す。
 	float Siya(CVector3 h, float g);
 	float VectorAngleDeg2(CVector3 c);
-	void takikennsau();
+	float takikennsau();
 	void Animation_Walk();//歩き始めと歩き続けの一連のアニメーションの処理。
 	void Animation_Run();//走り始めと走り続けの一連のアニメーションの処理。
 
