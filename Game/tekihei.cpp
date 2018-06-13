@@ -100,7 +100,7 @@ bool tekihei::Start()
 		tekistop_counter[i] = 0;
 
 		old_old_target_num[i] = 100;
-		target_num[i] = 0;
+		target_num[i] = 100;
 		old_target_num[i] = 100;
 		old_old_old_target_num[i] = 100;
 		moving[i] = 0;
@@ -199,10 +199,6 @@ void tekihei::Update()
 						if (c == old_old_old_target_num[i] && c<path - 1)
 						{
 							c++;
-						}
-						if (c >= path)
-						{
-							break;
 						}
 						if (minDist > teki_to_path[i][c])
 						{
