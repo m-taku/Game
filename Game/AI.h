@@ -44,6 +44,7 @@ public:
 	void NPCRunangle(CVector3 kyori);
 	void Render(CRenderContext& rc);
 	void pasmove();								//パスを探して最適なパスに移動する。
+	void hinannpas(CVector3 m_position);							//逃げる時の基本移動処理
 	void Turn();
 	void NPC_Search_Zonbi();					//こ、怖くなんかねぇし(市民がゾンビを探す処理)
 	void NPCRuet();							    //NPCの移動ルートを格納する。
