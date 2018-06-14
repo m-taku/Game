@@ -25,7 +25,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 	initParam.screenWidth2D = 1280;
 	initParam.screenHeight2D = 720;
 	//âeÇÃê›íËÅB
-	initParam.graphicsConfing.shadowRenderConfig.isEnable = true;
+	initParam.graphicsConfing.shadowRenderConfig.isEnable = false;
 	initParam.graphicsConfing.shadowRenderConfig.shadowMapWidth = 512;
 	initParam.graphicsConfing.shadowRenderConfig.shadowMapHeight = 512;
 	initParam.graphicsConfing.shadowRenderConfig.lightHeight = UnitM(100.0f);
@@ -34,7 +34,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 	initParam.graphicsConfing.shadowRenderConfig.depthOffset[2] = 0.002f;
 	initParam.graphicsConfing.shadowRenderConfig.softShadowLevel = EnSoftShadowQualityLevel::enNone;
 	//ÉAÉìÉ`
-	initParam.graphicsConfing.aaConfig.isEnable = true;
+	initParam.graphicsConfing.aaConfig.isEnable = false;
 	//Bloom
 	initParam.graphicsConfing.bloomConfig.isEnable = false;
 	//tonemap

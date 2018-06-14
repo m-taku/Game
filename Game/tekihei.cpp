@@ -76,18 +76,12 @@ bool tekihei::Start()
 	EnemyPath[43] = { 4000.0f,0.0f,-8000.0f };
 	EnemyPath[44] = { 6200.0f,0.0f,-8000.0f };
 
-	tekipos[0] = EnemyPath[0];
-	tekipos[1] = EnemyPath[10];
-	tekipos[2] = EnemyPath[20];
-	tekipos[3] = EnemyPath[30];
-	tekipos[4] = EnemyPath[40];
-	tekipos[5] = EnemyPath[44];
-	tekipos[6] = EnemyPath[42];
-	tekipos[7] = EnemyPath[33];
-	tekipos[8] = EnemyPath[22];
-	tekipos[9] = EnemyPath[27];
+	
+
 	for (int i = 0;i < teki;i++)
 	{
+		nearPathNo[i] = 0;
+		tekipos[i] = EnemyPath[i];
 		stop_target_num[i] = 999;
 		stop_f[i] = 0;
 		min_f[i] = 0;
@@ -149,6 +143,7 @@ bool tekihei::Start()
 		);
 
 	}
+	
 	gaizi->SatFragu();
 	Pp = FindGO<Player>("Player");
 	return true;
@@ -177,38 +172,48 @@ void tekihei::Update()
 				if (m_charaCon[i].IsOnGround())
 				{
 					tekispeed[i].y = 0.0f;
+					
+
+					//target_num[i] = 0;
+					
 					for (int j = 0;j < path;j++)
 					{
 						teki_to_path_vector[i][j] = EnemyPath[j] - tekipos[i];
 						teki_to_path[i][j] = length(teki_to_path_vector[i][j]);
 					}
-
-					//target_num[i] = 0;
-					float minDist = FLT_MAX;
-					int nearPathNo = target_num[i];
-					for (int c = 0;c < path;c++)
+					if (moving[i] == 0)
 					{
-						if (c == old_target_num[i] && c<path - 1)
+						
+						minDist = FLT_MAX;
+						//nearPathNo = target_num[i];
+						for (int c = 0;c < path;c++)
 						{
-							c++;
+							
+							if (c == old_target_num[i])
+							{
+								continue;
+							}
+							if (c == old_old_target_num[i])
+							{
+								continue;
+							}
+							if (c == old_old_old_target_num[i]/* && c<path - 1*/)
+							{
+								continue;
+							}
+							if (minDist > teki_to_path[i][c])
+							{
+								//このパスの方が近い。
+								minDist = teki_to_path[i][c];
+								//一番近いパスの番号を更新。
+								nearPathNo[i] = c;
+							}
 						}
-						if (c == old_old_target_num[i] && c<path - 1)
-						{
-							c++;
-						}
-						if (c == old_old_old_target_num[i] && c<path - 1)
-						{
-							c++;
-						}
-						if (minDist > teki_to_path[i][c])
-						{
-							//このパスの方が近い。
-							minDist = teki_to_path[i][c];
-							//一番近いパスの番号を更新。
-							nearPathNo = c;
-						}
+						moving[i] = 1;
+						target_num[i] = nearPathNo[i];
 					}
-					target_num[i] = nearPathNo;
+					
+					
 
 					//for (int j = 0;j < 20;j++)
 					//{
@@ -256,7 +261,7 @@ void tekihei::Update()
 
 
 
-					if (teki_to_path_vector[i][target_num[i]].Length() < 500.0f)
+					if (length(teki_to_path_vector[i][target_num[i]]) < 300.0f)
 					{
 						old_old_old_target_num[i] = old_old_target_num[i];
 						old_old_target_num[i] = old_target_num[i];
@@ -266,12 +271,11 @@ void tekihei::Update()
 
 
 						stop_f[i] = 0;
-
+						moving[i] = 0;
 						min_f[i] = 0;
 					}
 
-
-					teki_to_path_vector[i][target_num[i]].Normalize();
+					
 					m_tekirot[i].MakeRotationFromQuaternion(tekirot[i]);
 					tekiright[i].x = m_tekirot[i].m[0][0];
 					tekiright[i].y = m_tekirot[i].m[0][1];
@@ -283,6 +287,14 @@ void tekihei::Update()
 					tekifoward[i].z = m_tekirot[i].m[2][2];
 					tekifoward[i].Normalize();
 
+					for (int j = 0;j < path;j++)
+					{
+						teki_to_path_vector[i][j] = EnemyPath[j]+tekiright[i]*100.0f -tekipos[i];
+						teki_to_path[i][j] = length(teki_to_path_vector[i][j]);
+					}
+
+					teki_to_path_vector[i][target_num[i]].Normalize();
+
 					ppos = Pp->GetPosition();
 					teki_to_player[i] = ppos - tekipos[i];
 
@@ -291,13 +303,13 @@ void tekihei::Update()
 					teki_to_player[i].Normalize();
 
 
-
 					teki_siya[i] = acosf(tekifoward[i].Dot(teki_to_player[i]));//視野の計算
+
 					teki_siya[i] = (180.0 / 3.14159)*teki_siya[i];
 					if (teki_siya[i] <= 45.0f&&teki_to_player_vector[i] < 1000.0f)
 					{
 						find_f[i] = 1;
-
+						moving[i] = 0;
 						min_f[i] = 0;
 					}
 
