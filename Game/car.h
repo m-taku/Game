@@ -1,6 +1,6 @@
 #pragma once
 #include"AImove.h"
-
+#include"tkEngine/sound/tkSoundSource.h"
 #include"carRender.h"
 class car : public IGameObject
 {
@@ -14,6 +14,8 @@ public:
 	{
 		m_Render = &ka;
 	}
+	void CarSound();//Carクラスのサウンドを扱う関数。
+	void SoundklaxonPlay();//クラクションを鳴らす処理。
 private:
 	void Move();
 	CSkinModel m_skinModel;					//スキンモデル。
@@ -37,5 +39,9 @@ private:
 	float siya = 100.0f;
 	bool Humanfrag = false;
 	carRender* m_Render;
+	
+	bool stopFlag = false;//今止まっているかを示すフラグこのフラグがtrueのときは、前のフレームで既に止まっている。
+	bool loodflag = false;//ロードしたかを示すフラグ。
+	bool klaxonFlag = false;//クラクションを鳴らすことを示すフラグ。
 };
 

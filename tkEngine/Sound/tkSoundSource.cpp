@@ -32,6 +32,12 @@ namespace tkEngine{
 			m_dspSettings.EmitterVelocityComponent = 0.0f;
 			m_dspSettings.ListenerVelocityComponent = 0.0f;
 		}
+		void CSoundSource::OnDestroy()
+		{
+			for (auto& cb : m_soundStopCallbackList) {
+				cb();
+			}
+		}
 		void CSoundSource::Init(char* filePath, bool is3DSound)
 		{
 			m_waveFile = SoundEngine().GetWaveFileBank().FindWaveFile(0, filePath);

@@ -30,13 +30,12 @@ Game::Game()
 	player = NewGO<Player>(0, "Player");
 
 	wchar_t moveFilePath[256];
-	swprintf_s(moveFilePath, L"lever/levalAI%d%d.tks", 0, 1);
+	swprintf_s(moveFilePath, L"lever/levalAI%d%d.tks", 0, 2);
 	pasu[0].Load(moveFilePath,No);
 	No = 1;
-	swprintf_s(moveFilePath, L"lever/levalAI%d%d.tks", 2, 1);
+	swprintf_s(moveFilePath, L"lever/levalAI%d%d.tks", 2, 2);
 	pasu[1].Load(moveFilePath,No);
 	No = 0;
-
 #ifndef Mizuki_baka
 	carRender* kar = NewGO<carRender>(0, nullptr);
 #endif // Mizuki_baka
@@ -153,6 +152,7 @@ Game::Game()
 	m_level[1].Build(moveFilePath);
 	swprintf_s(moveFilePath, L"lever/matilevel%d0%d.tks", 2, 1);
 	m_level[2].Build(moveFilePath);
+
 	CLocData loc;
 	loc.Load(L"lever/laitLv001.tks");
 	for (int i = 0; i < loc.GetNumObject(); i++) {
@@ -187,18 +187,18 @@ void Game::OnDestroy()
 {
 	DeleteGO(player);
 	//‚±‚±‚ÅÅI“I‚É‚c‚…‚Œ‚…‚”‚…‚f‚n‚ðâ‘Î‚µ‚«‚éB	
-	for (int k = 0; k < 26; k++) {
+	for (int k = 0; k < Rsimin.size(); k++) {
 		if (RAIseizon[k] >= 1) {
 			DeleteGO(Rsimin[k]);
 		}
 	}
-	for (int k = 0; k < 25; k++) {
+	for (int k = 0; k < Lsimin.size(); k++) {
 
 		if (LAIseizon[k] >= 1) {
 			DeleteGO(Lsimin[k]);
 		}
 	}
-	for (int i = 0; i < 23; i++) {
+	for (int i = 0; i < carv.size(); i++) {
 		DeleteGO(carv[i]);
 	}
 	DeleteGO(gaizi);
@@ -240,6 +240,14 @@ void Game::Update()
 	if (m_Fade != NULL&& m_Fade->toumeiodo >= 1.0f) {
 		m_Fade->StartFadeIn();
 	}
+
+	//ƒTƒEƒ“ƒh
+	SoundEngine().SetListenerPosition(MainCamera().GetPosition());
+	CVector3 frontXZ = MainCamera().GetForward();
+	frontXZ.y = 0.0f;
+	frontXZ.Normalize();
+	SoundEngine().SetListenerFront(frontXZ);
+
 	/*if (Pad(0).IsTrigger(enButtonB) && a >= 2) {
 		m_Fade->StartFadeOut();
 		a--;

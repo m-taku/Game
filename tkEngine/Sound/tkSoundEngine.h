@@ -61,7 +61,7 @@ namespace tkEngine{
 		*/
 		void SetListenerPosition(const CVector3& pos)
 		{
-			m_listenerPosition = pos;
+			m_listenerPosition = pos/1000;
 		}
 		/*!
 		* @brief	サウンドリスナーの前方向を設定。

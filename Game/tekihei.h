@@ -19,10 +19,10 @@ public:
 	CCharacterController m_charaCon[teki];		//キャラクタコントローラ。
 	CVector3 tekipos[teki];//敵のポジション
 	CVector3 tekispeed[teki];//移動速度
-	CQuaternion tekirot[teki];
+	CQuaternion tekirot[teki];//敵の回転
 	CMatrix m_tekirot[teki];
-	CVector3 tekiright[teki];
-	CVector3 tekifoward[teki];
+	CVector3 tekiright[teki];//敵兵の右方向。
+	CVector3 tekifoward[teki];//敵兵の前方方向。
 	Geizi *gaizi;
 	Player *Pp = nullptr;
 	CVector3 ppos = CVector3::Zero;
