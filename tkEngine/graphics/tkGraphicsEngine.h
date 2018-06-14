@@ -285,5 +285,7 @@ namespace tkEngine{
 		int						m_2dSpaceScreenWidth = 1280;				//!<2D空間のスクリーンの幅。2Dはこの座標系を前提に表示されていれば、解像度が変わっても大丈夫。
 		int						m_2dSpaceScreenHeight = 720;				//!<2D空間のスクリーンの高さ。2Dはこの座標系を前提に表示されていれば、解像度が変わっても大丈夫。
 		CDirectXModelResource	m_directXModelResource;						//!<DirectXモデルリソースの管理者。
+		HWND					m_hwnd;
+		SInitParam				m_initParam;
 	};
 }

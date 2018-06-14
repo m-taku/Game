@@ -66,9 +66,9 @@ int AImove::kyorikeisan(CVector3 mokuteki1, CVector3 m_pos, CVector3 m_forward)
 	if (15.0f <= len) {
 		float angle = VectorAngleDeg(bekutor, m_forward);
 		if (angle >= haba) {
+			//‰ñ“]²‚ğ‹‚ß‚éB
 			bekutor.y = 0.0f;
 			bekutor.Normalize();
-			//‰ñ“]²‚ğ‹‚ß‚éB
 			CVector3 rotAxis;
 			rotAxis.Cross(m_forward, bekutor);
 			rotAxis.Normalize();

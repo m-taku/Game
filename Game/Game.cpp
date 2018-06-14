@@ -30,13 +30,12 @@ Game::Game()
 	player = NewGO<Player>(0, "Player");
 
 	wchar_t moveFilePath[256];
-	swprintf_s(moveFilePath, L"lever/levalAI%d%d.tks", 0, 1);
+	swprintf_s(moveFilePath, L"lever/levalAI%d%d.tks", 0, 2);
 	pasu[0].Load(moveFilePath,No);
 	No = 1;
-	swprintf_s(moveFilePath, L"lever/levalAI%d%d.tks", 2, 1);
+	swprintf_s(moveFilePath, L"lever/levalAI%d%d.tks", 2, 2);
 	pasu[1].Load(moveFilePath,No);
 	No = 0;
-
 #ifndef Mizuki_baka
 	carRender* kar = NewGO<carRender>(0, nullptr);
 #endif // Mizuki_baka
@@ -147,12 +146,13 @@ Game::Game()
 
 
 
-	/*swprintf_s(moveFilePath, L"lever/matilevel%d0%d.tks", 0, 2);
+	swprintf_s(moveFilePath, L"lever/matilevel%d0%d.tks", 0, 2);
 	m_level[0].Build(moveFilePath);
 	swprintf_s(moveFilePath, L"lever/matilevel%d0%d.tks", 1, 1);
 	m_level[1].Build(moveFilePath);
 	swprintf_s(moveFilePath, L"lever/matilevel%d0%d.tks", 2, 1);
-	m_level[2].Build(moveFilePath);*/
+	m_level[2].Build(moveFilePath);
+
 	CLocData loc;
 	loc.Load(L"lever/laitLv001.tks");
 	for (int i = 0; i < loc.GetNumObject(); i++) {
@@ -166,8 +166,8 @@ Game::Game()
 	m_sunLig = NewGO<prefab::CDirectionLight>(0);
 	CVector3 lightDir = { 0.707f, -0.707f, 0.0f };
 	m_sunLig->SetDirection(lightDir);
-	m_sunLig->SetColor({ 1.0f, 1.0f, 1.0f, 1.0f });
-	LightManager().SetAmbientLight({ 1.0f, 1.0f, 1.0f });
+	m_sunLig->SetColor({ 1.0f, 1.0f, 3.0f, 1.0f });
+	LightManager().SetAmbientLight({1.0f, 1.0f, 1.0f });
 	GraphicsEngine().GetShadowMap().SetLightDirection(lightDir);
 	//m_level[1].X = 5.0f;
 	//m_level[1].Z=  5.0f;
@@ -187,18 +187,18 @@ void Game::OnDestroy()
 {
 	DeleteGO(player);
 	//Ç±Ç±Ç≈ç≈èIìIÇ…ÇcÇÖÇåÇÖÇîÇÖÇfÇnÇê‚ëŒÇµÇ´ÇÈÅB	
-	for (int k = 0; k < 26; k++) {
+	for (int k = 0; k < Rsimin.size(); k++) {
 		if (RAIseizon[k] >= 1) {
 			DeleteGO(Rsimin[k]);
 		}
 	}
-	for (int k = 0; k < 25; k++) {
+	for (int k = 0; k < Lsimin.size(); k++) {
 
 		if (LAIseizon[k] >= 1) {
 			DeleteGO(Lsimin[k]);
 		}
 	}
-	for (int i = 0; i < 23; i++) {
+	for (int i = 0; i < carv.size(); i++) {
 		DeleteGO(carv[i]);
 	}
 	DeleteGO(gaizi);

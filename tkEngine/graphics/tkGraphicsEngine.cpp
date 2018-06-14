@@ -155,6 +155,8 @@ namespace tkEngine{
 	}
 	bool CGraphicsEngine::Init(HWND hwnd, const SInitParam& initParam)
 	{
+		m_initParam = initParam;	
+		m_hwnd = hwnd;
 		//D3Dデバイスとスワップチェインの作成。
 		if (!InitD3DDeviceAndSwapChain(hwnd, initParam)) {
 			return false;
@@ -246,8 +248,9 @@ namespace tkEngine{
 		HRESULT hr = m_pSwapChain->Present(2, 0);
 		if (hr == DXGI_ERROR_DEVICE_REMOVED) {
 			char buff[64];
+			//0x887A0006L
 			sprintf_s(buff, "Device remove reazon code 0x%08x\n", m_pd3dDevice->GetDeviceRemovedReason());
 			TK_LOG(buff);
-		}
+			}
 	}
 }
