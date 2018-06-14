@@ -17,6 +17,10 @@ public:
 	void CarSound();//Carクラスのサウンドを扱う関数。
 	void SoundklaxonPlay();//クラクションを鳴らす処理。
 private:
+
+	CMeshCollider m_meshCollider;	//メッシュコライダー。
+	CRigidBody m_rigidBody;			//剛体
+	CPhysicsStaticObject m_physicsStaticObject;
 	void Move();
 	CSkinModel m_skinModel;					//スキンモデル。
 	CSkinModelData m_skinModelData;			//スキンモデルデータ。

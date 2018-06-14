@@ -21,7 +21,7 @@ AI::AI()
 }
 AI::~AI()
 {
-	//m_charaCon.RemoveRigidBoby();
+	//A_charaCon.RemoveRigidBoby();
 	DeleteGO(work);
 }
 bool AI::Start()
@@ -156,6 +156,7 @@ void AI::NPCNormal_Search()//NPCの警戒処理。
 		da = 0;
 		m_speed = 4.0f;
 		nearestpas();
+		Fardist_path(pl->Getposition());
 		pa = Escape;
 	}
 	if (hann >= 2) {
@@ -207,9 +208,8 @@ void AI::NPCDamage()
 	}
 
 }
-void AI::nearestpas()
+void AI::nearestpas()//最寄りのパス検索
 {
-
 	float sa = 99999999999999.0;
 	for (int h = 0; h < game->pasu[Leftfrag].GetresutoSaiz()-1; h++) {
 		CVector3 k = game->pasu[Leftfrag].Getresuto(h)->m_position[0] - m_position;
@@ -237,7 +237,6 @@ void AI::NPCZombie_Normal()
 	pasmove();
 	m_rotation.Multiply(work->Getkaku());//回転
 	if ((game->pasu[Leftfrag].Getresuto(mokuhyouNo)->m_position[0] - m_position).Length() < 150.0f) {
-
 		int num = Random().GetRandInt() % (game->pasu[Leftfrag].Getresuto(mokuhyouNo)->No.size() - 1);	
 			mokuhyou = game->pasu[Leftfrag].Getresuto(mokuhyouNo)->No[++num];
 		
@@ -265,6 +264,7 @@ void AI::NPCZombie_Chase()
 		HitFlag = false;
 		escapecaku = 30.0f;
 		nearestpas();
+		pa = Zombie_Normal;
 	}
 	else {//NPCを見失っておらず、見つけていたら
 		float kou = VectorAngleDeg((Tansaku->m_forward));
@@ -495,15 +495,7 @@ void AI::NPCRuet()//NPCルート
 
 }
 
-float AI::VectorAngleDeg2(CVector3 c)
-{
-	c.Normalize();//向きVectorにする。
-	float kaku = atanf(c.Dot(m_rite));//２つのべクトルの内積のアークコサインを求める。(ラジアン)
 
-	float degree = CMath::RadToDeg(kaku);//求めたラジアンを度に変える。
-
-	return degree;
-}
 
 float AI::Siya(CVector3 h, float g)
 {
@@ -575,7 +567,18 @@ float AI::VectorAngleDeg(CVector3 c)
 
 	return degree;
 }
+float AI::VectorAngleDeg(CVector3 h,CVector3 c)
+{
+	c.y = 0.0f;
+	c.Normalize();//向きVectorにする。
+	h.y = 0.0f;
+	h.Normalize();
+	float kaku = acosf(c.Dot(h));//２つのべクトルの内積のアークコサインを求める。(ラジアン)
 
+	float degree = CMath::RadToDeg(kaku);
+
+	return degree;
+}
 void AI::NPC_Search_Zonbi() //全てのゾンビと距離でダメージ判定をする。
 {
 	AIrest++;
@@ -997,25 +1000,31 @@ void AI::pasmove()
 	m_movespeed.y += gravity;
 	m_position = A_charaCon.Execute(GameTime().GetFrameDeltaTime(), m_movespeed);//移動
 }
-void AI::hinannpas(CVector3 m_position)
+void AI::Fardist_path(CVector3 m_position)//視野付きリンク先パス検索
 {
-	pasmove();
-	NPCRunangle(work->Getbekutor());
-	if ((game->pasu[Leftfrag].Getresuto(mokuhyouNo)->m_position[0] - m_position).Length() < 200.0f) {
-		CVector3 minkore = { 0.0f,0.0f,0.0f };
-		for (int Linknum = 1; Linknum < game->pasu[Leftfrag].GetresutoSaiz(mokuhyouNo); Linknum++) {
-			CVector3 ma = game->pasu[Leftfrag].Getresuto(mokuhyouNo)->m_position[Linknum] - m_position;
-			if (minkore.Length()< ma.Length()) {
+	CVector3 minkore = { 0.0f,0.0f,0.0f };
+	for (int Linknum = 0; Linknum < game->pasu[Leftfrag].GetresutoSaiz(mokuhyouNo); Linknum++) {
+		CVector3 ma = game->pasu[Leftfrag].Getresuto(mokuhyouNo)->m_position[Linknum] - m_position;
+		if (minkore.Length() < ma.Length()) {
+			if (90 <= VectorAngleDeg(ma, m_position - this->m_position)) {
 				minkore = ma;
 				mokuhyou = game->pasu[Leftfrag].Getresuto(mokuhyouNo)->No[Linknum];
 			}
 		}
-		for (int ka = 0; ka < game->pasu[Leftfrag].GetresutoSaiz(); ka++) {
-			if (game->pasu[Leftfrag].Getresuto(ka)->No[0] == mokuhyou) {
-				mokuhyouNo = ka;
-				break;
-			}
+	}
+	for (int ka = 0; ka < game->pasu[Leftfrag].GetresutoSaiz(); ka++){
+		if (game->pasu[Leftfrag].Getresuto(ka)->No[0] == mokuhyou) {
+			mokuhyouNo = ka;
+			break;
 		}
+	}
+}
+void AI::hinannpas(CVector3 m_position)
+{
+	pasmove();
+	NPCRunangle(work->Getbekutor());
+	if ((game->pasu[Leftfrag].Getresuto(mokuhyouNo)->m_position[0] - this->m_position).Length() < 200.0f) {
+		Fardist_path(m_position);
 	}
 }
 void AI::NPCescape()//ゾンビから逃げる

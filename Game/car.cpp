@@ -29,7 +29,7 @@ bool car::Start()
 	pasu = game->getDate(fa);
 	ran = NewGO<AImove>(0, "AImove");
 	m_position = No[pasu[ima++]-1];
-	m_position.y = 0.0f;
+	m_position.y = 100.0f;
 	m_tekirot.MakeRotationFromQuaternion(m_rotation);
 	m_forward.x = m_tekirot.m[2][0];
 	m_forward.y = m_tekirot.m[2][1];
@@ -74,12 +74,24 @@ bool car::Start()
 	if (game->GatNo() >= 23) {//carを増やすときに変える。
 		game->risetteNo();
 	}
-	
+
+	m_skinModelData.Load(L"modelData/Vehicle_SUV1.cmo");//プレイヤーを書け
+	m_skinModel.Init(m_skinModelData);
+
+
+	//m_skinModel.Update(m_position, m_rotation, { 0.5f,0.5f,0.5f });
+	//m_meshCollider.CreateFromSkinModel(m_skinModel, nullptr);
+	//RigidBodyInfo rbInfo;
+	//rbInfo.pos = m_position;
+	//rbInfo.rot = CQuaternion::Identity;
+	//rbInfo.collider = &m_meshCollider;
+	//rbInfo.mass = 1.0f;							//質量を0にすると動かない剛体になる。
+	//											//背景などの動かないオブジェクトは0を設定するとよい。
+	//m_rigidBody.Create(rbInfo);					//作成した情報を使って剛体を作成する。
+	//PhysicsWorld().AddRigidBody(m_rigidBody);	//作成した剛体を物理ワールドに追加する。
 	//stopFlag = false;//stopFlagの初期化。
 
 #ifdef instansingu_katto
-	m_skinModelData.Load(L"modelData/Vehicle_SUV1.cmo");//プレイヤーを書け
-	m_skinModel.Init(m_skinModelData);
 	m_skinModel.SetShadowCasterFlag(true);
 	m_skinModel.SetShadowReceiverFlag(true);
 #endif 
@@ -99,10 +111,10 @@ void car::Update()
 		m_forward.Normalize();
 		frag = false;
 		Humanfrag = false;
-		Stop();
+		//Stop();
 		//こ↑こ↓より下は、停止している限りklaxonFlagがtrueになる。
 		//if (frag <= 0) {
-		Move();
+		//Move();
 		//}
 		m_position.y = 0.0f;
 		if (Humanfrag != false) {
@@ -120,8 +132,16 @@ void car::Update()
 		stopFlag = false;
 	}
 
+
+	//btVector3 m_pos = m_rigidBody.GetBody()->getWorldTransform().getOrigin();
+	//if (0 >= m_pos.y()) {
+	//	m_pos.setY(0.0f);
+	//}
+	//m_rigidBody.GetBody()->getWorldTransform().setOrigin(m_pos);
+	//m_position.Set(m_pos);
+
 #ifdef instansingu_katto
-	m_skinModel.Update(m_position, m_rotation, { 0.5f,0.5f,0.5f });
+	m_skinModel.Update(m_position, m_rotation, { 1.0f,1.0f,1.0f });
 #else
 	m_Render->UpdateWorldMatrix(m_position, m_rotation, { 0.5f,0.5f,0.5f });
 #endif // Mizuki_baka

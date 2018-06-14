@@ -166,7 +166,7 @@ Game::Game()
 	m_sunLig = NewGO<prefab::CDirectionLight>(0);
 	CVector3 lightDir = { 0.707f, -0.707f, 0.0f };
 	m_sunLig->SetDirection(lightDir);
-	m_sunLig->SetColor({ 1.0f, 1.0f, 3.0f, 1.0f });
+	m_sunLig->SetColor({ 1.0f, 0.05f, 0.8f, 1.0f });
 	LightManager().SetAmbientLight({1.0f, 1.0f, 1.0f });
 	GraphicsEngine().GetShadowMap().SetLightDirection(lightDir);
 	//m_level[1].X = 5.0f;

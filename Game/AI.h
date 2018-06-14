@@ -50,8 +50,9 @@ public:
 	void NPCRuet();							    //NPCの移動ルートを格納する。
 	float GetKyori(CVector3 a, CVector3 b);     //2つのオブジェクトの距離を計測する。
 	float VectorAngleDeg(CVector3 c);           //2つのベクトルの角度を角度表記(degree)で返す。
+	float VectorAngleDeg(CVector3 h, CVector3 c);
+	void Fardist_path(CVector3 m_position);
 	float Siya(CVector3 h, float g);
-	float VectorAngleDeg2(CVector3 c);
 	float takikennsau();
 	void Animation_Walk();					    //歩き始めと歩き続けの一連のアニメーションの処理。
 	void Animation_Run();						//走り始めと走り続けの一連のアニメーションの処理。
