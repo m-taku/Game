@@ -35,16 +35,16 @@ void Pasu::Load(const wchar_t* filePath,int b)
 			long long h = 0;
 			for (int g = 8; g > f; g--) {
 				h += No2[u++] * pow(100, g);
-				if (i == 13 && g == 2) {
+				if (i == 16 && g == 2) {
 					if(b ==0)
 					h -= 16;
 					//int a = 0;
 				}
-				if (i == 21 && g == 2) {
+				if (i == 52 && g == 2) {
 					if (b == 1)
 						h -= 16;
 				}
-				if (i == 25 && g == 2) {
+				if (i == 41 && g == 2) {
 					if (b == 1)
 						h -= 16;
 				}
@@ -78,9 +78,8 @@ void Pasu::Load(const wchar_t* filePath,int b)
 		kan.kanrenz(No12[i - 1], m_pointList);
 		Pasuresuto.push_back(kan);
 	}
-
 	for (int l = 0; l < Pasuresuto.size(); l++) {
-		if (Pasuresuto[l].No.size()>1)
-			resuto.push_back(Pasuresuto[l]);
+		if ((Pasuresuto[l].No.size())>1)
+			resuto.push_back(&Pasuresuto[l]);
 	}
 }

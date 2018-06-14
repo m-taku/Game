@@ -34,25 +34,26 @@ public:
 	void NPCZombie_Normal();					//ここは…どこだ（ゾンビNPCランダム徘徊の処理）
 	void NPCZombie_Chase();						//お前が、死ぬまで、殴るのをやめない！！！（ゾンビNPCが市民を殴るの処理）
 	void NPCZombie_Attack();					//主人様にたてつく奴は許さね～～～（特殊部隊とゾンビが戦う時の処理）//vs特殊部隊
-	void NPCzombie_Return();//殴った後帰る（いらん）
+	void NPCzombie_Return();					//殴った後帰る（いらん）
 	void nearestpas();							//ド～コ行こうかな～～～（ランダム徘徊処理の初期化）
-//	void NPCzombie_Escape();
+//	void NPCzombie_Escape();					
 	void NPCescape();							//こ、こんなの勝てるはずがねぇ、逃げるしかねぇ（ゾンビプレイヤーから逃げるときの処理）
 	void NPCReturn();							//あそこには、何かあるはずだ！！！（指定したパスまで移行する処理）
 	void NPCDeath();							//俺は、、こん、なところで、、、（死亡、消滅処理）
 	void Zonbesiya();							//獲物はどこだ～～～（ゾンビの視野判定）
 	void NPCRunangle(CVector3 kyori);
 	void Render(CRenderContext& rc);
+	void pasmove();								//パスを探して最適なパスに移動する。
 	void Turn();
 	void NPC_Search_Zonbi();					//こ、怖くなんかねぇし(市民がゾンビを探す処理)
-	void NPCRuet(); //NPCの移動ルートを格納する。
-	float GetKyori(CVector3 a, CVector3 b);  //2つのオブジェクトの距離を計測する。
-	float VectorAngleDeg(CVector3 c);  //2つのベクトルの角度を角度表記(degree)で返す。
+	void NPCRuet();							    //NPCの移動ルートを格納する。
+	float GetKyori(CVector3 a, CVector3 b);     //2つのオブジェクトの距離を計測する。
+	float VectorAngleDeg(CVector3 c);           //2つのベクトルの角度を角度表記(degree)で返す。
 	float Siya(CVector3 h, float g);
 	float VectorAngleDeg2(CVector3 c);
 	float takikennsau();
-	void Animation_Walk();//歩き始めと歩き続けの一連のアニメーションの処理。
-	void Animation_Run();//走り始めと走り続けの一連のアニメーションの処理。
+	void Animation_Walk();					    //歩き始めと歩き続けの一連のアニメーションの処理。
+	void Animation_Run();						//走り始めと走り続けの一連のアニメーションの処理。
 
 	////////////////////////////////////////////////////////////////////////
 	////アニメーション関連のメンバ関数(メソッド)。                      ////
@@ -119,7 +120,6 @@ protected:
 	CMatrix m_tekirot;
 
 	CMatrix k_tekirot;
-	CVector3 retu_position;
 
 	Game* game;
 	
@@ -169,6 +169,8 @@ private:
 	tekihei* tekip;
 	int mokuhyou=1;
 	std::vector<AI*> mikatalest;
+
+	CVector3 retu_position = CVector3::Zero;
 	int mobe = 50;
 	std::vector<Human*>::iterator AIrest;
 	enum animation {
@@ -189,5 +191,8 @@ private:
 	bool kaiten = false;
 	CShaderResourceView zondi;
 	CObjectFrustumCulling m_objectFrustumCulling;
+	float angle = 0.0f;
+	CVector3 Pboneforward = CVector3::Zero;
+	CQuaternion Crot = CQuaternion::Identity;
 };
 

@@ -48,6 +48,10 @@ public:
 	{
 		haba = kakudo;
 	}
+	CVector3 Getbekutor()
+	{
+		return bekutor;
+	}
 private:
 	CQuaternion qBias1 = CQuaternion::Identity; //‰ñ“]s—ñ
 	float muve = 1.0;								//‘¬‚³

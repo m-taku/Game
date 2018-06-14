@@ -146,12 +146,12 @@ Game::Game()
 
 
 
-	swprintf_s(moveFilePath, L"lever/matilevel%d0%d.tks", 0, 2);
-	m_level[0].Build(moveFilePath);
-	swprintf_s(moveFilePath, L"lever/matilevel%d0%d.tks", 1, 1);
-	m_level[1].Build(moveFilePath);
-	swprintf_s(moveFilePath, L"lever/matilevel%d0%d.tks", 2, 1);
-	m_level[2].Build(moveFilePath);
+	//swprintf_s(moveFilePath, L"lever/matilevel%d0%d.tks", 0, 2);
+	//m_level[0].Build(moveFilePath);
+	//swprintf_s(moveFilePath, L"lever/matilevel%d0%d.tks", 1, 1);
+	//m_level[1].Build(moveFilePath);
+	//swprintf_s(moveFilePath, L"lever/matilevel%d0%d.tks", 2, 1);
+	//m_level[2].Build(moveFilePath);
 	CLocData loc;
 	loc.Load(L"lever/laitLv001.tks");
 	for (int i = 0; i < loc.GetNumObject(); i++) {
@@ -186,18 +186,18 @@ void Game::OnDestroy()
 {
 	DeleteGO(player);
 	//‚±‚±‚ÅÅI“I‚É‚c‚…‚Œ‚…‚”‚…‚f‚n‚ðâ‘Î‚µ‚«‚éB	
-	for (int k = 0; k < 26; k++) {
+	for (int k = 0; k < Rsimin.size(); k++) {
 		if (RAIseizon[k] >= 1) {
 			DeleteGO(Rsimin[k]);
 		}
 	}
-	for (int k = 0; k < 25; k++) {
+	for (int k = 0; k < Lsimin.size(); k++) {
 
 		if (LAIseizon[k] >= 1) {
 			DeleteGO(Lsimin[k]);
 		}
 	}
-	for (int i = 0; i < 23; i++) {
+	for (int i = 0; i < carv.size(); i++) {
 		DeleteGO(carv[i]);
 	}
 	DeleteGO(gaizi);
