@@ -35,6 +35,9 @@
     <Filter Include="Assets\effect\mqo">
       <UniqueIdentifier>{b4ed4d7b-ba29-4c2f-a922-534ffd162735}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Assets\sound">
+      <UniqueIdentifier>{cd6e8f0c-46e9-4994-8129-0a8ca2b93396}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -423,9 +426,7 @@
       <Filter>Assets\modelData</Filter>
     </CustomBuild>
     <CustomBuild Include="Assets\effect\aura3.efk" />
-    <CustomBuild Include="Assets\lever\levalAI22.tks">
-      <Filter>Assets\lever</Filter>
-    </CustomBuild>
+    <CustomBuild Include="Assets\sound\car-horn1.wav" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\modelData\livingbuildings.png">
@@ -473,5 +474,13 @@
     <ImageContentTask Include="Assets\sprite\fade.png">
       <Filter>Assets\sprite</Filter>
     </ImageContentTask>
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="Assets\sound\klaxon.wav">
+      <Filter>Assets\sound</Filter>
+    </Media>
+    <Media Include="Assets\sound\car_noise.wav">
+      <Filter>Assets\sound</Filter>
+    </Media>
   </ItemGroup>
 </Project>

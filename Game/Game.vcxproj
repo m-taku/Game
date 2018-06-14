@@ -933,9 +933,6 @@
     <CustomBuild Include="Assets\modelData\liam.tks">
       <FileType>Document</FileType>
     </CustomBuild>
-    <CustomBuild Include="Assets\lever\levalAI22.tks">
-      <FileType>Document</FileType>
-    </CustomBuild>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="Assets\sound\car-horn1.wav">
@@ -944,6 +941,11 @@
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="Assets\sound\klaxon.wav">
+      <FileType>Document</FileType>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="Assets\sound\car_noise.wav">
       <FileType>Document</FileType>
     </CustomBuild>
   </ItemGroup>
