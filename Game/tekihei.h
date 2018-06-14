@@ -3,7 +3,7 @@
 #include"Geizi.h"
 #include "tkEngine/graphics/effect/tkEffect.h"
 #include "tkEngine/character/tkCharacterController.h"
-#define teki 10
+#define teki 40
 #define path 45
 class tekihei : public IGameObject
 {
@@ -78,4 +78,6 @@ public:
 	int stop_target_num[teki];
 	int stop_f[teki];
 	int min_f[teki];
+	float minDist = FLT_MAX;
+	int nearPathNo[teki];
 };

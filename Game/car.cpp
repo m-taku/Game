@@ -123,6 +123,9 @@ void car::Update()
 		}
 	}
 
+	if (move == 0.0f) {
+		int i = 0;
+	}
 	//クラクションを鳴らすかを判定する。
 	if (klaxonFlag == true) {//クラクションを鳴らした。
 		SoundklaxonPlay();
