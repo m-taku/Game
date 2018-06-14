@@ -44,6 +44,8 @@ namespace tkEngine{
 		 */
 		class CSoundSource : public IGameObject {
 		public:
+			using OnSoundStopCallback = std::function<void()>;
+
 			/*!
 			 * @brief	コンストラクタ。
 			 */
@@ -88,7 +90,10 @@ namespace tkEngine{
 			* デストラクタから自動的に呼ばれます。明示的に開放を行いたい場合に使用してください。
 			*/
 			void Release();
-
+			void AddSoundStopCallback(OnSoundStopCallback cb)
+			{
+				m_soundStopCallbackList.push_back(cb);
+			}
 			/*!
 			* @brief	再生。
 			*@param[in]	isLoop		ループ再生フラグ。
@@ -147,7 +152,7 @@ namespace tkEngine{
 			*/
 			void SetPosition(const CVector3& pos)
 			{
-				m_position = pos;
+				m_position = pos/1000;
 				if (m_isSetPositionFirst) {
 					m_lastFramePosition = m_position;
 					m_isSetPositionFirst = false;
@@ -207,6 +212,7 @@ namespace tkEngine{
 			{
 				return &m_dspSettings;
 			}
+			void OnDestroy() override;
 		private:
 			void InitCommon();
 			//ストリーミング再生中の更新処理。
@@ -242,6 +248,7 @@ namespace tkEngine{
 			FLOAT32 m_matrixCoefficients[INPUTCHANNELS * OUTPUTCHANNELS];
 			X3DAUDIO_DSP_SETTINGS m_dspSettings;
 			bool m_isSetPositionFirst = true;	//!<一番最初のsetPosition?
+			std::list<OnSoundStopCallback>	m_soundStopCallbackList;		//!<サウンドが停止した時のコールバックのリストリスナー
 		};
 	}
 }

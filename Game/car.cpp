@@ -41,6 +41,9 @@ bool car::Start()
 		HumanLest.push_back(ai);
 	}
 
+	//クラクションの初期化。
+	//m_klaxon = NewGO<prefab::CSoundSource>(0);
+	//m_klaxon->Init("sound/car-horn1.wav",true);
 	CVector3 c = No[pasu[ima] - 1];
 	CVector3 bekutor =  c-m_position;
 	bekutor.y = 0.0f;
@@ -71,18 +74,22 @@ bool car::Start()
 	if (game->GatNo() >= 23) {//carを増やすときに変える。
 		game->risetteNo();
 	}
+	
+	//stopFlag = false;//stopFlagの初期化。
+
 #ifdef instansingu_katto
 	m_skinModelData.Load(L"modelData/Vehicle_SUV1.cmo");//プレイヤーを書け
 	m_skinModel.Init(m_skinModelData);
 	m_skinModel.SetShadowCasterFlag(true);
 	m_skinModel.SetShadowReceiverFlag(true);
-
 #endif 
 	SetTags(20);
 	return true;
 }
+
 void car::Update()
 {
+	klaxonFlag = false;//毎回初期化。
 	if (Gaizi->GatFragu() < 1.0f) {
 		m_tekirot.MakeRotationFromQuaternion(m_rotation);
 		m_forward.x = m_tekirot.m[2][0];
@@ -93,6 +100,7 @@ void car::Update()
 		frag = false;
 		Humanfrag = false;
 		Stop();
+		//こ↑こ↓より下は、停止している限りklaxonFlagがtrueになる。
 		//if (frag <= 0) {
 		Move();
 		//}
@@ -102,6 +110,16 @@ void car::Update()
 			ran->Setlen(0.0f);
 		}
 	}
+
+	//クラクションを鳴らすかを判定する。
+	if (klaxonFlag == true) {//クラクションを鳴らした。
+		SoundklaxonPlay();
+	}
+
+	if (klaxonFlag == false) {
+		stopFlag = false;
+	}
+
 #ifdef instansingu_katto
 	m_skinModel.Update(m_position, m_rotation, { 0.5f,0.5f,0.5f });
 #else
@@ -176,8 +194,10 @@ void car::Stop()
 				float degree = CMath::RadToDeg(kaku);
 				if (degree <= 60)
 				{
+					//この一連の処理を続けているときは止まっている。
 					move = -0.1;
 					Humanfrag = true;
+					klaxonFlag = true;//クラクションを鳴らす。止まり続ける限りtrueのままになる。
 				}
 			}
 		}
@@ -204,7 +224,7 @@ void car::Stop()
 								move = -0.1;
 
 								siya = 5.0f;
-								Humanfrag = true;
+							//	Humanfrag = true;
 							}
 
 							else {
@@ -224,6 +244,32 @@ void car::Stop()
 		}
 	});
 }
+
+//void car::CarSound()//一連のさうんどの処理をする。
+//{
+//	//クラクションを鳴らすかを判定する。
+//	SoundklaxonPlay();
+//}
+
+void car::SoundklaxonPlay()//クラクションのサウンドを鳴らされた時に一回だけ流す。
+{
+	if (stopFlag == false) {
+		prefab::CSoundSource*m_klaxon = nullptr;
+		m_klaxon = NewGO<prefab::CSoundSource>(0);
+		m_klaxon->Init("sound/klaxon.wav", true);
+		m_klaxon->AddSoundStopCallback([&]() {
+			//サウンドが停止したらこの関数が呼ばれる
+			stopFlag = true;//ストップした。
+		});
+		//サウンドのポジションを設定する。
+		m_klaxon->SetPosition(m_position);
+		m_klaxon->Play(false);//初めて止まったので、クラクションを鳴らす。
+	//if (Humanfrag == false) {//車が動き出した。
+	//	stopFlag = false;//「ストップした」というフラグを元に戻しておく。
+	//}
+		stopFlag = true;//ストップした。
+	}
+}
 void car::Render(CRenderContext& rc)
 {
 
@@ -231,4 +277,3 @@ void car::Render(CRenderContext& rc)
 	m_skinModel.Draw(rc, MainCamera().GetViewMatrix(), MainCamera().GetProjectionMatrix());
 #endif 
 }
-

@@ -150,7 +150,7 @@ bool tekihei::Start()
 
 	}
 	gaizi->SatFragu();
-	Pp = FindGO<Player>("Player");
+	Pp = FindGO<Player>("Player");//プレイヤーのインスタンスを代入。
 	return true;
 }
 float tekihei::length(CVector3 vector)

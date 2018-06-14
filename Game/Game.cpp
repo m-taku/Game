@@ -147,12 +147,12 @@ Game::Game()
 
 
 
-	swprintf_s(moveFilePath, L"lever/matilevel%d0%d.tks", 0, 2);
+	/*swprintf_s(moveFilePath, L"lever/matilevel%d0%d.tks", 0, 2);
 	m_level[0].Build(moveFilePath);
 	swprintf_s(moveFilePath, L"lever/matilevel%d0%d.tks", 1, 1);
 	m_level[1].Build(moveFilePath);
 	swprintf_s(moveFilePath, L"lever/matilevel%d0%d.tks", 2, 1);
-	m_level[2].Build(moveFilePath);
+	m_level[2].Build(moveFilePath);*/
 	CLocData loc;
 	loc.Load(L"lever/laitLv001.tks");
 	for (int i = 0; i < loc.GetNumObject(); i++) {
@@ -240,6 +240,14 @@ void Game::Update()
 	if (m_Fade != NULL&& m_Fade->toumeiodo >= 1.0f) {
 		m_Fade->StartFadeIn();
 	}
+
+	//ƒTƒEƒ“ƒh
+	SoundEngine().SetListenerPosition(MainCamera().GetPosition());
+	CVector3 frontXZ = MainCamera().GetForward();
+	frontXZ.y = 0.0f;
+	frontXZ.Normalize();
+	SoundEngine().SetListenerFront(frontXZ);
+
 	/*if (Pad(0).IsTrigger(enButtonB) && a >= 2) {
 		m_Fade->StartFadeOut();
 		a--;

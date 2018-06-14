@@ -948,7 +948,7 @@ void AI::NPCescape()//ƒ]ƒ“ƒr‚©‚ç“¦‚°‚é
 		m_speed = 4.0f;
 		escapecaku = 30.0f;
 		mobe = 50.0f;
-		Gaizi->Satpoint(0.1);
+	//	Gaizi->Satpoint(0.1);
 		work->Setkakudo(5.0f);
 		kaiten = false;
 		pa = Fade_Out;										//‚±‚ñ‚È’¬......‚à‚¤‚¨‚³‚ç‚Î‚¾II
