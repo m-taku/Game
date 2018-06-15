@@ -67,6 +67,7 @@
     <ClCompile Include="car.cpp" />
     <ClCompile Include="carRender.cpp" />
     <ClCompile Include="LevelRender.cpp" />
+    <ClCompile Include="AIChase.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -95,7 +96,6 @@
     <ClInclude Include="car.h" />
     <ClInclude Include="carRender.h" />
     <ClInclude Include="LevelRender.h" />
-    <ClInclude Include="user.h" />
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\unityChan.fbx">
@@ -430,9 +430,6 @@
     <CustomBuild Include="Assets\sound\car-horn1.wav" />
     <CustomBuild Include="Assets\sound\klaxon.wav" />
     <CustomBuild Include="Assets\sound\car_noise.wav" />
-    <CustomBuild Include="Assets\lever\levalAI22.tks">
-      <Filter>Assets\lever</Filter>
-    </CustomBuild>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\modelData\livingbuildings.png">
