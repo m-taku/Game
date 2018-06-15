@@ -33,8 +33,6 @@ bool Stage::Start()
 }
 void Stage::Update()
 {
-
-	btVector3 m_pos = m_rigidBody.GetBody()->getWorldTransform().getOrigin();
 	m_skinModel.Update(CVector3::Zero, CQuaternion::Identity, CVector3::One);
 	s_skinModel.Update(CVector3::Zero, CQuaternion::Identity, CVector3::One);
 }

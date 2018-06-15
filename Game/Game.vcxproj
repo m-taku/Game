@@ -641,6 +641,7 @@
     <ClCompile Include="Osu.cpp" />
     <ClCompile Include="Pasu.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="AIChase.cpp" />
     <ClCompile Include="Stage.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

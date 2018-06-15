@@ -65,7 +65,7 @@ Game::Game()
 	da.push_back(AIR24);
 	da.push_back(AIR25);
 	da.push_back(AIR26);
-	for (int k = 0; k < 26; k++) {
+	for (int k = 0; k < da.size(); k++) {
 		AI* AIR = NewGO<AI>(0, "AI");
 		AIR->GetGame(this);
 		Rsimin.push_back(AIR);
@@ -73,14 +73,14 @@ Game::Game()
 	}
 	No = 0;
 	Leftfrag = 1;
-	da2.push_back(AIL1);
+	/*da2.push_back(AIL1);
 	da2.push_back(AIL2);
 	da2.push_back(AIL3);
 	da2.push_back(AIL4);
 	da2.push_back(AIL5);
-	da2.push_back(AIL6);
+	da2.push_back(AIL6);*/
 	da2.push_back(AIL7);
-	da2.push_back(AIL8);
+	/*da2.push_back(AIL8);
 	da2.push_back(AIL9);
 	da2.push_back(AIL10);
 	da2.push_back(AIL11);
@@ -97,8 +97,8 @@ Game::Game()
 	da2.push_back(AIL22);
 	da2.push_back(AIL23);
 	da2.push_back(AIL24);
-	da2.push_back(AIL25);
-	for (int k = 0; k < 25; k++) {
+	da2.push_back(AIL25);*/
+	for (int k = 0; k < da2.size(); k++) {
 		AI* AIL = NewGO<AI>(0, "AI");
 		AIL->GetGame(this);
 		Lsimin.push_back(AIL);
@@ -160,7 +160,7 @@ Game::Game()
 		CVector3 f= loc.GetObjectPosition(i);
 		f.y = 500.0f;
 		point[i]->SetPosition(f);
-		point[i]->SetColor({ 255.0f,255.0f, 0.0f,0.0f });
+		point[i]->SetColor({ 180.0f,255.0f, 0.0f,0.0f });
 		point[i]->SetAttn({ 700.0f,4.0f ,0.0f });	 
 	}
 	m_sunLig = NewGO<prefab::CDirectionLight>(0);

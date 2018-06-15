@@ -16,6 +16,14 @@ public:
 	}
 	void CarSound();//Carクラスのサウンドを扱う関数。
 	void SoundklaxonPlay();//クラクションを鳴らす処理。
+	CVector3 Getposition()
+	{
+		return m_position;//現在の座標
+	}
+	CVector3 Getforward()
+	{
+		return m_forward;
+	}
 private:
 
 	CMeshCollider m_meshCollider;	//メッシュコライダー。

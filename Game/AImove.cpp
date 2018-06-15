@@ -25,17 +25,18 @@ int AImove::kyorikeisan(int bangou, CVector3 m_pos, CVector3 m_forward,std::vect
 	kaku = 0.0f;
 	muve = 1.0f;
 	qBias1 = CQuaternion::Identity;
-	m_pos.y = 0.0f;
+	CVector3 pos= m_pos;
+	pos.y = 0.0f;
 	len = 0;
 	mokuteki = pasu[bangou];
 	mokuteki.y = 0.0f;
-	bekutor = mokuteki - m_pos;
+	bekutor = mokuteki - pos;
 	len = bekutor.Length();//í∑Ç≥
+	bekutor.y = 0.0f;
+	bekutor.Normalize();
 	if (15.0f <= len) {
 		float angle = VectorAngleDeg(bekutor, m_forward);
 		if (angle >= haba) {
-			bekutor.y = 0.0f;
-			bekutor.Normalize();
 			//âÒì]é≤ÇãÅÇﬂÇÈÅB
 			CVector3 rotAxis;
 			rotAxis.Cross(m_forward,bekutor);
@@ -57,18 +58,19 @@ int AImove::kyorikeisan(CVector3 mokuteki1, CVector3 m_pos, CVector3 m_forward)
 	kaku = 0.0f;
 	muve = 1.0f;
 	qBias1 = CQuaternion::Identity;
-	m_pos.y = 0.0f;
+	CVector3 pos = m_pos;
+	pos.y = 0.0f;
 	len = 0;
 	mokuteki = mokuteki1;
 	mokuteki.y = 0.0f;
-	bekutor = mokuteki - m_pos;
+	bekutor = mokuteki - pos;
 	len = bekutor.Length();//í∑Ç≥
+	bekutor.y = 0.0f;
+	bekutor.Normalize();
 	if (15.0f <= len) {
 		float angle = VectorAngleDeg(bekutor, m_forward);
 		if (angle >= haba) {
 			//âÒì]é≤ÇãÅÇﬂÇÈÅB
-			bekutor.y = 0.0f;
-			bekutor.Normalize();
 			CVector3 rotAxis;
 			rotAxis.Cross(m_forward, bekutor);
 			rotAxis.Normalize();

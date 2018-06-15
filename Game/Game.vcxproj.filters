@@ -67,6 +67,7 @@
     <ClCompile Include="car.cpp" />
     <ClCompile Include="carRender.cpp" />
     <ClCompile Include="LevelRender.cpp" />
+    <ClCompile Include="AIChase.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -427,6 +428,8 @@
     </CustomBuild>
     <CustomBuild Include="Assets\effect\aura3.efk" />
     <CustomBuild Include="Assets\sound\car-horn1.wav" />
+    <CustomBuild Include="Assets\sound\klaxon.wav" />
+    <CustomBuild Include="Assets\sound\car_noise.wav" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\modelData\livingbuildings.png">
@@ -474,13 +477,5 @@
     <ImageContentTask Include="Assets\sprite\fade.png">
       <Filter>Assets\sprite</Filter>
     </ImageContentTask>
-  </ItemGroup>
-  <ItemGroup>
-    <Media Include="Assets\sound\klaxon.wav">
-      <Filter>Assets\sound</Filter>
-    </Media>
-    <Media Include="Assets\sound\car_noise.wav">
-      <Filter>Assets\sound</Filter>
-    </Media>
   </ItemGroup>
 </Project>
