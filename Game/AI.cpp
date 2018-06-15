@@ -632,7 +632,6 @@ void AI::Update()
 {
 
 	AIrest = Humans.begin();
-	m_movespeed = CVector3::Zero;
 	//pa = Normal; //ここはプレイヤーの行動によって変化するようにする。
 	m_tekirot.MakeRotationFromQuaternion(m_rotation);
 	m_forward.x = m_tekirot.m[2][0];
@@ -672,24 +671,26 @@ void AI::Update()
 			NPCMAXHP = NPCHP;
 		}
 	}
-
-	FindGameObjectsWithTag(20, [&](IGameObject* go) {
-		if (go != this) {            //自分からの距離を計測するため、検索結果から自分を除外する。
-			car* ai = (car*)go;
-			CVector3 kyori1 = ai->Getposition() - this->m_position;//自分との距離を求める。
-			float f = kyori1.Length();
-			if (f <= 1000000) { //距離が車間距離よりも短くなっていたら
-				float kaku = acosf(kyori1.Dot(ai->Getforward()));//２つのべクトルの内積のアークコサインを求める。(ラジアン)
-				float degree = CMath::RadToDeg(kaku);
-				if (degree <= 90) {
-					nearestpas();
-					m_movespeed.y = 1000.0f;
-					pa = flyNPC;
+	if (GetZonbi() == true&&pa!= flyNPC) {
+		FindGameObjectsWithTag(20, [&](IGameObject* go) {
+			if (go != this) {            //自分からの距離を計測するため、検索結果から自分を除外する。
+				car* ai = (car*)go;
+				CVector3 kyori1 = ai->Getposition() - this->m_position;//自分との距離を求める。
+				float f = kyori1.Length();
+				if (f <= 1000000) { //距離が車間距離よりも短くなっていたら
+					kyori1.Normalize();
+					float kaku = acosf(kyori1.Dot(ai->Getforward()));//２つのべクトルの内積のアークコサインを求める。(ラジアン)
+					float degree = CMath::RadToDeg(kaku);
+					if (degree <= 360) {
+						nearestpas();
+						m_movespeed.y += 50.0f;
+						pa = flyNPC;
+					}
 				}
 			}
-		}
 
-	});
+		});
+	}
 	if (Gaizi->GatFragu() >= 1.0f&& ForceFlag == false) {//特殊部隊が出現したら、
 		ForceFlag = true;//出現フラグを立てる。
 		if (GetZonbi() == true) {//自分がゾンビだったら
@@ -852,7 +853,7 @@ void AI::FlyNPC()
 	m_rotation.Multiply(kak);
 	m_movespeed+=work->Getbekutor();
 	CharaConUpdate();
-	if (m_position.y <= 0.0f) {
+	if (A_charaCon.IsOnGround()) {
 		pa = Zombie_Normal;
 	}
 }
