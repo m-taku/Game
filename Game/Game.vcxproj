@@ -678,6 +678,7 @@
     <ClInclude Include="taieki.h" />
     <ClInclude Include="Taitor.h" />
     <ClInclude Include="tekihei.h" />
+    <ClInclude Include="user.h" />
     <CustomBuild Include="Assets\shader\LightingFunction.h" />
     <CustomBuild Include="Assets\shader\modelCB.h" />
     <CustomBuild Include="Assets\shader\modelSRV.h" />
@@ -931,6 +932,10 @@
       <FileType>Document</FileType>
     </CustomBuild>
     <CustomBuild Include="Assets\modelData\liam.tks">
+      <FileType>Document</FileType>
+    </CustomBuild>
+    <CustomBuild Include="Assets\lever\levalAI22.tks">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">call $(ProjectDir)..\tkTools\tkContentTools.bat %(Identity) $(OutDir)</ExcludedFromBuild>
       <FileType>Document</FileType>
     </CustomBuild>
   </ItemGroup>
