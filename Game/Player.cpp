@@ -85,7 +85,7 @@ bool Player::Start()
 		m_animclip,
 		animnum
 	);*/
-	
+	SetZonbe();
 	return true;
 }
 void Player::Update()

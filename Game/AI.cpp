@@ -7,6 +7,7 @@
 #include"Geizi.h"
 #include"Pasu.h"
 #include"tekihei.h"
+#include"car.h"
 #define REACH 200.0  //ゾンビの攻撃範囲。この距離まで近づいたら攻撃する。
 #define PI 3.141592653589793 
 //AI NPC;
@@ -21,7 +22,7 @@ AI::AI()
 }
 AI::~AI()
 {
-	//m_charaCon.RemoveRigidBoby();
+	//A_charaCon.RemoveRigidBoby();
 	DeleteGO(work);
 }
 bool AI::Start()
@@ -29,6 +30,7 @@ bool AI::Start()
 	work = NewGO<AImove>(0, "AImove");
 	pl = FindGO<Player>("Player");
 	Gaizi = FindGO<Geizi>("Geizi");
+	Car = FindGO<car>("car");
 	//キャラのスキンモデルのロードは各自サブクラスで行う。
 	m_skinModelData.Load(L"modelData/liam.cmo");//プレイヤーを書け
 	m_skinModel.Init(m_skinModelData);
@@ -78,7 +80,7 @@ bool AI::Start()
 	m_forward.z = m_tekirot.m[2][2];
 	m_forward.Normalize();
 	work->Setkakudo(4.0f);
-	zondi.CreateFromDDSTextureFromFile(L"modelData/LiamTexZonbi.dds");
+	zondi.CreateFromDDSTextureFromFile(L"modelData/LiamTexZonbi1.dds");
 	m_skinModel.FindMaterial([&](CModelEffect* material) {
 		material->Setm_zonbi(zondi.GetBody());
 	});
@@ -156,6 +158,7 @@ void AI::NPCNormal_Search()//NPCの警戒処理。
 		da = 0;
 		m_speed = 4.0f;
 		nearestpas();
+		Fardist_path(pl->Getposition());
 		pa = Escape;
 	}
 	if (hann >= 2) {
@@ -207,9 +210,8 @@ void AI::NPCDamage()
 	}
 
 }
-void AI::nearestpas()
+void AI::nearestpas()//最寄りのパス検索
 {
-
 	float sa = 99999999999999.0;
 	for (int h = 0; h < game->pasu[Leftfrag].GetresutoSaiz()-1; h++) {
 		CVector3 k = game->pasu[Leftfrag].Getresuto(h)->m_position[0] - m_position;
@@ -229,84 +231,21 @@ void AI::nearestpas()
 
 void AI::NPCZombie_Normal()
 {
-//	work->kyorikeisan(mokuhyou-1, m_position, m_forward, game->pasu[Leftfrag].m_pointList);
-//	m_rotation.Multiply(work->Getkaku());//回転
-//	m_movespeed = m_forward * (work->Getmuve()*m_speed + mobe);
-//	m_movespeed.y += gravity;
-//	m_position = A_charaCon.Execute(GameTime().GetFrameDeltaTime(), m_movespeed);//移動
+	//	work->kyorikeisan(mokuhyou-1, m_position, m_forward, game->pasu[Leftfrag].m_pointList);
+	//	m_rotation.Multiply(work->Getkaku());//回転
+	//	m_movespeed = m_forward * (work->Getmuve()*m_speed + mobe);
+	//	m_movespeed.y += gravity;
+	//	m_position = A_charaCon.Execute(GameTime().GetFrameDeltaTime(), m_movespeed);//移動
 	pasmove();
 	m_rotation.Multiply(work->Getkaku());//回転
-	if ((game->pasu[Leftfrag].Getresuto(mokuhyouNo)->m_position[0] - m_position).Length() < 150.0f) {
-
-		int num = Random().GetRandInt() % (game->pasu[Leftfrag].Getresuto(mokuhyouNo)->No.size() - 1);	
-			mokuhyou = game->pasu[Leftfrag].Getresuto(mokuhyouNo)->No[++num];
-		
-		for (int ka = 0; ka < game->pasu[Leftfrag].GetresutoSaiz(); ka++) {
-			if (game->pasu[Leftfrag].Getresuto(ka)->No[0] == mokuhyou) {
-				mokuhyouNo = ka;
-				break;
-			}
-		}
+	if ((game->pasu[Leftfrag].Getresuto(mokuhyouNo)->m_position[0] - m_position).Length() < 150.0f) {//ランダム徘徊のパス番号検索
+		int num = Random().GetRandInt() % (game->pasu[Leftfrag].Getresuto(mokuhyouNo)->No.size() - 1);
+		mokuhyou = game->pasu[Leftfrag].Getresuto(mokuhyouNo)->No[++num];
 	}
+	Retrieval_pasNo(mokuhyou);
 	if (Tansaku != nullptr) {
 		pa = Zombie_Chase; //パターンをゾンビチェイスに変える。
 	}
-}
-void AI::NPCZombie_Chase()
-{
-	float len = GetKyori(m_position, Tansaku->m_position);
-	if (len > 2100.0f || Tansaku->Raifu_f == true) {//他のNPCを見失った(距離が2100以上あいた)、あるいは死んだら
-		//元の位置に戻る。
-		jyunban.erase(jyunban.begin(), jyunban.end());
-		keiro.tansa(m_position, retu_position, &jyunban, Leftfrag);
-		Tansaku = nullptr; //検索結果を初期化する。
-		kaiten = false;
-		angle = 0;
-		HitFlag = false;
-		escapecaku = 30.0f;
-		nearestpas();
-	}
-	else {//NPCを見失っておらず、見つけていたら
-		float kou = VectorAngleDeg((Tansaku->m_forward));
-		CVector3 n = Tansaku->m_position - m_position;
-		NPCRunangle(n);
-		if (kou <= 120) {
-			if (len < atakkukyori) {//NPCに追いついたら
-							//攻撃する(確実に当たる仕様)。
-				HitFlag = true;//「NPCに攻撃を当てた」というフラグをたてる。
-				if (Tansaku->muteki_Flag == false) {
-					Tansaku->NPCHP -= 40.0f;
-				}
-
-				atakkukyori = 200.0f;
-				//NPC_Attack_Animation();//攻撃アニメーションを流す。
-			}
-			else {
-				HitFlag = false;
-				n.y = 0.0f;
-				n.Normalize();
-				m_movespeed = n * (m_speed*200.0 + mobe);
-				m_movespeed.y += gravity;
-				m_position = A_charaCon.Execute(GameTime().GetFrameDeltaTime(), m_movespeed);//移動
-				atakkukyori = 100.0f;
-				/////////////////////////////////
-				//市民NPCを追跡する処理。
-				/////////////////////////////////
-			}
-		}
-		else {
-			Pboneforward = Tansaku->m_forward;
-			CVector3 rotAxis;
-			rotAxis.Cross(this->m_forward, Pboneforward);
-			rotAxis.Normalize();
-			angle += 3.0f;
-			Crot.SetRotationDeg(rotAxis, angle);
-			Crot.Multiply(Pboneforward);
-			CVector3 baka = (Pboneforward * len) + Tansaku->m_position;
-			baka = baka - m_position;
-			m_position = A_charaCon.Execute(GameTime().GetFrameDeltaTime(), baka);
-		}
-	}	
 }
 void AI::NPCZombie_Attack()//vs特殊部隊
 {
@@ -494,17 +433,6 @@ void AI::NPCRuet()//NPCルート
 {
 
 }
-
-float AI::VectorAngleDeg2(CVector3 c)
-{
-	c.Normalize();//向きVectorにする。
-	float kaku = atanf(c.Dot(m_rite));//２つのべクトルの内積のアークコサインを求める。(ラジアン)
-
-	float degree = CMath::RadToDeg(kaku);//求めたラジアンを度に変える。
-
-	return degree;
-}
-
 float AI::Siya(CVector3 h, float g)
 {
 
@@ -529,42 +457,6 @@ float AI::Siya(CVector3 h, float g)
 	}
 	return 0;
 }
-void AI::NPCChase()
-{
-	CVector3 mokuteki = lam->m_position-m_position;
-	NPCRunangle(mokuteki);
-	if (lam->Raifu_f == true) {
-		pa = Return;
-		jyunban.erase(jyunban.begin(), jyunban.end());
-		keiro.tansa(m_position,retu_position, &jyunban, Leftfrag);
-		escapecaku = 30.0f;
-		Chasefrag = 0;
-		m_speed = 1.0f;
-		lam = nullptr;
-		HitFlag = false;
-	}
-	else {
-		if (mokuteki.Length() <= atakkukyori) {
-			m_speed = 0.0f;
-			HitFlag = true;
-			if (lam->muteki_Flag == false) {
-				lam->NPCHP -= 20.0f;
-			}
-			atakkukyori = 200.0f;
-		}
-		else {
-			HitFlag = false;
-			furag = 0;
-			m_speed = 4.0f;
-			mokuteki.y = 0.0f;
-			mokuteki.Normalize();//正規化して向きベクトルにする。
-			m_movespeed = mokuteki * (150 * m_speed + mobe);
-			m_movespeed.y += gravity;
-			m_position = A_charaCon.Execute(GameTime().GetFrameDeltaTime(), m_movespeed);
-			atakkukyori = 100.0f;
-		}
-	}
-}
 float AI::VectorAngleDeg(CVector3 c)
 {
 	c.y = 0.0f;
@@ -575,11 +467,21 @@ float AI::VectorAngleDeg(CVector3 c)
 
 	return degree;
 }
+float AI::VectorAngleDeg(CVector3 h,CVector3 c)
+{
+	c.y = 0.0f;
+	c.Normalize();//向きVectorにする。
+	h.y = 0.0f;
+	h.Normalize();
+	float kaku = acosf(c.Dot(h));//２つのべクトルの内積のアークコサインを求める。(ラジアン)
 
+	float degree = CMath::RadToDeg(kaku);
+
+	return degree;
+}
 void AI::NPC_Search_Zonbi() //全てのゾンビと距離でダメージ判定をする。
 {
 	AIrest++;
-
 	if (Chasefrag <= 0) {
 		for (; AIrest != Humans.end(); AIrest++) {
 			if (this != (AI*)AIrest[0]) {
@@ -590,52 +492,50 @@ void AI::NPC_Search_Zonbi() //全てのゾンビと距離でダメージ判定をする。
 					if (angle <= 60)
 					{
 						if (ai->GetZonbi() == true) {
+							keikai_f = true;
 							lam = ai;
-							for (AIrest = Humans.begin() + 1; AIrest != Humans.end(); AIrest++) {
-								if (this != (AI*)AIrest[0]) {
-									AI* ai = (AI*)AIrest[0];
-									if (ai->GetZonbi() != true) {
-										if (1000.0 >= (ai->m_position - this->m_position).Length())
-										{
-											if (ai->Chasefrag <= 0) {
-												mikata++;
-												mikatalest.push_back(ai);
-											}
-
-										}
-									}
-								}
-							}
-							if (mikata <= 2) {
-								m_speed = 3.0f;
-								retu_position = m_position;
-								nearestpas();
-								pa = Escape_NPC;
-
-							}
-							else {
-								Chasefrag = 1;
-								pa = Chase;
-								retu_position = m_position;
-								for (int k = 0; k < mikatalest.size(); k++) {
-									m_speed = 4.0f;
-									mikatalest[k]->Chasefrag += 1;
-									mikatalest[k]->retu_position = mikatalest[k]->m_position;
-									mikatalest[k]->pa = Chase;
-									mikatalest[k]->lam = this->lam;
-								}
-							}
-							mikatalest.clear();
-							mikata = 0;
-							break;
+							nearestpas();
+							pa = Escape_NPC;
+							m_speed = 3.0f;
+							retu_position = m_position;
 						}
-						else {
-							//市民同士の確認
-						}
+					}
+				}
+				else {
+					//市民同士の確認
+				}
+			}
+		}
+	}
+	if (keikai_f==true) {
+		for (AIrest = Humans.begin() + 1; AIrest != Humans.end(); AIrest++) {
+			if (this != (AI*)AIrest[0]) {
+				AI* ai = (AI*)AIrest[0];
+				if (ai->GetZonbi() != true) {
+					if (1000.0 >= (ai->m_position - this->m_position).Length())
+					{
+						mikata++;
+						mikatalest.push_back(ai);
 					}
 				}
 			}
 		}
+		if (mikata >= 2) {
+			Chasefrag = 1;
+			pa = Chase;
+			keikai_f = false;
+			retu_position = m_position;
+			for (int k = 0; k < mikatalest.size(); k++) {
+				m_speed = 4.0f;
+				mikatalest[k]->Chasefrag += 1;
+				mikatalest[k]->retu_position = mikatalest[k]->m_position;
+				mikatalest[k]->pa = Chase;
+				mikatalest[k]->keikai_f = false;
+				mikatalest[k]->lam = this->lam;
+			}
+		}
+		mikatalest.clear();
+		mikata = 0;
 	}
 
 
@@ -716,27 +616,6 @@ void AI::AI_Animation()//AIのアニメーション制御
 		}
 	}
 }
-void AI::Idle_Animation() //キャラクターが歩き続ける時のアニメーションの処理。
-{
-	ai_NPCAnimation.Play(shiminidle, 0.7);
-}
-
-
-void AI::Loop_Walk_Animation()//キャラクターが歩き続ける時のアニメーションの処理。
-{
-	ai_NPCAnimation.Play(shiminwalk,0.7);
-}
-
-
-void AI::Loop_Run_Animation()//キャラクターが走り続ける時のアニメーションの処理。
-{
-	ai_NPCAnimation.Play(shiminrun,0.7);
-}
-
-void AI::Zombie_Walk_Animation()
-{
-	ai_NPCAnimation.Play(Zonbiwalk, 0.7);
-}
 
 //void AI::Resistance_Animation()//キャラクターが抵抗している時のアニメーションの処理。
 //{
@@ -753,7 +632,6 @@ void AI::Update()
 {
 
 	AIrest = Humans.begin();
-	m_movespeed = CVector3::Zero;
 	//pa = Normal; //ここはプレイヤーの行動によって変化するようにする。
 	m_tekirot.MakeRotationFromQuaternion(m_rotation);
 	m_forward.x = m_tekirot.m[2][0];
@@ -793,8 +671,26 @@ void AI::Update()
 			NPCMAXHP = NPCHP;
 		}
 	}
+	if (GetZonbi() == true&&pa!= flyNPC) {
+		FindGameObjectsWithTag(20, [&](IGameObject* go) {
+			if (go != this) {            //自分からの距離を計測するため、検索結果から自分を除外する。
+				car* ai = (car*)go;
+				CVector3 kyori1 = ai->Getposition() - this->m_position;//自分との距離を求める。
+				float f = kyori1.Length();
+				if (f <= 1000000) { //距離が車間距離よりも短くなっていたら
+					kyori1.Normalize();
+					float kaku = acosf(kyori1.Dot(ai->Getforward()));//２つのべクトルの内積のアークコサインを求める。(ラジアン)
+					float degree = CMath::RadToDeg(kaku);
+					if (degree <= 360) {
+						nearestpas();
+						m_movespeed.y += 50.0f;
+						pa = flyNPC;
+					}
+				}
+			}
 
-
+		});
+	}
 	if (Gaizi->GatFragu() >= 1.0f&& ForceFlag == false) {//特殊部隊が出現したら、
 		ForceFlag = true;//出現フラグを立てる。
 		if (GetZonbi() == true) {//自分がゾンビだったら
@@ -848,6 +744,9 @@ void AI::Update()
 			break;
 		case Chase:
 			NPCChase();
+			break;
+		case flyNPC:
+			FlyNPC();
 			break;
 		case Fade_Out:
 			NPCNormal_Search();
@@ -946,11 +845,28 @@ void AI::NPCReturn()
 	}
 
 }
+void AI::FlyNPC()
+{
+	work->kyorikeisan(mokuhyou - 1, m_position, m_forward, game->pasu[Leftfrag].m_pointList);
+	CQuaternion kak;
+	kak.SetRotationDeg(CVector3::AxisX, 30.0f);
+	m_rotation.Multiply(kak);
+	m_movespeed+=work->Getbekutor();
+	CharaConUpdate();
+	if (A_charaCon.IsOnGround()) {
+		pa = Zombie_Normal;
+	}
+}
+void AI::CharaConUpdate()
+{
+	m_movespeed.y += gravity;
+	m_position = A_charaCon.Execute(GameTime().GetFrameDeltaTime(), m_movespeed);//移動
+}
 void AI::Gathered()                       //主人のところにいくぞ～～～
 {
 	jyunban.erase(jyunban.begin(), jyunban.end());
 	keiro.tansa(m_position, pl->Getposition(), &jyunban, Leftfrag);
-	m_speed = 10.0;
+	
 	pa = Zombie_Return;
 }
 void AI::NPCzombie_Return()               //目的地にいくんだ～～～
@@ -997,25 +913,26 @@ void AI::pasmove()
 	m_movespeed.y += gravity;
 	m_position = A_charaCon.Execute(GameTime().GetFrameDeltaTime(), m_movespeed);//移動
 }
-void AI::hinannpas(CVector3 m_position)
+void AI::Fardist_path(CVector3 m_position)//視野付きリンク先パス検索
 {
-	pasmove();
-	NPCRunangle(work->Getbekutor());
-	if ((game->pasu[Leftfrag].Getresuto(mokuhyouNo)->m_position[0] - m_position).Length() < 200.0f) {
-		CVector3 minkore = { 0.0f,0.0f,0.0f };
-		for (int Linknum = 1; Linknum < game->pasu[Leftfrag].GetresutoSaiz(mokuhyouNo); Linknum++) {
-			CVector3 ma = game->pasu[Leftfrag].Getresuto(mokuhyouNo)->m_position[Linknum] - m_position;
-			if (minkore.Length()< ma.Length()) {
+	CVector3 minkore = { 0.0f,0.0f,0.0f };
+	for (int Linknum = 0; Linknum < game->pasu[Leftfrag].GetresutoSaiz(mokuhyouNo); Linknum++) {
+		CVector3 ma = game->pasu[Leftfrag].Getresuto(mokuhyouNo)->m_position[Linknum] - m_position;
+		if (minkore.Length() < ma.Length()) {
+			if (90 <= VectorAngleDeg(ma, m_position - this->m_position)) {
 				minkore = ma;
 				mokuhyou = game->pasu[Leftfrag].Getresuto(mokuhyouNo)->No[Linknum];
 			}
 		}
-		for (int ka = 0; ka < game->pasu[Leftfrag].GetresutoSaiz(); ka++) {
-			if (game->pasu[Leftfrag].Getresuto(ka)->No[0] == mokuhyou) {
-				mokuhyouNo = ka;
-				break;
-			}
-		}
+	}
+	Retrieval_pasNo(mokuhyou);
+}
+void AI::hinannpas(CVector3 m_position)
+{
+	pasmove();
+	NPCRunangle(work->Getbekutor());
+	if ((game->pasu[Leftfrag].Getresuto(mokuhyouNo)->m_position[0] - this->m_position).Length() < 200.0f) {
+		Fardist_path(m_position);
 	}
 }
 void AI::NPCescape()//ゾンビから逃げる
@@ -1063,6 +980,20 @@ void AI::NPCEscape_NPC()
 	else {
 		hinannpas(lam->m_position);
 		//1人では戦えない！！！//に～げるんだよ～～～～
+	}
+}
+void AI::search()
+{
+	jyunban.erase(jyunban.begin(), jyunban.end());     //逃げ切ったぜ～～～～
+	keiro.tansa(m_position, game->pasu[Leftfrag].m_pointList[0], &jyunban, Leftfrag);
+}
+void AI::Retrieval_pasNo(int mokuhyou)
+{
+	for (int ka = 0; ka < game->pasu[Leftfrag].GetresutoSaiz(); ka++) {
+		if (game->pasu[Leftfrag].Getresuto(ka)->No[0] == mokuhyou) {
+			mokuhyouNo = ka;
+			break;
+		}
 	}
 }
 void AI::Render(CRenderContext& rc)

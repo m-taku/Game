@@ -22,7 +22,7 @@ namespace tkEngine{
 		 */
 		constexpr static inline float RadToDeg( float rad )
 		{
-			return rad / (PI/180.0f);
+			return rad / (PI/ 180.0f);
 		}
 		/*!
 		 *@brief	t0‚Æt1ŠÔ‚ğüŒ`•âŠ®B

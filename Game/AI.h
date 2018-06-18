@@ -36,22 +36,29 @@ public:
 	void NPCZombie_Attack();					//主人様にたてつく奴は許さね～～～（特殊部隊とゾンビが戦う時の処理）//vs特殊部隊
 	void NPCzombie_Return();					//殴った後帰る（いらん）
 	void nearestpas();							//ド～コ行こうかな～～～（ランダム徘徊処理の初期化）
+	void Retrieval_pasNo(int mokuhyou);
+
 //	void NPCzombie_Escape();					
 	void NPCescape();							//こ、こんなの勝てるはずがねぇ、逃げるしかねぇ（ゾンビプレイヤーから逃げるときの処理）
 	void NPCReturn();							//あそこには、何かあるはずだ！！！（指定したパスまで移行する処理）
+	void FlyNPC();
 	void NPCDeath();							//俺は、、こん、なところで、、、（死亡、消滅処理）
 	void Zonbesiya();							//獲物はどこだ～～～（ゾンビの視野判定）
 	void NPCRunangle(CVector3 kyori);
 	void Render(CRenderContext& rc);
-	void pasmove();								//パスを探して最適なパスに移動する。
-	void hinannpas(CVector3 m_position);							//逃げる時の基本移動処理
+	void pasmove();		                       //パスを利用して最適なパスに移動する。
+	void CharaConUpdate();
+	void Chasepas(CVector3 m_position);		    //追いかける時時の基本移動処理
+	void hinannpas(CVector3 m_position);		//逃げる時の基本移動処理
 	void Turn();
 	void NPC_Search_Zonbi();					//こ、怖くなんかねぇし(市民がゾンビを探す処理)
 	void NPCRuet();							    //NPCの移動ルートを格納する。
 	float GetKyori(CVector3 a, CVector3 b);     //2つのオブジェクトの距離を計測する。
 	float VectorAngleDeg(CVector3 c);           //2つのベクトルの角度を角度表記(degree)で返す。
+	float VectorAngleDeg(CVector3 h, CVector3 c);
+	void search();								//経路探索呼び出し関数
+	void Fardist_path(CVector3 m_position);
 	float Siya(CVector3 h, float g);
-	float VectorAngleDeg2(CVector3 c);
 	float takikennsau();
 	void Animation_Walk();					    //歩き始めと歩き続けの一連のアニメーションの処理。
 	void Animation_Run();						//走り始めと走り続けの一連のアニメーションの処理。
@@ -73,7 +80,10 @@ public:
 	void NPC_Attack_Animation();//ゾンビ化NPCが攻撃するときの処理。
 	/////////////////////////////////////////////////////////////////////////
 	/////////////////////////////////////////////////////////////////////////
-
+	CVector3 Getposition()
+	{
+		return m_position;
+	}
 protected:
 	//メンバ変数
 	enum npcpattern { //switch文に使う。
@@ -84,6 +94,7 @@ protected:
 		Escape,				//逃げてるとき。
 		Escape_NPC,             //市民のNPCからの逃走状態。
 		Chase,
+		flyNPC,
 		//Escape_Player,       //市民のプレイヤーからの逃走状態。
 		Return,				//戻るとき。
 		Fade_Out,           //特殊部隊が出現して、一般市民が退場するとき。
@@ -107,32 +118,19 @@ protected:
 	};
 
 	enum npcpattern pa;
-	CCharacterController A_charaCon;
-	CSkinModel m_skinModel;					//スキンモデル。
-	CSkinModelData m_skinModelData;			//スキンモデルデータ。
-	CQuaternion m_rotation = CQuaternion::Identity;	//回転。
-	CQuaternion front = CQuaternion::Identity;
-	CVector3 m_forward;						//キャラの前方。
-	CVector3 m_rite;						//キャラの右方向。
-	CMatrix mRot;
-	keiroK keiro;
-	Geizi* Gaizi;
-	Player* pl;
-	CMatrix m_tekirot;
-
-	CMatrix k_tekirot;
-
-	Game* game;
-	
-	CVector3 before_m_position = CVector3::Zero;		//一つ前の座標。
-	std::vector<int> jyunban;
-
-	AI*Chawse_Zombie;  //追跡してくるキャラを格納する。
 	int satForceFlag()
 	{
 		 ForceFlag = true;     //特殊部隊の出現を表すフラグ。
 	}
+
+	CSkinModel m_skinModel;					//スキンモデル。
+	CSkinModelData m_skinModelData;			//スキンモデルデータ。
+	Game* game;
 	float m_speed;
+	car* Car;
+	Geizi* Gaizi;
+	Player* pl;
+
 private:
 	bool muteki_Flag = false;//無敵になっているかどうかを表すフラグ。
 	bool DamageFlag = false;      //ダメージを受けたかを示すフラグ。
@@ -166,11 +164,11 @@ private:
 	float atekfrag = 0;
 	float escapecaku = 30.0f;
 	int radam = 0;
-	int mokuhyouNo = 0;
+	int mokuhyouNo = 0;			//目的地のパス番号の入っている＜配列番号＞
 	tekihei* tekip;
-	int mokuhyou=1;
+	int mokuhyou=1;					//目的地のパス番号
 	std::vector<AI*> mikatalest;
-
+	bool keikai_f = false;
 	CVector3 retu_position = CVector3::Zero;
 	int mobe = 50;
 	std::vector<Human*>::iterator AIrest;
@@ -195,5 +193,18 @@ private:
 	float angle = 0.0f;
 	CVector3 Pboneforward = CVector3::Zero;
 	CQuaternion Crot = CQuaternion::Identity;
+	CCharacterController A_charaCon;
+	CQuaternion m_rotation = CQuaternion::Identity;	//回転。
+	CQuaternion front = CQuaternion::Identity;
+	CVector3 m_forward;						//キャラの前方。
+	CVector3 m_rite;						//キャラの右方向。
+	CMatrix mRot;
+	keiroK keiro;
+	CMatrix m_tekirot;
+	CMatrix k_tekirot;
+	CVector3 before_m_position = CVector3::Zero;		//一つ前の座標。
+	std::vector<int> jyunban;
+
+	AI* Chawse_Zombie;  //追跡してくるキャラを格納する。
 };
 

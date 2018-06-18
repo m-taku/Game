@@ -34,7 +34,6 @@ namespace tkEngine{
 	 */
 	void CLightCulling::Render(CRenderContext& rc)
 	{
-		return;
 		BeginGPUEvent(L"enRenderStep_LightCulling");
 		rc.SetRenderStep(enRenderStep_LightCulling);
 		CGraphicsEngine& ge = GraphicsEngine();

@@ -34,6 +34,7 @@ public:
 	{
 		kakudo = kku;
 	}
+	//目的地までの距離（あまり......）
 	void Setlen(float ka)
 	{
 		len = ka;
@@ -48,6 +49,7 @@ public:
 	{
 		haba = kakudo;
 	}
+	//目的地までのベクトル（Normalize済み）
 	CVector3 Getbekutor()
 	{
 		return bekutor;
