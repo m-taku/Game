@@ -19,13 +19,14 @@ bool Taitor::Start()
 	//y_texture.CreateFromDDSTextureFromFile(L"sprite/yaji.dds");
 	//y_sprite.Init(y_texture, 100, 50);
 	//y_sprite.Update(n_position, Quaternion, { 1.0f,1.0f,1.0f });
-	Pboneforward = { 0.0f,7000.0f,5000.0f };
+	BasisVector = { 0.0f,7000.0f,5000.0f };
 	//	fase->StartFadeOut();
+	furag = steat;
 	return true;
 }
 void Taitor::Update()
 {
-	if (fase->toumeiodo >= 1.0f) {
+	/*if (fase->toumeiodo >= 1.0f) {
 		if (Triggeer >= 1) {
 			if (Triggeer >= 2) {
 
@@ -56,43 +57,116 @@ void Taitor::Update()
 			hyouji = 0;
 			taim = 0;
 		}
-	}
-	if (Pad(0).IsTrigger(enButtonA)&& fase->toumeiodo <= 0.0f) {
+	}*/
+	
+	//if (Pad(0).IsTrigger(enButtonB) && fase->toumeiodo <= 0.0f) {
+	//	if(Triggeer>=1)
 	//	fase->StartFadeOut();
-		furag = push;
-		Triggeer++;
-	}
-	if (Pad(0).IsTrigger(enButtonB) && fase->toumeiodo <= 0.0f) {
-		if(Triggeer>=1)
-		fase->StartFadeOut();
-		Triggeer=0;
-	}
+	//	Triggeer=0;
+	//}
 
 //	y_sprite.Update(n_position, Quaternion,{ 1.0f,1.0f,1.0f });
-	if (furag == suii) {
-		Pboneforward *= 0.98;
-	}
-	if (furag == push) {
-		Pboneforward *= 0.98;
-		target=player->Getbonepos();
-		Pboneforward += target;
-		furag = suii;
-	//	UP = player->Getboneup();
-	}
-	
-	if (Pboneforward.Length() <= 200.0f)
-	{
-		NewGO<Game>(0, "Game");
-		DeleteGO(this);
-	}
-	Crot.SetRotationDeg(UP, 2.0f);
-	Crot.Multiply(Pboneforward);
+	//Crot.SetRotationDeg(UP, 2.0f);
+	//Crot.Multiply(BasisVector);
+	static int taime = 0;
 
-	MainCamera().SetTarget(target);
+	switch (furag) {
+	case steat:
+		Crot.SetRotationDeg(UP, 2.0f);
+		Crot.Multiply(BasisVector);
+		if (Pad(0).IsTrigger(enButtonA)) {
+			//	fase->StartFadeOut();
+			furag = push;
+		}
+		break;
+	case push:
+		BasisVector *= 0.98;
+		target = player->Getbonepos();
+		player_Foeward = player->GetFoeward();
+		player_Foeward.y = 0.0f;
+		player_Foeward.Normalize();
+		player_Foeward *= -1;
+		if (kakudo >= 2) {
+			ka = nowkmVector - target;
+			ka.y = 0.0f;
+			ka.Normalize();
+			UP.Cross(ka, player_Foeward);
+			UP.Normalize();
+			Crot.SetRotationDeg(UP, 2.0f);
+			Crot.Multiply(BasisVector);
+			kakudo = siya();
+		}
+		kaunto = kakudo / 2;
+		//	UP = player->Getboneup();
+		furag = suii;
+		break;
+	case suii:
+		nowkmtarget += target / kaunto;
+		Crot.SetRotationDeg(UP, 2.0f);
+		Crot.Multiply(BasisVector);
+		BasisVector *= 0.98;
+		if (taime++ >= kaunto)
+		{
+			nowkmtarget = target;
+			ka = nowkmVector - target;
+			
+			ka.Normalize();
+
+			ka.y = 1.2f;
+			speed -= taime;
+			ka *= speed;
+			speed--;
+			furag = tyoku;
+		}
+		break;
+	case tyoku:
+		ka = nowkmVector - target;
+		if (0.0f >= nowkmVector.y - target.y) {
+			ka.y = 0.0f;
+			nowkmtarget.y = target.y;
+			BasisVector.y = 0.0f;
+		}
+		ka.Normalize();
+		if (ka.y > 0) {
+			ka.y = 1.2f;
+		}
+
+		if (BasisVector.Length() <= 500.0f)
+		{
+			ka *= 20;
+		}
+		else {
+			ka *= speed;
+			speed--;
+		}
+		if (BasisVector.Length() <= 40.0f)
+		{
+			NewGO<Game>(0, "Game");
+			DeleteGO(this);
+		}
+		break;
+	default:
+		break;
+
+	}
+
+	nowkmVector = (BasisVector-ka) + nowkmtarget;
+	BasisVector -= ka;
+	MainCamera().SetTarget(nowkmtarget);
 	MainCamera().SetNear(1.0f);
 	//MainCamera().SetUp(Getboneup());
 	MainCamera().SetFar(50000.0f);
-	MainCamera().SetPosition(Pboneforward);
+	MainCamera().SetPosition(nowkmVector);
 	MainCamera().Update();
 }
 
+float Taitor::siya()
+{
+	CVector3 muki = BasisVector;
+	muki.y = 0.0f;
+	muki.Normalize();//向きVectorにする。
+	float kaku = acosf(muki.Dot(player_Foeward));//２つのべクトルの内積のアークコサインを求める。(ラジアン)
+
+	float degree = CMath::RadToDeg(kaku);
+	return degree;
+}

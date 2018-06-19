@@ -246,6 +246,9 @@
     <MeshContentTask Include="Assets\modelData\SimpleCorgi.FBX">
       <Filter>Assets\modelData</Filter>
     </MeshContentTask>
+    <MeshContentTask Include="Assets\modelData\Zonbiliam.FBX">
+      <Filter>Assets\modelData</Filter>
+    </MeshContentTask>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="Assets\shader\tonemap.fx">
@@ -444,6 +447,9 @@
     </CustomBuild>
     <CustomBuild Include="Assets\animData\waon.tka">
       <Filter>Assets\animData</Filter>
+    </CustomBuild>
+    <CustomBuild Include="Assets\modelData\Zonbiliam.tks">
+      <Filter>Assets\modelData</Filter>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>

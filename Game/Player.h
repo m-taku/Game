@@ -94,6 +94,7 @@ private:
 		animnum
 	};
 	CAnimation m_animation;
+	CShaderResourceView zondi;
 	CAnimationClip m_animclip[animnum];
 	int attackF = 0;
 	int attackcounter = 0;

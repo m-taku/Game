@@ -39,7 +39,13 @@ bool Player::Start()
 	const wchar_t name[20] = { 'h','e','a','d' };
 	m_skinModelData.Load(L"modelData/liam.cmo");//ƒvƒŒƒCƒ„[‚ð‘‚¯
 	m_skinModel.Init(m_skinModelData);
-	
+	zondi.CreateFromDDSTextureFromFile(L"modelData/LiamTexZonbi1.dds");
+	m_skinModel.FindMaterial([&](CModelEffect* material) {
+		material->Setm_zonbi(zondi.GetBody());
+
+	});
+
+	m_skinModel.Satburend(0.45f);
 	m_animclip[idle].SetLoopFlag(true);
 	m_animclip[walk].SetLoopFlag(true);
 	m_animclip[attack].SetLoopFlag(false);
@@ -86,6 +92,11 @@ bool Player::Start()
 		animnum
 	);*/
 	//SetZonbe();
+	mRot.MakeRotationFromQuaternion(m_rotation);
+	m_forward.x = mRot.m[2][0];
+	m_forward.y = mRot.m[2][1];
+	m_forward.z = mRot.m[2][2];
+	m_forward.Normalize();
 	m_animation.Play(idle, 0.2f);
 	m_skinModel.Update(m_position, m_rotation, { 20.0f,20.0f,20.0f });// CVector3::One*20.0f);
 	return true;
