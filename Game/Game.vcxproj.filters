@@ -430,6 +430,7 @@
     <CustomBuild Include="Assets\sound\car-horn1.wav" />
     <CustomBuild Include="Assets\sound\klaxon.wav" />
     <CustomBuild Include="Assets\sound\car_noise.wav" />
+    <CustomBuild Include="Assets\lever\levalAI22.tks" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\modelData\livingbuildings.png">

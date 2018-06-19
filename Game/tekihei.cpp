@@ -341,7 +341,7 @@ void tekihei::Update()
 							collide_siya[j] = (180.0 / 3.14159)*collide_siya[j];
 							if (collide_siya[j] <= 30.0f)
 							{
-								tekispeed[i] += tekiright[i] * 150.0f;
+								tekispeed[i] += tekiright[i] * 300.0f;
 							}
 						}
 
