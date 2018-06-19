@@ -24,7 +24,10 @@ public:
 	{
 		return bonepos;
 	}
-
+	void SetGame()
+	{
+		game = true;
+	}
 	CVector3& GetFoeward()
 	{
 		return m_forward;
@@ -99,7 +102,7 @@ private:
 	CVector3 boneright = CVector3::Zero;
 	CVector3 boneup = CVector3::Zero;
 	CMatrix bonerot_M;
-
+	bool game = false;
 	//////////T.M////////////////////////////
 	float Log_lStick_x = 0.0f;
 	float Log_lStick_y = 0.0f;

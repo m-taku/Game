@@ -150,6 +150,12 @@ namespace tkEngine{
 		}
 		void CSoundSource::Play(bool isLoop)
 		{
+			if (m_is3DSound == true) {
+				//音源の移動速度を更新。
+				m_velocity.Subtract(m_position, m_lastFramePosition);
+				m_velocity.Div(GameTime().GetFrameDeltaTime());
+				m_lastFramePosition = m_position;
+			}
 			if (m_isPlaying) {
 				//再生中のものを再開する。
 				m_sourceVoice->Start(0);
@@ -167,8 +173,10 @@ namespace tkEngine{
 					Play(m_waveFile->GetReadBuffer(), m_waveFile->GetSize());
 				}
 				m_isPlaying = true;
+			
 			}
 			m_isLoop = isLoop;
+		
 		}
 		void CSoundSource::UpdateStreaming()
 		{

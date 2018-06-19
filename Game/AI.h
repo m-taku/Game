@@ -2,10 +2,10 @@
 #include "tkEngine/character/tkCharacterController.h"
 #include "tkEngine/graphics/animation/tkAnimation.h" //アニメーション
 #include"Human.h"
-#include"Game.h"
+#include "AI_manager.h"
 #include"Geizi.h"
 #include "tkEngine/culling/tkObjectFrustumCulling.h"
-
+#include"Game.h"
 #define REACH 500.0  //ゾンビの攻撃範囲。この距離まで近づいたら攻撃する。
 #define PI 3.141592653589793 
 class Player;
@@ -17,9 +17,13 @@ public:
 	~AI();
 	bool Start();
 	void Update();
-	void GetGame(Game* ka)
+	void GetGame(AI_manager* ka)
 	{
 		game = ka;
+	}
+	void GetGaizi(Geizi*ka)
+	{
+		Gaizi = ka;
 	}
 	void NPCNormal();							//この時はまだ知らなかった…この街にゾンビがいるなんて…（市民の通常行動の処理）
 	void NPCNormal_Search();				    //おや？あれは？？？？？（市民の視野処理）
@@ -46,7 +50,7 @@ public:
 	void Zonbesiya();							//獲物はどこだ～～～（ゾンビの視野判定）
 	void NPCRunangle(CVector3 kyori);
 	void Render(CRenderContext& rc);
-	void pasmove();		                       //パスを利用して最適なパスに移動する。
+	void pasmove(int mokuhyou);		                       //パスを利用して最適なパスに移動する。
 	void CharaConUpdate();
 	void Chasepas(CVector3 m_position);		    //追いかける時時の基本移動処理
 	void hinannpas(CVector3 m_position);		//逃げる時の基本移動処理
@@ -56,18 +60,17 @@ public:
 	float GetKyori(CVector3 a, CVector3 b);     //2つのオブジェクトの距離を計測する。
 	float VectorAngleDeg(CVector3 c);           //2つのベクトルの角度を角度表記(degree)で返す。
 	float VectorAngleDeg(CVector3 h, CVector3 c);
-	void search();								//経路探索呼び出し関数
+	void search(CVector3 mokutekipos);								//経路探索呼び出し関数
 	void Fardist_path(CVector3 m_position);
 	float Siya(CVector3 h, float g);
 	float takikennsau();
-	void Animation_Walk();					    //歩き始めと歩き続けの一連のアニメーションの処理。
-	void Animation_Run();						//走り始めと走り続けの一連のアニメーションの処理。
-
+	
 	////////////////////////////////////////////////////////////////////////
 	////アニメーション関連のメンバ関数(メソッド)。                      ////
 	////各サブクラスでのオーバーライドを前提とするため、中身は書かない。////
 	//////////////////////////////////////////////////////////////////////////
-	void AI_Animation();//AIのアニメーションの移行を処理する。
+	void Animation_Walk();					    //歩き始めと歩き続けの一連のアニメーションの処理。
+	void Animation_Run();						//走り始めと走り続けの一連のアニメーションの処理。
 
 	void Idle_Animation();
 	
@@ -78,6 +81,7 @@ public:
 	void Zombie_Walk_Animation();//ゾンビ化NPCが歩き続けるときの処理。
 	//void Resistance_Animation();//抵抗しているときの処理。
 	void NPC_Attack_Animation();//ゾンビ化NPCが攻撃するときの処理。
+	void Zombie_Ziko_Animation();
 	/////////////////////////////////////////////////////////////////////////
 	/////////////////////////////////////////////////////////////////////////
 	CVector3 Getposition()
@@ -125,16 +129,15 @@ protected:
 
 	CSkinModel m_skinModel;					//スキンモデル。
 	CSkinModelData m_skinModelData;			//スキンモデルデータ。
-	Game* game;
+	AI_manager* game;
 	float m_speed;
 	car* Car;
 	Geizi* Gaizi;
 	Player* pl;
-
+	bool HitFlag = false;      //ダメージを与えたかを示すフラグ。
 private:
 	bool muteki_Flag = false;//無敵になっているかどうかを表すフラグ。
 	bool DamageFlag = false;      //ダメージを受けたかを示すフラグ。
-	bool HitFlag = false;      //ダメージを与えたかを示すフラグ。
 	bool BattleFlag = false;     //特殊部隊と戦闘をしているかを示すフラグ。
 	bool Raifu_f = false;
 	int MyNumber = 0;               //今自分が存在しているパスの番号。
@@ -172,23 +175,12 @@ private:
 	CVector3 retu_position = CVector3::Zero;
 	int mobe = 50;
 	std::vector<Human*>::iterator AIrest;
-	enum animation {
-		shiminidle,
-		shiminwalk,
-		shiminrun,
-		shiminattack,
-		Zonbiwalk,
-		Zonbiattack,
-		animnum
-	};
+
 	float atakkukyori = 100.0f;
 	int furag = 0;
-	CAnimation ai_NPCAnimation;				//アニメーション。
-	CAnimationClip ai_NPCAnimationClips[animnum];	//アニメーションクリップ。
 	bool kannkaku = false;
 	int Leftfrag = 0;
 	bool kaiten = false;
-	CShaderResourceView zondi;
 	CObjectFrustumCulling m_objectFrustumCulling;
 	float angle = 0.0f;
 	CVector3 Pboneforward = CVector3::Zero;
@@ -204,7 +196,9 @@ private:
 	CMatrix k_tekirot;
 	CVector3 before_m_position = CVector3::Zero;		//一つ前の座標。
 	std::vector<int> jyunban;
+	CVector3 flydist=CVector3::Zero;
 
+	int taime = 0;
 	AI* Chawse_Zombie;  //追跡してくるキャラを格納する。
 };
 
