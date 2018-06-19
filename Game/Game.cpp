@@ -6,6 +6,7 @@
 #include"AI.h"
 #include"Stage.h"
 #include"Level.h"
+#include "AI_manager.h"
 #include"AImove.h"
 #include"camera.h"
 #include"Pasu.h"
@@ -14,19 +15,12 @@
 #include"tekihei.h"
 #include"Geizi.h"
 #include"item.h"
-#include"Osu.h"
-#include"Mes.h"
-#include"Dog.h"
 #include"car.h"
-#include "tkEngine\light\tkDirectionLight.h"
-#include"tkEngine/graphics/tkLight.h"
-#include "tkEngine\light\tkPointLight.h"
-Game* game1;
 Game::Game()
 {
-	game1 = this;
 	//ここに基本的な発生を描く
 	gaizi = NewGO<Geizi>(1, "Geizi");
+
 	player = NewGO<Player>(0, "Player");
 
 	wchar_t moveFilePath[256];
@@ -158,11 +152,11 @@ Game::Game()
 		carv[i]->gatcarRender(*kar);
 #endif // Mizuki_baka
 	}
+
+	player->SetGame();
+
 //	pasu2.clear();
-	stge = NewGO<Stage>(0, "stage");
 	camera1 = NewGO<camera>(0, "camera");
-
-
 
 	/*swprintf_s(moveFilePath, L"lever/matilevel%d0%d.tks", 0, 2);
 	m_level[0].Build(moveFilePath);
@@ -187,6 +181,7 @@ Game::Game()
 	m_sunLig->SetColor({ 1.0f, 1.0f, 3.0f, 1.0f });
 	LightManager().SetAmbientLight({1.0f, 1.0f, 1.0f });
 	GraphicsEngine().GetShadowMap().SetLightDirection(lightDir);
+
 	//m_level[1].X = 5.0f;
 	//m_level[1].Z=  5.0f;
 	//m_level[1].Build(L"lever/leval01.tks");
@@ -205,39 +200,17 @@ void Game::OnDestroy()
 {
 	DeleteGO(player);
 	//ここで最終的にＤｅｌｅｔｅＧＯを絶対しきる。	
-	for (int k = 0; k < Rsimin.size(); k++) {
-		if (RAIseizon[k] >= 1) {
-			DeleteGO(Rsimin[k]);
-		}
-	}
-	for (int k = 0; k < Lsimin.size(); k++) {
-
-		if (LAIseizon[k] >= 1) {
-			DeleteGO(Lsimin[k]);
-		}
-	}
-	for (int i = 0; i < carv.size(); i++) {
-		DeleteGO(carv[i]);
-	}
+	DeleteGO(FindGO<AI_manager>("AI_manager"));
 	DeleteGO(gaizi);
-	DeleteGO(stge);
 	DeleteGO(camera1);
 	DeleteGO(FindGO<item>("item"));
-	for (int i = 0; i < point.size(); i++) {
-		DeleteGO(point[i]);
-	}
 	//再起動（タイトル表示）
-	point.clear();
 	NewGO<Taitor>(0, "Taitor");
+	NewGO<AI_manager>(0, "AI_manager");
 }
 bool Game::Start()
 {
 	//カメラを設定。
-	MainCamera().SetTarget({ 0.0f, 10.0f, 0.5f });
-	MainCamera().SetNear(10.0f);
-	MainCamera().SetFar(50000.0f);
-	MainCamera().SetPosition({ 30.0f, 10.0f, 0.0f });
-	MainCamera().Update();
 	m_Fade = FindGO<Fade>("Fade");
 
 

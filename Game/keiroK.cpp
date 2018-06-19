@@ -3,6 +3,8 @@
 #include"AI.h"
 #include"Game.h"
 #include"math.h"
+
+#include "AI_manager.h"
 #include "kanren.h"
 keiroK::keiroK()
 {
@@ -166,7 +168,7 @@ int keiroK::GetDistance(CVector3 iP ,CVector3 GP)
 void keiroK::tansa(CVector3 i, CVector3 Ta, std::vector<int> *a,int Leftfrag)
 {
 
-	Game *game = FindGO<Game>("Game");
+	AI_manager *game = FindGO<AI_manager>("AI_manager");
 	for (int l = 0; l < game->pasu[Leftfrag].Pasuresuto.size(); l++) {
 		if(game->pasu[Leftfrag].Pasuresuto[l].No.size()>1)
 		resuto1.push_back(game->pasu[Leftfrag].Pasuresuto[l]);

@@ -16,7 +16,19 @@ public:
 	}
 	void CarSound_SetPosition();//Carクラスのサウンドの座標を扱う関数。
 	void SoundklaxonPlay();//クラクションを鳴らす処理。
+	CVector3 Getposition()
+	{
+		return m_position;//現在の座標
+	}
+	CVector3 Getforward()
+	{
+		return m_forward;
+	}
 private:
+
+	CMeshCollider m_meshCollider;	//メッシュコライダー。
+	CRigidBody m_rigidBody;			//剛体
+	CPhysicsStaticObject m_physicsStaticObject;
 	void Move();
 	CSkinModel m_skinModel;					//スキンモデル。
 	CSkinModelData m_skinModelData;			//スキンモデルデータ。

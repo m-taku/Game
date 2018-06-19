@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "Taitor.h"
+#include"Player.h"
 #include"Game.h"
-
 
 Taitor::Taitor()
 {
@@ -11,13 +11,15 @@ Taitor::~Taitor()
 }
 bool Taitor::Start()
 {
-	n_texture.CreateFromDDSTextureFromFile(L"sprite/ge-ji.dds");
-	n_sprite.Init(n_texture, 1280, 720);
-	n_sprite.Update(n_position, CQuaternion::Identity, { 1.0f,1.0f,1.0f });
+	//n_texture.CreateFromDDSTextureFromFile(L"sprite/ge-ji.dds");
+	//n_sprite.Init(n_texture, 1280, 720);
+	//n_sprite.Update(n_position, CQuaternion::Identity, { 1.0f,1.0f,1.0f });
 	fase = FindGO<Fade>("Fade");
-	y_texture.CreateFromDDSTextureFromFile(L"sprite/yaji.dds");
-	y_sprite.Init(y_texture, 100, 50);
-	y_sprite.Update(n_position, Quaternion, { 1.0f,1.0f,1.0f });
+	player= FindGO<Player>("Player");
+	//y_texture.CreateFromDDSTextureFromFile(L"sprite/yaji.dds");
+	//y_sprite.Init(y_texture, 100, 50);
+	//y_sprite.Update(n_position, Quaternion, { 1.0f,1.0f,1.0f });
+	Pboneforward = { 0.0f,7000.0f,5000.0f };
 	//	fase->StartFadeOut();
 	return true;
 }
@@ -26,8 +28,7 @@ void Taitor::Update()
 	if (fase->toumeiodo >= 1.0f) {
 		if (Triggeer >= 1) {
 			if (Triggeer >= 2) {
-				NewGO<Game>(0, "Game")->stag = Target;
-				DeleteGO(this);
+
 			}
 			else {
 				n_texture.CreateFromDDSTextureFromFile(L"sprite/waku.dds");
@@ -57,7 +58,8 @@ void Taitor::Update()
 		}
 	}
 	if (Pad(0).IsTrigger(enButtonA)&& fase->toumeiodo <= 0.0f) {
-		fase->StartFadeOut();
+	//	fase->StartFadeOut();
+		furag = push;
 		Triggeer++;
 	}
 	if (Pad(0).IsTrigger(enButtonB) && fase->toumeiodo <= 0.0f) {
@@ -66,20 +68,31 @@ void Taitor::Update()
 		Triggeer=0;
 	}
 
-	y_sprite.Update(n_position, Quaternion,{ 1.0f,1.0f,1.0f });
-
-}
-void Taitor::Render(CRenderContext& rc)
-{
-	n_sprite.Draw(rc, MainCamera2D().GetViewMatrix(), MainCamera2D().GetProjectionMatrix());
-	if (hyouji++ <= 10) {
-		y_sprite.Draw(rc, MainCamera2D().GetViewMatrix(), MainCamera2D().GetProjectionMatrix());
+//	y_sprite.Update(n_position, Quaternion,{ 1.0f,1.0f,1.0f });
+	if (furag == suii) {
+		Pboneforward *= 0.98;
 	}
-	else
+	if (furag == push) {
+		Pboneforward *= 0.98;
+		target=player->Getbonepos();
+		Pboneforward += target;
+		furag = suii;
+	//	UP = player->Getboneup();
+	}
+	
+	if (Pboneforward.Length() <= 200.0f)
 	{
-		if (taim++ >= 10) {
-			hyouji = 0;
-			taim = 0;
-		}
+		NewGO<Game>(0, "Game");
+		DeleteGO(this);
 	}
+	Crot.SetRotationDeg(UP, 2.0f);
+	Crot.Multiply(Pboneforward);
+
+	MainCamera().SetTarget(target);
+	MainCamera().SetNear(1.0f);
+	//MainCamera().SetUp(Getboneup());
+	MainCamera().SetFar(50000.0f);
+	MainCamera().SetPosition(Pboneforward);
+	MainCamera().Update();
 }
+

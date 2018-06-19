@@ -2,6 +2,7 @@
 #include "Geizi.h"
 #include"tekihei.h"
 #include"GameEnd.h"
+#include"AI.h"
 Geizi::Geizi()
 {
 }
@@ -13,6 +14,13 @@ Geizi::~Geizi()
 
 bool Geizi::Start()
 {
+	auto& human = Humans.begin();
+	human++;
+	for (; human < Humans.end(); human++)
+	{
+		AI* ka = (AI*)human[0];
+		ka->GetGaizi(this);
+	}
 
 	m_texture.CreateFromDDSTextureFromFile(L"sprite/waku.dds");
 	m_sprite.Init(m_texture, 400, 100);

@@ -1,9 +1,11 @@
 #include "stdafx.h"
 #include "car.h"
 #include"AImove.h"
+#include"AI.h"
 #include"Game.h"
 #include"Geizi.h"
 #include"Human.h"
+#include"Stage.h"
 car::car()
 {
 }
@@ -22,14 +24,14 @@ bool car::Start()
 		int ka=_wtoll(loc.GetObjectName(i));
 		No[ka-1] = loc.GetObjectPosition(i);
 	}
-	Game* game=FindGO<Game>("Game");
+	Stage* stage =FindGO<Stage>("stage");
 	Gaizi = FindGO<Geizi>("Geizi");
-	fa = game->incNo();//車ができた数だけカウントする関数。
-	saidaiNo = game->Gatpasusaiz(fa);
-	pasu = game->getDate(fa);
+	fa = stage->incNo();//車ができた数だけカウントする関数。
+	saidaiNo = stage->Gatpasusaiz(fa);
+	pasu = stage->getDate(fa);
 	ran = NewGO<AImove>(0, "AImove");
 	m_position = No[pasu[ima++]-1];
-	m_position.y = 0.0f;
+	m_position.y = 10.0f;
 	m_tekirot.MakeRotationFromQuaternion(m_rotation);
 	m_forward.x = m_tekirot.m[2][0];
 	m_forward.y = m_tekirot.m[2][1];
@@ -81,15 +83,26 @@ bool car::Start()
 	//rotation.Multiply(rotation);
 	ran->Setkakudo(0.1f);
 	ran->Sethaba(1.0f);
-	if (game->GatNo() >= 1) {//carを増やすときに変える。
-		game->risetteNo();
+	if (stage->GatNo() >= 23) {//carを増やすときに変える。
+		stage->risetteNo();
 	}
-	
-	//stopFlag = false;//stopFlagの初期化。
 
-#ifdef instansingu_katto
+
 	m_skinModelData.Load(L"modelData/Vehicle_SUV1.cmo");//プレイヤーを書け
 	m_skinModel.Init(m_skinModelData);
+
+	m_meshCollider.CreateFromSkinModel(m_skinModel, nullptr);
+	RigidBodyInfo rbInfo;
+	rbInfo.pos = m_position;
+	rbInfo.rot = m_rotation;
+	rbInfo.collider = &m_meshCollider;
+	rbInfo.mass= 10.0f;							//質量を0にすると動かない剛体になる。
+												//背景などの動かないオブジェクトは0を設定するとよい。
+	m_rigidBody.Create(rbInfo);					//作成した情報を使って剛体を作成する。
+	PhysicsWorld().AddRigidBody(m_rigidBody);	//作成した剛体を物理ワールドに追加する。
+	stopFlag = false;//stopFlagの初期化。
+
+#ifdef instansingu_katto
 	m_skinModel.SetShadowCasterFlag(true);
 	m_skinModel.SetShadowReceiverFlag(true);
 #endif 
@@ -102,6 +115,7 @@ void car::Update()
 	klaxonFlag = false;//毎回初期化。
 	if (Gaizi->GatFragu() < 1.0f) {
 		CarSound_SetPosition();//音源の座標を設定。
+
 		m_tekirot.MakeRotationFromQuaternion(m_rotation);
 		m_forward.x = m_tekirot.m[2][0];
 		m_forward.y = m_tekirot.m[2][1];
@@ -136,15 +150,36 @@ void car::Update()
 
 			ran->Setlen(0.0f);
 		}
+
+//	}
+
+	if (move == 0.0f) {
+		int i = 0;
 	}
-	else {
-		m_noise->Stop();//車の走行音を止める。
+	//クラクションを鳴らすかを判定する。
+	if (klaxonFlag == true) {//クラクションを鳴らした。
+		SoundklaxonPlay();
 	}
 
+	if (klaxonFlag == false) {
+		stopFlag = false;
+	}
+
+
+	btVector3 m_pos = m_rigidBody.GetBody()->getWorldTransform().getOrigin();
+	if (0 >= m_pos.y()) {
+		m_pos.setY(0.0f);
+	}
+	m_pos.setX(m_position.x);
+	m_pos.setZ(m_position.z);
+	m_rigidBody.GetBody()->getWorldTransform().setOrigin(m_pos);
+	m_position.Set(m_pos);
+
+
 #ifdef instansingu_katto
-	m_skinModel.Update(m_position, m_rotation, { 0.5f,0.5f,0.5f });
+	m_skinModel.Update(m_position, m_rotation, { 1.0f,1.0f,1.0f });
 #else
-	m_Render->UpdateWorldMatrix(m_position, m_rotation, { 0.5f,0.5f,0.5f });
+	m_Render->UpdateWorldMatrix(m_position, m_rotation, {1.0f,1.0f,1.0f});
 #endif // Mizuki_baka
 }
 void car::Move()
@@ -187,7 +222,7 @@ void car::Move()
 	}
 	m_position += m_forward * ((move*speed)*(GameTime().GetFrameDeltaTime()));
 
-	if (400.0f > ran->Getlen()) {
+	if (300.0f > ran->Getlen()) {
 
 		if (ima >= saidaiNo-1) {//今のポジションが6なら
 						//0にリセットする。0,1,2,3,4,5の順番。
@@ -208,17 +243,19 @@ void car::Stop()
 		if (Humanfrag != true) {
 			CVector3 kyori1 = Humanlest->Getposition() - this->m_position;//自分との距離を求める。
 			float f = kyori1.Length();
-			if (f <= 500) { //距離が視野内だったら
-				kyori1.Normalize();
-				kyori1.y = 0.0f;
-				float kaku = acosf(kyori1.Dot(m_forward));//２つのべクトルの内積のアークコサインを求める。(ラジアン)
-				float degree = CMath::RadToDeg(kaku);
-				if (degree <= 60)
-				{
-					//この一連の処理を続けているときは止まっている。
-					move = -0.1;
-					Humanfrag = true;
-					klaxonFlag = true;//クラクションを鳴らす。止まり続ける限りtrueのままになる。
+			if(!Humanlest->GetZonbi()){
+				if (f <= 800) { //距離が視野内だったら
+					kyori1.Normalize();
+					kyori1.y = 0.0f;
+					float kaku = acosf(kyori1.Dot(m_forward));//２つのべクトルの内積のアークコサインを求める。(ラジアン)
+					float degree = CMath::RadToDeg(kaku);
+					if (degree <= 30)
+					{
+						//この一連の処理を続けているときは止まっている。
+						move = -0.1;
+						Humanfrag = true;
+						klaxonFlag = true;//クラクションを鳴らす。止まり続ける限りtrueのままになる。
+					}
 				}
 			}
 		}
@@ -233,7 +270,7 @@ void car::Stop()
 			if (f <= 1000) { //距離が車間距離よりも短くなっていたら
 				float kaku1 = acosf(ai->m_forward.Dot(this->m_forward));
 				float degree1 = CMath::RadToDeg(kaku1);
-				if (degree1 <90) {
+				if (degree1 <160) {
 					kyori1.Normalize();
 					kyori1.y = 0.0f;
 					float kaku = acosf(kyori1.Dot(m_forward));//２つのべクトルの内積のアークコサインを求める。(ラジアン)
@@ -244,8 +281,8 @@ void car::Stop()
 							if (ai->Humanfrag == true) {
 								move = -0.1;
 
-								siya = 5.0f;
-							//	Humanfrag = true;
+								siya = 10.0f;
+								Humanfrag = true;
 							}
 
 							else {

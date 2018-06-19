@@ -47,7 +47,6 @@
     <ClCompile Include="Fade.cpp" />
     <ClCompile Include="Human.cpp" />
     <ClCompile Include="Player.cpp" />
-    <ClCompile Include="AI.cpp" />
     <ClCompile Include="Stage.cpp" />
     <ClCompile Include="camera.cpp" />
     <ClCompile Include="taieki.cpp" />
@@ -67,6 +66,11 @@
     <ClCompile Include="car.cpp" />
     <ClCompile Include="carRender.cpp" />
     <ClCompile Include="LevelRender.cpp" />
+    <ClCompile Include="AIChase.cpp" />
+    <ClCompile Include="AIZonbie.cpp" />
+    <ClCompile Include="AI.cpp" />
+    <ClCompile Include="Stage_Light.cpp" />
+    <ClCompile Include="AI_manager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -95,6 +99,8 @@
     <ClInclude Include="car.h" />
     <ClInclude Include="carRender.h" />
     <ClInclude Include="LevelRender.h" />
+    <ClInclude Include="Stage_Light.h" />
+    <ClInclude Include="AI_manager.h" />
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\unityChan.fbx">
@@ -235,6 +241,9 @@
       <Filter>Assets\modelData</Filter>
     </MeshContentTask>
     <MeshContentTask Include="Assets\modelData\liam.FBX">
+      <Filter>Assets\modelData</Filter>
+    </MeshContentTask>
+    <MeshContentTask Include="Assets\modelData\SimpleCorgi.FBX">
       <Filter>Assets\modelData</Filter>
     </MeshContentTask>
   </ItemGroup>
@@ -429,8 +438,16 @@
     <CustomBuild Include="Assets\sound\car-horn1.wav" />
     <CustomBuild Include="Assets\sound\klaxon.wav" />
     <CustomBuild Include="Assets\sound\car_noise.wav" />
-    <CustomBuild Include="Assets\lever\levalAI22.tks">
-      <Filter>Assets\lever</Filter>
+
+   
+
+    <CustomBuild Include="Assets\animData\liam_ziko.tka" />
+    <CustomBuild Include="Assets\modelData\SimpleCorgi.tks">
+      <Filter>Assets\modelData</Filter>
+    </CustomBuild>
+    <CustomBuild Include="Assets\animData\waon.tka">
+      <Filter>Assets\animData</Filter>
+
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>

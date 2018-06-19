@@ -85,169 +85,173 @@ bool Player::Start()
 		m_animclip,
 		animnum
 	);*/
-	
+	//SetZonbe();
+	m_animation.Play(idle, 0.2f);
+	m_skinModel.Update(m_position, m_rotation, { 20.0f,20.0f,20.0f });// CVector3::One*20.0f);
 	return true;
 }
 void Player::Update()
 {
-	
-	//m_animation.Play(idle,0.2);
-	
+	if (game != false) {
+		//m_animation.Play(idle,0.2);
 
-	m_moveSpeed.z = 0.0f;
-	m_moveSpeed.x = 0.0f;
-	//左スティックの入力量を受け取る。
-	float lStick_x = Pad(0).GetLStickXF()*500.0f;
-	float lStick_y = Pad(0).GetLStickYF()*600.0f;
 
-	//右スティックの入力量を受け取る。
-	float rStick_x = Pad(0).GetRStickXF();
-	float rStick_y = Pad(0).GetRStickYF();
+		m_moveSpeed.z = 0.0f;
+		m_moveSpeed.x = 0.0f;
+		//左スティックの入力量を受け取る。
+		float lStick_x = Pad(0).GetLStickXF()*500.0f;
+		float lStick_y = Pad(0).GetLStickYF()*600.0f;
 
-	if (Pad(0).IsTrigger(enButtonX)) //Xボタンが押されたら
-	{
-		switch (X_button_Flag)
+		//右スティックの入力量を受け取る。
+		float rStick_x = Pad(0).GetRStickXF();
+		float rStick_y = Pad(0).GetRStickYF();
+
+		if (Pad(0).IsTrigger(enButtonX)) //Xボタンが押されたら
 		{
-		case false://まだXボタンを押されていなかったら
-			Log_lStick_x = lStick_x;
-			Log_lStick_y = lStick_y;
-			X_button_Flag = true;//Xボタンが押されて、ロックされた
-			break;
-		case true://既にXボタンが押されていたら
-			Log_lStick_x = 0.0f;
-			Log_lStick_y = 0.0f;
-			X_button_Flag = false;//再度Xボタンが押されたので、ロックを解除
-		default:
-			X_button_Flag = false;//再度Xボタンが押されたので、ロックを解除
-			break;
+			switch (X_button_Flag)
+			{
+			case false://まだXボタンを押されていなかったら
+				Log_lStick_x = lStick_x;
+				Log_lStick_y = lStick_y;
+				X_button_Flag = true;//Xボタンが押されて、ロックされた
+				break;
+			case true://既にXボタンが押されていたら
+				Log_lStick_x = 0.0f;
+				Log_lStick_y = 0.0f;
+				X_button_Flag = false;//再度Xボタンが押されたので、ロックを解除
+			default:
+				X_button_Flag = false;//再度Xボタンが押されたので、ロックを解除
+				break;
+			}
+		}
+
+		/*rotX += rStick_y * 5;*/
+		rotY = rStick_x * 5;
+		/*qBias.SetRotationDeg(CVector3::AxisX, rotX);*/
+		qBias1.SetRotationDeg(CVector3::AxisY, rotY);
+		m_rotation.Multiply(qBias1);
+		if (hakaba != NULL)
+		{
+			land_to_player = landpos - m_position;
+			land_to_player_vector = sqrt(land_to_player.x*land_to_player.x + land_to_player.y*land_to_player.y + land_to_player.z*land_to_player.z);
+		}
+
+
+		if (Pad(0).IsTrigger(enButtonA) //Aボタンが押されたら
+			&& m_charaCon.IsOnGround()  //かつ、地面に居たら
+			) {
+			//ジャンプする。
+			m_moveSpeed.y = 400.0f;	//上方向に速度を設定して、
+			m_charaCon.Jump();		//キャラクターコントローラーにジャンプしたことを通知する。
+		}
+		m_moveSpeed.y -= 980.0f * GameTime().GetFrameDeltaTime();
+		//キャラクターコントローラーを使用して、座標を更新。
+		if (m_charaCon.IsOnGround()) {
+			//地面についた。
+			m_moveSpeed.y = 0.0f;
+		}
+		if (Pad(0).IsTrigger(enButtonRB2) && NULL == FindGO<taieki>("taieki"))
+		{
+			NewGO<taieki>(0, "taieki");
+		}
+		//プレイヤーの前方向を計算
+
+		mRot.MakeRotationFromQuaternion(m_rotation);
+		m_forward.x = mRot.m[2][0];
+		m_forward.y = mRot.m[2][1];
+		m_forward.z = mRot.m[2][2];
+		m_forward.Normalize();
+		//右方向
+		m_rite.x = mRot.m[0][0];
+		m_rite.y = mRot.m[0][1];
+		m_rite.z = mRot.m[0][2];
+		m_rite.Normalize();
+		if (X_button_Flag == false) {
+			m_moveSpeed += m_forward * lStick_y;
+			m_moveSpeed += m_rite * lStick_x;
+		}
+		else if (X_button_Flag == true) {
+			m_moveSpeed += m_forward * Log_lStick_y;
+			m_moveSpeed += m_rite * lStick_x;
+		}
+
+		if (hakaba->IsPlay() && landflag == 1 && land_to_player_vector <= 50.0f)
+		{
+			m_moveSpeed = CVector3::Zero;
+			if (Pad(0).IsTrigger(enButtonA))
+			{
+				DeleteGO(hakaba);
+				FindGO<Geizi>("Geizi")->Satpoint(1.0f);
+			}
+			if (Pad(0).IsTrigger(enButtonB))
+			{
+				landflag = 0;
+			}
+		}
+		if (land_to_player_vector > 50.0f)
+		{
+			landflag = 1;
+		}
+		if (Pad(0).IsTrigger(enButtonB) && attackF == 0)
+		{
+			m_animation.Play(attack, 0.1f);
+			attackF = 1;
+		}
+		if (!(m_animation.IsPlaying()) && attackF == 1)
+		{
+			if (Pad(0).IsTrigger(enButtonB))
+			{
+				m_animation.Play(attack2, 0.3);
+			}
+
+			if (attackcounter == 15)
+			{
+				attackF = 0;
+				attackcounter = 0;
+			}
+			attackcounter++;
+		}
+		m_position = m_charaCon.Execute(GameTime().GetFrameDeltaTime(), m_moveSpeed);//移動。
+		if (m_position.y <= -100.0f) {
+			m_position.y = -100.0f;
+		}
+		if (m_moveSpeed.x == 0.0f&&m_moveSpeed.z == 0.0f&&m_charaCon.IsOnGround() && attackF == 0)
+		{
+			m_animation.Play(idle, 0.2f);
+		}
+		if (m_moveSpeed.x != 0.0f&&m_moveSpeed.z != 0.0f&&m_charaCon.IsOnGround() && attackF == 0)
+		{
+			m_animation.Play(walk, 0.2f);
 		}
 	}
+		Setposition(m_position);
+		m_skinModel.Update(m_position, m_rotation, { 20.0f,20.0f,20.0f });// CVector3::One*20.0f);
+		const CMatrix& boneM = m_skinModelData.GetSkeleton().GetBone(boneNo)->GetWorldMatrix();
+
+		bonepos.x = boneM.m[3][0];
+		bonepos.y = boneM.m[3][1];
+		bonepos.z = boneM.m[3][2];
+		boneforward.x = boneM.m[2][0];
+		boneforward.y = boneM.m[2][1];
+		boneforward.z = boneM.m[2][2];
+		boneright.x = boneM.m[0][0];
+		boneright.y = boneM.m[0][1];
+		boneright.z = boneM.m[0][2];
+		boneup.x = boneM.m[1][0];
+		boneup.y = boneM.m[1][1];
+		boneup.z = boneM.m[1][2];
+		boneforward.Normalize();
+		boneright.Normalize();
+		boneup.Normalize();
+		/*FindGameObjectsWithTag(10, [&](IGameObject* go) {
+			CVector3 diff;
+			AI* ai = (AI*)go;
+			diff = ai->position - m_position;
+			if (diff.Length() < 100.0f) {
+
+			}
+		});*/
 	
-	/*rotX += rStick_y * 5;*/
-	rotY = rStick_x * 5;
-	/*qBias.SetRotationDeg(CVector3::AxisX, rotX);*/
-	qBias1.SetRotationDeg(CVector3::AxisY, rotY);
-	m_rotation.Multiply(qBias1);
-	if (hakaba != NULL)
-	{
-		land_to_player = landpos - m_position;
-		land_to_player_vector = sqrt(land_to_player.x*land_to_player.x + land_to_player.y*land_to_player.y + land_to_player.z*land_to_player.z);
-	}
-	
-
-	if (Pad(0).IsTrigger(enButtonA) //Aボタンが押されたら
-		&& m_charaCon.IsOnGround()  //かつ、地面に居たら
-		) {
-		//ジャンプする。
-		m_moveSpeed.y = 400.0f;	//上方向に速度を設定して、
-		m_charaCon.Jump();		//キャラクターコントローラーにジャンプしたことを通知する。
-	}
-	m_moveSpeed.y -= 980.0f * GameTime().GetFrameDeltaTime();
-	//キャラクターコントローラーを使用して、座標を更新。
-	if (m_charaCon.IsOnGround()) {
-		//地面についた。
-		m_moveSpeed.y = 0.0f;
-	}
-	if (Pad(0).IsTrigger(enButtonRB2)&& NULL == FindGO<taieki>("taieki"))
-	{
-		NewGO<taieki>(0,"taieki");
-	}
-	//プレイヤーの前方向を計算
-	
-	mRot.MakeRotationFromQuaternion(m_rotation);
-	m_forward.x = mRot.m[2][0];
-	m_forward.y = mRot.m[2][1];
-	m_forward.z = mRot.m[2][2];
-	m_forward.Normalize();
-	//右方向
-	m_rite.x = mRot.m[0][0];
-	m_rite.y = mRot.m[0][1];
-	m_rite.z = mRot.m[0][2];
-	m_rite.Normalize();
-	if (X_button_Flag == false) {
-		m_moveSpeed += m_forward * lStick_y;
-		m_moveSpeed += m_rite * lStick_x;
-	}
-	else if (X_button_Flag == true) {
-		m_moveSpeed += m_forward * Log_lStick_y;
-		m_moveSpeed += m_rite * lStick_x;
-	}
-
-	if (hakaba->IsPlay()&&landflag == 1 && land_to_player_vector <= 50.0f)
-	{
-		m_moveSpeed = CVector3::Zero;
-		if (Pad(0).IsTrigger(enButtonA))
-		{
-			DeleteGO(hakaba);
-			FindGO<Geizi>("Geizi")->Satpoint(1.0f);
-		}
-		if (Pad(0).IsTrigger(enButtonB))
-		{
-			landflag = 0;
-		}
-	}
-	if (land_to_player_vector > 50.0f)
-	{
-		landflag = 1;
-	}
-	if (Pad(0).IsTrigger(enButtonB)&&attackF==0)
-	{
-		m_animation.Play(attack, 0.1f);
-		attackF = 1;
-	}
-	if (!(m_animation.IsPlaying())&& attackF == 1)
-	{
-		if (Pad(0).IsTrigger(enButtonB))
-		{
-			m_animation.Play(attack2, 0.3);
-		}
-
-		if (attackcounter == 15)
-		{
-			attackF = 0;
-			attackcounter = 0;
-		}
-		attackcounter++;
-	}
-	m_position = m_charaCon.Execute(GameTime().GetFrameDeltaTime(), m_moveSpeed);//移動。
-	if (m_position.y <= -100.0f) {
-		m_position.y = -100.0f;
-	}
-	if (m_moveSpeed.x == 0.0f&&m_moveSpeed.z == 0.0f&&m_charaCon.IsOnGround()&&attackF==0)
-	{
-		m_animation.Play(idle, 0.2f);
-	}
-	if (m_moveSpeed.x != 0.0f&&m_moveSpeed.z != 0.0f&&m_charaCon.IsOnGround()&& attackF == 0)
-	{
-		m_animation.Play(walk, 0.2f);
-	}
-	Setposition(m_position);
-	m_skinModel.Update(m_position, m_rotation, { 20.0f,20.0f,20.0f });// CVector3::One*20.0f);
-	const CMatrix& boneM = m_skinModelData.GetSkeleton().GetBone(boneNo)->GetWorldMatrix();
-
-	bonepos.x = boneM.m[3][0];
-	bonepos.y = boneM.m[3][1];
-	bonepos.z = boneM.m[3][2];
-	boneforward.x = boneM.m[2][0];
-	boneforward.y = boneM.m[2][1];
-	boneforward.z = boneM.m[2][2];
-	boneright.x = boneM.m[0][0];
-	boneright.y = boneM.m[0][1];
-	boneright.z = boneM.m[0][2];
-	boneup.x = boneM.m[1][0];
-	boneup.y = boneM.m[1][1];
-	boneup.z = boneM.m[1][2];
-	boneforward.Normalize();
-	boneright.Normalize();
-	boneup.Normalize();
-	/*FindGameObjectsWithTag(10, [&](IGameObject* go) {
-		CVector3 diff;
-		AI* ai = (AI*)go;
-		diff = ai->position - m_position;
-		if (diff.Length() < 100.0f) {
-
-		}
-	});*/
 }
 void Player::Render(CRenderContext& rc)
 {
