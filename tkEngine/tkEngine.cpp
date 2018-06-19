@@ -107,13 +107,14 @@ namespace tkEngine {
 		for (auto& pad : m_pad) {
 			pad.Update();
 		}
-		//サウンドエンジンの更新。
-		m_soundEngine.Update();
 		//GameObjectManager更新
 		GameObjectManager().Execute();
 		
 		//物理エンジンの更新。
 		m_physicsWorld.Update();
+
+		//サウンドエンジンの更新。
+		m_soundEngine.Update();
 #if BUILD_LEVEL != BUILD_LEVEL_MASTER
 		static int count = 0;
 		m_timeTotal += (float)m_sw.GetElapsed();
