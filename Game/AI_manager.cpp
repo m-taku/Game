@@ -74,7 +74,7 @@ AI_manager::AI_manager()
 	da2.push_back(AIL24);
 	da2.push_back(AIL25);
 	for (int k = 0; k < da2.size(); k++) {
-		Dog* AIL = NewGO<Dog>(0, "Dog");
+		Dog* AIL = NewGO<Dog>(0, "Osu");
 		AIL->GetGame(this);
 		Lsimin.push_back(AIL);
 		LAIseizon.push_back(1);

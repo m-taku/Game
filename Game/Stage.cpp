@@ -83,6 +83,12 @@ void Stage::Update()
 {
 	m_skinModel.Update(CVector3::Zero, CQuaternion::Identity, CVector3::One);
 	s_skinModel.Update(CVector3::Zero, CQuaternion::Identity, CVector3::One);
+
+	SoundEngine().SetListenerPosition(MainCamera().GetPosition());
+	CVector3 frontXZ = MainCamera().GetForward();
+	frontXZ.y = 0.0f;
+	frontXZ.Normalize();
+	SoundEngine().SetListenerFront(frontXZ);
 }
 void Stage::Render(CRenderContext& rc)
 {

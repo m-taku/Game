@@ -743,6 +743,7 @@
     <MeshContentTask Include="Assets\modelData\Vehicle_SUV1.FBX" />
     <MeshContentTask Include="Assets\modelData\Vehicle_SUV2.FBX" />
     <MeshContentTask Include="Assets\modelData\Vehicle_SUV3.FBX" />
+    <MeshContentTask Include="Assets\modelData\Zonbiliam.FBX" />
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="Assets\modelData\unityChan.tks">
@@ -951,6 +952,9 @@
 =======
     <CustomBuild Include="Assets\modelData\SimpleCorgi.tks">
 >>>>>>> bc854881a60f2d26029a386e4dacf53ca39f279a
+      <FileType>Document</FileType>
+    </CustomBuild>
+    <CustomBuild Include="Assets\modelData\Zonbiliam.tks">
       <FileType>Document</FileType>
     </CustomBuild>
   </ItemGroup>

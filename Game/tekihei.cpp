@@ -79,14 +79,16 @@ bool tekihei::Start()
 	
 
 	for (int i = 0;i < teki;i++)
-	{
-		nearPathNo[i] = 0;
-		tekipos[i] = EnemyPath[i];
-		stop_target_num[i] = 999;
-		stop_f[i] = 0;
-		min_f[i] = 0;
-		for (int j = 0;j < path;j++)
-		{
+	{	
+		collide_siya[i] = 0.0f;
+		teki_to_teki_dist[i] = 0.0f;
+		teki_to_teki_vector[i] = CVector3::Zero;	//‚µ‚å
+		nearPathNo[i] = 0;													//‚«
+		tekipos[i] = EnemyPath[i];											//‚©
+		stop_target_num[i] = 999;											//‚Å	
+		stop_f[i] = 0;														//b
+		for (int j = 0;j < path;j++)										//‚·
+		{																	//B
 			teki_to_path[i][j]= FLT_MAX;
 			teki_to_path_vector[i][j] = CVector3::Zero;
 		}
@@ -272,7 +274,6 @@ void tekihei::Update()
 
 						stop_f[i] = 0;
 						moving[i] = 0;
-						min_f[i] = 0;
 					}
 
 					
@@ -301,7 +302,8 @@ void tekihei::Update()
 					teki_to_player_vector[i] = sqrt(teki_to_player[i].x*teki_to_player[i].x + teki_to_player[i].y*teki_to_player[i].y + teki_to_player[i].z*teki_to_player[i].z);
 
 					teki_to_player[i].Normalize();
-
+					
+					
 
 					teki_siya[i] = acosf(tekifoward[i].Dot(teki_to_player[i]));//Ž‹–ì‚ÌŒvŽZ
 
@@ -310,7 +312,6 @@ void tekihei::Update()
 					{
 						find_f[i] = 1;
 						moving[i] = 0;
-						min_f[i] = 0;
 					}
 
 
@@ -324,7 +325,28 @@ void tekihei::Update()
 					{
 						tekispeed[i] = teki_to_path_vector[i][target_num[i]] * 300.0f;
 					}
-					
+					//Õ“Ë‚µ‚È‚¢‚Å‚Ù‚µ‚¢‚È`B
+					for (int j = 0;j < teki;j++)
+					{
+						if (j == i)
+						{
+							continue;
+						}
+						teki_to_teki_vector[j] = tekipos[j] - tekipos[i];
+						teki_to_teki_dist[j] = length(teki_to_teki_vector[j]);
+						teki_to_teki_vector[j].Normalize();
+						if (teki_to_teki_dist[j] < 100.0f)
+						{
+							collide_siya[j] = acosf(tekifoward[i].Dot(teki_to_teki_vector[j]));
+							collide_siya[j] = (180.0 / 3.14159)*collide_siya[j];
+							if (collide_siya[j] <= 30.0f)
+							{
+								tekispeed[i] += tekiright[i] * 300.0f;
+							}
+						}
+
+
+					}
 					
 					if (tamaflag[i] == 1)
 					{

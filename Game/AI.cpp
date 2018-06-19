@@ -909,7 +909,7 @@ void AI::Chasepas(CVector3 m_position)
 	pasmove(mokuhyou);
 	NPCRunangle(work->Getbekutor());
 	if ((game->pasu[Leftfrag].Getresuto(mokuhyouNo)->m_position[0] - this->m_position).Length() < 200.0f) {
-		jyunban.erase(jyunban.begin(), jyunban.end());     //“¦‚°Ø‚Á‚½‚º````
+		jyunban.erase(jyunban.begin(), jyunban.end());  
 		keiro.tansa(this->m_position, m_position, &jyunban, Leftfrag);
 		escapecaku = 30.0f;
 		mokuhyou = jyunban[1];

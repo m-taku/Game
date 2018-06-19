@@ -232,12 +232,6 @@ void Game::Update()
 		m_Fade->StartFadeIn();
 	}
 
-	//ƒTƒEƒ“ƒh
-	SoundEngine().SetListenerPosition(MainCamera().GetPosition());
-	CVector3 frontXZ = MainCamera().GetForward();
-	frontXZ.y = 0.0f;
-	frontXZ.Normalize();
-	SoundEngine().SetListenerFront(frontXZ);
 
 	/*if (Pad(0).IsTrigger(enButtonB) && a >= 2) {
 		m_Fade->StartFadeOut();

@@ -245,7 +245,7 @@ namespace tkEngine{
 		m_lightManager.EndRender(m_renderContext);
 		
 		//フラーッシュ
-		HRESULT hr = m_pSwapChain->Present(2, 0);
+		HRESULT hr = m_pSwapChain->Present(1, 0);
 		if (hr == DXGI_ERROR_DEVICE_REMOVED) {
 			char buff[64];
 			//0x887A0006L
