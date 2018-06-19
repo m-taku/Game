@@ -65,7 +65,7 @@ Game::Game()
 	da.push_back(AIR24);
 	da.push_back(AIR25);
 	da.push_back(AIR26);
-	for (int k = 0; k < 26; k++) {
+	for (int k = 0; k < da.size(); k++) {
 		AI* AIR = NewGO<AI>(0, "AI");
 		AIR->GetGame(this);
 		Rsimin.push_back(AIR);
@@ -98,7 +98,25 @@ Game::Game()
 	da2.push_back(AIL23);
 	da2.push_back(AIL24);
 	da2.push_back(AIL25);
-	for (int k = 0; k < 25; k++) {
+	da2.push_back(AIL26);
+	da2.push_back(AIL27);
+	da2.push_back(AIL28);
+	da2.push_back(AIL29);
+	da2.push_back(AIL30);
+	da2.push_back(AIL31);
+	da2.push_back(AIL32);
+	da2.push_back(AIL33);
+	da2.push_back(AIL34);
+	da2.push_back(AIL35);
+	da2.push_back(AIL36);
+	da2.push_back(AIL37);
+	da2.push_back(AIL38);
+	da2.push_back(AIL39);
+	da2.push_back(AIL40);
+	da2.push_back(AIL41);
+	da2.push_back(AIL42);
+	da2.push_back(AIL43);
+	for (int k = 0; k < da2.size(); k++) {
 		AI* AIL = NewGO<AI>(0, "AI");
 		AIL->GetGame(this);
 		Lsimin.push_back(AIL);
@@ -108,27 +126,27 @@ Game::Game()
 	//car‚ð‘‚â‚µ‚½Žž‚Ì‚Ì•ÏX“_
 	pasu2.push_back(movepasu1);
 	pasu2.push_back(movepasu2);
-	pasu2.push_back(movepasu3);
-	pasu2.push_back(movepasu4);
-	pasu2.push_back(movepasu5);
-	pasu2.push_back(movepasu6);
-	pasu2.push_back(movepasu7);
-	pasu2.push_back(movepasu8);
-	pasu2.push_back(movepasu9);
-	pasu2.push_back(movepasu10);
-	pasu2.push_back(movepasu11);
-	pasu2.push_back(movepasu12);
-	pasu2.push_back(movepasu13);
-	pasu2.push_back(movepasu14);
-	pasu2.push_back(movepasu15);
-	pasu2.push_back(movepasu16);
-	pasu2.push_back(movepasu17);
-	pasu2.push_back(movepasu18);
-	pasu2.push_back(movepasu19);
-	pasu2.push_back(movepasu20);
-	pasu2.push_back(movepasu21);
-	pasu2.push_back(movepasu22);
-	pasu2.push_back(movepasu23);
+	//pasu2.push_back(movepasu3);
+	//pasu2.push_back(movepasu4);
+	//pasu2.push_back(movepasu5);
+	//pasu2.push_back(movepasu6);
+	//pasu2.push_back(movepasu7);
+	//pasu2.push_back(movepasu8);
+	//pasu2.push_back(movepasu9);
+	//pasu2.push_back(movepasu10);
+	//pasu2.push_back(movepasu11);
+	//pasu2.push_back(movepasu12);
+	//pasu2.push_back(movepasu13);
+	//pasu2.push_back(movepasu14);
+	//pasu2.push_back(movepasu15);
+	//pasu2.push_back(movepasu16);
+	//pasu2.push_back(movepasu17);
+	//pasu2.push_back(movepasu18);
+	//pasu2.push_back(movepasu19);
+	//pasu2.push_back(movepasu20);
+	//pasu2.push_back(movepasu21);
+	//pasu2.push_back(movepasu22);
+	//pasu2.push_back(movepasu23);
 
 #ifndef Mizuki_baka
 	kar->Satcarkosuu(pasu2.size());
@@ -146,12 +164,12 @@ Game::Game()
 
 
 
-	swprintf_s(moveFilePath, L"lever/matilevel%d0%d.tks", 0, 2);
+	/*swprintf_s(moveFilePath, L"lever/matilevel%d0%d.tks", 0, 2);
 	m_level[0].Build(moveFilePath);
 	swprintf_s(moveFilePath, L"lever/matilevel%d0%d.tks", 1, 1);
 	m_level[1].Build(moveFilePath);
 	swprintf_s(moveFilePath, L"lever/matilevel%d0%d.tks", 2, 1);
-	m_level[2].Build(moveFilePath);
+	m_level[2].Build(moveFilePath);*/
 
 	CLocData loc;
 	loc.Load(L"lever/laitLv001.tks");

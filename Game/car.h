@@ -14,7 +14,7 @@ public:
 	{
 		m_Render = &ka;
 	}
-	void CarSound();//Carクラスのサウンドを扱う関数。
+	void CarSound_SetPosition();//Carクラスのサウンドの座標を扱う関数。
 	void SoundklaxonPlay();//クラクションを鳴らす処理。
 private:
 	void Move();
@@ -43,5 +43,6 @@ private:
 	bool stopFlag = false;//今止まっているかを示すフラグこのフラグがtrueのときは、前のフレームで既に止まっている。
 	bool loodflag = false;//ロードしたかを示すフラグ。
 	bool klaxonFlag = false;//クラクションを鳴らすことを示すフラグ。
+	prefab::CSoundSource*m_noise = nullptr;
 };
 

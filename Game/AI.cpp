@@ -265,6 +265,7 @@ void AI::NPCZombie_Chase()
 		HitFlag = false;
 		escapecaku = 30.0f;
 		nearestpas();
+		pa = Zombie_Normal;
 	}
 	else {//NPC‚ðŒ©Ž¸‚Á‚Ä‚¨‚ç‚¸AŒ©‚Â‚¯‚Ä‚¢‚½‚ç
 		float kou = VectorAngleDeg((Tansaku->m_forward));
@@ -1001,7 +1002,7 @@ void AI::hinannpas(CVector3 m_position)
 {
 	pasmove();
 	NPCRunangle(work->Getbekutor());
-	if ((game->pasu[Leftfrag].Getresuto(mokuhyouNo)->m_position[0] - m_position).Length() < 200.0f) {
+	if ((game->pasu[Leftfrag].Getresuto(mokuhyouNo)->m_position[0] - this->m_position).Length() < 200.0f) {
 		CVector3 minkore = { 0.0f,0.0f,0.0f };
 		for (int Linknum = 1; Linknum < game->pasu[Leftfrag].GetresutoSaiz(mokuhyouNo); Linknum++) {
 			CVector3 ma = game->pasu[Leftfrag].Getresuto(mokuhyouNo)->m_position[Linknum] - m_position;

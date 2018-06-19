@@ -152,7 +152,7 @@ namespace tkEngine{
 			*/
 			void SetPosition(const CVector3& pos)
 			{
-				m_position = pos/1000;
+				m_position = pos/100;
 				if (m_isSetPositionFirst) {
 					m_lastFramePosition = m_position;
 					m_isSetPositionFirst = false;
@@ -178,6 +178,13 @@ namespace tkEngine{
 			bool GetLoopFlag() const
 			{
 				return m_isLoop;
+			}
+			/*!
+			* @brief	3Dサウンドかどうかのフラグを取得。
+			*/
+			bool Get3DSoundFlag() const
+			{
+				return m_is3DSound;
 			}
 			/*!
 			* @brief	ボイスの周波数調整比
