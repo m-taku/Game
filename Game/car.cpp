@@ -41,8 +41,6 @@ bool car::Start()
 	//	Human* ai = Humans[u];
 	//	HumanLest.push_back(ai);
 	//}
-
-	
 	m_noise = NewGO<prefab::CSoundSource>(0);
 	m_noise->Init("sound/car_noise.wav", true);
 	m_noise->AddSoundStopCallback([&]() {
@@ -51,6 +49,7 @@ bool car::Start()
 	});
 	
 	//m_noise->Play(false);//初めて止まったので、クラクションを鳴らす。
+
 
 	//クラクションの初期化。
 	//m_klaxon = NewGO<prefab::CSoundSource>(0);
@@ -146,8 +145,7 @@ void car::Update()
 		if (Humanfrag != false) {
 
 			ran->Setlen(0.0f);
-		}
-
+            }
 	}
 
 	if (move == 0.0f) {

@@ -71,7 +71,6 @@
     <ClCompile Include="AI.cpp" />
     <ClCompile Include="Stage_Light.cpp" />
     <ClCompile Include="AI_manager.cpp" />
-    <ClCompile Include="BGM.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -102,7 +101,6 @@
     <ClInclude Include="LevelRender.h" />
     <ClInclude Include="Stage_Light.h" />
     <ClInclude Include="AI_manager.h" />
-    <ClInclude Include="BGM.h" />
   </ItemGroup>
   <ItemGroup>
     <MeshContentTask Include="Assets\modelData\unityChan.fbx">
@@ -440,20 +438,18 @@
       <Filter>Assets\modelData</Filter>
     </CustomBuild>
     <CustomBuild Include="Assets\effect\aura3.efk" />
+    <CustomBuild Include="Assets\sound\car-horn1.wav" />
     <CustomBuild Include="Assets\sound\klaxon.wav" />
+    <CustomBuild Include="Assets\sound\car_noise.wav" />
     <CustomBuild Include="Assets\animData\liam_ziko.tka" />
+    <CustomBuild Include="Assets\modelData\SimpleCorgi.tks">
+      <Filter>Assets\modelData</Filter>
+    </CustomBuild>
     <CustomBuild Include="Assets\animData\waon.tka">
       <Filter>Assets\animData</Filter>
     </CustomBuild>
     <CustomBuild Include="Assets\modelData\Zonbiliam.tks">
       <Filter>Assets\modelData</Filter>
-    </CustomBuild>
-    <CustomBuild Include="Assets\lever\levalAI22.tks" />
-    <CustomBuild Include="Assets\sound\car_noise.wav">
-      <Filter>Assets\sound</Filter>
-    </CustomBuild>
-    <CustomBuild Include="Assets\sound\car-horn1.wav">
-      <Filter>Assets\sound</Filter>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
@@ -514,10 +510,5 @@
     <ImageContentTask Include="Assets\sprite\A_botan.png">
       <Filter>Assets\sprite</Filter>
     </ImageContentTask>
-  </ItemGroup>
-  <ItemGroup>
-    <Media Include="Assets\sound\horror_zone1.wav">
-      <Filter>Assets\sound</Filter>
-    </Media>
   </ItemGroup>
 </Project>
