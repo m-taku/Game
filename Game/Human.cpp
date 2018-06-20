@@ -6,7 +6,7 @@ Human::Human()
 {
 	Humans.push_back(this);
 	SetTags(1);
-	SetZonbe();
+	//SetZonbe();
 }
 
 

@@ -23,6 +23,8 @@ Game::Game()
 	player = FindGO<Player>("Player");
 	player->SetGame();
 //	pasu2.clear();
+	Car = FindGO<car>("car");
+	Car->GetGeizi(gaizi);
 	camera1 = NewGO<camera>(0, "camera");
 	//m_level[1].X = 5.0f;
 	//m_level[1].Z=  5.0f;
@@ -44,18 +46,18 @@ void Game::OnDestroy()
 	//ここで最終的にＤｅｌｅｔｅＧＯを絶対しきる。	
 	DeleteGO(FindGO<AI_manager>("AI_manager"));
 	DeleteGO(gaizi);
+	DeleteGO(Car);
 	DeleteGO(camera1);
 	DeleteGO(FindGO<item>("item"));
 	//再起動（タイトル表示）
 	NewGO<Taitor>(0, "Taitor");
+	NewGO<Player>(0, "Player");
 	NewGO<AI_manager>(0, "AI_manager");
 }
 bool Game::Start()
 {
 	//カメラを設定。
 	m_Fade = FindGO<Fade>("Fade");
-
-
 	/*m_skinModelRender = NewGO<prefab::CSkinModelRender>(0);
 	m_skinModelRender->Init(L"modelData/unityChan.cmo");
 	m_skinModelRender->SetScale({ 0.1f, 0.1f, 0.1f } );*/

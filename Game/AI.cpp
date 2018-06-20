@@ -466,20 +466,14 @@ void AI::Update()
 		FindGameObjectsWithTag(20, [&](IGameObject* go) {
 			if (go != this) {            //自分からの距離を計測するため、検索結果から自分を除外する。
 				car* ai = (car*)go;
-				CVector3 kyori1 = ai->Getposition() - this->m_position;//自分との距離を求める。
+				CVector3 kyori1 = this->m_position- ai->Getposition();//自分との距離を求める。
 				float f = kyori1.Length();
-				if (f <= 500) { //距離が車間距離よりも短くなっていたら
+				if (f <= 600) { //距離が車間距離よりも短くなっていたら
 					kyori1.Normalize();
 					float kaku = acosf(kyori1.Dot(ai->Getforward()));//２つのべクトルの内積のアークコサインを求める。(ラジアン)
 					float degree = CMath::RadToDeg(kaku);
-					if (degree <= 360) {
-						nearestpas();
-						work->kyorikeisan(mokuhyou - 1, m_position, m_forward, game->pasu[Leftfrag].m_pointList);
-						flydist = work->Getmokuteki() - this->Getposition();
-						flydist.y = 0.0f;
-						flydist.Normalize();
-						m_movespeed = {flydist.x * 700, flydist.y * 500, flydist.z * 700, };
-						m_movespeed.y = 600.0f;
+					if (degree <= 45) {
+						ziko_car = ai;
 						pa = flyNPC;
 					}
 				}
@@ -642,11 +636,34 @@ void AI::NPCReturn()
 }
 void AI::FlyNPC()
 {
-	//flydist /= 10;	
-	if (A_charaCon.IsOnGround()&&taime++>=2) {
-		//pa = Zombie_Normal;
-		m_movespeed = CVector3::Zero;
-		//taime = 0;
+	if (ziko_frag == false) {
+		CVector3 kori = ziko_car->Getposition()- this->m_position;
+		if (kori.Length() <= 300) {
+			CVector3 tobu= this->Getforward()*-1;
+			flydist = ziko_car->Getforward() + tobu;
+			flydist.y = 0.0f;
+			flydist = { flydist.x*1000.0f,flydist.y,flydist.z*1000.0f };
+			//flydist /= (1.0f / GameTime().GetFrameDeltaTime());
+			m_movespeed = flydist;
+			ziko_frag = true;
+			m_movespeed.y = 600.0f;
+			retu_position = game->pasu[Leftfrag].m_pointList[pasu[ima] - 1];
+		}
+		else if(kori.Length()>=1000)
+		{
+			pa = Zombie_Normal;
+		}
+		else {
+			NPCRunangle(kori);
+		}
+	}
+	else {
+		//flydist /= 10;	
+		if (A_charaCon.IsOnGround() && taime++ >= 2) {
+			//pa = Zombie_Normal;
+			m_movespeed = CVector3::Zero;
+			//taime = 0;
+		}
 	}
 	CharaConUpdate();	
 }

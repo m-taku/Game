@@ -75,39 +75,49 @@ void AI::NPCZombie_Chase()
 		pa = Zombie_Normal;
 	}
 	else {//NPCを見失っておらず、見つけていたら
-		if (len <= 1000) {
-			float kou = VectorAngleDeg((Tansaku->m_forward));
-			CVector3 n = Tansaku->m_position - m_position;
-			NPCRunangle(n);
-			if (kou <= 120) {
-				if (len < atakkukyori) {//NPCに追いついたら
-										//攻撃する(確実に当たる仕様)。
-					HitFlag = true;//「NPCに攻撃を当てた」というフラグをたてる。
-					if (Tansaku->muteki_Flag == false) {
-						Tansaku->NPCHP -= 40.0f;
-					}
-
-					atakkukyori = 200.0f;
-					//NPC_Attack_Animation();//攻撃アニメーションを流す。
+		float kou = VectorAngleDeg((Tansaku->m_forward));
+		CVector3 n = Tansaku->m_position - m_position;
+		NPCRunangle(n);
+		if (kou <= 120) {
+			if (len < atakkukyori) {//NPCに追いついたら
+									//攻撃する(確実に当たる仕様)。
+				HitFlag = true;//「NPCに攻撃を当てた」というフラグをたてる。
+				if (Tansaku->muteki_Flag == false) {
+					Tansaku->NPCHP -= 40.0f;
 				}
 
-				else {
-					HitFlag = false;
-					n.y = 0.0f;
-					n.Normalize();
-					m_movespeed = n * (m_speed*200.0 + mobe);
-					m_movespeed.y += gravity;
-					m_position = A_charaCon.Execute(GameTime().GetFrameDeltaTime(), m_movespeed);//移動
-
-					//Chasepas(Tansaku->m_position);
-					atakkukyori = 100.0f;
-					/////////////////////////////////
-					//市民NPCを追跡する処理。
-					/////////////////////////////////
-				}
+				atakkukyori = 200.0f;
+				//NPC_Attack_Animation();//攻撃アニメーションを流す。
 			}
+
 			else {
-				Pboneforward = Tansaku->m_forward;
+				HitFlag = false;
+				n.y = 0.0f;
+				n.Normalize();
+				m_movespeed = n * (m_speed*200.0 + mobe);
+				m_movespeed.y += gravity;
+				m_position = A_charaCon.Execute(GameTime().GetFrameDeltaTime(), m_movespeed);//移動
+
+				//Chasepas(Tansaku->m_position);
+				atakkukyori = 100.0f;
+				/////////////////////////////////
+				//市民NPCを追跡する処理。
+				/////////////////////////////////
+			}
+		}
+		else {
+			Pboneforward = Tansaku->m_forward;
+			CVector3 rotAxis;
+			rotAxis.Cross(this->m_forward, Pboneforward);
+			rotAxis.Normalize();
+			angle += 3.0f;
+			Crot.SetRotationDeg(rotAxis, angle);
+			Crot.Multiply(Pboneforward);
+			CVector3 baka = (Pboneforward * len) + Tansaku->m_position;
+			baka = baka - m_position;
+			m_position = A_charaCon.Execute(GameTime().GetFrameDeltaTime(), baka);
+
+			/*	Pboneforward = Tansaku->m_forward;
 				CVector3 rotAxis;
 				rotAxis.Cross(this->m_forward, Pboneforward);
 				rotAxis.Normalize();
@@ -116,24 +126,9 @@ void AI::NPCZombie_Chase()
 				Crot.Multiply(Pboneforward);
 				CVector3 baka = (Pboneforward * len) + Tansaku->m_position;
 				baka = baka - m_position;
-				m_position = A_charaCon.Execute(GameTime().GetFrameDeltaTime(), baka);
+				m_position = A_charaCon.Execute(GameTime().GetFrameDeltaTime(), baka);*/
+		}
 
-				/*	Pboneforward = Tansaku->m_forward;
-					CVector3 rotAxis;
-					rotAxis.Cross(this->m_forward, Pboneforward);
-					rotAxis.Normalize();
-					angle += 3.0f;
-					Crot.SetRotationDeg(rotAxis, angle);
-					Crot.Multiply(Pboneforward);
-					CVector3 baka = (Pboneforward * len) + Tansaku->m_position;
-					baka = baka - m_position;
-					m_position = A_charaCon.Execute(GameTime().GetFrameDeltaTime(), baka);*/
-			}
-		}
-		else {
-			CVector3 ka = Tansaku->m_position;
-			Chasepas(ka);
-		}
 	}
 }
 void AI::NPCZombie_Attack()//vs特殊部隊

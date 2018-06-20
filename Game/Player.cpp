@@ -210,10 +210,10 @@ void Player::Update()
 		}
 		if (!(m_animation.IsPlaying()) && attackF == 1)
 		{
-	/*		if (Pad(0).IsTrigger(enButtonB))
-			{
-				m_animation.Play(attack2, 0.3);
-			}*/
+			/*		if (Pad(0).IsTrigger(enButtonB))
+					{
+						m_animation.Play(attack2, 0.3);
+					}*/
 
 			if (attackcounter == 10)
 			{
@@ -221,10 +221,6 @@ void Player::Update()
 				attackcounter = 0;
 			}
 			attackcounter++;
-		}
-		m_position = m_charaCon.Execute(GameTime().GetFrameDeltaTime(), m_moveSpeed);//à⁄ìÆÅB
-		if (m_position.y <= -100.0f) {
-			m_position.y = -100.0f;
 		}
 		if (m_moveSpeed.x == 0.0f&&m_moveSpeed.z == 0.0f&&m_charaCon.IsOnGround() && attackF == 0)
 		{
@@ -235,34 +231,35 @@ void Player::Update()
 			m_animation.Play(walk, 0.2f);
 		}
 	}
-		Setposition(m_position);
-		m_skinModel.Update(m_position, m_rotation, { 20.0f,20.0f,20.0f });// CVector3::One*20.0f);
-		const CMatrix& boneM = m_skinModelData.GetSkeleton().GetBone(boneNo)->GetWorldMatrix();
+	m_position = m_charaCon.Execute(GameTime().GetFrameDeltaTime(), m_moveSpeed);//à⁄ìÆÅB
+	Setposition(m_position);
+	m_skinModel.Update(m_position, m_rotation, { 20.0f,20.0f,20.0f });// CVector3::One*20.0f);
+	const CMatrix& boneM = m_skinModelData.GetSkeleton().GetBone(boneNo)->GetWorldMatrix();
 
-		bonepos.x = boneM.m[3][0];
-		bonepos.y = boneM.m[3][1];
-		bonepos.z = boneM.m[3][2];
-		boneforward.x = boneM.m[2][0];
-		boneforward.y = boneM.m[2][1];
-		boneforward.z = boneM.m[2][2];
-		boneright.x = boneM.m[0][0];
-		boneright.y = boneM.m[0][1];
-		boneright.z = boneM.m[0][2];
-		boneup.x = boneM.m[1][0];
-		boneup.y = boneM.m[1][1];
-		boneup.z = boneM.m[1][2];
-		boneforward.Normalize();
-		boneright.Normalize();
-		boneup.Normalize();
-		/*FindGameObjectsWithTag(10, [&](IGameObject* go) {
-			CVector3 diff;
-			AI* ai = (AI*)go;
-			diff = ai->position - m_position;
-			if (diff.Length() < 100.0f) {
+	bonepos.x = boneM.m[3][0];
+	bonepos.y = boneM.m[3][1];
+	bonepos.z = boneM.m[3][2];
+	boneforward.x = boneM.m[2][0];
+	boneforward.y = boneM.m[2][1];
+	boneforward.z = boneM.m[2][2];
+	boneright.x = boneM.m[0][0];
+	boneright.y = boneM.m[0][1];
+	boneright.z = boneM.m[0][2];
+	boneup.x = boneM.m[1][0];
+	boneup.y = boneM.m[1][1];
+	boneup.z = boneM.m[1][2];
+	boneforward.Normalize();
+	boneright.Normalize();
+	boneup.Normalize();
+	/*FindGameObjectsWithTag(10, [&](IGameObject* go) {
+		CVector3 diff;
+		AI* ai = (AI*)go;
+		diff = ai->position - m_position;
+		if (diff.Length() < 100.0f) {
 
-			}
-		});*/
-	
+		}
+	});*/
+
 }
 void Player::Render(CRenderContext& rc)
 {

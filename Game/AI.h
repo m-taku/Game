@@ -88,6 +88,10 @@ public:
 	{
 		return m_position;
 	}
+	CVector3 Getforward()
+	{
+		return m_forward;
+	}
 protected:
 	//メンバ変数
 	enum npcpattern { //switch文に使う。
@@ -207,6 +211,8 @@ private:
 	keiroK keiro;
 	CMatrix m_tekirot;
 	CMatrix k_tekirot;
+	car* ziko_car;
+	bool ziko_frag = false;
 	CVector3 before_m_position = CVector3::Zero;		//一つ前の座標。
 	std::vector<int> jyunban;
 	CVector3 flydist=CVector3::Zero;

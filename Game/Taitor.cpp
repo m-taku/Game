@@ -13,7 +13,7 @@ Taitor::~Taitor()
 }
 bool Taitor::Start()
 {
-	n_texture.CreateFromDDSTextureFromFile(L"sprite/Game_Title.dds");
+	n_texture.CreateFromDDSTextureFromFile(L"sprite/Game_Title2.dds");
 	n_sprite.Init(n_texture, 1280, 600);
 	n_sprite.Update(n_position, CQuaternion::Identity, { 1.0f,1.0f,1.0f });
 	fase = FindGO<Fade>("Fade");
@@ -21,7 +21,7 @@ bool Taitor::Start()
 	//y_texture.CreateFromDDSTextureFromFile(L"sprite/yaji.dds");
 	//y_sprite.Init(y_texture, 100, 50);
 	//y_sprite.Update(n_position, Quaternion, { 1.0f,1.0f,1.0f });
-	BasisVector = { 0.0f,7000.0f,5000.0f };
+	BasisVector = { 0.0f,5000.0f,5000.0f };
 	//	fase->StartFadeOut();
 	furag = steat;
 	return true;
