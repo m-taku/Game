@@ -2,6 +2,7 @@
 #include"Pasu.h"
 
 class Dog;
+class AI;
 class Osu;
 class AI_manager : public IGameObject
 {
@@ -53,8 +54,8 @@ public:
 private:
 	int No = 0;
 	int Leftfrag = 0;
-	std::vector<Osu*> Rsimin;
-	std::vector<Osu*> Lsimin;
+	std::vector<AI*> Rsimin;
+	std::vector<AI*> Lsimin;
 	std::vector<int> RAIseizon;
 	std::vector<int> LAIseizon;
 

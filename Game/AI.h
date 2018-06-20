@@ -64,7 +64,7 @@ public:
 	void Fardist_path(CVector3 m_position);
 	float Siya(CVector3 h, float g);
 	float takikennsau();
-	
+	void AI_Animation();
 	////////////////////////////////////////////////////////////////////////
 	////アニメーション関連のメンバ関数(メソッド)。                      ////
 	////各サブクラスでのオーバーライドを前提とするため、中身は書かない。////
@@ -120,6 +120,19 @@ protected:
 		//NPC_Attack      //ゾンビ化NPCの攻撃
 		Animnum           //AnimationClipの総数
 	};
+	enum animation {
+		shiminidle,
+		shiminwalk,
+		shiminrun,
+		shiminattack,
+		Zonbiwalk,
+		Zonbiattack,
+		Zonbi_zico,
+		animnum
+	};
+	CAnimation ai_NPCAnimation;				//アニメーション。
+	CAnimationClip ai_NPCAnimationClips[animnum];	//アニメーションクリップ。
+	CShaderResourceView zondi;
 
 	enum npcpattern pa;
 	int satForceFlag()

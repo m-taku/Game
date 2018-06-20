@@ -2,7 +2,7 @@
 #include "Taitor.h"
 #include"Player.h"
 #include"Game.h"
-
+#define kaku 15.0f
 Taitor::Taitor()
 {
 }
@@ -37,7 +37,7 @@ void Taitor::Update()
 				Quaternion.SetRotation(CVector3::AxisZ, 90);
 				fase->StartFadeIn();
 			}
-		
+
 		}
 		else {
 			n_texture.CreateFromDDSTextureFromFile(L"sprite/ge-ji.dds");
@@ -58,7 +58,7 @@ void Taitor::Update()
 			taim = 0;
 		}
 	}*/
-	
+
 	//if (Pad(0).IsTrigger(enButtonB) && fase->toumeiodo <= 0.0f) {
 	//	if(Triggeer>=1)
 	//	fase->StartFadeOut();
@@ -69,10 +69,10 @@ void Taitor::Update()
 	//Crot.SetRotationDeg(UP, 2.0f);
 	//Crot.Multiply(BasisVector);
 	static int taime = 0;
-
+	float kjhbuij;
 	switch (furag) {
 	case steat:
-		Crot.SetRotationDeg(UP, 2.0f);
+		Crot.SetRotationDeg(UP, kaku*GameTime().GetFrameDeltaTime());
 		Crot.Multiply(BasisVector);
 		if (Pad(0).IsTrigger(enButtonA)) {
 			//	fase->StartFadeOut();
@@ -80,36 +80,36 @@ void Taitor::Update()
 		}
 		break;
 	case push:
-		BasisVector *= 0.98;
+		BasisVector /= 1 - (1 / (100 / GameTime().GetFrameDeltaTime()));
 		target = player->Getbonepos();
 		player_Foeward = player->GetFoeward();
 		player_Foeward.y = 0.0f;
 		player_Foeward.Normalize();
 		player_Foeward *= -1;
-		if (kakudo >= 2) {
-			ka = nowkmVector - target;
-			ka.y = 0.0f;
-			ka.Normalize();
-			UP.Cross(ka, player_Foeward);
-			UP.Normalize();
-			Crot.SetRotationDeg(UP, 2.0f);
-			Crot.Multiply(BasisVector);
-			kakudo = siya();
-		}
-		kaunto = kakudo / 2;
+		kakudo = siya();
+		kakudo /= 100;
+		ka = nowkmVector - target;
+		ka.y = 0.0f;
+		ka.Normalize();
+		UP.Cross(ka, player_Foeward);
+		UP.Normalize();
+		Crot.SetRotationDeg(UP, kakudo*GameTime().GetFrameDeltaTime());
+		Crot.Multiply(BasisVector);
+		kaunto = 100 / GameTime().GetFrameDeltaTime();
 		//	UP = player->Getboneup();
 		furag = suii;
 		break;
 	case suii:
 		nowkmtarget += target / kaunto;
-		Crot.SetRotationDeg(UP, 2.0f);
+		Crot.SetRotationDeg(UP, kakudo*GameTime().GetFrameDeltaTime());
 		Crot.Multiply(BasisVector);
-		BasisVector *= 0.98;
-		if (taime++ >= kaunto)
+		BasisVector *=1-(1/(100/GameTime().GetFrameDeltaTime()));
+
+		if (taime++ > kaunto)
 		{
 			nowkmtarget = target;
 			ka = nowkmVector - target;
-			
+
 			ka.Normalize();
 
 			ka.y = 1.2f;
@@ -133,7 +133,7 @@ void Taitor::Update()
 
 		if (BasisVector.Length() <= 500.0f)
 		{
-			ka *= 20;
+			ka *= 20 * GameTime().GetFrameDeltaTime();
 		}
 		else {
 			ka *= speed;
@@ -150,7 +150,7 @@ void Taitor::Update()
 
 	}
 
-	nowkmVector = (BasisVector-ka) + nowkmtarget;
+	nowkmVector = (BasisVector - ka) + nowkmtarget;
 	BasisVector -= ka;
 	MainCamera().SetTarget(nowkmtarget);
 	MainCamera().SetNear(1.0f);
@@ -165,8 +165,8 @@ float Taitor::siya()
 	CVector3 muki = BasisVector;
 	muki.y = 0.0f;
 	muki.Normalize();//向きVectorにする。
-	float kaku = acosf(muki.Dot(player_Foeward));//２つのべクトルの内積のアークコサインを求める。(ラジアン)
+	float kok = acosf(muki.Dot(player_Foeward));//２つのべクトルの内積のアークコサインを求める。(ラジアン)
 
-	float degree = CMath::RadToDeg(kaku);
+	float degree = CMath::RadToDeg(kok);
 	return degree;
 }

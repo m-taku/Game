@@ -54,7 +54,35 @@ bool AI::Start()
 		m_position,		//初期位置。
 		0
 	);
-	
+	m_skinModelData.Load(L"modelData/liam.cmo");//男性型を書け
+	m_skinModel.Init(m_skinModelData);
+	ai_NPCAnimationClips[shiminidle].Load(L"animData/shiminidle.tka");//仮。後で入れろ。
+	ai_NPCAnimationClips[shiminidle].SetLoopFlag(true);
+	ai_NPCAnimationClips[shiminwalk].Load(L"animData/shiminwalk.tka");//仮。後で入れろ。
+	ai_NPCAnimationClips[shiminwalk].SetLoopFlag(true);
+	ai_NPCAnimationClips[shiminrun].Load(L"animData/shiminrun.tka");//仮。後で入れろ。
+	ai_NPCAnimationClips[shiminrun].SetLoopFlag(true);
+	ai_NPCAnimationClips[shiminattack].Load(L"animData/playerattack.tka");//仮。後で入れろ。
+	ai_NPCAnimationClips[shiminattack].SetLoopFlag(true);
+	ai_NPCAnimationClips[Zonbiwalk].Load(L"animData/playerwalk.tka");//仮。後で入れろ。
+	ai_NPCAnimationClips[Zonbiwalk].SetLoopFlag(true);
+	ai_NPCAnimationClips[Zonbiattack].Load(L"animData/playerattack.tka");//仮。後で入れろ。
+	ai_NPCAnimationClips[Zonbiattack].SetLoopFlag(true);
+	ai_NPCAnimationClips[Zonbi_zico].Load(L"animData/liam_ziko.tka");//仮。後で入れろ。
+	ai_NPCAnimationClips[Zonbi_zico].SetLoopFlag(false);
+
+	//アニメーションの初期化。
+	ai_NPCAnimation.Init(
+		m_skinModel,			//アニメーションを流すスキンモデル。
+								//これでアニメーションとスキンモデルが関連付けされる。
+		ai_NPCAnimationClips,	//アニメーションクリップの配列。
+
+		animnum					//アニメーションクリップの数。
+	);
+	zondi.CreateFromDDSTextureFromFile(L"modelData/LiamTexZonbi1.dds");
+	m_skinModel.FindMaterial([&](CModelEffect* material) {
+		material->Setm_zonbi(zondi.GetBody());
+	});
 	m_tekirot.MakeRotationFromQuaternion(m_rotation);
 	m_forward.x = m_tekirot.m[2][0];
 	m_forward.y = m_tekirot.m[2][1];
@@ -577,6 +605,7 @@ void AI::Update()
 	}
 	Setposition(m_position);
 
+	AI_Animation();
 	if (!m_objectFrustumCulling.IsCulling()) {
 		m_skinModel.Update(m_position, m_rotation, { 20.0f, 20.0f,20.0f });
 	}

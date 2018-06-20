@@ -45,3 +45,72 @@ void AI::NPCChase()
 	}
 }
 
+void AI::AI_Animation()//AIのアニメーション制御
+{
+	/*if (m_speed <= 1.0) {
+	Loop_Walk_Animation();
+	}
+	if (m_speed > 1.0) {
+	Loop_Run_Animation();
+	}*/
+	if (GetZonbi() == false) {
+		if (HitFlag == true)
+		{
+			NPC_Attack_Animation();
+
+		}
+		else if (m_speed < 0.5f) {
+			Idle_Animation();
+		}
+		else if (m_speed <= 1.0) {
+			Loop_Walk_Animation();
+		}
+		else if (m_speed > 1.0) {
+			Loop_Run_Animation();
+		}
+
+	}
+	else {
+		if (pa == flyNPC) {
+			Zombie_Ziko_Animation();
+		}
+		else if (HitFlag == true) {
+			NPC_Attack_Animation();
+		}
+		else if (m_speed >= 0.5f) {
+			Zombie_Walk_Animation();
+		}
+	}
+}
+void AI::Idle_Animation() //キャラクターが歩き続ける時のアニメーションの処理。
+{
+	ai_NPCAnimation.Play(shiminidle, 0.7);
+}
+
+
+void AI::Loop_Walk_Animation()//キャラクターが歩き続ける時のアニメーションの処理。
+{
+	ai_NPCAnimation.Play(shiminwalk, 0.7);
+}
+void AI::Loop_Run_Animation()//キャラクターが走り続ける時のアニメーションの処理。
+{
+	ai_NPCAnimation.Play(shiminrun, 0.7);
+}
+
+void AI::NPC_Attack_Animation()//ゾンビ化キャラクターが攻撃している時のアニメーションの処理。
+{
+	ai_NPCAnimation.Play(shiminattack, 0.2);
+}
+
+
+void AI::Zombie_Walk_Animation()
+{
+	ai_NPCAnimation.Play(Zonbiwalk, 0.7);
+}
+void AI::Zombie_Ziko_Animation()
+{
+	ai_NPCAnimation.Play(Zonbi_zico, 0.7);
+	if (!ai_NPCAnimation.IsPlaying()) {
+		pa = Zombie_Normal;
+	}
+}

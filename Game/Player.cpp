@@ -210,12 +210,12 @@ void Player::Update()
 		}
 		if (!(m_animation.IsPlaying()) && attackF == 1)
 		{
-			if (Pad(0).IsTrigger(enButtonB))
+	/*		if (Pad(0).IsTrigger(enButtonB))
 			{
 				m_animation.Play(attack2, 0.3);
-			}
+			}*/
 
-			if (attackcounter == 15)
+			if (attackcounter == 10)
 			{
 				attackF = 0;
 				attackcounter = 0;
