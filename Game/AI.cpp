@@ -200,7 +200,7 @@ float AI::takikennsau()
 	float min = 99999999999999999.0;
 	No = -1;
 	if (tekip != NULL) {
-		for (int i = 0; i < 10; i++) {
+		for (int i = 0; i < 45; i++) {
 			if (tekip->tekiheiflag[i] >= 1) {
 				float max = GetKyori(m_position, tekip->tekipos[i]);
 				if (min > max) {
@@ -764,7 +764,7 @@ void AI::NPCescape()//ƒ]ƒ“ƒr‚©‚ç“¦‚°‚é
 	CVector3 v = m_position - pl->Getposition();
 	v.y = 0.0f;
 	float len = v.Length();//’·‚³
-	if (len < 10000.0) {
+	if (len < 3000.0) {
 		hinannpas(pl->Getposition());
 	}
 	else {
