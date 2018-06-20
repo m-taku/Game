@@ -12,7 +12,7 @@
 void AI::NPCChase()
 {
 	CVector3 mokuteki = lam->m_position - m_position;
-	//NPCRunangle(mokuteki);
+	NPCRunangle(mokuteki);
 	if (lam->Raifu_f == true) {
 		pa = Return;
 		search(retu_position);

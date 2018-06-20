@@ -49,7 +49,7 @@ bool AI::Start()
 	CMatrix mRot;
 	//mRot.MakeRotationFromQuaternion();
 	A_charaCon.Init(
-		40.0,			//半径。 
+		30.0,			//半径。 
 		150.0f,			//高さ。
 		m_position,		//初期位置。
 		0
@@ -165,14 +165,8 @@ void AI::nearestpas()//最寄りのパス検索
 			mokuhyou = game->pasu[Leftfrag].Getresuto(h)->No[0];
 		}
 	}
-	for (int ka = 0; ka < game->pasu[Leftfrag].GetresutoSaiz(); ka++) {
-		if (game->pasu[Leftfrag].Getresuto(ka)->No[0] == mokuhyou) {
-			mokuhyouNo = ka;
-			break;
-		}
-	}
+	Retrieval_pasNo(mokuhyou);
 }
-
 float AI::takikennsau()
 {
 	float min = 99999999999999999.0;
@@ -302,6 +296,7 @@ void AI::NPC_Search_Zonbi() //全てのゾンビと距離でダメージ判定をする。
 							pa = Escape_NPC;
 							m_speed = 3.0f;
 							retu_position = m_position;
+							break;
 						}
 					}
 				}
@@ -382,6 +377,9 @@ void AI::NPCDeath()//死亡、消滅処理。
 		game->SatLSaizon(iNo);
 	}
 	if (fureme++ >= 30) {
+		/*CQuaternion qBias1;
+		qBias1.SetRotationDeg(CVector3::AxisX, 10.0f);
+		m_rotation.Multiply(qBias1);*/
 		DeleteGO(this);//自己消滅。
 	}
 }
@@ -442,7 +440,7 @@ void AI::Update()
 				car* ai = (car*)go;
 				CVector3 kyori1 = ai->Getposition() - this->m_position;//自分との距離を求める。
 				float f = kyori1.Length();
-				if (f <= 500) { //距離が車間距離よりも短くなっていたら
+				if (f <= 100) { //距離が車間距離よりも短くなっていたら
 					kyori1.Normalize();
 					float kaku = acosf(kyori1.Dot(ai->Getforward()));//２つのべクトルの内積のアークコサインを求める。(ラジアン)
 					float degree = CMath::RadToDeg(kaku);
@@ -595,7 +593,7 @@ void AI::NPCReturn()
 		m_rotation.Multiply(work->Getkaku());
 		m_movespeed = m_forward * (work->Getmuve()*m_speed + mobe);
 		CharaConUpdate();
-		if (15.0f > work->Getlen()) {
+		if (150.0f > work->Getlen()) {
 			if (da >= jyunban.size() - 1) {//指定されたパスの最後まで着いたら
 				pa = Normal;//パターンをノーマルにかえる。
 				m_speed = 1.0f;
@@ -704,12 +702,16 @@ void AI::hinannpas(CVector3 m_position)
 void AI::Chasepas(CVector3 m_position)
 {
 	pasmove(mokuhyou);
-	NPCRunangle(work->Getbekutor());
+	//NPCRunangle(work->Getbekutor());
 	if ((game->pasu[Leftfrag].Getresuto(mokuhyouNo)->m_position[0] - this->m_position).Length() < 200.0f) {
-		jyunban.erase(jyunban.begin(), jyunban.end());  
-		keiro.tansa(this->m_position, m_position, &jyunban, Leftfrag);
-		escapecaku = 30.0f;
-		mokuhyou = jyunban[1];
+		CVector3 minkore = { 0.0f,0.0f,0.0f };
+		for (int Linknum = 0; Linknum < game->pasu[Leftfrag].GetresutoSaiz(mokuhyouNo); Linknum++) {
+			CVector3 ma = game->pasu[Leftfrag].Getresuto(mokuhyouNo)->m_position[Linknum] - m_position;
+			if (minkore.Length() < ma.Length()) {
+				minkore = ma;
+				mokuhyou = game->pasu[Leftfrag].Getresuto(mokuhyouNo)->No[Linknum];
+			}
+		}
 		Retrieval_pasNo(mokuhyou);
 	}
 }

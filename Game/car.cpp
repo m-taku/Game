@@ -130,9 +130,7 @@ void car::Update()
 	//ƒNƒ‰ƒNƒVƒ‡ƒ“‚ğ–Â‚ç‚·‚©‚ğ”»’è‚·‚éB
 	if (klaxonFlag == true) {//ƒNƒ‰ƒNƒVƒ‡ƒ“‚ğ–Â‚ç‚µ‚½B
 		SoundklaxonPlay();
-	}
-
-	if (klaxonFlag == false) {
+	}else{
 		stopFlag = false;
 	}
 
@@ -286,13 +284,13 @@ void car::SoundklaxonPlay()//ƒNƒ‰ƒNƒVƒ‡ƒ“‚ÌƒTƒEƒ“ƒh‚ğ–Â‚ç‚³‚ê‚½‚Éˆê‰ñ‚¾‚¯—¬‚·
 		prefab::CSoundSource*m_klaxon = nullptr;
 		m_klaxon = NewGO<prefab::CSoundSource>(0);
 		m_klaxon->Init("sound/klaxon.wav", true);
+		m_klaxon->Play(false);//‰‚ß‚Ä~‚Ü‚Á‚½‚Ì‚ÅAƒNƒ‰ƒNƒVƒ‡ƒ“‚ğ–Â‚ç‚·B
 		m_klaxon->AddSoundStopCallback([&]() {
 			//ƒTƒEƒ“ƒh‚ª’â~‚µ‚½‚ç‚±‚ÌŠÖ”‚ªŒÄ‚Î‚ê‚é
 			stopFlag = true;//ƒXƒgƒbƒv‚µ‚½B
 		});
 		//ƒTƒEƒ“ƒh‚Ìƒ|ƒWƒVƒ‡ƒ“‚ğİ’è‚·‚éB
 		m_klaxon->SetPosition(m_position);
-		m_klaxon->Play(false);//‰‚ß‚Ä~‚Ü‚Á‚½‚Ì‚ÅAƒNƒ‰ƒNƒVƒ‡ƒ“‚ğ–Â‚ç‚·B
 	//if (Humanfrag == false) {//Ô‚ª“®‚«o‚µ‚½B
 	//	stopFlag = false;//uƒXƒgƒbƒv‚µ‚½v‚Æ‚¢‚¤ƒtƒ‰ƒO‚ğŒ³‚É–ß‚µ‚Ä‚¨‚­B
 	//}

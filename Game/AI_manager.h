@@ -54,7 +54,7 @@ private:
 	int No = 0;
 	int Leftfrag = 0;
 	std::vector<Osu*> Rsimin;
-	std::vector<Dog*> Lsimin;
+	std::vector<Osu*> Lsimin;
 	std::vector<int> RAIseizon;
 	std::vector<int> LAIseizon;
 
