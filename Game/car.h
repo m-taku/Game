@@ -30,9 +30,9 @@ public:
 	}
 private:
 
-	CMeshCollider m_meshCollider;	//メッシュコライダー。
-	CRigidBody m_rigidBody;			//剛体
-	CPhysicsStaticObject m_physicsStaticObject;
+	//CMeshCollider m_meshCollider;	//メッシュコライダー。
+	//CRigidBody m_rigidBody;			//剛体
+	//CPhysicsStaticObject m_physicsStaticObject;
 	void Move();
 	CSkinModel m_skinModel;					//スキンモデル。
 	CSkinModelData m_skinModelData;			//スキンモデルデータ。

@@ -37,11 +37,6 @@ bool car::Start()
 	m_forward.z = m_tekirot.m[2][2];
 	m_forward.y = 0.0f;
 	m_forward.Normalize();
-	//for (int u = 0; u < Humans.size(); u++) {
-	//	Human* ai = Humans[u];
-	//	HumanLest.push_back(ai);
-	//}
-
 	//クラクションの初期化。
 	//m_klaxon = NewGO<prefab::CSoundSource>(0);
 	//m_klaxon->Init("sound/car-horn1.wav",true);

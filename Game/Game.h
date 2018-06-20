@@ -26,7 +26,7 @@ public:
 	CVector3 m_pos = CVector3::Zero;
 	Fade* m_Fade;
 	Geizi* gaizi;
-	car* Car;
+	Stage* stage;
 	Player* player;
 	camera* camera1;
 	keiroK* keiro;

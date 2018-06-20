@@ -75,21 +75,24 @@ void AI::NPCZombie_Chase()
 		pa = Zombie_Normal;
 	}
 	else {//NPCを見失っておらず、見つけていたら
-		float kou = VectorAngleDeg((Tansaku->m_forward));
 		CVector3 n = Tansaku->m_position - m_position;
+		float kou = VectorAngleDeg((Tansaku->m_forward), n);
 		NPCRunangle(n);
-		if (kou <= 120) {
+		if (n.Length()>=1000.0f)
+		{
+			Chasepas(Tansaku->m_position);
+
+		}
+		else if (kou >= 120) {
 			if (len < atakkukyori) {//NPCに追いついたら
 									//攻撃する(確実に当たる仕様)。
 				HitFlag = true;//「NPCに攻撃を当てた」というフラグをたてる。
 				if (Tansaku->muteki_Flag == false) {
 					Tansaku->NPCHP -= 40.0f;
 				}
-
 				atakkukyori = 200.0f;
 				//NPC_Attack_Animation();//攻撃アニメーションを流す。
 			}
-
 			else {
 				HitFlag = false;
 				n.y = 0.0f;

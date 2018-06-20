@@ -23,8 +23,11 @@ Game::Game()
 	player = FindGO<Player>("Player");
 	player->SetGame();
 //	pasu2.clear();
-	Car = FindGO<car>("car");
-	Car->GetGeizi(gaizi);
+	stage = FindGO<Stage>("stage");
+	auto car = stage->getcarv();
+	for (auto& na : car) {
+		na->GetGeizi(gaizi);
+	}
 	camera1 = NewGO<camera>(0, "camera");
 	//m_level[1].X = 5.0f;
 	//m_level[1].Z=  5.0f;
@@ -46,11 +49,15 @@ void Game::OnDestroy()
 	//ここで最終的にＤｅｌｅｔｅＧＯを絶対しきる。	
 	DeleteGO(FindGO<AI_manager>("AI_manager"));
 	DeleteGO(gaizi);
-	DeleteGO(Car);
+	auto car = stage->getcarv();
+	for (auto na : car) {
+		DeleteGO(na);
+	}
 	DeleteGO(camera1);
-	DeleteGO(FindGO<item>("item"));
+//	DeleteGO(FindGO<item>("item"));
 	//再起動（タイトル表示）
 	NewGO<Taitor>(0, "Taitor");
+
 	NewGO<Player>(0, "Player");
 	NewGO<AI_manager>(0, "AI_manager");
 }

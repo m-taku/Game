@@ -22,7 +22,7 @@ bool Taitor::Start()
 	//y_sprite.Init(y_texture, 100, 50);
 	//y_sprite.Update(n_position, Quaternion, { 1.0f,1.0f,1.0f });
 	BasisVector = { 0.0f,5000.0f,5000.0f };
-	//	fase->StartFadeOut();
+	fase->StartFadeIn();
 	furag = steat;
 	return true;
 }
@@ -70,8 +70,6 @@ void Taitor::Update()
 //	y_sprite.Update(n_position, Quaternion,{ 1.0f,1.0f,1.0f });
 	//Crot.SetRotationDeg(UP, 2.0f);
 	//Crot.Multiply(BasisVector);
-	static int taime = 0;
-	float kjhbuij;
 	switch (furag) {
 	case steat:
 		Crot.SetRotationDeg(UP, kaku*GameTime().GetFrameDeltaTime());
@@ -79,8 +77,6 @@ void Taitor::Update()
 		if (Pad(0).IsTrigger(enButtonA)) {
 			//	fase->StartFadeOut();
 			furag = push;
-			NewGO<Game>(0, "Game");
-			DeleteGO(this);
 		}
 		break;
 	case push:
@@ -157,7 +153,7 @@ void Taitor::Update()
 	BasisVector -= ka;
 	MainCamera().SetTarget(nowkmtarget);
 	MainCamera().SetNear(1.0f);
-	//MainCamera().SetUp(Getboneup());
+	MainCamera().SetUp(CVector3::AxisY);
 	MainCamera().SetFar(50000.0f);
 	MainCamera().SetPosition(nowkmVector);
 	MainCamera().Update();

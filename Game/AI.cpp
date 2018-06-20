@@ -219,7 +219,7 @@ void AI::NPCFade_Out()//一般市民が退場するときの処理。
 	m_movespeed = m_forward*(work->Getmuve()*m_speed + mobe);
 	m_movespeed.y += gravity;
 	m_position = A_charaCon.Execute(GameTime().GetFrameDeltaTime(),m_movespeed);//移動
-	if (150.0f > work->Getlen()) {
+	if (30.0f > work->Getlen()) {
 		if (da >= jyunban.size()-1) {//指定されたパスの最後まで着いたら
 			pa = Death;
 			da = 1;
@@ -484,10 +484,8 @@ void AI::Update()
 		if (Gaizi->GatFragu() >= 1.0f&& ForceFlag == false) {//特殊部隊が出現したら、
 			ForceFlag = true;//出現フラグを立てる。
 			tekip = FindGO<tekihei>("tekihei");
-			if (GetZonbi() == true) {//自分がゾンビだったら
-				takikennsau(); //パターンをゾンビアタックに切り替える。
-			}
-			else {//尚且つ、自分がゾンビではなかったら
+			if (GetZonbi() != true)
+			{//自分がゾンビではなかったら
 				search(game->pasu[Leftfrag].m_pointList[0]);
 				da = 0;
 				m_speed = 4.0f;
@@ -748,7 +746,7 @@ void AI::Chasepas(CVector3 m_position)
 	pasmove(mokuhyou);
 	//NPCRunangle(work->Getbekutor());
 	if ((game->pasu[Leftfrag].Getresuto(mokuhyouNo)->m_position[0] - this->m_position).Length() < 200.0f) {
-		CVector3 minkore = { 1000000000000000000.0f,1000000000000000000.0f,100000000000000000000.0f };
+		CVector3 minkore = { FLT_MAX,FLT_MAX,FLT_MAX};
 		for (int Linknum = 0; Linknum < game->pasu[Leftfrag].GetresutoSaiz(mokuhyouNo); Linknum++) {
 			CVector3 ma = game->pasu[Leftfrag].Getresuto(mokuhyouNo)->m_position[Linknum] - m_position;
 			if (minkore.Length() > ma.Length()) {

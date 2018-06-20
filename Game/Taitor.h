@@ -41,6 +41,7 @@ private:
 	float kakudo = 10.0f;
 	float speed = 900.0f;
 	int kaunto = 0;
+	int taime = 0;
 	CVector3 ka = CVector3::Zero;
 	int hyouji = 11;
 	int taim = 11;

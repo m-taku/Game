@@ -39,6 +39,10 @@ public:
 	std::vector<int>::iterator getDate(int i) {
 		return pasu2[i].begin();
 	}
+
+	std::vector<car*> getcarv(){
+		return carv;
+	}
 private:
 	Level m_level[10];
 	CPhysicsStaticObject m_physicsStaticObject;
