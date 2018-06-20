@@ -25,7 +25,6 @@ bool car::Start()
 		No[ka-1] = loc.GetObjectPosition(i);
 	}
 	Stage* stage =FindGO<Stage>("stage");
-	Gaizi = FindGO<Geizi>("Geizi");
 	fa = stage->incNo();//車ができた数だけカウントする関数。
 	saidaiNo = stage->Gatpasusaiz(fa);
 	pasu = stage->getDate(fa);
@@ -81,15 +80,15 @@ bool car::Start()
 	m_skinModelData.Load(L"modelData/Vehicle_SUV1.cmo");//プレイヤーを書け
 	m_skinModel.Init(m_skinModelData);
 
-	m_meshCollider.CreateFromSkinModel(m_skinModel, nullptr);
-	RigidBodyInfo rbInfo;
-	rbInfo.pos = m_position;
-	rbInfo.rot = m_rotation;
-	rbInfo.collider = &m_meshCollider;
-	rbInfo.mass= 10.0f;							//質量を0にすると動かない剛体になる。
-												//背景などの動かないオブジェクトは0を設定するとよい。
-	m_rigidBody.Create(rbInfo);					//作成した情報を使って剛体を作成する。
-	PhysicsWorld().AddRigidBody(m_rigidBody);	//作成した剛体を物理ワールドに追加する。
+	//m_meshCollider.CreateFromSkinModel(m_skinModel, nullptr);
+	//RigidBodyInfo rbInfo;
+	//rbInfo.pos = m_position;
+	//rbInfo.rot = m_rotation;
+	//rbInfo.collider = &m_meshCollider;
+	//rbInfo.mass= 10.0f;							//質量を0にすると動かない剛体になる。
+	//											//背景などの動かないオブジェクトは0を設定するとよい。
+	//m_rigidBody.Create(rbInfo);					//作成した情報を使って剛体を作成する。
+	//PhysicsWorld().AddRigidBody(m_rigidBody);	//作成した剛体を物理ワールドに追加する。
 	stopFlag = false;//stopFlagの初期化。
 
 #ifdef instansingu_katto
@@ -103,7 +102,7 @@ bool car::Start()
 void car::Update()
 {
 	klaxonFlag = false;//毎回初期化。
-//	if (Gaizi->GatFragu() < 1.0f) {
+	if (Gaizi==nullptr|| Gaizi->GatFragu() < 1.0f) {
 		m_tekirot.MakeRotationFromQuaternion(m_rotation);
 		m_forward.x = m_tekirot.m[2][0];
 		m_forward.y = m_tekirot.m[2][1];
@@ -122,7 +121,7 @@ void car::Update()
 
 			ran->Setlen(0.0f);
 		}
-//	}
+	}
 
 	if (move == 0.0f) {
 		int i = 0;
@@ -135,14 +134,14 @@ void car::Update()
 	}
 
 
-	btVector3 m_pos = m_rigidBody.GetBody()->getWorldTransform().getOrigin();
-	if (0 >= m_pos.y()) {
-		m_pos.setY(0.0f);
-	}
-	m_pos.setX(m_position.x);
-	m_pos.setZ(m_position.z);
-	m_rigidBody.GetBody()->getWorldTransform().setOrigin(m_pos);
-	m_position.Set(m_pos);
+	//btVector3 m_pos = m_rigidBody.GetBody()->getWorldTransform().getOrigin();
+	//if (0 >= m_pos.y()) {
+	//	m_pos.setY(0.0f);
+	//}
+	//m_pos.setX(m_position.x);
+	//m_pos.setZ(m_position.z);
+	//m_rigidBody.GetBody()->getWorldTransform().setOrigin(m_pos);
+	//m_position.Set(m_pos);
 
 
 #ifdef instansingu_katto

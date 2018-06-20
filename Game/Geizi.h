@@ -8,7 +8,6 @@ public:
 	bool Start();
 	void Update();
 	void Render(CRenderContext& rc);
-	
 	void satHP(float a)
 	{
 		HP -= a;

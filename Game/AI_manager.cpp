@@ -92,12 +92,10 @@ AI_manager::~AI_manager()
 		}
 	}
 	for (int k = 0; k < Lsimin.size(); k++) {
-
 		if (LAIseizon[k] >= 1) {
 			DeleteGO(Lsimin[k]);
 		}
 	}
-
 }
 bool AI_manager::Start()
 {
