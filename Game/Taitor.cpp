@@ -79,8 +79,6 @@ void Taitor::Update()
 		if (Pad(0).IsTrigger(enButtonA)) {
 			//	fase->StartFadeOut();
 			furag = push;
-			NewGO<Game>(0, "Game");
-			DeleteGO(this);
 		}
 		break;
 	case push:

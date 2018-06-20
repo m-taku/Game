@@ -70,7 +70,7 @@ void Geizi::Update()
 	}
 	if (keifou_saiz >= 0.95) {
 		keifou_saiz = 0.95;
-		if (furag <= 0) {
+		if (furag <= 0) {//1度敵兵のインスタンスが出来たらNewGOされないようにする。
 			haus=NewGO<tekihei>(0, "tekihei");
 			
 		}

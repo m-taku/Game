@@ -622,6 +622,7 @@
     <ClCompile Include="AI.cpp" />
     <ClCompile Include="AImove.cpp" />
     <ClCompile Include="AI_manager.cpp" />
+    <ClCompile Include="BGM.cpp" />
     <ClCompile Include="camera.cpp" />
     <ClCompile Include="car.cpp" />
     <ClCompile Include="carRender.cpp" />
@@ -662,6 +663,7 @@
     <ClInclude Include="AI.h" />
     <ClInclude Include="AImove.h" />
     <ClInclude Include="AI_manager.h" />
+    <ClInclude Include="BGM.h" />
     <ClInclude Include="camera.h" />
     <ClInclude Include="car.h" />
     <ClInclude Include="carRender.h" />
@@ -951,11 +953,7 @@
     <CustomBuild Include="Assets\modelData\liam.tks">
       <FileType>Document</FileType>
     </CustomBuild>
-<<<<<<< HEAD
     <CustomBuild Include="Assets\lever\levalAI22.tks">
-=======
-    <CustomBuild Include="Assets\modelData\SimpleCorgi.tks">
->>>>>>> bc854881a60f2d26029a386e4dacf53ca39f279a
       <FileType>Document</FileType>
     </CustomBuild>
     <CustomBuild Include="Assets\modelData\Zonbiliam.tks">
@@ -976,6 +974,9 @@
     <CustomBuild Include="Assets\sound\car_noise.wav">
       <FileType>Document</FileType>
     </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="Assets\sound\horror_zone1.wav" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

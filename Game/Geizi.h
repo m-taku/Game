@@ -32,6 +32,11 @@ public:
 	{
 		return HPfurag;
 	}
+
+	float Get_keifou_saiz()
+	{
+		return keifou_saiz;//これが0.95以上になると敵兵が出てくる。
+	}
 private:
 	CSprite m_sprite;				//スプライト(枠)。
 	CShaderResourceView m_texture;	//テクスチャ。
