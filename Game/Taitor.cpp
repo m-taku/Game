@@ -11,9 +11,9 @@ Taitor::~Taitor()
 }
 bool Taitor::Start()
 {
-	//n_texture.CreateFromDDSTextureFromFile(L"sprite/ge-ji.dds");
-	//n_sprite.Init(n_texture, 1280, 720);
-	//n_sprite.Update(n_position, CQuaternion::Identity, { 1.0f,1.0f,1.0f });
+	n_texture.CreateFromDDSTextureFromFile(L"sprite/Game_Title.dds");
+	n_sprite.Init(n_texture, 1280, 600);
+	n_sprite.Update(n_position, CQuaternion::Identity, { 1.0f,1.0f,1.0f });
 	fase = FindGO<Fade>("Fade");
 	player= FindGO<Player>("Player");
 	//y_texture.CreateFromDDSTextureFromFile(L"sprite/yaji.dds");
@@ -77,6 +77,8 @@ void Taitor::Update()
 		if (Pad(0).IsTrigger(enButtonA)) {
 			//	fase->StartFadeOut();
 			furag = push;
+			NewGO<Game>(0, "Game");
+			DeleteGO(this);
 		}
 		break;
 	case push:
@@ -169,4 +171,11 @@ float Taitor::siya()
 
 	float degree = CMath::RadToDeg(kok);
 	return degree;
+}
+
+void  Taitor::PostRender(CRenderContext& rc)
+{
+	if (furag == steat) {
+		n_sprite.Draw(rc, MainCamera2D().GetViewMatrix(), MainCamera2D().GetViewProjectionMatrix());
+	}
 }

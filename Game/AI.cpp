@@ -468,7 +468,7 @@ void AI::Update()
 				car* ai = (car*)go;
 				CVector3 kyori1 = ai->Getposition() - this->m_position;//自分との距離を求める。
 				float f = kyori1.Length();
-				if (f <= 100) { //距離が車間距離よりも短くなっていたら
+				if (f <= 500) { //距離が車間距離よりも短くなっていたら
 					kyori1.Normalize();
 					float kaku = acosf(kyori1.Dot(ai->Getforward()));//２つのべクトルの内積のアークコサインを求める。(ラジアン)
 					float degree = CMath::RadToDeg(kaku);
@@ -643,14 +643,12 @@ void AI::NPCReturn()
 void AI::FlyNPC()
 {
 	//flydist /= 10;	
-	if (A_charaCon.IsOnGround()&&taime>=2) {
+	if (A_charaCon.IsOnGround()&&taime++>=2) {
 		//pa = Zombie_Normal;
 		m_movespeed = CVector3::Zero;
 		//taime = 0;
 	}
 	CharaConUpdate();	
-	
-
 }
 void AI::CharaConUpdate()
 {
@@ -733,10 +731,10 @@ void AI::Chasepas(CVector3 m_position)
 	pasmove(mokuhyou);
 	//NPCRunangle(work->Getbekutor());
 	if ((game->pasu[Leftfrag].Getresuto(mokuhyouNo)->m_position[0] - this->m_position).Length() < 200.0f) {
-		CVector3 minkore = { 0.0f,0.0f,0.0f };
+		CVector3 minkore = { 1000000000000000000.0f,1000000000000000000.0f,100000000000000000000.0f };
 		for (int Linknum = 0; Linknum < game->pasu[Leftfrag].GetresutoSaiz(mokuhyouNo); Linknum++) {
 			CVector3 ma = game->pasu[Leftfrag].Getresuto(mokuhyouNo)->m_position[Linknum] - m_position;
-			if (minkore.Length() < ma.Length()) {
+			if (minkore.Length() > ma.Length()) {
 				minkore = ma;
 				mokuhyou = game->pasu[Leftfrag].Getresuto(mokuhyouNo)->No[Linknum];
 			}

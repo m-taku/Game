@@ -107,7 +107,6 @@ void AI::NPCZombie_Chase()
 				}
 			}
 			else {
-
 				Pboneforward = Tansaku->m_forward;
 				CVector3 rotAxis;
 				rotAxis.Cross(this->m_forward, Pboneforward);
