@@ -3,6 +3,8 @@
 #include"Player.h"
 #include"Game.h"
 #define kaku 15.0f
+
+#define seconds 5
 Taitor::Taitor()
 {
 }
@@ -82,14 +84,14 @@ void Taitor::Update()
 		}
 		break;
 	case push:
-		BasisVector /= 1 - (1 / (100 / GameTime().GetFrameDeltaTime()));
+		BasisVector /= 1 - (1 / (seconds / GameTime().GetFrameDeltaTime()));
 		target = player->Getbonepos();
 		player_Foeward = player->GetFoeward();
 		player_Foeward.y = 0.0f;
 		player_Foeward.Normalize();
 		player_Foeward *= -1;
 		kakudo = siya();
-		kakudo /= 100;
+		kakudo /= seconds;
 		ka = nowkmVector - target;
 		ka.y = 0.0f;
 		ka.Normalize();
@@ -97,7 +99,7 @@ void Taitor::Update()
 		UP.Normalize();
 		Crot.SetRotationDeg(UP, kakudo*GameTime().GetFrameDeltaTime());
 		Crot.Multiply(BasisVector);
-		kaunto = 100 / GameTime().GetFrameDeltaTime();
+		kaunto = seconds / GameTime().GetFrameDeltaTime();
 		//	UP = player->Getboneup();
 		furag = suii;
 		break;
@@ -105,7 +107,7 @@ void Taitor::Update()
 		nowkmtarget += target / kaunto;
 		Crot.SetRotationDeg(UP, kakudo*GameTime().GetFrameDeltaTime());
 		Crot.Multiply(BasisVector);
-		BasisVector *=1-(1/(100/GameTime().GetFrameDeltaTime()));
+		BasisVector *=1-(1/(seconds /GameTime().GetFrameDeltaTime()));
 
 		if (taime++ > kaunto)
 		{
@@ -115,8 +117,7 @@ void Taitor::Update()
 			ka.Normalize();
 
 			ka.y = 1.2f;
-			speed -= taime;
-			ka *= speed;
+			ka *= (speed * GameTime().GetFrameDeltaTime());
 			speed--;
 			furag = tyoku;
 		}
@@ -135,10 +136,10 @@ void Taitor::Update()
 
 		if (BasisVector.Length() <= 500.0f)
 		{
-			ka *= 20 * GameTime().GetFrameDeltaTime();
+			ka *= 600 * GameTime().GetFrameDeltaTime();
 		}
 		else {
-			ka *= speed;
+			ka *= speed * GameTime().GetFrameDeltaTime();
 			speed--;
 		}
 		if (BasisVector.Length() <= 40.0f)

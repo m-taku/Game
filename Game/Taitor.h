@@ -39,7 +39,7 @@ private:
 	CVector3 nowkmVector = CVector3::Zero;
 	int Triggeer = 0;
 	float kakudo = 10.0f;
-	int speed = 200.0f;
+	float speed = 900.0f;
 	int kaunto = 0;
 	CVector3 ka = CVector3::Zero;
 	int hyouji = 11;

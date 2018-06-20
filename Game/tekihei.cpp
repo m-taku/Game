@@ -359,7 +359,7 @@ void tekihei::Update()
 						teki_to_tama_vector[i] = sqrt(teki_to_tama[i].x*teki_to_tama[i].x + teki_to_tama[i].y*teki_to_tama[i].y + teki_to_tama[i].z*teki_to_tama[i].z);
 						if (tama_to_player_vector[i] > 50.0f && damageflag[i] == 0)
 						{
-							tamapos[i] += tamamuki[i] * 30.0f;
+							tamapos[i] += tamamuki[i] * 600.0f*GameTime().GetFrameDeltaTime();
 							tamaEF[i]->SetPosition(tamapos[i]);
 						}
 
@@ -390,6 +390,7 @@ void tekihei::Update()
 
 					}
 				}
+
 				tekipos[i] = m_charaCon[i].Execute(GameTime().GetFrameDeltaTime(), tekispeed[i]);
 				tekiskinModel[i].Update(tekipos[i], tekirot[i], { 1.0f,1.0f,1.0f });
 				
@@ -500,7 +501,7 @@ void tekihei::Update()
 				teki_to_tama_vector[i] = sqrt(teki_to_tama[i].x*teki_to_tama[i].x + teki_to_tama[i].y*teki_to_tama[i].y + teki_to_tama[i].z*teki_to_tama[i].z);
 				if (tama_to_player_vector[i] > 50.0f && damageflag[i] == 0)
 				{
-					tamapos[i] += tamamuki[i] * 30.0f;
+					tamapos[i] += tamamuki[i] * 600.0f*GameTime().GetFrameDeltaTime();
 					tamaEF[i]->SetPosition(tamapos[i]);
 				}
 

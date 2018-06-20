@@ -38,10 +38,10 @@ bool car::Start()
 	m_forward.z = m_tekirot.m[2][2];
 	m_forward.y = 0.0f;
 	m_forward.Normalize();
-	for (int u = 0; u < Humans.size(); u++) {
-		Human* ai = Humans[u];
-		HumanLest.push_back(ai);
-	}
+	//for (int u = 0; u < Humans.size(); u++) {
+	//	Human* ai = Humans[u];
+	//	HumanLest.push_back(ai);
+	//}
 
 	//クラクションの初期化。
 	//m_klaxon = NewGO<prefab::CSoundSource>(0);
@@ -208,7 +208,7 @@ void car::Move()
 }
 void car::Stop()
 {
-	for (auto& Humanlest : HumanLest) {
+	for (auto& Humanlest : Humans) {
 		if (Humanfrag != true) {
 			CVector3 kyori1 = Humanlest->Getposition() - this->m_position;//自分との距離を求める。
 			float f = kyori1.Length();
