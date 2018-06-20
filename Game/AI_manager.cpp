@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "AI_manager.h"
+#include"AI.h"
 #include"Osu.h"
 #include"Mes.h"
 #include"Dog.h"
@@ -41,7 +42,7 @@ AI_manager::AI_manager()
 	da.push_back(AIR25);
 	da.push_back(AIR26);
 	for (int k = 0; k < da.size(); k++) {
-		Osu* AIR = NewGO<Osu>(0, "Osu");
+		AI* AIR = NewGO<AI>(0, "AI");
 		AIR->GetGame(this);
 		Rsimin.push_back(AIR);
 		RAIseizon.push_back(1);
@@ -74,7 +75,7 @@ AI_manager::AI_manager()
 	da2.push_back(AIL24);
 	da2.push_back(AIL25);
 	for (int k = 0; k < da2.size(); k++) {
-		Dog* AIL = NewGO<Dog>(0, "Osu");
+		AI* AIL = NewGO<AI>(0, "Osu");
 		AIL->GetGame(this);
 		Lsimin.push_back(AIL);
 		LAIseizon.push_back(1);
@@ -91,12 +92,10 @@ AI_manager::~AI_manager()
 		}
 	}
 	for (int k = 0; k < Lsimin.size(); k++) {
-
 		if (LAIseizon[k] >= 1) {
 			DeleteGO(Lsimin[k]);
 		}
 	}
-
 }
 bool AI_manager::Start()
 {

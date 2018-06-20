@@ -24,6 +24,10 @@ public:
 	{
 		return m_forward;
 	}
+	void GetGeizi(Geizi* naka)
+	{
+		Gaizi = naka;
+	}
 private:
 
 	CMeshCollider m_meshCollider;	//メッシュコライダー。
@@ -34,7 +38,7 @@ private:
 	CSkinModelData m_skinModelData;			//スキンモデルデータ。
 	AImove* ran;
 	std::vector<Human*> HumanLest;
-	Geizi* Gaizi;
+	Geizi* Gaizi= nullptr;
 	CQuaternion m_rotation = CQuaternion::Identity;		//回転
 	CVector3 m_position = CVector3::Zero;				//現在の座標
 	CMatrix m_tekirot;									//行列

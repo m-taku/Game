@@ -1,7 +1,7 @@
 #pragma once
 #include"tekihei.h"
 #define tekikazu 10
-class item:public IGameObject
+class item : public IGameObject
 {
 public:
 	item();

@@ -8,6 +8,7 @@ public:
 	~Taitor();
 	bool Start();
 	float siya();
+	void PostRender(CRenderContext& rc) override;
 	void Update();
 private:
 	enum kaiten {
@@ -23,7 +24,7 @@ private:
 	CQuaternion Quaternion = CQuaternion::Identity; //回転
 	CSprite y_sprite;				//スプライト（矢印）。
 	CShaderResourceView y_texture;	//テクスチャ。*/
-	CVector3 n_position = CVector3::Zero;
+	CVector3 n_position = { 0.0f ,180.0f,0.0f };
 
 	Player* player = nullptr;
 	CVector3 target = CVector3::Zero;
@@ -38,7 +39,7 @@ private:
 	CVector3 nowkmVector = CVector3::Zero;
 	int Triggeer = 0;
 	float kakudo = 10.0f;
-	int speed = 135.0f;
+	float speed = 900.0f;
 	int kaunto = 0;
 	CVector3 ka = CVector3::Zero;
 	int hyouji = 11;

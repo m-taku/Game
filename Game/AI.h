@@ -64,7 +64,7 @@ public:
 	void Fardist_path(CVector3 m_position);
 	float Siya(CVector3 h, float g);
 	float takikennsau();
-	
+	void AI_Animation();
 	////////////////////////////////////////////////////////////////////////
 	////アニメーション関連のメンバ関数(メソッド)。                      ////
 	////各サブクラスでのオーバーライドを前提とするため、中身は書かない。////
@@ -87,6 +87,10 @@ public:
 	CVector3 Getposition()
 	{
 		return m_position;
+	}
+	CVector3 Getforward()
+	{
+		return m_forward;
 	}
 protected:
 	//メンバ変数
@@ -120,6 +124,19 @@ protected:
 		//NPC_Attack      //ゾンビ化NPCの攻撃
 		Animnum           //AnimationClipの総数
 	};
+	enum animation {
+		shiminidle,
+		shiminwalk,
+		shiminrun,
+		shiminattack,
+		Zonbiwalk,
+		Zonbiattack,
+		Zonbi_zico,
+		animnum
+	};
+	CAnimation ai_NPCAnimation;				//アニメーション。
+	CAnimationClip ai_NPCAnimationClips[animnum];	//アニメーションクリップ。
+	CShaderResourceView zondi;
 
 	enum npcpattern pa;
 	int satForceFlag()
@@ -194,6 +211,8 @@ private:
 	keiroK keiro;
 	CMatrix m_tekirot;
 	CMatrix k_tekirot;
+	car* ziko_car;
+	bool ziko_frag = false;
 	CVector3 before_m_position = CVector3::Zero;		//一つ前の座標。
 	std::vector<int> jyunban;
 	CVector3 flydist=CVector3::Zero;

@@ -25,7 +25,6 @@ bool car::Start()
 		No[ka-1] = loc.GetObjectPosition(i);
 	}
 	Stage* stage =FindGO<Stage>("stage");
-	Gaizi = FindGO<Geizi>("Geizi");
 	fa = stage->incNo();//Ô‚ª‚Å‚«‚½”‚¾‚¯ƒJƒEƒ“ƒg‚·‚éŠÖ”B
 	saidaiNo = stage->Gatpasusaiz(fa);
 	pasu = stage->getDate(fa);
@@ -38,10 +37,10 @@ bool car::Start()
 	m_forward.z = m_tekirot.m[2][2];
 	m_forward.y = 0.0f;
 	m_forward.Normalize();
-	for (int u = 0; u < Humans.size(); u++) {
-		Human* ai = Humans[u];
-		HumanLest.push_back(ai);
-	}
+	//for (int u = 0; u < Humans.size(); u++) {
+	//	Human* ai = Humans[u];
+	//	HumanLest.push_back(ai);
+	//}
 
 	
 	m_noise = NewGO<prefab::CSoundSource>(0);
@@ -91,15 +90,15 @@ bool car::Start()
 	m_skinModelData.Load(L"modelData/Vehicle_SUV1.cmo");//ƒvƒŒƒCƒ„[‚ğ‘‚¯
 	m_skinModel.Init(m_skinModelData);
 
-	m_meshCollider.CreateFromSkinModel(m_skinModel, nullptr);
-	RigidBodyInfo rbInfo;
-	rbInfo.pos = m_position;
-	rbInfo.rot = m_rotation;
-	rbInfo.collider = &m_meshCollider;
-	rbInfo.mass= 10.0f;							//¿—Ê‚ğ0‚É‚·‚é‚Æ“®‚©‚È‚¢„‘Ì‚É‚È‚éB
-												//”wŒi‚È‚Ç‚Ì“®‚©‚È‚¢ƒIƒuƒWƒFƒNƒg‚Í0‚ğİ’è‚·‚é‚Æ‚æ‚¢B
-	m_rigidBody.Create(rbInfo);					//ì¬‚µ‚½î•ñ‚ğg‚Á‚Ä„‘Ì‚ğì¬‚·‚éB
-	PhysicsWorld().AddRigidBody(m_rigidBody);	//ì¬‚µ‚½„‘Ì‚ğ•¨—ƒ[ƒ‹ƒh‚É’Ç‰Á‚·‚éB
+	//m_meshCollider.CreateFromSkinModel(m_skinModel, nullptr);
+	//RigidBodyInfo rbInfo;
+	//rbInfo.pos = m_position;
+	//rbInfo.rot = m_rotation;
+	//rbInfo.collider = &m_meshCollider;
+	//rbInfo.mass= 10.0f;							//¿—Ê‚ğ0‚É‚·‚é‚Æ“®‚©‚È‚¢„‘Ì‚É‚È‚éB
+	//											//”wŒi‚È‚Ç‚Ì“®‚©‚È‚¢ƒIƒuƒWƒFƒNƒg‚Í0‚ğİ’è‚·‚é‚Æ‚æ‚¢B
+	//m_rigidBody.Create(rbInfo);					//ì¬‚µ‚½î•ñ‚ğg‚Á‚Ä„‘Ì‚ğì¬‚·‚éB
+	//PhysicsWorld().AddRigidBody(m_rigidBody);	//ì¬‚µ‚½„‘Ì‚ğ•¨—ƒ[ƒ‹ƒh‚É’Ç‰Á‚·‚éB
 	stopFlag = false;//stopFlag‚Ì‰Šú‰»B
 
 #ifdef instansingu_katto
@@ -113,9 +112,7 @@ bool car::Start()
 void car::Update()
 {
 	klaxonFlag = false;//–ˆ‰ñ‰Šú‰»B
-	if (Gaizi->GatFragu() < 1.0f) {
-		CarSound_SetPosition();//‰¹Œ¹‚ÌÀ•W‚ğİ’èB
-
+	if (Gaizi==nullptr|| Gaizi->GatFragu() < 1.0f) {
 		m_tekirot.MakeRotationFromQuaternion(m_rotation);
 		m_forward.x = m_tekirot.m[2][0];
 		m_forward.y = m_tekirot.m[2][1];
@@ -151,7 +148,7 @@ void car::Update()
 			ran->Setlen(0.0f);
 		}
 
-//	}
+	}
 
 	if (move == 0.0f) {
 		int i = 0;
@@ -159,21 +156,19 @@ void car::Update()
 	//ƒNƒ‰ƒNƒVƒ‡ƒ“‚ğ–Â‚ç‚·‚©‚ğ”»’è‚·‚éB
 	if (klaxonFlag == true) {//ƒNƒ‰ƒNƒVƒ‡ƒ“‚ğ–Â‚ç‚µ‚½B
 		SoundklaxonPlay();
-	}
-
-	if (klaxonFlag == false) {
+	}else{
 		stopFlag = false;
 	}
 
 
-	btVector3 m_pos = m_rigidBody.GetBody()->getWorldTransform().getOrigin();
-	if (0 >= m_pos.y()) {
-		m_pos.setY(0.0f);
-	}
-	m_pos.setX(m_position.x);
-	m_pos.setZ(m_position.z);
-	m_rigidBody.GetBody()->getWorldTransform().setOrigin(m_pos);
-	m_position.Set(m_pos);
+	//btVector3 m_pos = m_rigidBody.GetBody()->getWorldTransform().getOrigin();
+	//if (0 >= m_pos.y()) {
+	//	m_pos.setY(0.0f);
+	//}
+	//m_pos.setX(m_position.x);
+	//m_pos.setZ(m_position.z);
+	//m_rigidBody.GetBody()->getWorldTransform().setOrigin(m_pos);
+	//m_position.Set(m_pos);
 
 
 #ifdef instansingu_katto
@@ -239,7 +234,7 @@ void car::Move()
 }
 void car::Stop()
 {
-	for (auto& Humanlest : HumanLest) {
+	for (auto& Humanlest : Humans) {
 		if (Humanfrag != true) {
 			CVector3 kyori1 = Humanlest->Getposition() - this->m_position;//©•ª‚Æ‚Ì‹——£‚ğ‹‚ß‚éB
 			float f = kyori1.Length();
@@ -317,13 +312,13 @@ void car::SoundklaxonPlay()//ƒNƒ‰ƒNƒVƒ‡ƒ“‚ÌƒTƒEƒ“ƒh‚ğ–Â‚ç‚³‚ê‚½‚Éˆê‰ñ‚¾‚¯—¬‚·
 		prefab::CSoundSource*m_klaxon = nullptr;
 		m_klaxon = NewGO<prefab::CSoundSource>(0);
 		m_klaxon->Init("sound/klaxon.wav", true);
+		m_klaxon->Play(false);//‰‚ß‚Ä~‚Ü‚Á‚½‚Ì‚ÅAƒNƒ‰ƒNƒVƒ‡ƒ“‚ğ–Â‚ç‚·B
 		m_klaxon->AddSoundStopCallback([&]() {
 			//ƒTƒEƒ“ƒh‚ª’â~‚µ‚½‚ç‚±‚ÌŠÖ”‚ªŒÄ‚Î‚ê‚é
 			stopFlag = true;//ƒXƒgƒbƒv‚µ‚½B
 		});
 		//ƒTƒEƒ“ƒh‚Ìƒ|ƒWƒVƒ‡ƒ“‚ğİ’è‚·‚éB
 		m_klaxon->SetPosition(m_position);
-		m_klaxon->Play(false);//‰‚ß‚Ä~‚Ü‚Á‚½‚Ì‚ÅAƒNƒ‰ƒNƒVƒ‡ƒ“‚ğ–Â‚ç‚·B
 	//if (Humanfrag == false) {//Ô‚ª“®‚«o‚µ‚½B
 	//	stopFlag = false;//uƒXƒgƒbƒv‚µ‚½v‚Æ‚¢‚¤ƒtƒ‰ƒO‚ğŒ³‚É–ß‚µ‚Ä‚¨‚­B
 	//}

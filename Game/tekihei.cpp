@@ -4,7 +4,7 @@
 #include"math.h"
 #include"Geizi.h"
 #include"GameEnd.h"
-#include"item.h"
+//#include"item.h"
 tekihei::tekihei()
 {
 }
@@ -27,7 +27,6 @@ bool tekihei::Start()
 	/*animclip[0].Load(L"animData/tekiidle.tka");
 	animclip[0].SetLoopFlag(true);*/
 
-	NewGO<item>(0, "item");
 
 	//ƒpƒX‚Ì‰Šú‰»
 	EnemyPath[0] = { 0.0f,0.0f,0.0f };
@@ -359,7 +358,7 @@ void tekihei::Update()
 						teki_to_tama_vector[i] = sqrt(teki_to_tama[i].x*teki_to_tama[i].x + teki_to_tama[i].y*teki_to_tama[i].y + teki_to_tama[i].z*teki_to_tama[i].z);
 						if (tama_to_player_vector[i] > 50.0f && damageflag[i] == 0)
 						{
-							tamapos[i] += tamamuki[i] * 30.0f;
+							tamapos[i] += tamamuki[i] * 1000.0f*GameTime().GetFrameDeltaTime();
 							tamaEF[i]->SetPosition(tamapos[i]);
 						}
 
@@ -390,6 +389,7 @@ void tekihei::Update()
 
 					}
 				}
+
 				tekipos[i] = m_charaCon[i].Execute(GameTime().GetFrameDeltaTime(), tekispeed[i]);
 				tekiskinModel[i].Update(tekipos[i], tekirot[i], { 1.0f,1.0f,1.0f });
 				
@@ -425,7 +425,11 @@ void tekihei::Update()
 
 			teki_siya[i] = acosf(tekifoward[i].Dot(teki_to_player[i]));//Ž‹–ì‚ÌŒvŽZ
 			teki_siya[i] = (180.0 / 3.14159)*teki_siya[i];
-			if (!(teki_siya[i] <= 45.0f&&teki_to_player_vector[i] < 1000.0f))
+			if (teki_siya[i] > 45.0f)
+			{
+				find_f[i] = 0;
+			}
+			if (teki_to_player_vector[i] >= 1000.0f)
 			{
 				find_f[i] = 0;
 			}
@@ -500,7 +504,7 @@ void tekihei::Update()
 				teki_to_tama_vector[i] = sqrt(teki_to_tama[i].x*teki_to_tama[i].x + teki_to_tama[i].y*teki_to_tama[i].y + teki_to_tama[i].z*teki_to_tama[i].z);
 				if (tama_to_player_vector[i] > 50.0f && damageflag[i] == 0)
 				{
-					tamapos[i] += tamamuki[i] * 30.0f;
+					tamapos[i] += tamamuki[i] * 1000.0f*GameTime().GetFrameDeltaTime();
 					tamaEF[i]->SetPosition(tamapos[i]);
 				}
 

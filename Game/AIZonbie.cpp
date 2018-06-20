@@ -22,11 +22,12 @@ void AI::NPCZombie_Normal()
 	if ((game->pasu[Leftfrag].Getresuto(mokuhyouNo)->m_position[0] - m_position).Length() < 150.0f) {//ランダム徘徊のパス番号検索
 		int num = Random().GetRandInt() % (game->pasu[Leftfrag].Getresuto(mokuhyouNo)->No.size() - 1);
 		mokuhyou = game->pasu[Leftfrag].Getresuto(mokuhyouNo)->No[++num];
+		Retrieval_pasNo(mokuhyou);
 	}
-	Retrieval_pasNo(mokuhyou);
 	if (Tansaku != nullptr) {
 		search(Tansaku->m_position);
 		mokuhyou=jyunban[0];
+		Retrieval_pasNo(mokuhyou);
 		pa = Zombie_Chase; //パターンをゾンビチェイスに変える。
 	}
 }
@@ -76,7 +77,7 @@ void AI::NPCZombie_Chase()
 	else {//NPCを見失っておらず、見つけていたら
 		float kou = VectorAngleDeg((Tansaku->m_forward));
 		CVector3 n = Tansaku->m_position - m_position;
-		//NPCRunangle(n);
+		NPCRunangle(n);
 		if (kou <= 120) {
 			if (len < atakkukyori) {//NPCに追いついたら
 									//攻撃する(確実に当たる仕様)。
@@ -91,13 +92,13 @@ void AI::NPCZombie_Chase()
 
 			else {
 				HitFlag = false;
-				//n.y = 0.0f;
-				//n.Normalize();
-				//m_movespeed = n * (m_speed*200.0 + mobe);
-				//m_movespeed.y += gravity;
-				//m_position = A_charaCon.Execute(GameTime().GetFrameDeltaTime(), m_movespeed);//移動
+				n.y = 0.0f;
+				n.Normalize();
+				m_movespeed = n * (m_speed*200.0 + mobe);
+				m_movespeed.y += gravity;
+				m_position = A_charaCon.Execute(GameTime().GetFrameDeltaTime(), m_movespeed);//移動
 
-				Chasepas(Tansaku->m_position);
+				//Chasepas(Tansaku->m_position);
 				atakkukyori = 100.0f;
 				/////////////////////////////////
 				//市民NPCを追跡する処理。
@@ -105,10 +106,7 @@ void AI::NPCZombie_Chase()
 			}
 		}
 		else {
-
-			CVector3 ka = Tansaku->m_position;
-			Chasepas(ka);
-		/*	Pboneforward = Tansaku->m_forward;
+			Pboneforward = Tansaku->m_forward;
 			CVector3 rotAxis;
 			rotAxis.Cross(this->m_forward, Pboneforward);
 			rotAxis.Normalize();
@@ -117,8 +115,20 @@ void AI::NPCZombie_Chase()
 			Crot.Multiply(Pboneforward);
 			CVector3 baka = (Pboneforward * len) + Tansaku->m_position;
 			baka = baka - m_position;
-			m_position = A_charaCon.Execute(GameTime().GetFrameDeltaTime(), baka);*/
+			m_position = A_charaCon.Execute(GameTime().GetFrameDeltaTime(), baka);
+
+			/*	Pboneforward = Tansaku->m_forward;
+				CVector3 rotAxis;
+				rotAxis.Cross(this->m_forward, Pboneforward);
+				rotAxis.Normalize();
+				angle += 3.0f;
+				Crot.SetRotationDeg(rotAxis, angle);
+				Crot.Multiply(Pboneforward);
+				CVector3 baka = (Pboneforward * len) + Tansaku->m_position;
+				baka = baka - m_position;
+				m_position = A_charaCon.Execute(GameTime().GetFrameDeltaTime(), baka);*/
 		}
+
 	}
 }
 void AI::NPCZombie_Attack()//vs特殊部隊
