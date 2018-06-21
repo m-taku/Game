@@ -20,8 +20,11 @@ Game::Game()
 {
 	//Ç±Ç±Ç…äÓñ{ìIÇ»î≠ê∂Çï`Ç≠
 	gaizi = NewGO<Geizi>(1, "Geizi");
+
 	player = FindGO<Player>("Player");
+
 	player->trueGame();
+
 //	pasu2.clear();
 	stage = FindGO<Stage>("stage");
 	auto car = stage->getcarv();
@@ -29,6 +32,14 @@ Game::Game()
 		na->GetGeizi(gaizi);
 	}
 	camera1 = NewGO<camera>(0, "camera");
+
+	/*swprintf_s(moveFilePath, L"lever/matilevel%d0%d.tks", 0, 2);
+	m_level[0].Build(moveFilePath);
+	swprintf_s(moveFilePath, L"lever/matilevel%d0%d.tks", 1, 1);
+	m_level[1].Build(moveFilePath);
+	swprintf_s(moveFilePath, L"lever/matilevel%d0%d.tks", 2, 1);
+	m_level[2].Build(moveFilePath);*/
+
 	//m_level[1].X = 5.0f;
 	//m_level[1].Z=  5.0f;
 	//m_level[1].Build(L"lever/leval01.tks");

@@ -2,6 +2,7 @@
 #include"Human.h"
 #include "tkEngine/character/tkCharacterController.h"
 #include "tkEngine/graphics/effect/tkEffect.h"
+#define tama 20
 class taieki;
 class car;
 class Player : public Human

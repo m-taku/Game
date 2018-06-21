@@ -37,6 +37,20 @@ bool car::Start()
 	m_forward.z = m_tekirot.m[2][2];
 	m_forward.y = 0.0f;
 	m_forward.Normalize();
+	//for (int u = 0; u < Humans.size(); u++) {
+	//	Human* ai = Humans[u];
+	//	HumanLest.push_back(ai);
+	//}
+	m_noise = NewGO<prefab::CSoundSource>(0);
+	m_noise->Init("sound/car_noise.wav", true);
+	m_noise->AddSoundStopCallback([&]() {
+		//サウンドが停止したらこの関数が呼ばれる
+		
+	});
+	
+	//m_noise->Play(false);//初めて止まったので、クラクションを鳴らす。
+
+
 	//クラクションの初期化。
 	//m_klaxon = NewGO<prefab::CSoundSource>(0);
 	//m_klaxon->Init("sound/car-horn1.wav",true);
@@ -111,11 +125,27 @@ void car::Update()
 		//if (frag <= 0) {
 		Move();
 		//}
+
+		if (move != 0.0f) {//動いていたら
+			if(m_noise->Get3DSoundFlag() ==true)
+			m_noise->Play(true);//車の走行音を流す。
+		}
+		else {//止まっていたら
+			m_noise->Stop();//車の走行音を止める。
+		}
+		//クラクションを鳴らすかを判定する。
+		if (klaxonFlag == true) {//クラクションを鳴らした。
+			SoundklaxonPlay();
+		}
+
+		if (klaxonFlag == false) {
+			stopFlag = false;
+		}
 		m_position.y = 0.0f;
 		if (Humanfrag != false) {
 
 			ran->Setlen(0.0f);
-		}
+            }
 	}
 
 	if (move == 0.0f) {
@@ -266,11 +296,13 @@ void car::Stop()
 	});
 }
 
-//void car::CarSound()//一連のさうんどの処理をする。
-//{
-//	//クラクションを鳴らすかを判定する。
-//	SoundklaxonPlay();
-//}
+void car::CarSound_SetPosition()//一連のさうんどの処理をする。
+{
+	//	//クラクションを鳴らすかを判定する。
+	//	SoundklaxonPlay();
+	//サウンドのポジションを設定する。
+	m_noise->SetPosition(m_position);
+}
 
 void car::SoundklaxonPlay()//クラクションのサウンドを鳴らされた時に一回だけ流す。
 {

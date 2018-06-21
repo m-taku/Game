@@ -135,7 +135,7 @@ void Player::Update()
 		}
 
 		/*rotX += rStick_y * 5;*/
-		rotY = rStick_x * 5;
+		rotY = rStick_x * 3;
 		/*qBias.SetRotationDeg(CVector3::AxisX, rotX);*/
 		qBias1.SetRotationDeg(CVector3::AxisY, rotY);
 		m_rotation.Multiply(qBias1);

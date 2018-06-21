@@ -180,6 +180,13 @@ namespace tkEngine{
 				return m_isLoop;
 			}
 			/*!
+			* @brief	3Dサウンドかどうかのフラグを取得。
+			*/
+			bool Get3DSoundFlag() const
+			{
+				return m_is3DSound;
+			}
+			/*!
 			* @brief	ボイスの周波数調整比
 			*@details
 			* 詳細はIXAudio2SourceVoiceのSetFrequencyRatioを参照してください。
