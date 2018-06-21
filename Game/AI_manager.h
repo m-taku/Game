@@ -54,8 +54,8 @@ public:
 private:
 	int No = 0;
 	int Leftfrag = 0;
-	std::vector<AI*> Rsimin;
-	std::vector<AI*> Lsimin;
+	std::vector<Osu*> Rsimin;
+	std::vector<Osu*> Lsimin;
 	std::vector<int> RAIseizon;
 	std::vector<int> LAIseizon;
 
@@ -115,5 +115,4 @@ private:
 	std::vector<std::vector<int>> da;
 
 };
-
 extern AI_manager* AI_ado;

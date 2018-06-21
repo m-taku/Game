@@ -3,6 +3,7 @@
 #include "tkEngine/character/tkCharacterController.h"
 #include "tkEngine/graphics/effect/tkEffect.h"
 class taieki;
+class car;
 class Player : public Human
 {
 public:
@@ -11,9 +12,9 @@ public:
 	bool Start();
 	void Update();
 	void Render(CRenderContext& rc);
-	CVector3& GetPosition()
+	CVector3 GetPosition()
 	{
-		return Getposition();
+		return m_position;
 	}
 	CVector3& Getboneforward()
 	{
@@ -24,9 +25,14 @@ public:
 	{
 		return bonepos;
 	}
-	void SetGame()
+	void trueGame()
 	{
 		game = true;
+	}
+	void falseGame()
+	{
+		game = false;
+
 	}
 	CVector3& GetFoeward()
 	{
@@ -85,12 +91,13 @@ private:
 	int bonenum = 0;
 	int boneNo = 0;
 	CVector3 bonepos = CVector3::Zero;
-	
+	car* zikocar;
+	bool zikofrag = false;
 	enum animation {
 		idle,
 		walk,
 		attack,
-		attack2,
+		ziko,
 		animnum
 	};
 	CAnimation m_animation;

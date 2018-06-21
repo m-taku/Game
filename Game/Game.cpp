@@ -21,7 +21,7 @@ Game::Game()
 	//ここに基本的な発生を描く
 	gaizi = NewGO<Geizi>(1, "Geizi");
 	player = FindGO<Player>("Player");
-	player->SetGame();
+	player->trueGame();
 //	pasu2.clear();
 	stage = FindGO<Stage>("stage");
 	auto car = stage->getcarv();
@@ -49,15 +49,12 @@ void Game::OnDestroy()
 	//ここで最終的にＤｅｌｅｔｅＧＯを絶対しきる。	
 	DeleteGO(FindGO<AI_manager>("AI_manager"));
 	DeleteGO(gaizi);
-	auto car = stage->getcarv();
-	for (auto na : car) {
-		DeleteGO(na);
-	}
+	stage->Car_delete();
 	DeleteGO(camera1);
 //	DeleteGO(FindGO<item>("item"));
 	//再起動（タイトル表示）
 	NewGO<Taitor>(0, "Taitor");
-
+	stage->Car_create();
 	NewGO<Player>(0, "Player");
 	NewGO<AI_manager>(0, "AI_manager");
 }

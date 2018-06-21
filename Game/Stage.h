@@ -3,6 +3,7 @@
 #include "tkEngine/physics/tkRigidBody.h"
 #include "tkEngine/physics/tkPhysicsStaticObject.h"
 #include "Level.h"
+#include"carRender.h"
 class Level;
 class car;
 class Stage : public IGameObject
@@ -12,6 +13,8 @@ public:
 	~Stage();
 	bool Start();
 	void Update();
+	void Car_create();
+	void Car_delete();
 	void Render(CRenderContext& rc);
 	void OnDestroy();
 	CSkinModel m_skinModel;					//スキンモデル。
@@ -48,6 +51,7 @@ private:
 	CPhysicsStaticObject m_physicsStaticObject;
 	CSkinModel s_skinModel;					//スキンモデル。
 	CSkinModelData s_skinModelData;			//スキンモデルデータ。
+	carRender* kar;
 	int No = 0;
 	int Stege_No = 0;
 	std::vector<car*> carv;

@@ -4,6 +4,7 @@
 #include"taieki.h"
 #include"tekihei.h"
 #include"Geizi.h"
+#include"car.h"
 #define counter 10
 #include <string>
 #include<codecvt>
@@ -25,13 +26,10 @@ bool Player::Start()
 	m_animclip[idle].Load(L"animData/playeridle.tka");
 	m_animclip[walk].Load(L"animData/playerwalk.tka");
 	m_animclip[attack].Load(L"animData/playerattack.tka");
-	m_animclip[attack2].Load(L"animData/playerattack2.tka");
-
+	m_animclip[ziko].Load(L"animData/liam_ziko.tka");
 	/*animclip[1].Load(L"animData/demoanime/walk.tka");
 	animclip[2].Load(L"animData/demoanime/run.tka");
-	animclip[0].SetLoopFlag(true);
-	animclip[1].SetLoopFlag(true);
-	animclip[2].SetLoopFlag(true);*/
+
 	/*std::string hoge("Character1_Head");
 	std::wstring_convert<std::codecvt_utf8<wchar_t>, wchar_t> c
 	v;
@@ -49,7 +47,7 @@ bool Player::Start()
 	m_animclip[idle].SetLoopFlag(true);
 	m_animclip[walk].SetLoopFlag(true);
 	m_animclip[attack].SetLoopFlag(false);
-	m_animclip[attack2].SetLoopFlag(false);
+	m_animclip[ziko].SetLoopFlag(false);
 	m_animation.Init(
 		m_skinModel,
 		m_animclip,
@@ -155,7 +153,6 @@ void Player::Update()
 			m_moveSpeed.y = 400.0f;	//上方向に速度を設定して、
 			m_charaCon.Jump();		//キャラクターコントローラーにジャンプしたことを通知する。
 		}
-		m_moveSpeed.y -= 980.0f * GameTime().GetFrameDeltaTime();
 		//キャラクターコントローラーを使用して、座標を更新。
 		if (m_charaCon.IsOnGround()) {
 			//地面についた。
@@ -230,8 +227,41 @@ void Player::Update()
 		{
 			m_animation.Play(walk, 0.2f);
 		}
+		FindGameObjectsWithTag(20, [&](IGameObject* go) {
+			if (go != this) {            //自分からの距離を計測するため、検索結果から自分を除外する。
+				car* ai = (car*)go;
+				CVector3 kyori1 = this->m_position - ai->Getposition();//自分との距離を求める。
+				float f = kyori1.Length();
+				if (f <= 600) { //距離が車間距離よりも短くなっていたら
+					kyori1.Normalize();
+					float kaku = acosf(kyori1.Dot(ai->Getforward()));//２つのべクトルの内積のアークコサインを求める。(ラジアン)
+					float degree = CMath::RadToDeg(kaku);
+					if (degree <= 45) {
+						game = false;
+						zikocar = ai;
+						m_moveSpeed = (m_forward*-1*m_moveSpeed.Length())+zikocar->Getforward()*1000.0f;
+						m_moveSpeed.y = 600.0f;
+						zikofrag = true;
+					}
+				}
+			}
+		});
 	}
+	m_moveSpeed.y -= 980.0f * GameTime().GetFrameDeltaTime();
 	m_position = m_charaCon.Execute(GameTime().GetFrameDeltaTime(), m_moveSpeed);//移動。
+	if (zikofrag == true)
+	{
+		m_animation.Play(ziko, 0.4f);
+		if (!m_animation.IsPlaying()) {
+			zikofrag = false;
+		//	game = true;	
+			game = true;
+		}
+		if (m_charaCon.IsOnGround()) {
+			m_moveSpeed = CVector3::Zero;
+		
+		}
+	}
 	Setposition(m_position);
 	m_skinModel.Update(m_position, m_rotation, { 20.0f,20.0f,20.0f });// CVector3::One*20.0f);
 	const CMatrix& boneM = m_skinModelData.GetSkeleton().GetBone(boneNo)->GetWorldMatrix();

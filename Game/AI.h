@@ -148,9 +148,11 @@ protected:
 	CSkinModelData m_skinModelData;			//スキンモデルデータ。
 	AI_manager* game;
 	float m_speed;
+	bool ziko_frag = false;
 	car* Car;
 	Geizi* Gaizi;
 	Player* pl;
+	int taime = 0;
 	bool HitFlag = false;      //ダメージを与えたかを示すフラグ。
 private:
 	bool muteki_Flag = false;//無敵になっているかどうかを表すフラグ。
@@ -212,12 +214,10 @@ private:
 	CMatrix m_tekirot;
 	CMatrix k_tekirot;
 	car* ziko_car;
-	bool ziko_frag = false;
 	CVector3 before_m_position = CVector3::Zero;		//一つ前の座標。
 	std::vector<int> jyunban;
 	CVector3 flydist=CVector3::Zero;
 
-	int taime = 0;
 	AI* Chawse_Zombie;  //追跡してくるキャラを格納する。
 };
 
