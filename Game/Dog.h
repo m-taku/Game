@@ -9,5 +9,12 @@ public:
 	Dog();
 	~Dog();
 	bool Start();
+private:
+	enum animation {
+		waon,
+		animnum
+	};
+	CAnimation ai_NPCAnimation;				//アニメーション。
+	CAnimationClip ai_NPCAnimationClips[animnum];	//アニメーションクリップ。
 };
 

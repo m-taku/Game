@@ -8,6 +8,7 @@
 #include "tkEngine/graphics/postEffect/tkBloom.h"
 #include "tkEngine/graphics/postEffect/tkTonemap.h"
 #include "tkEngine/graphics/postEffect/tkDithering.h"
+#include "tkEngine/graphics/postEffect/tkMonochromeFilter.h"
 #include "tkEngine/graphics/tkPrimitive.h"
 
 
@@ -52,6 +53,14 @@ namespace tkEngine{
 			return m_tonemap;
 		}
 		/*!
+		*@brief	モノクロームフィルターの取得。。
+		*/
+		CMonochromeFilter& GetMonochrome()
+		{
+			return m_monochrome;
+		}
+
+		/*!
 		* @brief	最終書き込みのレンダリングターゲットを切り替え。
 		*/
 		void ToggleFinalRenderTarget()
@@ -75,12 +84,17 @@ namespace tkEngine{
 		 */
 		void InitFinalRenderTarget();
 	private:
-		CFxaa		m_fxaa;						//!<FXAA。
-		CBloom		m_bloom;					//!<BLOOM。
-		CTonemap	m_tonemap;					//!<トーンマップ。
-		CDithering	m_dithering;				//!<ディザリング。
-		CPrimitive	m_fullscreenQuad;			//!<フルスクリーン描画用の矩形プリミティブ。
-		int	m_currentFinalRenderTarget = 0;				//!<現在のメインレンダリングターゲット。
-		CRenderTarget m_finalRenderTarget[2];	//!<ポストエフェクトの最終書き込み先となるレンダリングターゲット。
+
+		CConstantBuffer constantBuffer;
+		CShader psShader;
+		CShader vsShader;
+		CFxaa				m_fxaa;						//!<FXAA。
+		CBloom				m_bloom;					//!<BLOOM。
+		CTonemap			m_tonemap;					//!<トーンマップ。
+		CMonochromeFilter	m_monochrome;
+		CDithering			m_dithering;				//!<ディザリング。
+		CPrimitive			m_fullscreenQuad;			//!<フルスクリーン描画用の矩形プリミティブ。
+		int					m_currentFinalRenderTarget = 0;				//!<現在のメインレンダリングターゲット。
+		CRenderTarget		m_finalRenderTarget[2];	//!<ポストエフェクトの最終書き込み先となるレンダリングターゲット。
 	};
 }

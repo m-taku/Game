@@ -3,7 +3,7 @@
 #include"Geizi.h"
 #include "tkEngine/graphics/effect/tkEffect.h"
 #include "tkEngine/character/tkCharacterController.h"
-#define teki 40
+#define teki 45
 #define path 45
 class tekihei : public IGameObject
 {
@@ -24,7 +24,7 @@ public:
 	CVector3 tekiright[teki];//敵兵の右方向。
 	CVector3 tekifoward[teki];//敵兵の前方方向。
 	Geizi *gaizi;
-	Player *Pp = nullptr;
+	Player *Pp;
 	CVector3 ppos = CVector3::Zero;
 	CVector3 teki_to_player[teki];
 	float teki_to_player_vector[teki];
@@ -49,8 +49,7 @@ public:
 	CAnimation tekianimation[teki];
 	CAnimationClip animclip[1];
 	float Dtekiangle[teki];
-	int tekianglecompF[teki];						//敵が向ききったフラグ
-
+	int tekianglecompF[teki];
 
 
 
@@ -80,4 +79,7 @@ public:
 	int min_f[teki];
 	float minDist = FLT_MAX;
 	int nearPathNo[teki];
+	CVector3 teki_to_teki_vector[teki];
+	float teki_to_teki_dist[teki];
+	float collide_siya[teki];
 };

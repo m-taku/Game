@@ -621,6 +621,7 @@
   <ItemGroup>
     <ClCompile Include="AI.cpp" />
     <ClCompile Include="AImove.cpp" />
+    <ClCompile Include="AI_manager.cpp" />
     <ClCompile Include="camera.cpp" />
     <ClCompile Include="car.cpp" />
     <ClCompile Include="carRender.cpp" />
@@ -642,7 +643,9 @@
     <ClCompile Include="Pasu.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="AIChase.cpp" />
+    <ClCompile Include="AIZonbie.cpp" />
     <ClCompile Include="Stage.cpp" />
+    <ClCompile Include="Stage_Light.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
@@ -658,6 +661,7 @@
   <ItemGroup>
     <ClInclude Include="AI.h" />
     <ClInclude Include="AImove.h" />
+    <ClInclude Include="AI_manager.h" />
     <ClInclude Include="camera.h" />
     <ClInclude Include="car.h" />
     <ClInclude Include="carRender.h" />
@@ -676,10 +680,10 @@
     <ClInclude Include="Pasu.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Stage.h" />
+    <ClInclude Include="Stage_Light.h" />
     <ClInclude Include="taieki.h" />
     <ClInclude Include="Taitor.h" />
     <ClInclude Include="tekihei.h" />
-    <ClInclude Include="user.h" />
     <CustomBuild Include="Assets\shader\LightingFunction.h" />
     <CustomBuild Include="Assets\shader\modelCB.h" />
     <CustomBuild Include="Assets\shader\modelSRV.h" />
@@ -720,6 +724,7 @@
     <MeshContentTask Include="Assets\modelData\Props_Fence.FBX" />
     <MeshContentTask Include="Assets\modelData\Props_Street Light.FBX" />
     <MeshContentTask Include="Assets\modelData\Props_Traffic Control Barrier Fence.FBX" />
+    <MeshContentTask Include="Assets\modelData\SimpleCorgi.FBX" />
     <MeshContentTask Include="Assets\modelData\sora.FBX" />
     <MeshContentTask Include="Assets\modelData\stage.FBX" />
     <MeshContentTask Include="Assets\modelData\stage0.FBX" />
@@ -738,6 +743,8 @@
     <MeshContentTask Include="Assets\modelData\Vehicle_SUV1.FBX" />
     <MeshContentTask Include="Assets\modelData\Vehicle_SUV2.FBX" />
     <MeshContentTask Include="Assets\modelData\Vehicle_SUV3.FBX" />
+    <MeshContentTask Include="Assets\modelData\VolumeLight.FBX" />
+    <MeshContentTask Include="Assets\modelData\Zonbiliam.FBX" />
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="Assets\modelData\unityChan.tks">
@@ -814,6 +821,10 @@
     <CustomBuild Include="Assets\effect\Texture\magma.png" />
     <CustomBuild Include="Assets\effect\Texture\sdfs.png" />
     <Image Include="Assets\modelData\ao.png" />
+    <ImageContentTask Include="Assets\sprite\A_botan.png" />
+    <ImageContentTask Include="Assets\sprite\Pusu_Button.png" />
+    <ImageContentTask Include="Assets\sprite\Game_Title2.png" />
+    <ImageContentTask Include="Assets\sprite\Game_Title.png" />
     <ImageContentTask Include="Assets\modelData\LiamTexZonbi.png">
       <ContentOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)/Resource/modelData/%(Filename).dds</ContentOutput>
       <ContentOutput Condition="'$(Configuration)|$(Platform)'=='Preview|Win32'">$(ProjectDir)/Resource/modelData/%(Filename).dds</ContentOutput>
@@ -892,6 +903,12 @@
     <CustomBuild Include="Assets\effect\aura3.efk">
       <FileType>Document</FileType>
     </CustomBuild>
+    <CustomBuild Include="Assets\animData\liam_ziko.tka">
+      <FileType>Document</FileType>
+    </CustomBuild>
+    <CustomBuild Include="Assets\animData\waon.tka">
+      <FileType>Document</FileType>
+    </CustomBuild>
     <None Include="Assets\lever\larer_01.tks" />
     <CustomBuild Include="Assets\lever\leval00.tks">
       <FileType>Document</FileType>
@@ -935,8 +952,10 @@
     <CustomBuild Include="Assets\modelData\liam.tks">
       <FileType>Document</FileType>
     </CustomBuild>
-    <CustomBuild Include="Assets\lever\levalAI22.tks">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">call $(ProjectDir)..\tkTools\tkContentTools.bat %(Identity) $(OutDir)</ExcludedFromBuild>
+    <CustomBuild Include="Assets\modelData\SimpleCorgi.tks">
+      <FileType>Document</FileType>
+    </CustomBuild>
+    <CustomBuild Include="Assets\modelData\Zonbiliam.tks">
       <FileType>Document</FileType>
     </CustomBuild>
   </ItemGroup>
@@ -952,6 +971,16 @@
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="Assets\sound\car_noise.wav">
+      <FileType>Document</FileType>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="Assets\shader\VolumeLight.fx">
+      <FileType>Document</FileType>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="Assets\shader\monochrome.fx">
       <FileType>Document</FileType>
     </CustomBuild>
   </ItemGroup>

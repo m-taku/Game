@@ -56,6 +56,13 @@ struct PSOutput_RenderGBuffer{
 	float shadow		: SV_Target1;		//シャドウ。
 };
 
+struct PSOutput_VolumeLight
+{
+	float4 frontZ		: SV_Target0;
+	float4 backZ		: SV_Target1;
+	float4 color		: SV_Target2;
+};
+
 /*!
  * @brief	ディレクションライト。
  */

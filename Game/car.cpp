@@ -5,6 +5,7 @@
 #include"Game.h"
 #include"Geizi.h"
 #include"Human.h"
+#include"Stage.h"
 car::car()
 {
 }
@@ -23,11 +24,10 @@ bool car::Start()
 		int ka=_wtoll(loc.GetObjectName(i));
 		No[ka-1] = loc.GetObjectPosition(i);
 	}
-	Game* game=FindGO<Game>("Game");
-	Gaizi = FindGO<Geizi>("Geizi");
-	fa = game->incNo();//Ô‚ª‚Å‚«‚½”‚¾‚¯ƒJƒEƒ“ƒg‚·‚éŠÖ”B
-	saidaiNo = game->Gatpasusaiz(fa);
-	pasu = game->getDate(fa);
+	Stage* stage =FindGO<Stage>("stage");
+	fa = stage->incNo();//Ô‚ª‚Å‚«‚½”‚¾‚¯ƒJƒEƒ“ƒg‚·‚éŠÖ”B
+	saidaiNo = stage->Gatpasusaiz(fa);
+	pasu = stage->getDate(fa);
 	ran = NewGO<AImove>(0, "AImove");
 	m_position = No[pasu[ima++]-1];
 	m_position.y = 10.0f;
@@ -37,10 +37,10 @@ bool car::Start()
 	m_forward.z = m_tekirot.m[2][2];
 	m_forward.y = 0.0f;
 	m_forward.Normalize();
-	for (int u = 0; u < Humans.size(); u++) {
-		Human* ai = Humans[u];
-		HumanLest.push_back(ai);
-	}
+	//for (int u = 0; u < Humans.size(); u++) {
+	//	Human* ai = Humans[u];
+	//	HumanLest.push_back(ai);
+	//}
 
 	//ƒNƒ‰ƒNƒVƒ‡ƒ“‚Ì‰Šú‰»B
 	//m_klaxon = NewGO<prefab::CSoundSource>(0);
@@ -72,25 +72,26 @@ bool car::Start()
 	//rotation.Multiply(rotation);
 	ran->Setkakudo(0.1f);
 	ran->Sethaba(1.0f);
-	if (game->GatNo() >= 23) {//car‚ğ‘‚â‚·‚Æ‚«‚É•Ï‚¦‚éB
-		game->risetteNo();
+	if (stage->GatNo() >= 23) {//car‚ğ‘‚â‚·‚Æ‚«‚É•Ï‚¦‚éB
+		stage->risetteNo();
 	}
 
 
-	
+	m_skinModelData.Load(L"modelData/Vehicle_SUV1.cmo");//ƒvƒŒƒCƒ„[‚ğ‘‚¯
+	m_skinModel.Init(m_skinModelData);
+
+	//m_meshCollider.CreateFromSkinModel(m_skinModel, nullptr);
 	//RigidBodyInfo rbInfo;
 	//rbInfo.pos = m_position;
 	//rbInfo.rot = m_rotation;
 	//rbInfo.collider = &m_meshCollider;
-	//rbInfo.mass= 1000000000.0f;							//¿—Ê‚ğ0‚É‚·‚é‚Æ“®‚©‚È‚¢„‘Ì‚É‚È‚éB
+	//rbInfo.mass= 10.0f;							//¿—Ê‚ğ0‚É‚·‚é‚Æ“®‚©‚È‚¢„‘Ì‚É‚È‚éB
 	//											//”wŒi‚È‚Ç‚Ì“®‚©‚È‚¢ƒIƒuƒWƒFƒNƒg‚Í0‚ğİ’è‚·‚é‚Æ‚æ‚¢B
 	//m_rigidBody.Create(rbInfo);					//ì¬‚µ‚½î•ñ‚ğg‚Á‚Ä„‘Ì‚ğì¬‚·‚éB
 	//PhysicsWorld().AddRigidBody(m_rigidBody);	//ì¬‚µ‚½„‘Ì‚ğ•¨—ƒ[ƒ‹ƒh‚É’Ç‰Á‚·‚éB
-	//stopFlag = false;//stopFlag‚Ì‰Šú‰»B
+	stopFlag = false;//stopFlag‚Ì‰Šú‰»B
 
 #ifdef instansingu_katto
-	m_skinModelData.Load(L"modelData/Vehicle_SUV1.cmo");//ƒvƒŒƒCƒ„[‚ğ‘‚¯
-	m_skinModel.Init(m_skinModelData);
 	m_skinModel.SetShadowCasterFlag(true);
 	m_skinModel.SetShadowReceiverFlag(true);
 #endif 
@@ -101,7 +102,7 @@ bool car::Start()
 void car::Update()
 {
 	klaxonFlag = false;//–ˆ‰ñ‰Šú‰»B
-	if (Gaizi->GatFragu() < 1.0f) {
+	if (Gaizi==nullptr|| Gaizi->GatFragu() < 1.0f) {
 		m_tekirot.MakeRotationFromQuaternion(m_rotation);
 		m_forward.x = m_tekirot.m[2][0];
 		m_forward.y = m_tekirot.m[2][1];
@@ -128,9 +129,7 @@ void car::Update()
 	//ƒNƒ‰ƒNƒVƒ‡ƒ“‚ğ–Â‚ç‚·‚©‚ğ”»’è‚·‚éB
 	if (klaxonFlag == true) {//ƒNƒ‰ƒNƒVƒ‡ƒ“‚ğ–Â‚ç‚µ‚½B
 		SoundklaxonPlay();
-	}
-
-	if (klaxonFlag == false) {
+	}else{
 		stopFlag = false;
 	}
 
@@ -139,11 +138,12 @@ void car::Update()
 	//if (0 >= m_pos.y()) {
 	//	m_pos.setY(0.0f);
 	//}
-	/*m_pos.setX(m_position.x);
-	m_pos.setZ(m_position.z);
-	m_rigidBody.GetBody()->getWorldTransform().setOrigin(m_pos);
-	m_position.Set(m_pos);
-*/
+	//m_pos.setX(m_position.x);
+	//m_pos.setZ(m_position.z);
+	//m_rigidBody.GetBody()->getWorldTransform().setOrigin(m_pos);
+	//m_position.Set(m_pos);
+
+
 #ifdef instansingu_katto
 	m_skinModel.Update(m_position, m_rotation, { 1.0f,1.0f,1.0f });
 #else
@@ -190,7 +190,7 @@ void car::Move()
 	}
 	m_position += m_forward * ((move*speed)*(GameTime().GetFrameDeltaTime()));
 
-	if (400.0f > ran->Getlen()) {
+	if (300.0f > ran->Getlen()) {
 
 		if (ima >= saidaiNo-1) {//¡‚Ìƒ|ƒWƒVƒ‡ƒ“‚ª6‚È‚ç
 						//0‚ÉƒŠƒZƒbƒg‚·‚éB0,1,2,3,4,5‚Ì‡”ÔB
@@ -207,7 +207,7 @@ void car::Move()
 }
 void car::Stop()
 {
-	for (auto& Humanlest : HumanLest) {
+	for (auto& Humanlest : Humans) {
 		if (Humanfrag != true) {
 			CVector3 kyori1 = Humanlest->Getposition() - this->m_position;//©•ª‚Æ‚Ì‹——£‚ğ‹‚ß‚éB
 			float f = kyori1.Length();
@@ -238,7 +238,7 @@ void car::Stop()
 			if (f <= 1000) { //‹——£‚ªÔŠÔ‹——£‚æ‚è‚à’Z‚­‚È‚Á‚Ä‚¢‚½‚ç
 				float kaku1 = acosf(ai->m_forward.Dot(this->m_forward));
 				float degree1 = CMath::RadToDeg(kaku1);
-				if (degree1 <90) {
+				if (degree1 <160) {
 					kyori1.Normalize();
 					kyori1.y = 0.0f;
 					float kaku = acosf(kyori1.Dot(m_forward));//‚Q‚Â‚Ì‚×ƒNƒgƒ‹‚Ì“àÏ‚ÌƒA[ƒNƒRƒTƒCƒ“‚ğ‹‚ß‚éB(ƒ‰ƒWƒAƒ“)
@@ -249,7 +249,7 @@ void car::Stop()
 							if (ai->Humanfrag == true) {
 								move = -0.1;
 
-								siya = 5.0f;
+								siya = 10.0f;
 								Humanfrag = true;
 							}
 
@@ -283,13 +283,13 @@ void car::SoundklaxonPlay()//ƒNƒ‰ƒNƒVƒ‡ƒ“‚ÌƒTƒEƒ“ƒh‚ğ–Â‚ç‚³‚ê‚½‚Éˆê‰ñ‚¾‚¯—¬‚·
 		prefab::CSoundSource*m_klaxon = nullptr;
 		m_klaxon = NewGO<prefab::CSoundSource>(0);
 		m_klaxon->Init("sound/klaxon.wav", true);
+		m_klaxon->Play(false);//‰‚ß‚Ä~‚Ü‚Á‚½‚Ì‚ÅAƒNƒ‰ƒNƒVƒ‡ƒ“‚ğ–Â‚ç‚·B
 		m_klaxon->AddSoundStopCallback([&]() {
 			//ƒTƒEƒ“ƒh‚ª’â~‚µ‚½‚ç‚±‚ÌŠÖ”‚ªŒÄ‚Î‚ê‚é
 			stopFlag = true;//ƒXƒgƒbƒv‚µ‚½B
 		});
 		//ƒTƒEƒ“ƒh‚Ìƒ|ƒWƒVƒ‡ƒ“‚ğİ’è‚·‚éB
 		m_klaxon->SetPosition(m_position);
-		m_klaxon->Play(false);//‰‚ß‚Ä~‚Ü‚Á‚½‚Ì‚ÅAƒNƒ‰ƒNƒVƒ‡ƒ“‚ğ–Â‚ç‚·B
 	//if (Humanfrag == false) {//Ô‚ª“®‚«o‚µ‚½B
 	//	stopFlag = false;//uƒXƒgƒbƒv‚µ‚½v‚Æ‚¢‚¤ƒtƒ‰ƒO‚ğŒ³‚É–ß‚µ‚Ä‚¨‚­B
 	//}

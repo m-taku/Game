@@ -15,9 +15,7 @@ void AI::NPCChase()
 	NPCRunangle(mokuteki);
 	if (lam->Raifu_f == true) {
 		pa = Return;
-		jyunban.erase(jyunban.begin(), jyunban.end());
-		keiro.tansa(m_position, retu_position, &jyunban, Leftfrag);
-		escapecaku = 30.0f;
+		search(retu_position);
 		Chasefrag = 0;
 		m_speed = 1.0f;
 		lam = nullptr;
@@ -33,6 +31,7 @@ void AI::NPCChase()
 			atakkukyori = 200.0f;
 		}
 		else {
+		//	Chasepas(lam->m_position);
 			HitFlag = false;
 			furag = 0;
 			m_speed = 4.0f;
@@ -45,61 +44,41 @@ void AI::NPCChase()
 		}
 	}
 }
-void AI::NPCZombie_Chase()
+
+void AI::AI_Animation()//AIのアニメーション制御
 {
-	float len = GetKyori(m_position, Tansaku->m_position);
-	if (len > 2100.0f || Tansaku->Raifu_f == true) {//他のNPCを見失った(距離が2100以上あいた)、あるいは死んだら
-													//元の位置に戻る。
-		jyunban.erase(jyunban.begin(), jyunban.end());
-		keiro.tansa(m_position, retu_position, &jyunban, Leftfrag);
-		Tansaku = nullptr; //検索結果を初期化する。
-		kaiten = false;
-		angle = 0;
-		HitFlag = false;
-		escapecaku = 30.0f;
-		nearestpas();
-		pa = Zombie_Normal;
+	/*if (m_speed <= 1.0) {
+	Loop_Walk_Animation();
 	}
-	else {//NPCを見失っておらず、見つけていたら
-		float kou = VectorAngleDeg((Tansaku->m_forward));
-		CVector3 n = Tansaku->m_position - m_position;
-		NPCRunangle(n);
-		if (kou <= 120) {
-			if (len < atakkukyori) {//NPCに追いついたら
-									//攻撃する(確実に当たる仕様)。
-				HitFlag = true;//「NPCに攻撃を当てた」というフラグをたてる。
-				if (Tansaku->muteki_Flag == false) {
-					Tansaku->NPCHP -= 40.0f;
-				}
+	if (m_speed > 1.0) {
+	Loop_Run_Animation();
+	}*/
+	if (GetZonbi() == false) {
+		if (HitFlag == true)
+		{
+			NPC_Attack_Animation();
 
-				atakkukyori = 200.0f;
-				//NPC_Attack_Animation();//攻撃アニメーションを流す。
-			}
-			else {
-				HitFlag = false;
-				//n.y = 0.0f;
-				//n.Normalize();
-				//m_movespeed = n * (m_speed*200.0 + mobe);
-				//m_movespeed.y += gravity;
-				//m_position = A_charaCon.Execute(GameTime().GetFrameDeltaTime(), m_movespeed);//移動
-
-				atakkukyori = 100.0f;
-				/////////////////////////////////
-				//市民NPCを追跡する処理。
-				/////////////////////////////////
-			}
 		}
-		else {
-			Pboneforward = Tansaku->m_forward;
-			CVector3 rotAxis;
-			rotAxis.Cross(this->m_forward, Pboneforward);
-			rotAxis.Normalize();
-			angle += 3.0f;
-			Crot.SetRotationDeg(rotAxis, angle);
-			Crot.Multiply(Pboneforward);
-			CVector3 baka = (Pboneforward * len) + Tansaku->m_position;
-			baka = baka - m_position;
-			m_position = A_charaCon.Execute(GameTime().GetFrameDeltaTime(), baka);
+		else if (m_speed < 0.5f) {
+			Idle_Animation();
+		}
+		else if (m_speed <= 1.0) {
+			Loop_Walk_Animation();
+		}
+		else if (m_speed > 1.0) {
+			Loop_Run_Animation();
+		}
+
+	}
+	else {
+		if (ziko_frag==true) {
+			Zombie_Ziko_Animation();
+		}
+		else if (HitFlag == true) {
+			NPC_Attack_Animation();
+		}
+		else if (m_speed >= 0.5f) {
+			Zombie_Walk_Animation();
 		}
 	}
 }
@@ -113,14 +92,28 @@ void AI::Loop_Walk_Animation()//キャラクターが歩き続ける時のアニメーションの処理
 {
 	ai_NPCAnimation.Play(shiminwalk, 0.7);
 }
-
-
 void AI::Loop_Run_Animation()//キャラクターが走り続ける時のアニメーションの処理。
 {
 	ai_NPCAnimation.Play(shiminrun, 0.7);
 }
 
+void AI::NPC_Attack_Animation()//ゾンビ化キャラクターが攻撃している時のアニメーションの処理。
+{
+	ai_NPCAnimation.Play(shiminattack, 0.2);
+}
+
+
 void AI::Zombie_Walk_Animation()
 {
 	ai_NPCAnimation.Play(Zonbiwalk, 0.7);
+}
+void AI::Zombie_Ziko_Animation()
+{
+	ai_NPCAnimation.Play(Zonbi_zico, 0.7);
+	if (!ai_NPCAnimation.IsPlaying()) {
+		ziko_frag = false;
+		taime = 0;
+		nearestpas();
+		pa = Zombie_Normal;
+	}
 }

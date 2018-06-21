@@ -11,6 +11,8 @@
 namespace tkEngine{
 	CSkinModel::CSkinModel()
 	{
+		isZPrePass = true;
+		isGBuffer = true;
 	}
 	CSkinModel::~CSkinModel()
 	{
@@ -96,8 +98,16 @@ namespace tkEngine{
 	void CSkinModel::Update(const CVector3& trans, const CQuaternion& rot, const CVector3& scale, EnFbxUpAxis enUpdateAxis)
 	{		
 		UpdateWorldMatrix(trans, rot, scale, enUpdateAxis);
-		GraphicsEngine().GetZPrepass().AddSkinModel(this);
-		GraphicsEngine().GetGBufferRender().AddSkinModel(this);
+
+		if (isZPrePass)
+		{
+			GraphicsEngine().GetZPrepass().AddSkinModel(this);
+		}
+		if (isGBuffer)
+		{
+			GraphicsEngine().GetGBufferRender().AddSkinModel(this);
+		}
+
 		if (m_isShadowCaster) {
 			GraphicsEngine().GetShadowMap().Entry(&m_shadowCaster);
 		}

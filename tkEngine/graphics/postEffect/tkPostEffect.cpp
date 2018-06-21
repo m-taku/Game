@@ -4,6 +4,7 @@
 
 #include "tkEngine/tkEnginePreCompile.h"
 #include "tkEngine/graphics/postEffect/tkPostEffect.h"
+#include "tkEngine/graphics/tkPresetRenderState.h"
 
 namespace tkEngine{
 	namespace {
@@ -30,11 +31,46 @@ namespace tkEngine{
 		m_tonemap.Init(config);
 		m_bloom.Init(config);
 		m_dithering.Init(config);
+		m_monochrome.Init(config);
 		InitFullScreenQuadPrimitive();
 		InitFinalRenderTarget();
+		psShader.Load("shader/VolumeLight.fx", "PSMain", CShader::EnType::PS);
+		vsShader.Load("shader/VolumeLight.fx", "VSMain", CShader::EnType::VS);
+		struct CB
+		{
+			CMatrix mat;
+			CVector4 color;
+		};
+		CB cb;
+		cb.mat = CMatrix::Identity;
+		cb.color = { 1.0f, 1.0f, 1.0f, 1.0f };
+
+		constantBuffer.Create(&cb, sizeof(CB));
 	}
 	void CPostEffect::Render(CRenderContext& rc)
 	{
+		CRenderTarget* targets[] = { &GraphicsEngine().GetMainRenderTarget() };
+		BeginGPUEvent(L"enRenderStep_Render3DModelToScene");
+		rc.OMSetRenderTargets(1, targets);
+		rc.OMSetDepthStencilState(DepthStencilState::SceneRender, 0);
+		rc.RSSetState(RasterizerState::sceneRender);
+		float blendFactor[4] = { 0.0f };
+		rc.OMSetBlendState(AlphaBlendState::add, 0, 0xFFFFFFFF);
+
+		rc.RSSetViewport(0.0f, 0.0f, (float)GraphicsEngine().GetFrameBufferWidth(), (float)GraphicsEngine().GetFrameBufferHeight());
+		rc.PSSetShaderResource(3, GraphicsEngine().GetZPrepass().GetDepthTextureSRV());
+		for (int i = 0;i < 3;i++)
+		{
+			rc.PSSetShaderResource(i, GraphicsEngine().GetVolumeLightTarget()[i].GetRenderTargetSRV());
+		}
+		rc.VSSetShader(vsShader);
+		rc.PSSetShader(psShader);
+		rc.IASetInputLayout(vsShader.GetInputLayout());
+		rc.VSSetConstantBuffer(0, constantBuffer);
+		rc.PSSetConstantBuffer(0, constantBuffer);
+		DrawFullScreenQuad(rc);
+		EndGPUEvent();
+		rc.OMSetBlendState(AlphaBlendState::disable, 0, 0xFFFFFFFF);
 		//メインレンダリングターゲットの内容をリゾルブ。
 		GraphicsEngine().GetMainRenderTarget().ResovleMSAATexture(rc);
 		m_tonemap.Render(rc, this);
@@ -51,10 +87,11 @@ namespace tkEngine{
 			GetFinalRenderTarget().GetRenderTargetTextureFormat()
 		);
 
+
 		m_bloom.Render(rc, this);
 		m_fxaa.Render(rc, this);
 		m_dithering.Render(rc, this);
-		//
+		m_monochrome.Render(rc, this);
 		GraphicsEngine().EndPostEffect(rc);
 	}
 	void CPostEffect::InitFullScreenQuadPrimitive()

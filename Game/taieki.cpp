@@ -28,7 +28,7 @@ bool taieki::Start()
 	CF = MainCamera().GetForward();
 	CF.Normalize();
 	tpos = player->GetPosition();//体液はプレイヤーから出されるので、体液の座標はプレイヤーと同じ座標にする。
-	tpos.y += 160.0f;//体液を頭から出すために高さを調整。
+	tpos.y += 120.0f;//体液を頭から出すために高さを調整。
 
 	PS = player->GetMoveSpeed();//プレイヤーの移動速度を格納。
 
@@ -105,7 +105,7 @@ void taieki::Update()
 		}
 	}
 	else {
-		tpos += (CF * 80.0f) + PS / 25.0f;
+		tpos += (CF * 2000.0f*GameTime().GetFrameDeltaTime()) + PS * GameTime().GetFrameDeltaTime();
 		TS.y -= 50.0f * GameTime().GetFrameDeltaTime();
 		tpos.y += TS.y;
 		effect->SetPosition(tpos);
