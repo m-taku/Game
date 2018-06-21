@@ -55,10 +55,8 @@ void camera::Update()
 	//カメラのニアクリップとファークリップを設定する。
 	MainCamera().SetTarget(target);
 	MainCamera().SetNear(1.0f);
-	//MainCamera().SetNear(10.0f);
 	MainCamera().SetUp(m_player->Getboneup());
 	MainCamera().SetFar(50000.0f);
-	//MainCamera().SetFar(1000.0f);
 	MainCamera().SetPosition(Ppos);
 	MainCamera().Update();
 	GraphicsEngine().GetMonochrome();

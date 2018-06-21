@@ -13,7 +13,7 @@
 #include "tkEngine/resource/tkShaderResources.h"
 #include "tkEngine/graphics/effect/tkEffectEngine.h"
 #include "tkEngine/resource/tkDirectXModelResource.h"
-#include "tkEngine/light/tkVolumeLight.h"
+//#include "tkEngine/light/tkVolumeLight.h"
 
 namespace tkEngine{
 	

@@ -104,7 +104,7 @@ void Player::Update()
 {
 	if (game != false) {
 		//m_animation.Play(idle,0.2);
-		NewGO<prefab::CVolumeLight>(0)->Init(&m_position);
+		// êÊîy //NewGO<prefab::CVolumeLight>(0)->Init(&m_position);
 
 		m_moveSpeed.z = 0.0f;
 		m_moveSpeed.x = 0.0f;
