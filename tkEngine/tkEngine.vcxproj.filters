@@ -374,6 +374,12 @@
     <ClInclude Include="math\tkBox.h">
       <Filter>Source Files\math</Filter>
     </ClInclude>
+    <ClInclude Include="light\tkVolumeLight.h">
+      <Filter>Source Files\light</Filter>
+    </ClInclude>
+    <ClInclude Include="graphics\postEffect\tkMonochromeFilter.h">
+      <Filter>Source Files\graphics\postEffect</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="gameObject\tkTransform.cpp">
@@ -600,6 +606,12 @@
     </ClCompile>
     <ClCompile Include="math\tkBox.cpp">
       <Filter>Source Files\math</Filter>
+    </ClCompile>
+    <ClCompile Include="light\tkVolumeLight.cpp">
+      <Filter>Source Files\light</Filter>
+    </ClCompile>
+    <ClCompile Include="graphics\postEffect\tkMonochromeFilter.cpp">
+      <Filter>Source Files\graphics\postEffect</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -981,7 +981,7 @@
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
-    <CustomBuild Include="Assets\sound\Sudden_braking.wav">
+    <CustomBuild Include="Assets\shader\monochrome.fx">
       <FileType>Document</FileType>
     </CustomBuild>
   </ItemGroup>

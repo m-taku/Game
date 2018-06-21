@@ -8,6 +8,7 @@
 #include "tkEngine/gameObject/tkGameObject.h"
 #include "tkEngine/util/tkUtil.h"
 #include "tkEngine/gameObject/tkTransform.h"
+#include "tkEngine/graphics/tkPrimitive.h"
 
 namespace tkEngine{
 	struct SRenderContextMap;
@@ -21,6 +22,7 @@ namespace tkEngine{
 			m_gameObjectPriorityMax(0)
 		{
 		}
+
 		~CGameObjectManager()
 		{
 		}
