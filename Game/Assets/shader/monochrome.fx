@@ -32,6 +32,6 @@ float4 PSMain( PSInput In ) : SV_Target0
 	srcColor.x = len;
 	srcColor.y = len;
 	srcColor.z = len;
-	float4 color = dstColor * (1.0f - rate) + srcColor * rate;
+	float4 color = dstColor * max(0.0f, (1.0f - rate)) + srcColor * min(1.0f, rate);
 	return  color;
 }
