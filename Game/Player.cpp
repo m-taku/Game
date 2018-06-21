@@ -56,8 +56,8 @@ bool Player::Start()
 		animnum
 	);
 	m_skinModel.SetShadowCasterFlag(true);
-	//m_position.x = -2910.12085;
-	//m_position.z = 3936.80713;
+	m_position.x = -2910.12085;
+	m_position.z = 3936.80713;
 	//キャラクターコントローラーを初期化。
 	m_charaCon.Init(
 		30.0,			//半径。 
@@ -137,7 +137,7 @@ void Player::Update()
 		}
 
 		/*rotX += rStick_y * 5;*/
-		rotY = rStick_x * 5;
+		rotY = rStick_x * 3;
 		/*qBias.SetRotationDeg(CVector3::AxisX, rotX);*/
 		qBias1.SetRotationDeg(CVector3::AxisY, rotY);
 		m_rotation.Multiply(qBias1);

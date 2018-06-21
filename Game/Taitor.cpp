@@ -24,6 +24,7 @@ bool Taitor::Start()
 	BasisVector = { 0.0f,5000.0f,5000.0f };
 	//	fase->StartFadeOut();
 	furag = steat;
+	fase->StartFadeIn();
 	return true;
 }
 void Taitor::Update()
@@ -79,8 +80,7 @@ void Taitor::Update()
 		if (Pad(0).IsTrigger(enButtonA)) {
 			//	fase->StartFadeOut();
 			furag = push;
-			NewGO<Game>(0, "Game");
-			DeleteGO(this);
+			
 		}
 		break;
 	case push:
