@@ -452,6 +452,9 @@
     </CustomBuild>
     <CustomBuild Include="Assets\lever\levalAI22.tks" />
     <CustomBuild Include="Assets\sound\horror_zone1.wav" />
+    <CustomBuild Include="Assets\sound\Sudden_braking.wav">
+      <Filter>Assets\sound</Filter>
+    </CustomBuild>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\modelData\livingbuildings.png">

@@ -29,7 +29,7 @@ public:
 		Gaizi = naka;
 	}
 private:
-
+	float distance = 600.0f;
 	//CMeshCollider m_meshCollider;	//メッシュコライダー。
 	//CRigidBody m_rigidBody;			//剛体
 	//CPhysicsStaticObject m_physicsStaticObject;

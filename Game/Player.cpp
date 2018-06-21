@@ -6,8 +6,8 @@
 #include"Geizi.h"
 #include"car.h"
 #define counter 10
-#define taime 20*60
-#include <string>
+#define taime 15*60
+#include<string>
 #include<codecvt>
 
 
@@ -228,7 +228,7 @@ void Player::Update()
 		{
 			m_animation.Play(walk, 0.2f);
 		}
-		if (muteki_Flag== false) {
+		if (muteki_Flag == false) {
 			FindGameObjectsWithTag(20, [&](IGameObject* go) {
 				if (go != this) {            //自分からの距離を計測するため、検索結果から自分を除外する。
 					car* ai = (car*)go;
@@ -240,9 +240,8 @@ void Player::Update()
 						float degree = CMath::RadToDeg(kaku);
 						if (degree <= 45) {
 							game = false;
-							ai->SoundklaxonPlay();
-							m_moveSpeed = (m_forward*-1 * m_moveSpeed.Length()) + ai->Getforward()*1000.0f;
-							m_moveSpeed.y = 600.0f;
+							carpoint = ai;
+							carpoint->SoundklaxonPlay();
 							zikofrag = true;
 							muteki_Flag = true;
 						}
@@ -262,14 +261,24 @@ void Player::Update()
 	m_position = m_charaCon.Execute(GameTime().GetFrameDeltaTime(), m_moveSpeed);//移動。
 	if (zikofrag == true)
 	{
-		m_animation.Play(ziko, 0.4f);
-		if (!m_animation.IsPlaying()) {
-			zikofrag = false;	
-			game = true;
+		if ((carpoint->Getposition() - m_position).Length() <= 500&& collision_f== false)
+		{
+			collision_f = true;
+			m_moveSpeed = (m_forward*-1 * m_moveSpeed.Length()) + carpoint->Getforward()*1000.0f;
+			m_moveSpeed.y = 600.0f;
 		}
-		if (m_charaCon.IsOnGround()) {
-			m_moveSpeed = CVector3::Zero;
-
+		else {
+			if (collision_f == true) {
+				m_animation.Play(ziko, 0.4f);
+				if (!m_animation.IsPlaying()) {
+					zikofrag = false;
+					collision_f = false;
+					game = true;
+				}
+				if (m_charaCon.IsOnGround()) {
+					m_moveSpeed = CVector3::Zero;
+				}
+			}
 		}
 	}
 	Setposition(m_position);

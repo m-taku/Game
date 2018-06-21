@@ -100,6 +100,7 @@ private:
 		ziko,
 		animnum
 	};
+	car* carpoint;
 	CAnimation m_animation;
 	CShaderResourceView zondi;
 	CAnimationClip m_animclip[animnum];
@@ -117,6 +118,7 @@ private:
 	float Log_lStick_y = 0.0f;
 	int muteki_count = 0;//無敵時間のカウント。
 	bool  muteki_Flag = false;
+	bool collision_f = false;
 	//CVector3 m_moveSpeed_log = CVector3::Zero;//moveSpeedを保持する。
 	bool X_button_Flag = false;//Xボタンが押されたかどうかを保持するフラグ。
 };
