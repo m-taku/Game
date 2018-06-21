@@ -6,6 +6,7 @@
 #include"Geizi.h"
 #include"car.h"
 #define counter 10
+#define taime 20*60
 #include <string>
 #include<codecvt>
 
@@ -227,25 +228,35 @@ void Player::Update()
 		{
 			m_animation.Play(walk, 0.2f);
 		}
-		FindGameObjectsWithTag(20, [&](IGameObject* go) {
-			if (go != this) {            //自分からの距離を計測するため、検索結果から自分を除外する。
-				car* ai = (car*)go;
-				CVector3 kyori1 = this->m_position - ai->Getposition();//自分との距離を求める。
-				float f = kyori1.Length();
-				if (f <= 600) { //距離が車間距離よりも短くなっていたら
-					kyori1.Normalize();
-					float kaku = acosf(kyori1.Dot(ai->Getforward()));//２つのべクトルの内積のアークコサインを求める。(ラジアン)
-					float degree = CMath::RadToDeg(kaku);
-					if (degree <= 45) {
-						game = false;
-						zikocar = ai;
-						m_moveSpeed = (m_forward*-1*m_moveSpeed.Length())+zikocar->Getforward()*1000.0f;
-						m_moveSpeed.y = 600.0f;
-						zikofrag = true;
+		if (muteki_Flag== false) {
+			FindGameObjectsWithTag(20, [&](IGameObject* go) {
+				if (go != this) {            //自分からの距離を計測するため、検索結果から自分を除外する。
+					car* ai = (car*)go;
+					CVector3 kyori1 = this->m_position - ai->Getposition();//自分との距離を求める。
+					float f = kyori1.Length();
+					if (f <= 600) { //距離が車間距離よりも短くなっていたら
+						kyori1.Normalize();
+						float kaku = acosf(kyori1.Dot(ai->Getforward()));//２つのべクトルの内積のアークコサインを求める。(ラジアン)
+						float degree = CMath::RadToDeg(kaku);
+						if (degree <= 45) {
+							game = false;
+							ai->SoundklaxonPlay();
+							m_moveSpeed = (m_forward*-1 * m_moveSpeed.Length()) + ai->Getforward()*1000.0f;
+							m_moveSpeed.y = 600.0f;
+							zikofrag = true;
+							muteki_Flag = true;
+						}
 					}
 				}
-			}
-		});
+			});
+		}
+	}
+	if (muteki_Flag == true) {
+		muteki_count++;
+		if (muteki_count > taime) {//無敵化してから5秒が経過したら
+			muteki_Flag = false;
+			muteki_count = 0;
+		}
 	}
 	m_moveSpeed.y -= 980.0f * GameTime().GetFrameDeltaTime();
 	m_position = m_charaCon.Execute(GameTime().GetFrameDeltaTime(), m_moveSpeed);//移動。
@@ -253,13 +264,12 @@ void Player::Update()
 	{
 		m_animation.Play(ziko, 0.4f);
 		if (!m_animation.IsPlaying()) {
-			zikofrag = false;
-		//	game = true;	
+			zikofrag = false;	
 			game = true;
 		}
 		if (m_charaCon.IsOnGround()) {
 			m_moveSpeed = CVector3::Zero;
-		
+
 		}
 	}
 	Setposition(m_position);

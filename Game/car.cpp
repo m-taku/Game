@@ -41,13 +41,13 @@ bool car::Start()
 	//	Human* ai = Humans[u];
 	//	HumanLest.push_back(ai);
 	//}
-	m_noise = NewGO<prefab::CSoundSource>(0);
-	m_noise->Init("sound/car_noise.wav", true);
-	m_noise->AddSoundStopCallback([&]() {
-		//サウンドが停止したらこの関数が呼ばれる
-		
-	});
-	
+	//@todo for debug	m_noise = NewGO<prefab::CSoundSource>(0);
+	//m_noise->Init("sound/car_noise.wav", true);
+	//m_noise->AddSoundStopCallback([&]() {
+	//	//サウンドが停止したらこの関数が呼ばれる
+	//	
+	//});
+	//
 	//m_noise->Play(false);//初めて止まったので、クラクションを鳴らす。
 
 
@@ -125,17 +125,17 @@ void car::Update()
 		//if (frag <= 0) {
 		Move();
 		//}
-
-		if (move != 0.0f) {//動いていたら
-			if(m_noise->Get3DSoundFlag() ==true)
-			m_noise->Play(true);//車の走行音を流す。
-		}
-		else {//止まっていたら
-			m_noise->Stop();//車の走行音を止める。
-		}
+//エンジン音　とりあえず消した
+		//if (move != 0.0f) {//動いていたら
+		//	if(m_noise->Get3DSoundFlag() ==true)
+		//	m_noise->Play(true);//車の走行音を流す。
+		//}
+		//else {//止まっていたら
+		//	m_noise->Stop();//車の走行音を止める。
+		//}
 		//クラクションを鳴らすかを判定する。
 		if (klaxonFlag == true) {//クラクションを鳴らした。
-			SoundklaxonPlay();
+			//SoundklaxonPlay();
 		}
 
 		if (klaxonFlag == false) {
@@ -153,7 +153,7 @@ void car::Update()
 	}
 	//クラクションを鳴らすかを判定する。
 	if (klaxonFlag == true) {//クラクションを鳴らした。
-		SoundklaxonPlay();
+//@todo for debug		SoundklaxonPlay();
 	}else{
 		stopFlag = false;
 	}
@@ -247,7 +247,7 @@ void car::Stop()
 						//この一連の処理を続けているときは止まっている。
 						move = -0.1;
 						Humanfrag = true;
-						klaxonFlag = true;//クラクションを鳴らす。止まり続ける限りtrueのままになる。
+						//tudo for debg klaxonFlag = true;//クラクションを鳴らす。止まり続ける限りtrueのままになる。
 					}
 				}
 			}

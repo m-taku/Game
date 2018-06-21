@@ -410,10 +410,10 @@ void AI::NPCDeath()//死亡、消滅処理。
 		else {
 			game->SatLSaizon(iNo);
 		}
-		/*CQuaternion qBias1;
+		CQuaternion qBias1;
 		qBias1.SetRotationDeg(CVector3::AxisX, 10.0f);
-		m_rotation.Multiply(qBias1);*/
-		DeleteGO(this);//自己消滅。
+		m_rotation.Multiply(qBias1);
+		//DeleteGO(this);//自己消滅。
 	}
 }
 
@@ -487,7 +487,6 @@ void AI::Update()
 	if (Gaizi != nullptr) {
 		if (Gaizi->GatFragu() >= 1.0f&& ForceFlag == false) {//特殊部隊が出現したら、
 			ForceFlag = true;//出現フラグを立てる。
-			tekip = FindGO<tekihei>("tekihei");
 			if (GetZonbi() != true)
 			{//自分がゾンビではなかったら
 				search(game->pasu[Leftfrag].m_pointList[0]);

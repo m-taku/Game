@@ -88,6 +88,10 @@ public:
 	{
 		return m_position;
 	}
+	void Gettekihei(tekihei* pointa)
+	{
+		tekip = pointa;
+	}
 	CVector3 Getforward()
 	{
 		return m_forward;
