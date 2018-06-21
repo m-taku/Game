@@ -14,7 +14,7 @@ public:
 	{
 		m_Render = &ka;
 	}
-	void CarSound();//Carクラスのサウンドを扱う関数。
+	void CarSound_SetPosition();//Carクラスのサウンドの座標を扱う関数。
 	void SoundklaxonPlay();//クラクションを鳴らす処理。
 	CVector3 Getposition()
 	{
@@ -30,9 +30,9 @@ public:
 	}
 private:
 
-	CMeshCollider m_meshCollider;	//メッシュコライダー。
-	CRigidBody m_rigidBody;			//剛体
-	CPhysicsStaticObject m_physicsStaticObject;
+	//CMeshCollider m_meshCollider;	//メッシュコライダー。
+	//CRigidBody m_rigidBody;			//剛体
+	//CPhysicsStaticObject m_physicsStaticObject;
 	void Move();
 	CSkinModel m_skinModel;					//スキンモデル。
 	CSkinModelData m_skinModelData;			//スキンモデルデータ。
@@ -59,5 +59,6 @@ private:
 	bool stopFlag = false;//今止まっているかを示すフラグこのフラグがtrueのときは、前のフレームで既に止まっている。
 	bool loodflag = false;//ロードしたかを示すフラグ。
 	bool klaxonFlag = false;//クラクションを鳴らすことを示すフラグ。
+	prefab::CSoundSource*m_noise = nullptr;
 };
 

@@ -9,7 +9,6 @@
 
 //ユーザー固有ヘッダ。
 #include "user.h"
-
 #include "tkEngine/tkEnginePreCompile.h"
 #include "tkEngine/light/tkVolumeLight.h"
 #include "tkEngine/graphics/postEffect/tkMonochromeFilter.h"

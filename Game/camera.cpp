@@ -26,7 +26,7 @@ void camera::Update()
 	
 	if (m_player != NULL){
 		Pboneforward = m_player->Getboneforward();
-		cameradeg += rStick_y*(-5.0f);//こ↑こ↓を変えることでカメラ操作の上下を変えられる。
+		cameradeg += rStick_y*(-3.0f);//こ↑こ↓を変えることでカメラ操作の上下を変えられる。
 		Crot.SetRotationDeg(m_player->Getboneright(), cameradeg);
 		Crot.Multiply(Pboneforward);
 		position_of_player = m_player->Getbonepos();

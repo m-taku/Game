@@ -20,12 +20,26 @@ Game::Game()
 {
 	//ここに基本的な発生を描く
 	gaizi = NewGO<Geizi>(1, "Geizi");
+
 	player = FindGO<Player>("Player");
-	player->SetGame();
+
+	player->trueGame();
+
 //	pasu2.clear();
-	Car = FindGO<car>("car");
-	Car->GetGeizi(gaizi);
+	stage = FindGO<Stage>("stage");
+	auto car = stage->getcarv();
+	for (auto& na : car) {
+		na->GetGeizi(gaizi);
+	}
 	camera1 = NewGO<camera>(0, "camera");
+
+	/*swprintf_s(moveFilePath, L"lever/matilevel%d0%d.tks", 0, 2);
+	m_level[0].Build(moveFilePath);
+	swprintf_s(moveFilePath, L"lever/matilevel%d0%d.tks", 1, 1);
+	m_level[1].Build(moveFilePath);
+	swprintf_s(moveFilePath, L"lever/matilevel%d0%d.tks", 2, 1);
+	m_level[2].Build(moveFilePath);*/
+
 	//m_level[1].X = 5.0f;
 	//m_level[1].Z=  5.0f;
 	//m_level[1].Build(L"lever/leval01.tks");
@@ -46,11 +60,12 @@ void Game::OnDestroy()
 	//ここで最終的にＤｅｌｅｔｅＧＯを絶対しきる。	
 	DeleteGO(FindGO<AI_manager>("AI_manager"));
 	DeleteGO(gaizi);
-	DeleteGO(Car);
+	stage->Car_delete();
 	DeleteGO(camera1);
-	DeleteGO(FindGO<item>("item"));
+//	DeleteGO(FindGO<item>("item"));
 	//再起動（タイトル表示）
 	NewGO<Taitor>(0, "Taitor");
+	stage->Car_create();
 	NewGO<Player>(0, "Player");
 	NewGO<AI_manager>(0, "AI_manager");
 }
