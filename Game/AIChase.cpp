@@ -31,7 +31,7 @@ void AI::NPCChase()
 			atakkukyori = 200.0f;
 		}
 		else {
-		//	Chasepas(lam->m_position);
+			Chasepas(lam->m_position);
 			HitFlag = false;
 			furag = 0;
 			m_speed = 4.0f;

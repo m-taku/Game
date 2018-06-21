@@ -10,7 +10,6 @@ Dog::Dog()
 Dog::~Dog()
 {
 }
-
 bool Dog::Start()
 {
 	m_skinModelData.Load(L"modelData/SimpleCorgi.cmo");//犬を書け
@@ -19,7 +18,6 @@ bool Dog::Start()
 	//tkaファイルの読み込み。6種類。
 	ai_NPCAnimationClips[waon].Load(L"animData/waon.tka");//仮。後で入れろ。
 	ai_NPCAnimationClips[waon].SetLoopFlag(true);
-
 	ai_NPCAnimation.Init(
 		m_skinModel,			//アニメーションを流すスキンモデル。
 								//これでアニメーションとスキンモデルが関連付けされる。
@@ -28,7 +26,5 @@ bool Dog::Start()
 		animnum					//アニメーションクリップの数。
 	);
 	AI::Start();
-
 	return true;
 }
-

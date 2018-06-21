@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "tekihei.h"
+#include"AI.h"
 #include"Player.h"
 #include"math.h"
 #include"Geizi.h"
@@ -17,6 +18,10 @@ tekihei::~tekihei()
 		if (tamaEF[i] != NULL) {
 			DeleteGO(tamaEF[i]);
 		}
+	}
+	for (auto human : Humans) {
+		AI* pointa = (AI*)human;
+		pointa->Gettekihei(NULL);
 	}
 }
 
@@ -147,6 +152,10 @@ bool tekihei::Start()
 	
 	gaizi->SatFragu();//フラグをセットして、これ以上敵兵のインスタンスが生成されないようにする。
 	Pp = FindGO<Player>("Player");//プレイヤーのインスタンスを代入。
+	for (auto human : Humans) {
+		AI* pointa = (AI*)human;
+		pointa->Gettekihei(this);
+	}
 	return true;
 }
 float tekihei::length(CVector3 vector)

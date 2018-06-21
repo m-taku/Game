@@ -4,6 +4,7 @@
 #include "tkEngine/graphics/effect/tkEffect.h"
 #define tama 20
 class taieki;
+class car;
 class Player : public Human
 {
 public:
@@ -12,9 +13,9 @@ public:
 	bool Start();
 	void Update();
 	void Render(CRenderContext& rc);
-	CVector3& GetPosition()
+	CVector3 GetPosition()
 	{
-		return Getposition();
+		return m_position;
 	}
 	CVector3& Getboneforward()
 	{
@@ -25,9 +26,14 @@ public:
 	{
 		return bonepos;
 	}
-	void SetGame()
+	void trueGame()
 	{
 		game = true;
+	}
+	void falseGame()
+	{
+		game = false;
+
 	}
 	CVector3& GetFoeward()
 	{
@@ -86,12 +92,12 @@ private:
 	int bonenum = 0;
 	int boneNo = 0;
 	CVector3 bonepos = CVector3::Zero;
-	
+	bool zikofrag = false;
 	enum animation {
 		idle,
 		walk,
 		attack,
-		attack2,
+		ziko,
 		animnum
 	};
 	CAnimation m_animation;
@@ -107,7 +113,10 @@ private:
 	bool game = false;
 	//////////T.M////////////////////////////
 	float Log_lStick_x = 0.0f;
+
 	float Log_lStick_y = 0.0f;
+	int muteki_count = 0;//無敵時間のカウント。
+	bool  muteki_Flag = false;
 	//CVector3 m_moveSpeed_log = CVector3::Zero;//moveSpeedを保持する。
 	bool X_button_Flag = false;//Xボタンが押されたかどうかを保持するフラグ。
 };
