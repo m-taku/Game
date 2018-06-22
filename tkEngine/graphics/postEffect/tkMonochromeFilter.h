@@ -36,5 +36,6 @@ namespace tkEngine {
 		CShader			m_vsShader;							//!<頂点シェーダー。
 		CShader			m_psShader;							//!<最終合成シェーダー。
 		CConstantBuffer	m_cbRate;
+		CShaderResourceView m_noiseTexture;
 	};
 }

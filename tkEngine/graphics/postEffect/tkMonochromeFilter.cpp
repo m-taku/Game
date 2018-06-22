@@ -11,10 +11,11 @@ namespace tkEngine {
 	}
 	void CMonochromeFilter::Init(const SGraphicsConfig& config)
 	{
-		m_rate = 1.0f;
+		m_rate = 0.0f;
 		m_cbRate.Create(&m_rate, sizeof(float));
 		m_psShader.Load("shader/monochrome.fx", "PSMain", CShader::EnType::PS);
 		m_vsShader.Load("shader/monochrome.fx", "VSMain", CShader::EnType::VS);
+		m_noiseTexture.CreateFromDDSTextureFromFile(L"sprite/noise.dds");
 	}
 	void CMonochromeFilter::Render(CRenderContext& rc, CPostEffect* postEffect)
 	{
@@ -26,7 +27,6 @@ namespace tkEngine {
 		CRenderTarget& sceneSRV = postEffect->GetFinalRenderTarget();
 		postEffect->ToggleFinalRenderTarget();
 		CRenderTarget& rt = postEffect->GetFinalRenderTarget();
-
 		CRenderTarget* rts[] = {
 			&rt
 		};
@@ -36,6 +36,7 @@ namespace tkEngine {
 		rc.OMSetBlendState(AlphaBlendState::disable, 0, 0xFFFFFFFF);
 		rc.OMSetDepthStencilState(DepthStencilState::disable, 0);
 		rc.PSSetShaderResource(0, sceneSRV.GetRenderTargetSRV());
+		rc.PSSetShaderResource(1, m_noiseTexture);
 		rc.PSSetConstantBuffer(0, m_cbRate);
 		rc.VSSetShader(m_vsShader);
 		rc.PSSetShader(m_psShader);

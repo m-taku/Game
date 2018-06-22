@@ -15,6 +15,7 @@ struct PSInput{
 };
 
 Texture2D<float4> colorTexture : register(t0);	//カラーテクスチャ。
+Texture2D<float4> noiseTexture : register(t1);	//ノイズテクスチャ。
 sampler Sampler : register(s0);
 
 PSInput VSMain(VSInput In) 
@@ -32,6 +33,10 @@ float4 PSMain( PSInput In ) : SV_Target0
 	srcColor.x = len;
 	srcColor.y = len;
 	srcColor.z = len;
-	float4 color = dstColor * max(0.0f, (1.0f - rate)) + srcColor * min(1.0f, rate);
+	float blendRate = 0.1f;
+	float4 noiseColor = noiseTexture.Sample(Sampler, In.uv);
+	srcColor = srcColor * (1.0f - blendRate) + noiseColor * blendRate;
+	float4 color = dstColor * clamp((1.0f - rate), 0.0f, 1.0f) + srcColor * clamp(rate, 0.0f, 1.0f);
+	color.w = 1.0f;
 	return  color;
 }
