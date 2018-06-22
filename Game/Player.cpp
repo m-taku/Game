@@ -45,7 +45,7 @@ bool Player::Start()
 
 	});
 
-	m_skinModel.Satburend(0.45f);
+	m_skinModel.Satburend(1.0f);
 	m_animclip[idle].SetLoopFlag(true);
 	m_animclip[walk].SetLoopFlag(true);
 	m_animclip[attack].SetLoopFlag(false);
@@ -99,6 +99,7 @@ bool Player::Start()
 	m_forward.Normalize();
 	m_animation.Play(idle, 0.2f);
 	m_skinModel.Update(m_position, m_rotation, { 20.0f,20.0f,20.0f });// CVector3::One*20.0f);
+
 	return true;
 }
 void Player::Update()
@@ -161,9 +162,25 @@ void Player::Update()
 			//地面についた。
 			m_moveSpeed.y = 0.0f;
 		}
-		if (Pad(0).IsTrigger(enButtonRB2) && NULL == FindGO<taieki>("taieki"))
+		if (Pad(0).IsTrigger(enButtonRB1)&&taieki_F==0)
 		{
-			NewGO<taieki>(0, "taieki");
+			
+			Tp[taieki_sum]=NewGO<taieki>(0, "taieki");
+			taieki_sum++;
+			taieki_F++;
+			if (taieki_sum == 20)
+			{
+				taieki_sum = 0;
+			}
+		}
+		if (taieki_F == 1)
+		{
+			taieki_timer += 1.0f*GameTime().GetFrameDeltaTime();
+		}
+		if (taieki_timer >= 0.5f)
+		{
+			taieki_timer = 0.0f;
+			taieki_F = 0;
 		}
 		//プレイヤーの前方向を計算
 

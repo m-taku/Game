@@ -76,7 +76,10 @@ private:
 	CQuaternion d_rotation = CQuaternion::Identity;//ダミーの回転（縦）
 	//CSkinModel m_taieki;
 	//CSkinModelData m_taiekiModelData;
-	taieki* Tp = nullptr;
+	taieki* Tp[20];
+	int taieki_sum = 0;
+	float taieki_timer = 0;
+	int taieki_F = 0;
 	prefab::CEffect* hakaba = nullptr;
 	CVector3 landpos = CVector3::Zero;
 	CVector3 land_to_player = CVector3::Zero;
@@ -110,5 +113,6 @@ private:
 	float Log_lStick_y = 0.0f;
 	//CVector3 m_moveSpeed_log = CVector3::Zero;//moveSpeedを保持する。
 	bool X_button_Flag = false;//Xボタンが押されたかどうかを保持するフラグ。
+
 };
 
