@@ -769,7 +769,7 @@ void AI::NPCescape()//ƒ]ƒ“ƒr‚©‚ç“¦‚°‚é
 	else {
 		m_speed = 4.0f;
 		mobe = 50.0f; 
-		search(retu_position);
+		search(game->pasu[Leftfrag].m_pointList[0]);
 		Gaizi->Satpoint(0.1);
 		work->Setkakudo(5.0f);
 		kaiten = false;

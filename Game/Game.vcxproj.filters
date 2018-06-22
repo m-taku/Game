@@ -455,6 +455,9 @@
     <CustomBuild Include="Assets\shader\monochrome.fx">
       <Filter>Assets\shader</Filter>
     </CustomBuild>
+    <CustomBuild Include="Assets\shader\VolumeLight.fx">
+      <Filter>Assets\shader</Filter>
+    </CustomBuild>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\modelData\livingbuildings.png">

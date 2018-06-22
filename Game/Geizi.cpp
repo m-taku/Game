@@ -74,8 +74,10 @@ void Geizi::Update()
 			haus=NewGO<tekihei>(0, "tekihei");
 			
 		}
-	}
+	} 
 
+
+	  
 	n_sprite.Update(n_position, CQuaternion::Identity, { keifou_saiz,0.8f,1.0f }, { 0.0f,1.0f });
 	m_sprite.Update(m_position, CQuaternion::Identity, { 1.0f,1.0f,1.0f }, { 0.0f,1.0f });
 	hn_sprite.Update(hn_position, CQuaternion::Identity, { HP_saiz,0.8f,1.0f }, { 0.0f,1.0f });

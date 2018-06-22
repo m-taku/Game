@@ -80,8 +80,8 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 		NewGO<BGM>(0, "BGM");
 		NewGO<Stage>(0, "stage");
 		NewGO<Player>(0, "Player");
-
 		NewGO<AI_manager>(0, "AI_manager");
+		GraphicsEngine().GetMonochrome().SetAlpha(0.0f);
 		//ゲームループを実行。
 		Engine().RunGameLoop();
 	}
