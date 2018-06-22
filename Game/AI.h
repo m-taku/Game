@@ -183,10 +183,10 @@ private:
 	int no = 0;
 	float sinsoku = 0.0f;
 	AI* Tansaku = nullptr;  //探索結果のオブジェクトを格納する。o
+	AI* lam;
 	CVector3 m_movespeed = CVector3::Zero;		//移動速度。
 	AImove* work;
 	CVector3 m_position = CVector3::Zero;
-	AI* lam;
 	float atekfrag = 0;
 	float escapecaku = 30.0f;
 	int radam = 0;

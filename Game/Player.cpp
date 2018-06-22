@@ -6,7 +6,7 @@
 #include"Geizi.h"
 #include"car.h"
 #define counter 10
-#define taime 15*60
+#define taime 15.0f*30.0f
 #include<string>
 #include<codecvt>
 
@@ -252,7 +252,15 @@ void Player::Update()
 	}
 	if (muteki_Flag == true) {
 		muteki_count++;
-		if (muteki_count > taime) {//–³“G‰»‚µ‚Ä‚©‚ç5•b‚ªŒo‰ß‚µ‚½‚ç
+		/*//ƒ‚ƒmƒNƒ	float taim= taime;
+		if ((muteki_count / taim) >= (4.0f / 5.0f)) {
+			if (blend >= 0) {
+				GraphicsEngine().GetMonochrome().SetAlpha(blend);
+				blend -= 0.1f;
+			}
+		}*/
+		if (muteki_count >= taime) {//–³“G‰»‚µ‚Ä‚©‚ç5•b‚ªŒo‰ß‚µ‚½‚ç
+		//	GraphicsEngine().GetMonochrome().SetAlpha(0.0f);
 			muteki_Flag = false;
 			muteki_count = 0;
 		}
@@ -270,9 +278,14 @@ void Player::Update()
 		else {
 			if (collision_f == true) {
 				m_animation.Play(ziko, 0.4f);
+/*//ƒ‚ƒmƒNƒ	if (blend <= 1.0f) {
+					GraphicsEngine().GetMonochrome().SetAlpha(blend);
+					blend += 0.1f;
+				}*/
 				if (!m_animation.IsPlaying()) {
 					zikofrag = false;
 					collision_f = false;
+				//	blend = 1.0f;
 					game = true;
 				}
 				if (m_charaCon.IsOnGround()) {
