@@ -88,6 +88,10 @@ public:
 	{
 		return m_position;
 	}
+	void Gettekihei(tekihei* pointa)
+	{
+		tekip = pointa;
+	}
 	CVector3 Getforward()
 	{
 		return m_forward;
@@ -148,9 +152,11 @@ protected:
 	CSkinModelData m_skinModelData;			//スキンモデルデータ。
 	AI_manager* game;
 	float m_speed;
+	bool ziko_frag = false;
 	car* Car;
 	Geizi* Gaizi;
 	Player* pl;
+	int taime = 0;
 	bool HitFlag = false;      //ダメージを与えたかを示すフラグ。
 private:
 	bool muteki_Flag = false;//無敵になっているかどうかを表すフラグ。
@@ -177,10 +183,10 @@ private:
 	int no = 0;
 	float sinsoku = 0.0f;
 	AI* Tansaku = nullptr;  //探索結果のオブジェクトを格納する。o
+	AI* lam;
 	CVector3 m_movespeed = CVector3::Zero;		//移動速度。
 	AImove* work;
 	CVector3 m_position = CVector3::Zero;
-	AI* lam;
 	float atekfrag = 0;
 	float escapecaku = 30.0f;
 	int radam = 0;
@@ -212,12 +218,10 @@ private:
 	CMatrix m_tekirot;
 	CMatrix k_tekirot;
 	car* ziko_car;
-	bool ziko_frag = false;
 	CVector3 before_m_position = CVector3::Zero;		//一つ前の座標。
 	std::vector<int> jyunban;
 	CVector3 flydist=CVector3::Zero;
 
-	int taime = 0;
 	AI* Chawse_Zombie;  //追跡してくるキャラを格納する。
 };
 

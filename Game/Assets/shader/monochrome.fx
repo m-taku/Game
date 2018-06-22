@@ -1,10 +1,8 @@
 /*!
  * @brief	スプライト用のシェーダー。
  */
-
-cbuffer cb : register(b0){
-	float4x4 mvp;		//ワールドビュープロジェクション行列。
-	float4 mulColor;	//乗算カラー。
+cbuffer PSCb : register(b0) {
+	float rate;
 };
 struct VSInput{
 	float4 pos : SV_Position;
@@ -22,11 +20,18 @@ sampler Sampler : register(s0);
 PSInput VSMain(VSInput In) 
 {
 	PSInput psIn;
-	psIn.pos = mul(mvp, In.pos);
+	psIn.pos = In.pos;
 	psIn.uv = In.uv;
 	return psIn;
 }
 float4 PSMain( PSInput In ) : SV_Target0
 {
-	return colorTexture.Sample(Sampler, In.uv) * mulColor;
+	float4 srcColor = colorTexture.Sample(Sampler, In.uv);
+	float4 dstColor = srcColor;
+	float len = srcColor.x * 0.299 + srcColor.y * 0.587 + srcColor.z * 0.114;
+	srcColor.x = len;
+	srcColor.y = len;
+	srcColor.z = len;
+	float4 color = dstColor * max(0.0f, (1.0f - rate)) + srcColor * min(1.0f, rate);
+	return  color;
 }

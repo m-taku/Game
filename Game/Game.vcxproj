@@ -976,7 +976,19 @@
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
-    <Media Include="Assets\sound\horror_zone1.wav" />
+    <CustomBuild Include="Assets\sound\horror_zone1.wav">
+      <FileType>Document</FileType>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="Assets\shader\monochrome.fx">
+      <FileType>Document</FileType>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="Assets\shader\VolumeLight.fx">
+      <FileType>Document</FileType>
+    </CustomBuild>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

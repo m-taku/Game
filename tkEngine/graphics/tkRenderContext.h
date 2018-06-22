@@ -31,6 +31,7 @@ namespace tkEngine {
 		enRenderStep_Bloom,						//!<ブルーム。
 		enRenderStep_Toonmap,					//!<トーンマップ。
 		enRenderStep_AntiAlias,					//!<アンチエイリアス。
+		enRenderStep_VolumeLight,
 		enRenderStep_Render2DToScene,			//!<2Dをシーンに描画。
 	};
 	class CRenderContext : Noncopyable {
@@ -133,13 +134,20 @@ namespace tkEngine {
 		*@param[in]	clearColor	クリアカラー。
 		*@param[in]	isClearDepthStencil	デプスステンシルバッファもクリアする？
 		*/
-		void ClearRenderTargetView(unsigned int rtNo, float* clearColor, bool isClearDepthStencil = true)
+		void ClearRenderTargetView(unsigned int rtNo, float* clearColor, bool isClearDepthStencil = true, bool isDepthClearValueZero = false)
 		{
 			if (rtNo < m_numRenderTargetView
 				&& m_renderTargetViews != nullptr) {
 				m_pD3DDeviceContext->ClearRenderTargetView(m_renderTargetViews[rtNo]->GetRenderTargetView(), clearColor);
 				if (m_renderTargetViews[0]->GetDepthStencilView() != nullptr && isClearDepthStencil) {
-					m_pD3DDeviceContext->ClearDepthStencilView(m_renderTargetViews[0]->GetDepthStencilView(), D3D11_CLEAR_DEPTH, 1.0f, 0);
+					if (isDepthClearValueZero)
+					{
+						m_pD3DDeviceContext->ClearDepthStencilView(m_renderTargetViews[0]->GetDepthStencilView(), D3D11_CLEAR_DEPTH, 0.0f, 0);
+					}
+					else
+					{
+						m_pD3DDeviceContext->ClearDepthStencilView(m_renderTargetViews[0]->GetDepthStencilView(), D3D11_CLEAR_DEPTH, 1.0f, 0);
+					}
 				}
 			}
 		}

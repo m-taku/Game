@@ -42,7 +42,7 @@ AI_manager::AI_manager()
 	da.push_back(AIR25);
 	da.push_back(AIR26);
 	for (int k = 0; k < da.size(); k++) {
-		AI* AIR = NewGO<AI>(0, "AI");
+		Osu* AIR = NewGO<Osu>(0, "Osu");
 		AIR->GetGame(this);
 		Rsimin.push_back(AIR);
 		RAIseizon.push_back(1);
@@ -74,8 +74,26 @@ AI_manager::AI_manager()
 	da2.push_back(AIL23);
 	da2.push_back(AIL24);
 	da2.push_back(AIL25);
+	da2.push_back(AIL26);
+	da2.push_back(AIL27);
+	da2.push_back(AIL28);
+	da2.push_back(AIL29);
+	da2.push_back(AIL30);
+	da2.push_back(AIL31);
+	da2.push_back(AIL32);
+	da2.push_back(AIL33);
+	da2.push_back(AIL34);
+	da2.push_back(AIL35);
+	da2.push_back(AIL36);
+	da2.push_back(AIL37);
+	da2.push_back(AIL38);
+	da2.push_back(AIL39);
+	da2.push_back(AIL40);
+	da2.push_back(AIL41);
+	da2.push_back(AIL42);
+	da2.push_back(AIL43);
 	for (int k = 0; k < da2.size(); k++) {
-		AI* AIL = NewGO<AI>(0, "Osu");
+		Osu* AIL = NewGO<Osu>(0, "Osu");
 		AIL->GetGame(this);
 		Lsimin.push_back(AIL);
 		LAIseizon.push_back(1);
