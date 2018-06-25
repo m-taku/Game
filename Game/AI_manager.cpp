@@ -119,3 +119,18 @@ bool AI_manager::Start()
 {
 	return true;
 }
+void AI_manager::Update()
+{
+	for (int i = 0;i < da.size();i++)
+	{
+		if (RAIseizon[i] == 1)
+		{
+			shimin_sum++;
+		}
+		if (RAIseizon[i] == 0)
+		{
+			zombie_sum++;
+		}
+	}
+
+}

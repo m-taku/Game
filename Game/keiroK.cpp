@@ -198,8 +198,8 @@ void keiroK::tansa(CVector3 i, CVector3 Ta, std::vector<int> *a,int Leftfrag)
 	fa = game->pasu[Leftfrag].m_pointList[f-1];
 	Satando(
 		&stuyt,
-		fa,
 		ga,
+		fa,
 		f,
 		-1,
 		resuto1[No].No,

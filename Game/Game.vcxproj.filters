@@ -458,6 +458,7 @@
     <CustomBuild Include="Assets\shader\VolumeLight.fx">
       <Filter>Assets\shader</Filter>
     </CustomBuild>
+    <CustomBuild Include="Assets\sound\Sudden_braking.wav" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\modelData\livingbuildings.png">
@@ -515,6 +516,9 @@
       <Filter>Assets\sprite</Filter>
     </ImageContentTask>
     <ImageContentTask Include="Assets\sprite\A_botan.png">
+      <Filter>Assets\sprite</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\noise.png">
       <Filter>Assets\sprite</Filter>
     </ImageContentTask>
   </ItemGroup>
