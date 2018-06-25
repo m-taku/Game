@@ -6,8 +6,8 @@
 #include"Geizi.h"
 #include"car.h"
 #define counter 10
-#define taime 20*60
-#include <string>
+#define taime 15.0f*30.0f
+#include<string>
 #include<codecvt>
 
 
@@ -44,7 +44,7 @@ bool Player::Start()
 
 	});
 
-	m_skinModel.Satburend(0.45f);
+	m_skinModel.Satburend(1.0f);
 	m_animclip[idle].SetLoopFlag(true);
 	m_animclip[walk].SetLoopFlag(true);
 	m_animclip[attack].SetLoopFlag(false);
@@ -98,6 +98,7 @@ bool Player::Start()
 	m_forward.Normalize();
 	m_animation.Play(idle, 0.2f);
 	m_skinModel.Update(m_position, m_rotation, { 20.0f,20.0f,20.0f });// CVector3::One*20.0f);
+
 	//プレイヤーの呼吸音の初期化。
 	m_Respiration = NewGO<prefab::CSoundSource>(0);
 	m_Respiration->Init("sound/iki.wav", false);
@@ -108,8 +109,11 @@ void Player::Update()
 {
 	if (game != false) {
 		//m_animation.Play(idle,0.2);
-
+<
 		m_moveDecision = CVector3::Zero;//判定に使用するので初期化。
+
+		// 先輩 //NewGO<prefab::CVolumeLight>(0)->Init(&m_position);
+
 		m_moveSpeed.z = 0.0f;
 		m_moveSpeed.x = 0.0f;
 		//左スティックの入力量を受け取る。
@@ -163,9 +167,25 @@ void Player::Update()
 			//地面についた。
 			m_moveSpeed.y = 0.0f;
 		}
-		if (Pad(0).IsTrigger(enButtonRB2) && NULL == FindGO<taieki>("taieki"))
+		if (Pad(0).IsTrigger(enButtonRB1)&&taieki_F==0)
 		{
-			NewGO<taieki>(0, "taieki");
+			
+			Tp[taieki_sum]=NewGO<taieki>(0, "taieki");
+			taieki_sum++;
+			taieki_F++;
+			if (taieki_sum == 20)
+			{
+				taieki_sum = 0;
+			}
+		}
+		if (taieki_F == 1)
+		{
+			taieki_timer += 1.0f*GameTime().GetFrameDeltaTime();
+		}
+		if (taieki_timer >= 0.5f)
+		{
+			taieki_timer = 0.0f;
+			taieki_F = 0;
 		}
 		//プレイヤーの前方向を計算
 
@@ -236,7 +256,7 @@ void Player::Update()
 		{
 			m_animation.Play(walk, 0.2f);	
 		}
-		if (muteki_Flag== false) {
+		if (muteki_Flag == false) {
 			FindGameObjectsWithTag(20, [&](IGameObject* go) {
 				if (go != this) {            //自分からの距離を計測するため、検索結果から自分を除外する。
 					car* ai = (car*)go;
@@ -248,9 +268,8 @@ void Player::Update()
 						float degree = CMath::RadToDeg(kaku);
 						if (degree <= 45) {
 							game = false;
-							ai->SoundklaxonPlay();
-							m_moveSpeed = (m_forward*-1 * m_moveSpeed.Length()) + ai->Getforward()*1000.0f;
-							m_moveSpeed.y = 600.0f;
+							carpoint = ai;
+							carpoint->SoundklaxonPlay();
 							zikofrag = true;
 							muteki_Flag = true;
 						}
@@ -261,7 +280,15 @@ void Player::Update()
 	}
 	if (muteki_Flag == true) {
 		muteki_count++;
-		if (muteki_count > taime) {//無敵化してから5秒が経過したら
+		/*//モノクロ	float taim= taime;
+		if ((muteki_count / taim) >= (4.0f / 5.0f)) {
+			if (blend >= 0) {
+				GraphicsEngine().GetMonochrome().SetAlpha(blend);
+				blend -= 0.1f;
+			}
+		}*/
+		if (muteki_count >= taime) {//無敵化してから5秒が経過したら
+		//	GraphicsEngine().GetMonochrome().SetAlpha(0.0f);
 			muteki_Flag = false;
 			muteki_count = 0;
 		}
@@ -270,14 +297,29 @@ void Player::Update()
 	m_position = m_charaCon.Execute(GameTime().GetFrameDeltaTime(), m_moveSpeed);//移動。
 	if (zikofrag == true)
 	{
-		m_animation.Play(ziko, 0.4f);
-		if (!m_animation.IsPlaying()) {
-			zikofrag = false;	
-			game = true;
+		if ((carpoint->Getposition() - m_position).Length() <= 500&& collision_f== false)
+		{
+			collision_f = true;
+			m_moveSpeed = (m_forward*-1 * m_moveSpeed.Length()) + carpoint->Getforward()*1000.0f;
+			m_moveSpeed.y = 600.0f;
 		}
-		if (m_charaCon.IsOnGround()) {
-			m_moveSpeed = CVector3::Zero;
-
+		else {
+			if (collision_f == true) {
+				m_animation.Play(ziko, 0.4f);
+/*//モノクロ	if (blend <= 1.0f) {
+					GraphicsEngine().GetMonochrome().SetAlpha(blend);
+					blend += 0.1f;
+				}*/
+				if (!m_animation.IsPlaying()) {
+					zikofrag = false;
+					collision_f = false;
+				//	blend = 1.0f;
+					game = true;
+				}
+				if (m_charaCon.IsOnGround()) {
+					m_moveSpeed = CVector3::Zero;
+				}
+			}
 		}
 	}
 	Setposition(m_position);

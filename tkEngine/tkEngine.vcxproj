@@ -289,6 +289,7 @@
     <ClInclude Include="graphics\postEffect\tkBloom.h" />
     <ClInclude Include="graphics\postEffect\tkDithering.h" />
     <ClInclude Include="graphics\postEffect\tkFxaa.h" />
+    <ClInclude Include="graphics\postEffect\tkMonochromeFilter.h" />
     <ClInclude Include="graphics\postEffect\tkPostEffect.h" />
     <ClInclude Include="graphics\postEffect\tkTonemap.h" />
     <ClInclude Include="graphics\preRender\tkGBufferRender.h" />
@@ -321,6 +322,7 @@
     <ClInclude Include="light\tkLightBase.h" />
     <ClInclude Include="light\tkLightManager.h" />
     <ClInclude Include="light\tkPointLight.h" />
+    <ClInclude Include="light\tkVolumeLight.h" />
     <ClInclude Include="math\tkAabb.h" />
     <ClInclude Include="math\tkBox.h" />
     <ClInclude Include="math\tkMath.h" />
@@ -383,6 +385,7 @@
     <ClCompile Include="graphics\postEffect\tkBloom.cpp" />
     <ClCompile Include="graphics\postEffect\tkDithering.cpp" />
     <ClCompile Include="graphics\postEffect\tkFxaa.cpp" />
+    <ClCompile Include="graphics\postEffect\tkMonochromeFilter.cpp" />
     <ClCompile Include="graphics\postEffect\tkPostEffect.cpp" />
     <ClCompile Include="graphics\postEffect\tkTonemap.cpp" />
     <ClCompile Include="graphics\preRender\tkGBufferRender.cpp" />
@@ -411,6 +414,7 @@
     <ClCompile Include="light\tkLightBase.cpp" />
     <ClCompile Include="light\tkLightManager.cpp" />
     <ClCompile Include="light\tkPointLight.cpp" />
+    <ClCompile Include="light\tkVolumeLight.cpp" />
     <ClCompile Include="math\tkAabb.cpp" />
     <ClCompile Include="math\tkBox.cpp" />
     <ClCompile Include="math\tkMath.cpp" />

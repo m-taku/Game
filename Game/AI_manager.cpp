@@ -74,6 +74,24 @@ AI_manager::AI_manager()
 	da2.push_back(AIL23);
 	da2.push_back(AIL24);
 	da2.push_back(AIL25);
+	da2.push_back(AIL26);
+	da2.push_back(AIL27);
+	da2.push_back(AIL28);
+	da2.push_back(AIL29);
+	da2.push_back(AIL30);
+	da2.push_back(AIL31);
+	da2.push_back(AIL32);
+	da2.push_back(AIL33);
+	da2.push_back(AIL34);
+	da2.push_back(AIL35);
+	da2.push_back(AIL36);
+	da2.push_back(AIL37);
+	da2.push_back(AIL38);
+	da2.push_back(AIL39);
+	da2.push_back(AIL40);
+	da2.push_back(AIL41);
+	da2.push_back(AIL42);
+	da2.push_back(AIL43);
 	for (int k = 0; k < da2.size(); k++) {
 		Osu* AIL = NewGO<Osu>(0, "Osu");
 		AIL->GetGame(this);
@@ -100,4 +118,19 @@ AI_manager::~AI_manager()
 bool AI_manager::Start()
 {
 	return true;
+}
+void AI_manager::Update()
+{
+	for (int i = 0;i < da.size();i++)
+	{
+		if (RAIseizon[i] == 1)
+		{
+			shimin_sum++;
+		}
+		if (RAIseizon[i] == 0)
+		{
+			zombie_sum++;
+		}
+	}
+
 }
