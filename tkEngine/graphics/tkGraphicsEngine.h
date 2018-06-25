@@ -13,6 +13,7 @@
 #include "tkEngine/resource/tkShaderResources.h"
 #include "tkEngine/graphics/effect/tkEffectEngine.h"
 #include "tkEngine/resource/tkDirectXModelResource.h"
+//#include "tkEngine/light/tkVolumeLight.h"
 
 namespace tkEngine{
 	
@@ -80,6 +81,14 @@ namespace tkEngine{
 		{
 			return m_postEffect.GetTonemap();
 		}
+
+		/*
+		* @brief	モノクロムフィルターを取得
+		*/
+		CMonochromeFilter& GetMonochrome()
+		{
+			return m_postEffect.GetMonochrome();
+		}
 		/*!
 		*@brief	メインカメラを取得。
 		*/
@@ -143,6 +152,11 @@ namespace tkEngine{
 		CRenderTarget& GetMainRenderTarget()
 		{
 			return m_mainRenderTarget;
+		}
+
+		CRenderTarget* GetVolumeLightTarget()
+		{
+			return m_volumeLightTarget;
 		}
 		/*!
 		* @brief	描画開始。
@@ -264,6 +278,7 @@ namespace tkEngine{
 		ID3D11DeviceContext*	m_pImmediateContext = nullptr;				//!<D3D11即時デバイスコンテキスト。
 		IDXGISwapChain*			m_pSwapChain = nullptr;						//!<SwapChain。
 		CRenderTarget			m_mainRenderTarget;							//!<メインレンダリングターゲット。
+		CRenderTarget			m_volumeLightTarget[3];
 		CPreRender				m_preRender;								//!<プリレンダリング。
 		CPostEffect				m_postEffect;								//!<ポストエフェクト。
 		CCamera					m_mainCamera;								//!<メインカメラ。
@@ -272,6 +287,7 @@ namespace tkEngine{
 		int						m_frameBufferWidth = 0;						//!<フレームバッファの幅。これが内部解像度。
 		int						m_frameBufferHeight = 0;					//!<フレームバッファの高さ。これが内部解像度。
 		DXGI_SAMPLE_DESC		m_mainRenderTargetMSAADesc;					//!<メインレンダリングターゲットのMSAAの設定。
+		DXGI_SAMPLE_DESC		m_volumeLightTargetMSAADesc;					//!<メインレンダリングターゲットのMSAAの設定。
 		D3D_DRIVER_TYPE			m_driverType = D3D_DRIVER_TYPE_NULL;		//!<ドライバの種類のオプション。
 		D3D_FEATURE_LEVEL		m_featureLevel = D3D_FEATURE_LEVEL_11_0;	//!<Direct3D デバイスのターゲットとなる機能セット。
 		CLightManager			m_lightManager;								//!<ライトの管理者。

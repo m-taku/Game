@@ -22,9 +22,7 @@ void Stage::OnDestroy()
 bool Stage::Start()
 {
 
-#ifndef instansingu_katto
-	carRender* kar = NewGO<carRender>(0, nullptr);
-#endif // Mizuki_baka
+
 	Stege_No = 3;//FindGO<Game>("Game")->stag;
 	wchar_t moveFilePath[256];//ファイルパス。
 	swprintf_s(moveFilePath, L"modelData/stage%d.cmo", Stege_No);//ステージ。
@@ -35,13 +33,12 @@ bool Stage::Start()
 	s_skinModel.Init(s_skinModelData);
 	////メッシュコライダーを作成。
 	m_physicsStaticObject.CreateMeshObject( m_skinModel,CVector3::Zero,CQuaternion::Identity);
-	m_meshCollider.CreateFromSkinModel(m_skinModel, nullptr);
-	swprintf_s(moveFilePath, L"lever/matilevel%d0%d.tks", 0, 2);
-	m_level[0].Build(moveFilePath);
-	swprintf_s(moveFilePath, L"lever/matilevel%d0%d.tks", 1, 1);
-	m_level[1].Build(moveFilePath);
-	swprintf_s(moveFilePath, L"lever/matilevel%d0%d.tks", 2, 1);
-	m_level[2].Build(moveFilePath);
+	//swprintf_s(moveFilePath, L"lever/matilevel%d0%d.tks", 0, 2);
+	//m_level[0].Build(moveFilePath);
+	//swprintf_s(moveFilePath, L"lever/matilevel%d0%d.tks", 1, 1);
+	//m_level[1].Build(moveFilePath);
+	//swprintf_s(moveFilePath, L"lever/matilevel%d0%d.tks", 2, 1);
+	//m_level[2].Build(moveFilePath);
 	//carを増やした時のの変更点
 	pasu2.push_back(movepasu1);
 	pasu2.push_back(movepasu2);
@@ -66,17 +63,7 @@ bool Stage::Start()
 	pasu2.push_back(movepasu21);
 	pasu2.push_back(movepasu22);
 	pasu2.push_back(movepasu23);
-
-#ifndef instansingu_katto
-	kar->Satcarkosuu(pasu2.size());
-#endif // Mizuki_baka
-	for (int i = 0; i < pasu2.size(); i++) {
-		carv.push_back(NewGO<car>(0, "car"));
-
-#ifndef  instansingu_katto
-		carv[i]->gatcarRender(*kar);
-#endif // Mizuki_baka
-	}
+	Car_create();
 	return true;
 }
 void Stage::Update()
@@ -94,4 +81,25 @@ void Stage::Render(CRenderContext& rc)
 {
 	m_skinModel.Draw(rc, MainCamera().GetViewMatrix(), MainCamera().GetProjectionMatrix());
 	s_skinModel.Draw(rc, MainCamera().GetViewMatrix(), MainCamera().GetProjectionMatrix());
+}
+void Stage::Car_create()
+{
+#ifndef instansingu_katto
+	kar = NewGO<carRender>(0, nullptr);
+	kar->Satcarkosuu(pasu2.size());
+#endif
+	for (int i = 0; i < pasu2.size(); i++) {
+		carv.push_back(NewGO<car>(0, "car"));
+#ifndef  instansingu_katto
+		carv[i]->gatcarRender(*kar);
+#endif
+	}
+}
+void Stage::Car_delete()
+{
+	for (int i = 0; i < carv.size(); i++) {
+		DeleteGO(carv[i]);
+	}
+	carv.clear();
+	DeleteGO(kar);
 }

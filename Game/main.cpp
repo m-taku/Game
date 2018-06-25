@@ -7,6 +7,7 @@
 #include"Stage.h"
 #include"Stage_Light.h"
 #include"AI_manager.h"
+#include"BGM.h"
 #include"Player.h"
 
 
@@ -76,9 +77,11 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 		NewGO<Taitor>(0, "Taitor");
 		NewGO<Fade>(1, "Fade");
 		NewGO<Stage_Light>(0, "Light");
+		NewGO<BGM>(0, "BGM");
 		NewGO<Stage>(0, "stage");
 		NewGO<Player>(0, "Player");
 		NewGO<AI_manager>(0, "AI_manager");
+		GraphicsEngine().GetMonochrome().SetAlpha(0.0f);
 		//ゲームループを実行。
 		Engine().RunGameLoop();
 	}

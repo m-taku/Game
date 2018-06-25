@@ -140,16 +140,26 @@ namespace tkEngine{
 		{
 			m_isShadowReceiver = flag;
 		}
-		void Satburend(float bai)
-		{
-			m_burend = bai;
-		}
+
 		/*!
 		* @brief	ブレンド率セット
 		*@param[in]	burend	ブレンド率（0.0～1.0）。
 		*/
-
+		void Satburend(float bai)
+		{
+			m_burend = bai;
+		}
 		
+		void SetIsZPrePass(bool zPrePass)
+		{
+			isZPrePass = zPrePass;
+		}
+
+		void SetIsGBuffer(bool gBuffer)
+		{
+			isGBuffer = gBuffer;
+		}
+
 		const CMatrix& GetWorldMatrix() const
 		{
 			return m_worldMatrix;
@@ -178,17 +188,19 @@ namespace tkEngine{
 		{
 			return m_boundingBox;
 		}
-	private:
+private:
+		/*!
+		private:
+		/*!
+		*@brief	ワールド行列の更新。
+		*/
+		void UpdateWorldMatrix(const CVector3& trans, const CQuaternion& rot, const CVector3& scale, EnFbxUpAxis enUpdateAxis);
+
 		/*! @todo
 		*@brief バウンディングボックスの初期化。
 		*/
 		void InitBoudingBox();
-		/*!
-	private:
-		/*!
-		 *@brief	ワールド行列の更新。
-		 */
-		void UpdateWorldMatrix(const CVector3& trans, const CQuaternion& rot, const CVector3& scale, EnFbxUpAxis enUpdateAxis);
+
 	private:
 		struct SVSConstantBuffer {
 			CMatrix mWorld;
@@ -198,6 +210,8 @@ namespace tkEngine{
 			int isShadowReceiver;
 			float burend;
 		};
+		bool isZPrePass;
+		bool isGBuffer;
 		CAnimation* m_animation = nullptr;
 		CSkinModelData*	m_skinModelData = nullptr;
 		CMatrix m_worldMatrix = CMatrix::Identity;

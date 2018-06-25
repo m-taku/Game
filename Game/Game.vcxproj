@@ -822,6 +822,7 @@
     <CustomBuild Include="Assets\effect\Texture\magma.png" />
     <CustomBuild Include="Assets\effect\Texture\sdfs.png" />
     <Image Include="Assets\modelData\ao.png" />
+    <ImageContentTask Include="Assets\sprite\noise.png" />
     <ImageContentTask Include="Assets\sprite\A_botan.png" />
     <ImageContentTask Include="Assets\sprite\Pusu_Button.png" />
     <ImageContentTask Include="Assets\sprite\Game_Title2.png" />
@@ -976,7 +977,24 @@
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
-    <Media Include="Assets\sound\horror_zone1.wav" />
+    <CustomBuild Include="Assets\sound\horror_zone1.wav">
+      <FileType>Document</FileType>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="Assets\shader\monochrome.fx">
+      <FileType>Document</FileType>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="Assets\shader\VolumeLight.fx">
+      <FileType>Document</FileType>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="Assets\sound\Sudden_braking.wav">
+      <FileType>Document</FileType>
+    </CustomBuild>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

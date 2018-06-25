@@ -162,6 +162,9 @@ void Osu::Zombie_Ziko_Animation()
 {
 	ai_NPCAnimation.Play(Zonbi_zico, 0.7);
 	if (!ai_NPCAnimation.IsPlaying()) {
+		ziko_frag = false;
+		taime = 0;
+		nearestpas();
 		pa = Zombie_Normal;
 	}
 }

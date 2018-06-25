@@ -38,7 +38,7 @@ int keiroK::BackTrace(int x)
 	if (tmp == close.end())
 		return 0;
 
-	return BackTrace(tmp->tunagi) + 1;
+	return BackTrace(tmp->tunagi) + GetDistance(tmp->m_position, tmp->s_position);
 }
 int keiroK::Kans(int count)
 {
@@ -54,8 +54,8 @@ int keiroK::Kans(int count)
 	int fhuj = 0,kesu =0;
 	it = open.begin();
 	while (it != open.end()) {
-		if (costmix > GetDistance(it->m_position, stuyt.s_position)) {
-			costmix = GetDistance(it->m_position, stuyt.s_position);
+		if (costmix > (it->cost+GetDistance(it->m_position, stuyt.s_position))) {
+			costmix = (it->cost + GetDistance(it->m_position, stuyt.s_position));
 			itmix = it;
 			kesu = fhuj;
 		}
@@ -96,7 +96,7 @@ int keiroK::Kans(int count)
 			ka->No[i+1],
 			n.ime,		
 			resuto1[No].No,
-			goulkost + GetDistance(ka->m_position[i+1], ga) + 1
+			goulkost + GetDistance(ka->m_position[i+1],n.m_position)
 		);
 		std::vector<ando>::iterator tmp = open.begin();
 		for (int d = 0; d < open.size(); d++) {
@@ -198,8 +198,8 @@ void keiroK::tansa(CVector3 i, CVector3 Ta, std::vector<int> *a,int Leftfrag)
 	fa = game->pasu[Leftfrag].m_pointList[f-1];
 	Satando(
 		&stuyt,
-		fa,
 		ga,
+		fa,
 		f,
 		-1,
 		resuto1[No].No,

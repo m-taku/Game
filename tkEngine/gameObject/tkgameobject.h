@@ -90,6 +90,11 @@ namespace tkEngine{
 		virtual void PostRender(CRenderContext& renderContext) {
 			(void)renderContext;
 		}
+
+		virtual void VolumeLightRender(CRenderContext& renderContext)
+		{
+			
+		}
 		/*!
 		*@brief	€–Sƒtƒ‰ƒO‚ğ—§‚Ä‚éB
 		*@details
@@ -146,6 +151,12 @@ namespace tkEngine{
 		{
 			if (m_isActive && m_isStart && !m_isDead && !m_isRegistDeadList) {
 				PostRender(renderContext);
+			}
+		}
+		void VolumeLightRenderWrapper(CRenderContext& renderContext)
+		{
+			if (m_isActive && m_isStart && !m_isDead && !m_isRegistDeadList) {
+				VolumeLightRender(renderContext);
 			}
 		}
 		void RenderWrapper(CRenderContext& renderContext)
