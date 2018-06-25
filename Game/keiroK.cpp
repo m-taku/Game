@@ -38,7 +38,7 @@ int keiroK::BackTrace(int x)
 	if (tmp == close.end())
 		return 0;
 
-	return BackTrace(tmp->tunagi) + GetDistance(tmp->m_position, tmp->s_position);
+	return BackTrace(tmp->tunagi) + 1;//+ GetDistance(tmp->m_position, tmp->s_position);
 }
 int keiroK::Kans(int count)
 {
