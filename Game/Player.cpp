@@ -98,6 +98,10 @@ bool Player::Start()
 	m_forward.Normalize();
 	m_animation.Play(idle, 0.2f);
 	m_skinModel.Update(m_position, m_rotation, { 20.0f,20.0f,20.0f });// CVector3::One*20.0f);
+	//プレイヤーの呼吸音の初期化。
+	m_Respiration = NewGO<prefab::CSoundSource>(0);
+	m_Respiration->Init("sound/iki.wav", false);
+	
 	return true;
 }
 void Player::Update()
@@ -105,7 +109,7 @@ void Player::Update()
 	if (game != false) {
 		//m_animation.Play(idle,0.2);
 
-
+		m_moveDecision = CVector3::Zero;//判定に使用するので初期化。
 		m_moveSpeed.z = 0.0f;
 		m_moveSpeed.x = 0.0f;
 		//左スティックの入力量を受け取る。
@@ -175,14 +179,18 @@ void Player::Update()
 		m_rite.y = mRot.m[0][1];
 		m_rite.z = mRot.m[0][2];
 		m_rite.Normalize();
-		if (X_button_Flag == false) {
+		if (X_button_Flag == false) {//Xボタンが押されていなかったら
 			m_moveSpeed += m_forward * lStick_y;
 			m_moveSpeed += m_rite * lStick_x;
+			m_moveDecision = m_moveSpeed;//少しでも動いていたら代入される。
 		}
-		else if (X_button_Flag == true) {
+		else if (X_button_Flag == true) {//Xボタンが押されていたら
 			m_moveSpeed += m_forward * Log_lStick_y;
 			m_moveSpeed += m_rite * lStick_x;
+			m_moveDecision = m_moveSpeed;//少しでも動いていたら代入される。
 		}
+
+		Play_Respiration(m_moveDecision);
 
 		if (hakaba->IsPlay() && landflag == 1 && land_to_player_vector <= 50.0f)
 		{
@@ -220,13 +228,13 @@ void Player::Update()
 			}
 			attackcounter++;
 		}
-		if (m_moveSpeed.x == 0.0f&&m_moveSpeed.z == 0.0f&&m_charaCon.IsOnGround() && attackF == 0)
+		if (m_moveSpeed.x == 0.0f&&m_moveSpeed.z == 0.0f&&m_charaCon.IsOnGround() && attackF == 0)//プレイヤーが止まっているとき
 		{
 			m_animation.Play(idle, 0.2f);
 		}
-		if (m_moveSpeed.x != 0.0f&&m_moveSpeed.z != 0.0f&&m_charaCon.IsOnGround() && attackF == 0)
+		if (m_moveSpeed.x != 0.0f&&m_moveSpeed.z != 0.0f&&m_charaCon.IsOnGround() && attackF == 0)//プレイヤーが歩いているとき
 		{
-			m_animation.Play(walk, 0.2f);
+			m_animation.Play(walk, 0.2f);	
 		}
 		if (muteki_Flag== false) {
 			FindGameObjectsWithTag(20, [&](IGameObject* go) {
@@ -300,6 +308,33 @@ void Player::Update()
 		}
 	});*/
 
+}
+void Player::Play_Respiration(CVector3 m_moveDecision)
+{
+	if (CVector_same_Decision(m_moveDecision, CVector3::Zero) != true) {//プレイヤーが止まっていなかったら
+		m_Respiration->Play(true);//呼吸音を再生する。
+	}
+	else {
+		m_Respiration->Stop();//呼吸音を止める。
+	}
+}
+bool Player::CVector_same_Decision(CVector3 a, CVector3 b) //2つのベクトルが同一かどうかを調べる。
+{
+	bool Hantei = false;
+	if (a.x == b.x) {
+		if (a.y == b.y) {
+			if (a.z == b.z) {//全部一緒だったら
+				Hantei = true;//Hanteiをtrueにする。
+			}
+		}
+	}
+
+	if (Hantei == true) {
+		return true;//2つのベクトルが一致したのでtrueを返す。
+	}
+	else {
+		return false;//2つのベクトルが一致しなかったのでfalseを返す。
+	}
 }
 void Player::Render(CRenderContext& rc)
 {

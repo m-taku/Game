@@ -273,7 +273,7 @@ void tekihei::Update()
 
 
 						stop_f[i] = 0;
-						moving[i] = 0;
+						moving[i] = 0;//movingを0にして、i番目の敵兵にいちばん短い距離のパス番号を調べるようにする。
 					}
 
 
@@ -301,9 +301,7 @@ void tekihei::Update()
 
 					teki_to_player_vector[i] = sqrt(teki_to_player[i].x*teki_to_player[i].x + teki_to_player[i].y*teki_to_player[i].y + teki_to_player[i].z*teki_to_player[i].z);
 
-					teki_to_player[i].Normalize();
-
-
+					teki_to_player[i].Normalize();//プレイヤーとi番目の敵兵との距離を正規化して向きベクトルにする。
 
 					teki_siya[i] = acosf(tekifoward[i].Dot(teki_to_player[i]));//視野の計算
 
@@ -311,7 +309,7 @@ void tekihei::Update()
 					if (teki_siya[i] <= 45.0f&&teki_to_player_vector[i] < 1000.0f)
 					{
 						find_f[i] = 1;
-						moving[i] = 0;
+						moving[i] = 0;//movingを0にして、i番目の敵兵にいちばん短い距離のパス番号を調べるようにする。
 					}
 
 
@@ -321,7 +319,7 @@ void tekihei::Update()
 					trot[i].SetRotationDeg(CVector3::AxisY, teki_angle[i]);//回転
 					tekirot[i].Multiply(trot[i]);
 
-					if (teki_to_path[i][target_num[i]] > 1.0f)
+					if (teki_to_path[i][target_num[i]] > 1.0f)//i番目の敵兵の次の目的地のパスとの距離が1.0f以上のとき
 					{
 						tekispeed[i] = teki_to_path_vector[i][target_num[i]] * 300.0f;
 					}
@@ -360,7 +358,7 @@ void tekihei::Update()
 						if (tama_to_player_vector[i] > 50.0f && damageflag[i] == 0)
 						{
 							tamapos[i] += tamamuki[i] * 1000.0f*GameTime().GetFrameDeltaTime();
-							tamaEF[i]->SetPosition(tamapos[i]);
+							tamaEF[i]->SetPosition(tamapos[i]);//i番目の敵兵の弾のエフェクトの座標を、同じ弾の座標と同じ座標に設定する。
 						}
 
 
@@ -371,12 +369,12 @@ void tekihei::Update()
 						}
 						if (damageflag[i] == 1)
 						{
-							tamaEF[i]->SetScale({ 100.0f,100.0f,100.0f });
+							tamaEF[i]->SetScale({ 100.0f,100.0f,100.0f });//i番目の敵兵の弾のエフェクトの拡大率を設定する。
 							time[i]++;
 
 							if (time[i] >= 10)
 							{
-								tamaEF[i]->Release();
+								tamaEF[i]->Release();//i番目の敵兵の弾のエフェクトを解放？(これがクラッシュの原因か？)
 								tamaflag[i] = 0;
 								time[i] = 0;
 								damageflag[i] = 0;
@@ -418,7 +416,7 @@ void tekihei::Update()
 				ppos = Pp->GetPosition();
 				teki_to_player[i] = ppos - tekipos[i];
 
-				teki_to_player_vector[i] = sqrt(teki_to_player[i].x*teki_to_player[i].x + teki_to_player[i].y*teki_to_player[i].y + teki_to_player[i].z*teki_to_player[i].z);
+				teki_to_player_vector[i] = sqrt(teki_to_player[i].x*teki_to_player[i].x + teki_to_player[i].y*teki_to_player[i].y + teki_to_player[i].z*teki_to_player[i].z);//teki_to_player??
 
 				teki_to_player[i].Normalize();
 				teki_angle[i] = atanf(tekiright[i].Dot(teki_to_player[i]));//プレイヤーに向ける計算
@@ -506,7 +504,7 @@ void tekihei::Update()
 					if (tama_to_player_vector[i] > 50.0f && damageflag[i] == 0)
 					{
 						tamapos[i] += tamamuki[i] * 1000.0f*GameTime().GetFrameDeltaTime();
-						tamaEF[i]->SetPosition(tamapos[i]);
+						tamaEF[i]->SetPosition(tamapos[i]);//i番目の敵兵の弾のエフェクトの座標を、同じ弾の座標と同じ座標に設定する。
 					}
 
 
