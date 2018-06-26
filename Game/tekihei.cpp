@@ -377,6 +377,7 @@ void tekihei::Update()
 							if (time[i] >= 10)
 							{
 								tamaEF[i]->Release();
+								tamaEF[i] = NULL;
 								tamaflag[i] = 0;
 								time[i] = 0;
 								damageflag[i] = 0;
@@ -385,6 +386,7 @@ void tekihei::Update()
 						if (teki_to_tama_vector[i] >= 1000)
 						{
 							tamaEF[i]->Release();
+							tamaEF[i] = NULL;
 							tamaflag[i] = 0;
 						}
 
@@ -523,6 +525,7 @@ void tekihei::Update()
 						if (time[i] >= 10)
 						{
 							tamaEF[i]->Release();
+							tamaEF[i] = NULL;
 							tamaflag[i] = 0;
 							time[i] = 0;
 							damageflag[i] = 0;
@@ -531,6 +534,7 @@ void tekihei::Update()
 					if (teki_to_tama_vector[i] >= 1000)
 					{
 						tamaEF[i]->Release();
+						tamaEF[i] = NULL;
 						tamaflag[i] = 0;
 					}
 
