@@ -506,8 +506,6 @@ void tekihei::Update()
 						tamapos[i] += tamamuki[i] * 1000.0f*GameTime().GetFrameDeltaTime();
 						tamaEF[i]->SetPosition(tamapos[i]);//i番目の敵兵の弾のエフェクトの座標を、同じ弾の座標と同じ座標に設定する。
 					}
-
-
 					if (tama_to_player_vector[i] <= 50.0f&& damageflag[i] == 0)
 					{
 						damageflag[i] = 1;
@@ -517,7 +515,6 @@ void tekihei::Update()
 					{
 						tamaEF[i]->SetScale({ 100.0f,100.0f,100.0f });
 						time[i]++;
-
 						if (time[i] >= 10)
 						{
 							tamaEF[i]->Release();
