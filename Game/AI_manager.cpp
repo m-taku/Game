@@ -12,7 +12,7 @@ AI_manager::AI_manager()
 	swprintf_s(moveFilePath, L"lever/levalAI%d%d.tks", 0, 2);
 	pasu[0].Load(moveFilePath, No);
 	No = 1;
-	swprintf_s(moveFilePath, L"lever/levalAI%d%d.tks", 2, 1);
+	swprintf_s(moveFilePath, L"lever/levalAI%d%d.tks", 2, 2);
 	pasu[1].Load(moveFilePath, No);
 	No = 0;
 	da.push_back(AIR1);
