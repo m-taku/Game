@@ -109,7 +109,7 @@ void Player::Update()
 {
 	if (game != false) {
 		//m_animation.Play(idle,0.2);
-<
+
 		m_moveDecision = CVector3::Zero;//”»’è‚ÉŽg—p‚·‚é‚Ì‚Å‰Šú‰»B
 
 		// æ”y //NewGO<prefab::CVolumeLight>(0)->Init(&m_position);
