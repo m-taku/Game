@@ -304,13 +304,6 @@ void Player::Update()
 			m_moveSpeed.y = 600.0f;
 		}
 		else {
-			if ((carpoint->Getposition() - m_position).Length() >= 800)
-			{
-				zikofrag = false;
-				collision_f = false;
-				//	blend = 1.0f;
-				game = true;
-			}
 			if (collision_f == true) {
 				m_animation.Play(ziko, 0.4f);
 /*//ÉÇÉmÉNÉç	if (blend <= 1.0f) {

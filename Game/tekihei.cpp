@@ -374,7 +374,9 @@ void tekihei::Update()
 
 							if (time[i] >= 10)
 							{
-								tamaEF[i]->Release();//i番目の敵兵の弾のエフェクトを解放？(これがクラッシュの原因か？)
+
+								tamaEF[i]->Release();
+								tamaEF[i] = NULL;
 								tamaflag[i] = 0;
 								time[i] = 0;
 								damageflag[i] = 0;
@@ -383,6 +385,7 @@ void tekihei::Update()
 						if (teki_to_tama_vector[i] >= 1000)
 						{
 							tamaEF[i]->Release();
+							tamaEF[i] = NULL;
 							tamaflag[i] = 0;
 						}
 
@@ -518,6 +521,7 @@ void tekihei::Update()
 						if (time[i] >= 10)
 						{
 							tamaEF[i]->Release();
+							tamaEF[i] = NULL;
 							tamaflag[i] = 0;
 							time[i] = 0;
 							damageflag[i] = 0;
@@ -526,6 +530,7 @@ void tekihei::Update()
 					if (teki_to_tama_vector[i] >= 1000)
 					{
 						tamaEF[i]->Release();
+						tamaEF[i] = NULL;
 						tamaflag[i] = 0;
 					}
 
