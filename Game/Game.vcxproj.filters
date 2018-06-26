@@ -459,6 +459,7 @@
       <Filter>Assets\shader</Filter>
     </CustomBuild>
     <CustomBuild Include="Assets\sound\Sudden_braking.wav" />
+    <CustomBuild Include="Assets\sound\iki.wav" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\modelData\livingbuildings.png">
