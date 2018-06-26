@@ -522,4 +522,9 @@
       <Filter>Assets\sprite</Filter>
     </ImageContentTask>
   </ItemGroup>
+  <ItemGroup>
+    <Media Include="Assets\sound\iki.wav">
+      <Filter>Assets\sound</Filter>
+    </Media>
+  </ItemGroup>
 </Project>
