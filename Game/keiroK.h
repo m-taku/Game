@@ -8,6 +8,7 @@ typedef struct {
 	int tunagi;
 	std::vector<int> No;
 	int cost;
+	int beforeNo;
 }ando;
 		
 class keiroK 
@@ -20,8 +21,9 @@ public:
 	int BackTrace(int x);
 	void tansa(CVector3 i, CVector3 Ta, std::vector<int> *a,int Leftfrag);
 	ando stuyt;
-	std::vector<ando> open;
-	std::vector<ando> close;
+	std::map<int ,ando> open;
+	std::map<int ,ando> close;
+	ando n;
 	std::vector<kanren> resuto1;
 	std::vector<int> jyunban;
 private:	
