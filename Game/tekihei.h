@@ -25,8 +25,8 @@ public:
 	CVector3 tekifoward[teki];//敵兵の前方方向。
 	Geizi *gaizi;//ゲージのインスタンスを入れるポインタ。
 	Player *Pp;//プレイヤーのインスタンスを入れるポインタ。
-	CVector3 ppos = CVector3::Zero;
-	CVector3 teki_to_player[teki];
+	CVector3 ppos = CVector3::Zero;//プレイヤーの座標。
+	CVector3 teki_to_player[teki];//プレイヤーとteki番目の敵兵との距離を格納する。
 	float teki_to_player_vector[teki];
 	CVector3 tama_to_player[teki];
 	float tama_to_player_vector[teki];
