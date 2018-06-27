@@ -105,14 +105,11 @@ AI_manager::AI_manager()
 AI_manager::~AI_manager()
 {
 	for (int k = 0; k < Rsimin.size(); k++) {
-		if (RAIseizon[k] >= 1) {
-			DeleteGO(Rsimin[k]);
-		}
+		DeleteGO(Rsimin[k]);
+
 	}
 	for (int k = 0; k < Lsimin.size(); k++) {
-		if (LAIseizon[k] >= 1) {
-			DeleteGO(Lsimin[k]);
-		}
+		DeleteGO(Lsimin[k]);
 	}
 }
 bool AI_manager::Start()
@@ -132,5 +129,15 @@ void AI_manager::Update()
 			zombie_sum++;
 		}
 	}
-
+	for (int i = 0; i < da2.size(); i++)
+	{
+		if (LAIseizon[i] == 1)
+		{
+			shimin_sum++;
+		}
+		if (LAIseizon[i] == 0)
+		{
+			zombie_sum++;
+		}
+	}
 }
