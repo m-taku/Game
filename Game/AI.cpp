@@ -322,13 +322,15 @@ void AI::NPC_Search_Zonbi() //全てのゾンビと距離でダメージ判定をする。
 					if (angle <= 60)
 					{
 						if (ai->GetZonbi() == true) {
-							keikai_f = true;
-							lam = ai;
-							nearestpas();
-							pa = Escape_NPC;
-							m_speed = 3.0f;
-							retu_position = m_position;
-							break;
+							if (ai->Raifu_f == true) {
+								keikai_f = true;
+								lam = ai;
+								nearestpas();
+								pa = Escape_NPC;
+								m_speed = 3.0f;
+								retu_position = m_position;
+								break;
+							}
 						}
 					}
 				}
@@ -368,29 +370,6 @@ void AI::NPC_Search_Zonbi() //全てのゾンビと距離でダメージ判定をする。
 		mikatalest.clear();
 		mikata = 0;
 	}
-
-
-	//FindGameObjectsWithTag(10, [&](IGameObject* go) {
-	//	if (go != this) {            //自分からの距離を計測するため、検索結果から自分を除外する。
-	//		AI* ai = (AI*)go;
-	//		if (ai->Zonbe == 1) {   //それがゾンビだったら
-	//			float kyori = GetKyori(this->m_position, ai->m_position);//自分との距離を求める。
-	//			if (kyori < 1000) {
-	//				float angle = VectorAngleDeg(this->m_position - ai->m_position);
-	//				if (angle <= 60)
-	//				{
-	//					CVector3 j = this->m_position - ai->m_position;
-	//					j.y = 0.0f;
-	//					j.Normalize();
-	//					m_movespeed = j * (m_speed *(mobe + 1000));
-	//					m_movespeed.y += gravity;
-	//					m_position = A_charaCon.Execute(GameTime().GetFrameDeltaTime(), m_movespeed);
-	//					kannkaku = true;
-	//				}
-	//			}
-	//		}
-	//	}
-	//});
 	if (pl->GetattackF() >= 1) {
 		if ((pl->Getposition() - m_position).Length() <= 100.0f) {
 			m_speed = 0.0;

@@ -9,7 +9,7 @@ AI_manager::AI_manager()
 {
 	AI_ado = this;
 	wchar_t moveFilePath[256];
-	swprintf_s(moveFilePath, L"lever/levalAI%d%d.tks", 0, 2);
+	swprintf_s(moveFilePath, L"lever/levalAI%d%d.tks", 0, 1);
 	pasu[0].Load(moveFilePath, No);
 	No = 1;
 	swprintf_s(moveFilePath, L"lever/levalAI%d%d.tks", 2, 2);

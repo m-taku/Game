@@ -152,8 +152,10 @@ bool tekihei::Start()
 	
 	gaizi->SatFragu();//フラグをセットして、これ以上敵兵のインスタンスが生成されないようにする。
 	Pp = FindGO<Player>("Player");//プレイヤーのインスタンスを代入。
-	for (auto human : Humans) {
-		AI* pointa = (AI*)human;
+	auto human = Humans.begin();
+	human++;
+	for (; human < Humans.end(); human++) {
+		AI* pointa = (AI*)human[0];
 		pointa->Gettekihei(this);
 	}
 	return true;

@@ -314,6 +314,7 @@ void Player::Update()
 					collision_f = false;
 				//	blend = 1.0f;
 					game = true;
+					//m_animation.Play(idle, 0.2f);
 				}
 				if (m_charaCon.IsOnGround()) {
 					m_moveSpeed = CVector3::Zero;
