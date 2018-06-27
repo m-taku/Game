@@ -308,12 +308,11 @@ void tekihei::Update()
 					teki_siya[i] = acosf(tekifoward[i].Dot(teki_to_player[i]));//Ž‹–ì‚ÌŒvŽZ
 
 					teki_siya[i] = (180.0 / 3.14159)*teki_siya[i];
-					if (teki_siya[i] <= 45.0f&&teki_to_player_vector[i] < 1000.0f)
+					if (teki_siya[i] <= 45.0f&&teki_to_player_vector[i] < 1500.0f)
 					{
 						find_f[i] = 1;
 						moving[i] = 0;//moving‚ð0‚É‚µ‚ÄAi”Ô–Ú‚Ì“G•º‚É‚¢‚¿‚Î‚ñ’Z‚¢‹——£‚ÌƒpƒX”Ô†‚ð’²‚×‚é‚æ‚¤‚É‚·‚éB
 					}
-
 
 
 					teki_angle[i] = atanf(tekiright[i].Dot(teki_to_path_vector[i][target_num[i]]));
@@ -481,6 +480,7 @@ void tekihei::Update()
 						}
 
 						if (teki_to_player_vector[i] < 510)//”­ŽË‹——£‚Ü‚Å‹ß‚Ã‚¢‚½‚ç
+
 						{
 							if (tamaflag[i] == 0)
 							{
