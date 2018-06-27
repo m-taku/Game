@@ -78,13 +78,10 @@ void Taitor::Update()
 		if (Pad(0).IsTrigger(enButtonA)) {
 			//	fase->StartFadeOut();
 			furag = push;
-			//でバックコード
-			NewGO<Game>(0, "Game");
-			DeleteGO(this);
 		}
 		break;
 	case push:
-		BasisVector /= 1 - (1 / (seconds * fream));// GameTime().GetFrameDeltaTime()));
+		BasisVector /= 1 - (1 / (seconds / GameTime().GetFrameDeltaTime()));
 		target = player->Getbonepos();
 		player_Foeward = player->GetFoeward();
 		player_Foeward.y = 0.0f;
@@ -92,22 +89,23 @@ void Taitor::Update()
 		player_Foeward *= -1;
 		kakudo = siya();
 		kakudo /= seconds;
-		ka = nowkmVector - target;
+		ka = nowkmVector- nowkmtarget;
 		ka.y = 0.0f;
 		ka.Normalize();
-		UP.Cross(ka, player_Foeward);
+		UP.Cross(ka,player_Foeward);
 		UP.Normalize();
-		Crot.SetRotationDeg(UP, kakudo/fream);//*GameTime().GetFrameDeltaTime());
+		Crot.SetRotationDeg(UP, kakudo*GameTime().GetFrameDeltaTime());
 		Crot.Multiply(BasisVector);
-		kaunto = seconds * fream; // GameTime().GetFrameDeltaTime();
+		kaunto = seconds /GameTime().GetFrameDeltaTime();
 		//UP = player->Getboneup();
 		furag = suii;
 		break;
 	case suii:
+		kaunto = seconds / GameTime().GetFrameDeltaTime();
 		nowkmtarget += target / kaunto;
-		Crot.SetRotationDeg(UP, kakudo/fream);//*GameTime().GetFrameDeltaTime());
+		Crot.SetRotationDeg(UP, kakudo*GameTime().GetFrameDeltaTime());
 		Crot.Multiply(BasisVector);
-		BasisVector *= 1 - (1 / (seconds * fream));// / GameTime().GetFrameDeltaTime()));
+		BasisVector *= 1 - (1 / (seconds  / GameTime().GetFrameDeltaTime()));
 		if (taime++ > kaunto)
 		{
 			nowkmtarget = target;

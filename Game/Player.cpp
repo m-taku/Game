@@ -259,19 +259,21 @@ void Player::Update()
 				if (go != this) {            //自分からの距離を計測するため、検索結果から自分を除外する。
 					car* ai = (car*)go;
 					if (ai->GetmoveStop() == false) {//車が止まっていたら
-						CVector3 kyori1 = this->m_position - ai->Getposition();//自分との距離を求める。
-						float f = kyori1.Length();
-						if (f <= 600) { //距離が車間距離よりも短くなっていたら
-							kyori1.Normalize();
-							float kaku = acosf(kyori1.Dot(ai->Getforward()));//２つのべクトルの内積のアークコサインを求める。(ラジアン)
-							float degree = CMath::RadToDeg(kaku);
-							if (degree <= 45) {
-								game = false;
-								carpoint = ai;
-								carpoint->SoundklaxonPlay();
-								zikofrag = true;
-								muteki_Flag = true;
-							}
+					CVector3 kyori1 = this->m_position - ai->Getposition();//自分との距離を求める。
+					float f = kyori1.Length();
+					if (f <= 600) { //距離が車間距離よりも短くなっていたら
+						kyori1.Normalize();
+						float kaku = acosf(kyori1.Dot(ai->Getforward()));//２つのべクトルの内積のアークコサインを求める。(ラジアン)
+						float degree = CMath::RadToDeg(kaku);
+						if (degree <= 45) {
+							game = false;
+							carpoint = ai;
+							carpoint->SoundklaxonPlay(); 
+							m_moveSpeed = (m_forward*-1 * m_moveSpeed.Length()) + carpoint->Getforward()*1000.0f;
+							m_moveSpeed.y = 600.0f;
+							zikofrag = true;
+							muteki_Flag = true;
+
 						}
 					}
 				}
@@ -299,30 +301,20 @@ void Player::Update()
 	//車との衝突判定
 	if (zikofrag == true)
 	{
-		if ((carpoint->Getposition() - m_position).Length() <= 500&& collision_f== false)
-		{
-			collision_f = true;
-			m_moveSpeed = (m_forward*-1 * m_moveSpeed.Length()) + carpoint->Getforward()*1000.0f;
-			m_moveSpeed.y = 600.0f;
+
+		m_animation.Play(ziko, 0.4f);
+		/*//モノクロ	if (blend <= 1.0f) {
+							GraphicsEngine().GetMonochrome().SetAlpha(blend);
+							blend += 0.1f;
+						}*/
+		if (!m_animation.IsPlaying()) {
+			zikofrag = false;
+			//	blend = 1.0f;
+			game = true;
+			//m_animation.Play(idle, 0.2f);
 		}
-		else {
-			if (collision_f == true) {
-				m_animation.Play(ziko, 0.4f);
-/*//モノクロ	if (blend <= 1.0f) {
-					GraphicsEngine().GetMonochrome().SetAlpha(blend);
-					blend += 0.1f;
-				}*/
-				if (!m_animation.IsPlaying()) {
-					zikofrag = false;
-					collision_f = false;
-				//	blend = 1.0f;
-					game = true;
-					//m_animation.Play(idle, 0.2f);
-				}
-				if (m_charaCon.IsOnGround()) {
-					m_moveSpeed = CVector3::Zero;
-				}
-			}
+		if (m_charaCon.IsOnGround()) {
+			m_moveSpeed = CVector3::Zero;
 		}
 	}
 	Setposition(m_position);

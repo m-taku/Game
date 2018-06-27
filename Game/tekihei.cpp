@@ -565,7 +565,7 @@ void tekihei::Update()
 		if (tekiheiflag[i]==0)
 		{
 			if (tamaEF[i] != NULL) {//NULLじゃなかったら消す(ここでクラッシュしている。NULLが反応していない)。
-				DeleteGO(tamaEF[i]);
+				tamaEF[i]->Release();
 				tamaflag[i] = 0;
 				tamaEF[i] = NULL;
 			}

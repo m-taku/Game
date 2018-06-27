@@ -33,12 +33,12 @@ bool Stage::Start()
 	s_skinModel.Init(s_skinModelData);
 	////メッシュコライダーを作成。
 	m_physicsStaticObject.CreateMeshObject( m_skinModel,CVector3::Zero,CQuaternion::Identity);
-	//swprintf_s(moveFilePath, L"lever/matilevel%d0%d.tks", 0, 2);
-	//m_level[0].Build(moveFilePath);
-	//swprintf_s(moveFilePath, L"lever/matilevel%d0%d.tks", 1, 1);
-	//m_level[1].Build(moveFilePath);
-	//swprintf_s(moveFilePath, L"lever/matilevel%d0%d.tks", 2, 1);
-	//m_level[2].Build(moveFilePath);
+	swprintf_s(moveFilePath, L"lever/matilevel%d0%d.tks", 0, 2);
+	m_level[0].Build(moveFilePath);
+	swprintf_s(moveFilePath, L"lever/matilevel%d0%d.tks", 1, 1);
+	m_level[1].Build(moveFilePath);
+	swprintf_s(moveFilePath, L"lever/matilevel%d0%d.tks", 2, 1);
+	m_level[2].Build(moveFilePath);
 	//carを増やした時のの変更点
 	pasu2.push_back(movepasu1);
 	pasu2.push_back(movepasu2);
