@@ -258,18 +258,20 @@ void Player::Update()
 			FindGameObjectsWithTag(20, [&](IGameObject* go) {
 				if (go != this) {            //自分からの距離を計測するため、検索結果から自分を除外する。
 					car* ai = (car*)go;
-					CVector3 kyori1 = this->m_position - ai->Getposition();//自分との距離を求める。
-					float f = kyori1.Length();
-					if (f <= 600) { //距離が車間距離よりも短くなっていたら
-						kyori1.Normalize();
-						float kaku = acosf(kyori1.Dot(ai->Getforward()));//２つのべクトルの内積のアークコサインを求める。(ラジアン)
-						float degree = CMath::RadToDeg(kaku);
-						if (degree <= 45) {
-							game = false;
-							carpoint = ai;
-							carpoint->SoundklaxonPlay();
-							zikofrag = true;
-							muteki_Flag = true;
+					if (ai->GetmoveStop() == false) {//車が止まっていたら
+						CVector3 kyori1 = this->m_position - ai->Getposition();//自分との距離を求める。
+						float f = kyori1.Length();
+						if (f <= 600) { //距離が車間距離よりも短くなっていたら
+							kyori1.Normalize();
+							float kaku = acosf(kyori1.Dot(ai->Getforward()));//２つのべクトルの内積のアークコサインを求める。(ラジアン)
+							float degree = CMath::RadToDeg(kaku);
+							if (degree <= 45) {
+								game = false;
+								carpoint = ai;
+								carpoint->SoundklaxonPlay();
+								zikofrag = true;
+								muteki_Flag = true;
+							}
 						}
 					}
 				}
@@ -293,6 +295,8 @@ void Player::Update()
 	}
 	m_moveSpeed.y -= 980.0f * GameTime().GetFrameDeltaTime();
 	m_position = m_charaCon.Execute(GameTime().GetFrameDeltaTime(), m_moveSpeed);//移動。
+
+	//車との衝突判定
 	if (zikofrag == true)
 	{
 		if ((carpoint->Getposition() - m_position).Length() <= 500&& collision_f== false)

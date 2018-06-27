@@ -145,6 +145,9 @@ void car::Update()
 			ran->Setlen(0.0f);
             }
 	}
+	else {
+		move = 0.1f;
+	}
 
 	if (move == 0.0f) {
 		int i = 0;
