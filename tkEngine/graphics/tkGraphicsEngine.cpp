@@ -136,6 +136,12 @@ namespace tkEngine{
 					m_mainRenderTargetMSAADesc.Quality = Quality - 1;
 				}
 			}
+			std::vector<int> aiList;
+			auto aiList2 = aiList;
+			for (int ai : aiList)
+			{
+
+			}
 		}
 		bool ret = m_mainRenderTarget.Create(
 			m_frameBufferWidth,
@@ -146,7 +152,39 @@ namespace tkEngine{
 			DXGI_FORMAT_D32_FLOAT,
 			m_mainRenderTargetMSAADesc
 		);
-		
+		if (!ret) {
+			//çÏê¨é∏îs
+			return false;
+		}
+
+		m_volumeLightTargetMSAADesc.Count = 1;
+		m_volumeLightTargetMSAADesc.Quality = 0;
+		for (int i = 0;i < 2;i++)
+		{
+			ret = m_volumeLightTarget[i].Create(
+				m_frameBufferWidth,
+				m_frameBufferHeight,
+				1,
+				1,
+				DXGI_FORMAT_R32_FLOAT,
+				DXGI_FORMAT_D32_FLOAT,
+				m_volumeLightTargetMSAADesc
+			);
+			if (!ret) {
+				//çÏê¨é∏îs
+				return false;
+			}
+		}
+
+		ret = m_volumeLightTarget[2].Create(
+			m_frameBufferWidth,
+			m_frameBufferHeight,
+			1,
+			1,
+			DXGI_FORMAT_R16G16B16A16_FLOAT,
+			DXGI_FORMAT_D32_FLOAT,
+			m_volumeLightTargetMSAADesc
+		);
 		if (!ret) {
 			//çÏê¨é∏îs
 			return false;

@@ -4,8 +4,10 @@
 #include"taieki.h"
 #include"tekihei.h"
 #include"Geizi.h"
+#include"car.h"
 #define counter 10
-#include <string>
+#define taime 15.0f*30.0f
+#include<string>
 #include<codecvt>
 
 
@@ -25,13 +27,10 @@ bool Player::Start()
 	m_animclip[idle].Load(L"animData/playeridle.tka");
 	m_animclip[walk].Load(L"animData/playerwalk.tka");
 	m_animclip[attack].Load(L"animData/playerattack.tka");
-	m_animclip[attack2].Load(L"animData/playerattack2.tka");
-
+	m_animclip[ziko].Load(L"animData/liam_ziko.tka");
 	/*animclip[1].Load(L"animData/demoanime/walk.tka");
 	animclip[2].Load(L"animData/demoanime/run.tka");
-	animclip[0].SetLoopFlag(true);
-	animclip[1].SetLoopFlag(true);
-	animclip[2].SetLoopFlag(true);*/
+
 	/*std::string hoge("Character1_Head");
 	std::wstring_convert<std::codecvt_utf8<wchar_t>, wchar_t> c
 	v;
@@ -49,7 +48,7 @@ bool Player::Start()
 	m_animclip[idle].SetLoopFlag(true);
 	m_animclip[walk].SetLoopFlag(true);
 	m_animclip[attack].SetLoopFlag(false);
-	m_animclip[attack2].SetLoopFlag(false);
+	m_animclip[ziko].SetLoopFlag(false);
 	m_animation.Init(
 		m_skinModel,
 		m_animclip,
@@ -91,7 +90,7 @@ bool Player::Start()
 		m_animclip,
 		animnum
 	);*/
-	//SetZonbe();
+	SetZonbe();
 	mRot.MakeRotationFromQuaternion(m_rotation);
 	m_forward.x = mRot.m[2][0];
 	m_forward.y = mRot.m[2][1];
@@ -99,7 +98,9 @@ bool Player::Start()
 	m_forward.Normalize();
 	m_animation.Play(idle, 0.2f);
 	m_skinModel.Update(m_position, m_rotation, { 20.0f,20.0f,20.0f });// CVector3::One*20.0f);
-
+	//プレイヤーの呼吸音の初期化。
+	m_Respiration = NewGO<prefab::CSoundSource>(0);
+	m_Respiration->Init("sound/iki.wav", false);
 	return true;
 }
 void Player::Update()
@@ -107,6 +108,9 @@ void Player::Update()
 	if (game != false) {
 		//m_animation.Play(idle,0.2);
 
+		m_moveDecision = CVector3::Zero;//判定に使用するので初期化。
+
+		// 先輩 //NewGO<prefab::CVolumeLight>(0)->Init(&m_position);
 
 		m_moveSpeed.z = 0.0f;
 		m_moveSpeed.x = 0.0f;
@@ -156,7 +160,6 @@ void Player::Update()
 			m_moveSpeed.y = 400.0f;	//上方向に速度を設定して、
 			m_charaCon.Jump();		//キャラクターコントローラーにジャンプしたことを通知する。
 		}
-		m_moveSpeed.y -= 980.0f * GameTime().GetFrameDeltaTime();
 		//キャラクターコントローラーを使用して、座標を更新。
 		if (m_charaCon.IsOnGround()) {
 			//地面についた。
@@ -194,14 +197,18 @@ void Player::Update()
 		m_rite.y = mRot.m[0][1];
 		m_rite.z = mRot.m[0][2];
 		m_rite.Normalize();
-		if (X_button_Flag == false) {
+		if (X_button_Flag == false) {//Xボタンが押されていなかったら
 			m_moveSpeed += m_forward * lStick_y;
 			m_moveSpeed += m_rite * lStick_x;
+			m_moveDecision = m_moveSpeed;//少しでも動いていたら代入される。
 		}
-		else if (X_button_Flag == true) {
+		else if (X_button_Flag == true) {//Xボタンが押されていたら
 			m_moveSpeed += m_forward * Log_lStick_y;
 			m_moveSpeed += m_rite * lStick_x;
+			m_moveDecision = m_moveSpeed;//少しでも動いていたら代入される。
 		}
+
+		Play_Respiration(m_moveDecision);
 
 		if (hakaba->IsPlay() && landflag == 1 && land_to_player_vector <= 50.0f)
 		{
@@ -239,16 +246,80 @@ void Player::Update()
 			}
 			attackcounter++;
 		}
-		if (m_moveSpeed.x == 0.0f&&m_moveSpeed.z == 0.0f&&m_charaCon.IsOnGround() && attackF == 0)
+		if (m_moveSpeed.x == 0.0f&&m_moveSpeed.z == 0.0f&&m_charaCon.IsOnGround() && attackF == 0)//プレイヤーが止まっているとき
 		{
 			m_animation.Play(idle, 0.2f);
 		}
-		if (m_moveSpeed.x != 0.0f&&m_moveSpeed.z != 0.0f&&m_charaCon.IsOnGround() && attackF == 0)
+		if (m_moveSpeed.x != 0.0f&&m_moveSpeed.z != 0.0f&&m_charaCon.IsOnGround() && attackF == 0)//プレイヤーが歩いているとき
 		{
-			m_animation.Play(walk, 0.2f);
+			m_animation.Play(walk, 0.2f);	
+		}
+		if (muteki_Flag == false) {
+			FindGameObjectsWithTag(20, [&](IGameObject* go) {
+				if (go != this) {            //自分からの距離を計測するため、検索結果から自分を除外する。
+					car* ai = (car*)go;
+					CVector3 kyori1 = this->m_position - ai->Getposition();//自分との距離を求める。
+					float f = kyori1.Length();
+					if (f <= 600) { //距離が車間距離よりも短くなっていたら
+						kyori1.Normalize();
+						float kaku = acosf(kyori1.Dot(ai->Getforward()));//２つのべクトルの内積のアークコサインを求める。(ラジアン)
+						float degree = CMath::RadToDeg(kaku);
+						if (degree <= 45) {
+							game = false;
+							carpoint = ai;
+							carpoint->SoundklaxonPlay();
+							zikofrag = true;
+							muteki_Flag = true;
+						}
+					}
+				}
+			});
 		}
 	}
+	if (muteki_Flag == true) {
+		muteki_count++;
+		/*//モノクロ	float taim= taime;
+		if ((muteki_count / taim) >= (4.0f / 5.0f)) {
+			if (blend >= 0) {
+				GraphicsEngine().GetMonochrome().SetAlpha(blend);
+				blend -= 0.1f;
+			}
+		}*/
+		if (muteki_count >= taime) {//無敵化してから5秒が経過したら
+		//	GraphicsEngine().GetMonochrome().SetAlpha(0.0f);
+			muteki_Flag = false;
+			muteki_count = 0;
+		}
+	}
+	m_moveSpeed.y -= 980.0f * GameTime().GetFrameDeltaTime();
 	m_position = m_charaCon.Execute(GameTime().GetFrameDeltaTime(), m_moveSpeed);//移動。
+	if (zikofrag == true)
+	{
+		if ((carpoint->Getposition() - m_position).Length() <= 500&& collision_f== false)
+		{
+			collision_f = true;
+			m_moveSpeed = (m_forward*-1 * m_moveSpeed.Length()) + carpoint->Getforward()*1000.0f;
+			m_moveSpeed.y = 600.0f;
+		}
+		else {
+			if (collision_f == true) {
+				m_animation.Play(ziko, 0.4f);
+/*//モノクロ	if (blend <= 1.0f) {
+					GraphicsEngine().GetMonochrome().SetAlpha(blend);
+					blend += 0.1f;
+				}*/
+				if (!m_animation.IsPlaying()) {
+					zikofrag = false;
+					collision_f = false;
+				//	blend = 1.0f;
+					game = true;
+				}
+				if (m_charaCon.IsOnGround()) {
+					m_moveSpeed = CVector3::Zero;
+				}
+			}
+		}
+	}
 	Setposition(m_position);
 	m_skinModel.Update(m_position, m_rotation, { 20.0f,20.0f,20.0f });// CVector3::One*20.0f);
 	const CMatrix& boneM = m_skinModelData.GetSkeleton().GetBone(boneNo)->GetWorldMatrix();
@@ -277,6 +348,33 @@ void Player::Update()
 		}
 	});*/
 
+}
+void Player::Play_Respiration(CVector3 m_moveDecision)
+{
+	if (CVector_same_Decision(m_moveDecision, CVector3::Zero) != true) {//プレイヤーが止まっていなかったら
+		m_Respiration->Play(true);//呼吸音を再生する。
+	}
+	else {
+		m_Respiration->Stop();//呼吸音を止める。
+	}
+}
+bool Player::CVector_same_Decision(CVector3 a, CVector3 b) //2つのベクトルが同一かどうかを調べる。
+{
+	bool Hantei = false;
+	if (a.x == b.x) {
+		if (a.y == b.y) {
+			if (a.z == b.z) {//全部一緒だったら
+				Hantei = true;//Hanteiをtrueにする。
+			}
+		}
+	}
+
+	if (Hantei == true) {
+		return true;//2つのベクトルが一致したのでtrueを返す。
+	}
+	else {
+		return false;//2つのベクトルが一致しなかったのでfalseを返す。
+	}
 }
 void Player::Render(CRenderContext& rc)
 {

@@ -16,11 +16,13 @@ bool BGM::Start()
 	/*m_bdm_Title = NewGO<prefab::CSoundSource>(0);
 	m_bdm_Title->Init("sound/horror_zone1.wav", false);*/
 	m_bdm_Sneak = NewGO<prefab::CSoundSource>(0);
-	m_bdm_Sneak->Init("sound/horror_zone1.wav", false);
+	m_bdm_Sneak->Init("sound/horror_zone1.wav");
+	m_bdm_Sneak->Play(true);
+	Scene = Title;
 	/*m_bdm_Assault = NewGO<prefab::CSoundSource>(0);
 	m_bdm_Assault->Init("sound/horror_zone1.wav", false);*/
 
-	
+	return true;
 }
 
 void BGM::Play_Title() //ƒ^ƒCƒgƒ‹‚ÌBGM‚ğ—¬‚µ‚Ä‚¢‚é‚Æ‚«‚É“®‚­ŠÖ”B
@@ -50,7 +52,7 @@ void BGM::Play_Assault()//ƒAƒTƒ‹ƒg(“G•º‚Æí‚¤)‚ÌBGM‚ğ—¬‚µ‚Ä‚¢‚é‚Æ‚«‚É“®‚­ŠÖ”
 void BGM::Update()
 {
 
-
+	m_bdm_Sneak->Play(true);
 
 	switch (Scene)//¡A‚Ç‚ÌBGM‚ğ—¬‚·‚©‚ğ”»’f‚·‚éB
 	{

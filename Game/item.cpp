@@ -28,20 +28,20 @@ bool item::Start()
 void item::Update()
 {
 
-	for (int i = 0;i < tekikazu;i++)
-	{
-		if (tp != NULL)
-		{
-			if (tp->tekiheiflag[i] == 0)
-			{
-				itemf[i] = 1;
-				itempos[i] = tp->tekipos[i];
-			}
-		}
-		if(itemf[i]==1)
-		itemModel[i].Update(itempos[i], itemrot[i], CVector3::One);
-	}
-	
+	//for (int i = 0;i < tekikazu;i++)
+	//{
+	//	if (tp != NULL)
+	//	{
+	//		if (tp->tekiheiflag[i] == 0)
+	//		{
+	//			itemf[i] = 1;
+	//			itempos[i] = tp->tekipos[i];
+	//		}
+	//	}
+	//	if(itemf[i]==1)
+	//	itemModel[i].Update(itempos[i], itemrot[i], CVector3::One);
+	//}
+	//
 }
 
 void item::Render(CRenderContext& rc)

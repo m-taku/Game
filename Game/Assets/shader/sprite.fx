@@ -22,7 +22,7 @@ sampler Sampler : register(s0);
 PSInput VSMain(VSInput In) 
 {
 	PSInput psIn;
-	psIn.pos = mul( mvp, In.pos );
+	psIn.pos = mul(mvp, In.pos);
 	psIn.uv = In.uv;
 	return psIn;
 }

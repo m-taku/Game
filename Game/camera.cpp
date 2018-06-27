@@ -59,4 +59,5 @@ void camera::Update()
 	MainCamera().SetFar(50000.0f);
 	MainCamera().SetPosition(Ppos);
 	MainCamera().Update();
+	GraphicsEngine().GetMonochrome();
 }

@@ -55,8 +55,8 @@ public:
 private:
 	int No = 0;
 	int Leftfrag = 0;
-	std::vector<AI*> Rsimin;
-	std::vector<AI*> Lsimin;
+	std::vector<Osu*> Rsimin;
+	std::vector<Osu*> Lsimin;
 	std::vector<int> RAIseizon;
 	std::vector<int> LAIseizon;
 
@@ -160,5 +160,4 @@ private:
 	int zombie_sum = 0;
 	int shimin_sum = 0;
 };
-
 extern AI_manager* AI_ado;

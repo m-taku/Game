@@ -3,7 +3,7 @@
 #include"Player.h"
 #include"Game.h"
 #define kaku 15.0f
-
+#define fream 30
 #define seconds 5
 Taitor::Taitor()
 {
@@ -22,7 +22,7 @@ bool Taitor::Start()
 	//y_sprite.Init(y_texture, 100, 50);
 	//y_sprite.Update(n_position, Quaternion, { 1.0f,1.0f,1.0f });
 	BasisVector = { 0.0f,5000.0f,5000.0f };
-	//	fase->StartFadeOut();
+	fase->StartFadeIn();
 	furag = steat;
 	fase->StartFadeIn();
 	return true;
@@ -71,8 +71,6 @@ void Taitor::Update()
 //	y_sprite.Update(n_position, Quaternion,{ 1.0f,1.0f,1.0f });
 	//Crot.SetRotationDeg(UP, 2.0f);
 	//Crot.Multiply(BasisVector);
-	static int taime = 0;
-	float kjhbuij;
 	switch (furag) {
 	case steat:
 		Crot.SetRotationDeg(UP, kaku*GameTime().GetFrameDeltaTime());
@@ -80,11 +78,13 @@ void Taitor::Update()
 		if (Pad(0).IsTrigger(enButtonA)) {
 			//	fase->StartFadeOut();
 			furag = push;
-			
+			//でバックコード
+			NewGO<Game>(0, "Game");
+			DeleteGO(this);
 		}
 		break;
 	case push:
-		BasisVector /= 1 - (1 / (seconds / GameTime().GetFrameDeltaTime()));
+		BasisVector /= 1 - (1 / (seconds * fream));// GameTime().GetFrameDeltaTime()));
 		target = player->Getbonepos();
 		player_Foeward = player->GetFoeward();
 		player_Foeward.y = 0.0f;
@@ -97,18 +97,17 @@ void Taitor::Update()
 		ka.Normalize();
 		UP.Cross(ka, player_Foeward);
 		UP.Normalize();
-		Crot.SetRotationDeg(UP, kakudo*GameTime().GetFrameDeltaTime());
+		Crot.SetRotationDeg(UP, kakudo/fream);//*GameTime().GetFrameDeltaTime());
 		Crot.Multiply(BasisVector);
-		kaunto = seconds / GameTime().GetFrameDeltaTime();
-		//	UP = player->Getboneup();
+		kaunto = seconds * fream; // GameTime().GetFrameDeltaTime();
+		//UP = player->Getboneup();
 		furag = suii;
 		break;
 	case suii:
 		nowkmtarget += target / kaunto;
-		Crot.SetRotationDeg(UP, kakudo*GameTime().GetFrameDeltaTime());
+		Crot.SetRotationDeg(UP, kakudo/fream);//*GameTime().GetFrameDeltaTime());
 		Crot.Multiply(BasisVector);
-		BasisVector *=1-(1/(seconds /GameTime().GetFrameDeltaTime()));
-
+		BasisVector *= 1 - (1 / (seconds * fream));// / GameTime().GetFrameDeltaTime()));
 		if (taime++ > kaunto)
 		{
 			nowkmtarget = target;
@@ -157,7 +156,7 @@ void Taitor::Update()
 	BasisVector -= ka;
 	MainCamera().SetTarget(nowkmtarget);
 	MainCamera().SetNear(1.0f);
-	//MainCamera().SetUp(Getboneup());
+	MainCamera().SetUp(CVector3::AxisY);
 	MainCamera().SetFar(50000.0f);
 	MainCamera().SetPosition(nowkmVector);
 	MainCamera().Update();

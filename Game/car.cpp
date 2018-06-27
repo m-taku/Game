@@ -41,13 +41,13 @@ bool car::Start()
 	//	Human* ai = Humans[u];
 	//	HumanLest.push_back(ai);
 	//}
-	m_noise = NewGO<prefab::CSoundSource>(0);
-	m_noise->Init("sound/car_noise.wav", true);
-	m_noise->AddSoundStopCallback([&]() {
-		//ƒTƒEƒ“ƒh‚ª’â~‚µ‚½‚ç‚±‚ÌŠÖ”‚ªŒÄ‚Î‚ê‚é
-		
-	});
-	
+	//m_noise = NewGO<prefab::CSoundSource>(0);
+	//m_noise->Init("sound/car_noise.wav", true);
+	//m_noise->AddSoundStopCallback([&]() {
+	//	//ƒTƒEƒ“ƒh‚ª’â~‚µ‚½‚ç‚±‚ÌŠÖ”‚ªŒÄ‚Î‚ê‚é
+	//	
+	//});
+	//
 	//m_noise->Play(false);//‰‚ß‚Ä~‚Ü‚Á‚½‚Ì‚ÅAƒNƒ‰ƒNƒVƒ‡ƒ“‚ğ–Â‚ç‚·B
 
 
@@ -125,17 +125,17 @@ void car::Update()
 		//if (frag <= 0) {
 		Move();
 		//}
-
-		if (move != 0.0f) {//“®‚¢‚Ä‚¢‚½‚ç
-			if(m_noise->Get3DSoundFlag() ==true)
-			m_noise->Play(true);//Ô‚Ì‘–s‰¹‚ğ—¬‚·B
-		}
-		else {//~‚Ü‚Á‚Ä‚¢‚½‚ç
-			m_noise->Stop();//Ô‚Ì‘–s‰¹‚ğ~‚ß‚éB
-		}
+//ƒGƒ“ƒWƒ“‰¹@‚Æ‚è‚ ‚¦‚¸Á‚µ‚½
+		//if (move != 0.0f) {//“®‚¢‚Ä‚¢‚½‚ç
+		//	if(m_noise->Get3DSoundFlag() ==true)
+		//	m_noise->Play(true);//Ô‚Ì‘–s‰¹‚ğ—¬‚·B
+		//}
+		//else {//~‚Ü‚Á‚Ä‚¢‚½‚ç
+		//	m_noise->Stop();//Ô‚Ì‘–s‰¹‚ğ~‚ß‚éB
+		//}
 		//ƒNƒ‰ƒNƒVƒ‡ƒ“‚ğ–Â‚ç‚·‚©‚ğ”»’è‚·‚éB
 		if (klaxonFlag == true) {//ƒNƒ‰ƒNƒVƒ‡ƒ“‚ğ–Â‚ç‚µ‚½B
-			SoundklaxonPlay();
+			//SoundklaxonPlay();
 		}
 
 		if (klaxonFlag == false) {
@@ -153,7 +153,7 @@ void car::Update()
 	}
 	//ƒNƒ‰ƒNƒVƒ‡ƒ“‚ğ–Â‚ç‚·‚©‚ğ”»’è‚·‚éB
 	if (klaxonFlag == true) {//ƒNƒ‰ƒNƒVƒ‡ƒ“‚ğ–Â‚ç‚µ‚½B
-		SoundklaxonPlay();
+//@todo for debug		SoundklaxonPlay();
 	}else{
 		stopFlag = false;
 	}
@@ -237,7 +237,7 @@ void car::Stop()
 			CVector3 kyori1 = Humanlest->Getposition() - this->m_position;//©•ª‚Æ‚Ì‹——£‚ğ‹‚ß‚éB
 			float f = kyori1.Length();
 			if(!Humanlest->GetZonbi()){
-				if (f <= 800) { //‹——£‚ª‹–ì“à‚¾‚Á‚½‚ç
+				if (f <= 1000) { //‹——£‚ª‹–ì“à‚¾‚Á‚½‚ç
 					kyori1.Normalize();
 					kyori1.y = 0.0f;
 					float kaku = acosf(kyori1.Dot(m_forward));//‚Q‚Â‚Ì‚×ƒNƒgƒ‹‚Ì“àÏ‚ÌƒA[ƒNƒRƒTƒCƒ“‚ğ‹‚ß‚éB(ƒ‰ƒWƒAƒ“)
@@ -246,8 +246,9 @@ void car::Stop()
 					{
 						//‚±‚Ìˆê˜A‚Ìˆ—‚ğ‘±‚¯‚Ä‚¢‚é‚Æ‚«‚Í~‚Ü‚Á‚Ä‚¢‚éB
 						move = -0.1;
+						distance = 1000.0f;
 						Humanfrag = true;
-						klaxonFlag = true;//ƒNƒ‰ƒNƒVƒ‡ƒ“‚ğ–Â‚ç‚·B~‚Ü‚è‘±‚¯‚éŒÀ‚ètrue‚Ì‚Ü‚Ü‚É‚È‚éB
+						//tudo for debg klaxonFlag = true;//ƒNƒ‰ƒNƒVƒ‡ƒ“‚ğ–Â‚ç‚·B~‚Ü‚è‘±‚¯‚éŒÀ‚ètrue‚Ì‚Ü‚Ü‚É‚È‚éB
 					}
 				}
 			}
@@ -307,7 +308,12 @@ void car::CarSound_SetPosition()//ˆê˜A‚Ì‚³‚¤‚ñ‚Ç‚Ìˆ—‚ğ‚·‚éB
 void car::SoundklaxonPlay()//ƒNƒ‰ƒNƒVƒ‡ƒ“‚ÌƒTƒEƒ“ƒh‚ğ–Â‚ç‚³‚ê‚½‚Éˆê‰ñ‚¾‚¯—¬‚·B
 {
 	if (stopFlag == false) {
+
+		prefab::CSoundSource*m_noise = nullptr;
 		prefab::CSoundSource*m_klaxon = nullptr;
+		m_noise = NewGO<prefab::CSoundSource>(0);
+		m_noise->Init("sound/Sudden_braking.wav", true);
+		m_noise->Play(false);
 		m_klaxon = NewGO<prefab::CSoundSource>(0);
 		m_klaxon->Init("sound/klaxon.wav", true);
 		m_klaxon->Play(false);//‰‚ß‚Ä~‚Ü‚Á‚½‚Ì‚ÅAƒNƒ‰ƒNƒVƒ‡ƒ“‚ğ–Â‚ç‚·B
@@ -316,6 +322,7 @@ void car::SoundklaxonPlay()//ƒNƒ‰ƒNƒVƒ‡ƒ“‚ÌƒTƒEƒ“ƒh‚ğ–Â‚ç‚³‚ê‚½‚Éˆê‰ñ‚¾‚¯—¬‚·
 			stopFlag = true;//ƒXƒgƒbƒv‚µ‚½B
 		});
 		//ƒTƒEƒ“ƒh‚Ìƒ|ƒWƒVƒ‡ƒ“‚ğİ’è‚·‚éB
+		m_noise->SetPosition(m_position);
 		m_klaxon->SetPosition(m_position);
 	//if (Humanfrag == false) {//Ô‚ª“®‚«o‚µ‚½B
 	//	stopFlag = false;//uƒXƒgƒbƒv‚µ‚½v‚Æ‚¢‚¤ƒtƒ‰ƒO‚ğŒ³‚É–ß‚µ‚Ä‚¨‚­B

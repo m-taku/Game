@@ -2,8 +2,10 @@
 #include"Human.h"
 #include "tkEngine/character/tkCharacterController.h"
 #include "tkEngine/graphics/effect/tkEffect.h"
+#include"tkEngine/sound/tkSoundSource.h"
 #define tama 20
 class taieki;
+class car;
 class Player : public Human
 {
 public:
@@ -12,9 +14,9 @@ public:
 	bool Start();
 	void Update();
 	void Render(CRenderContext& rc);
-	CVector3& GetPosition()
+	CVector3 GetPosition()
 	{
-		return Getposition();
+		return m_position;
 	}
 	CVector3& Getboneforward()
 	{
@@ -25,9 +27,14 @@ public:
 	{
 		return bonepos;
 	}
-	void SetGame()
+	void trueGame()
 	{
 		game = true;
+	}
+	void falseGame()
+	{
+		game = false;
+
 	}
 	CVector3& GetFoeward()
 	{
@@ -52,6 +59,10 @@ public:
 	{
 		return attackF;
 	}
+
+	void Play_Respiration(CVector3 m_moveDecision);//息遣いの音を再生させるかを判断する。
+
+	bool CVector_same_Decision(CVector3 a, CVector3 b);//二つのベクトルが同一なのかを調べる。
 	
 private:
 	CSkinModel m_skinModel;					//スキンモデル。
@@ -63,6 +74,7 @@ private:
 			//キャラクタコントローラ。
 	CVector3 m_moveSpeed = CVector3::Zero;
 	CVector3 m_position = CVector3::Zero;
+	CVector3 m_moveDecision = CVector3::Zero;//動いているのかを判定する。
 				//スペキュラマップ。
 	CVector3 m_forward=CVector3::Zero;						//プレイヤーの前方。
 	CVector3 m_rite= CVector3::Zero;						//プレイヤーの右方向
@@ -89,14 +101,15 @@ private:
 	int bonenum = 0;
 	int boneNo = 0;
 	CVector3 bonepos = CVector3::Zero;
-	
+	bool zikofrag = false;
 	enum animation {
 		idle,
 		walk,
 		attack,
-		attack2,
+		ziko,
 		animnum
 	};
+	car* carpoint;
 	CAnimation m_animation;
 	CShaderResourceView zondi;
 	CAnimationClip m_animclip[animnum];
@@ -110,9 +123,14 @@ private:
 	bool game = false;
 	//////////T.M////////////////////////////
 	float Log_lStick_x = 0.0f;
+
 	float Log_lStick_y = 0.0f;
+	float muteki_count = 0;//無敵時間のカウント。
+	bool  muteki_Flag = false;
+	bool collision_f = false;
+	float blend = 0.0f;
 	//CVector3 m_moveSpeed_log = CVector3::Zero;//moveSpeedを保持する。
 	bool X_button_Flag = false;//Xボタンが押されたかどうかを保持するフラグ。
-
+	prefab::CSoundSource*m_Respiration = nullptr;//息使いの音。歩くときに流す。
 };
 
