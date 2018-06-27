@@ -12,6 +12,7 @@ public:
 
 	Pasu pasu[10];
 	bool Start(); 
+	void Update();
 	void SatRSaizon(int No)
 	{
 		RAIseizon[No] = 0;
@@ -156,7 +157,8 @@ private:
 	std::vector<int> AIL43 = { 54,55,34,33,36,35,37,63,61,57 };
 	std::vector<std::vector<int>> da2;
 	std::vector<std::vector<int>> da;
-
+	int zombie_sum = 0;
+	int shimin_sum = 0;
 };
 
 extern AI_manager* AI_ado;
