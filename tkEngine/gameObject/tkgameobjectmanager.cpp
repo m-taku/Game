@@ -65,14 +65,9 @@ namespace tkEngine{
 		//‰e‚ð—Ž‚Æ‚·‚½‚ß‚Ìî•ñ‚ð“]‘—B
 		GraphicsEngine().GetShadowMap().SendShadowReceiveParamToGPU(renderContext);
 		GraphicsEngine().GetGBufferRender().SendGBufferParamToGPU(renderContext);
-		int no = 0;
-		IGameObject* obj1;
 		for (GameObjectList objList : m_gameObjectListArray) {
 			for (IGameObject* obj : objList) {
 				obj->PreRenderWrapper(renderContext);
-				if (no++ == 2) {
-					obj1 = obj;
-				}
 			}
 		}
 		for (GameObjectList objList : m_gameObjectListArray) {

@@ -101,7 +101,7 @@ private:
 	int bonenum = 0;
 	int boneNo = 0;
 	CVector3 bonepos = CVector3::Zero;
-	bool zikofrag = false;
+	bool zikofrag = false;//‚Í‚Ë‚ç‚ê‚½‚©‚Ç‚¤‚©‚ğ•Û‚·‚éB‚Í‚Ë‚ç‚ê‚½‚çtrue‚É‚È‚éB
 	enum animation {
 		idle,
 		walk,

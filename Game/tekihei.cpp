@@ -308,12 +308,11 @@ void tekihei::Update()
 					teki_siya[i] = acosf(tekifoward[i].Dot(teki_to_player[i]));//視野の計算
 
 					teki_siya[i] = (180.0 / 3.14159)*teki_siya[i];
-					if (teki_siya[i] <= 45.0f&&teki_to_player_vector[i] < 1000.0f)
+					if (teki_siya[i] <= 45.0f&&teki_to_player_vector[i] < 1500.0f)
 					{
 						find_f[i] = 1;
 						moving[i] = 0;//movingを0にして、i番目の敵兵にいちばん短い距離のパス番号を調べるようにする。
 					}
-
 
 
 					teki_angle[i] = atanf(tekiright[i].Dot(teki_to_path_vector[i][target_num[i]]));
@@ -472,20 +471,21 @@ void tekihei::Update()
 
 					if (teki_siya[i] <= 45.0f)
 					{
-						if (teki_to_player_vector[i] < 1000.0f&&teki_to_player_vector[i] >= 500.0f)
+						if (teki_to_player_vector[i] < 1000.0f&&teki_to_player_vector[i] >= 500.0f)//視認距離内かつ射程距離外だったら
 						{
-							tekispeed[i] = teki_to_player[i] * 300.0f;
+							tekispeed[i] = teki_to_player[i] * 300.0f;//プレイヤーへ近づく。
 						}
 						else {
 							tekispeed[i] = CVector3::Zero;
 						}
 
-						if (teki_to_player_vector[i] < 510)
+						if (teki_to_player_vector[i] < 510)//発射距離まで近づいたら
+
 						{
 							if (tamaflag[i] == 0)
 							{
 								tamamuki[i] = teki_to_player[i];
-								tamaEF[i] = NewGO<prefab::CEffect>(0);
+								tamaEF[i] = NewGO<prefab::CEffect>(0);//エフェクトの生成。
 								tamapos[i] = tekipos[i];
 								tamapos[i].y += 85.0f;
 								tamaEF[i]->Play(L"effect/aura.efk");
@@ -565,8 +565,9 @@ void tekihei::Update()
 		if (tekiheiflag[i]==0)
 		{
 			if (tamaEF[i] != NULL) {//NULLじゃなかったら消す(ここでクラッシュしている。NULLが反応していない)。
-				//DeleteGO(tamaEF[i]);
+				tamaEF[i]->Release();
 				tamaflag[i] = 0;
+				tamaEF[i] = NULL;
 			}
 		}
 

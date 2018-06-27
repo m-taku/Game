@@ -739,7 +739,7 @@ void AI::Chasepas(CVector3 m_position)
 				mokuhyou = game->pasu[Leftfrag].Getresuto(mokuhyouNo)->No[Linknum];
 			}
 		}*/
-		search(lam->m_position);
+		search(m_position);
 		if (jyunban[0] == jyunban[1])
 		{
 			switch (Leftfrag)		
