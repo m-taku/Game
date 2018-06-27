@@ -39,6 +39,7 @@ namespace tkEngine{
 	ID3D11DepthStencilState* DepthStencilState::disable = nullptr;			//!<すべて無効。
 	ID3D11DepthStencilState* DepthStencilState::SceneRender = nullptr;		//!<3Dモデルを描画する時の基本的な深度ステンシルステート。
 	ID3D11DepthStencilState* DepthStencilState::spriteRender = nullptr;		//!<2D描画する時の基本的な深度ステンシルステート。
+	ID3D11DepthStencilState* DepthStencilState::volumeLight = nullptr;		//!<ボリュームライトを描画するとき
 	void DepthStencilState::Init(CGraphicsEngine& ge)
 	{
 		D3D11_DEPTH_STENCIL_DESC desc;
@@ -59,11 +60,14 @@ namespace tkEngine{
 		desc.BackFace.StencilFunc = D3D11_COMPARISON_ALWAYS;
 
 		pd3d->CreateDepthStencilState(&desc, &SceneRender);
-
+		desc.DepthFunc = D3D11_COMPARISON_GREATER;
+		pd3d->CreateDepthStencilState(&desc, &volumeLight);
+		desc.DepthFunc = D3D11_COMPARISON_LESS_EQUAL;
 		desc.DepthEnable = false;
 		desc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ZERO;
 		pd3d->CreateDepthStencilState(&desc, &disable);
 		pd3d->CreateDepthStencilState(&desc, &spriteRender);
+
 	}
 	ID3D11RasterizerState*	RasterizerState::sceneRender = nullptr;		//!<3Dモデルを描画する時の基本的なラスタライザステート。
 	ID3D11RasterizerState*	RasterizerState::spriteRender = nullptr;	//!<2D描画する時の基本的なラスタライザステート。
