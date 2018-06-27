@@ -87,15 +87,16 @@ int keiroK::Kans(int count)
 			n.ime * 100 + n.tunagi
 		);
 		//std::map<int,ando>::iterator tmp = open.begin();
-		for (auto ka : open) {
-			if (ka.second.tunagi == nodes[i].ime&&ka.second.ime==nodes[i].tunagi)
+		for (auto& ka : open) {
+			if (ka.second.tunagi == nodes[i].ime && ka.second.ime==nodes[i].tunagi)
 			{
-				if (nodes[i].cost < ka.second.cost) {
-					ka.second.m_position = nodes[i].m_position;
-					ka.second.ime = nodes[i].ime;
-					ka.second.cost = nodes[i].cost;
-					ka.second.beforeNo = nodes[i].beforeNo;
-				}
+				//if (nodes[i].cost < ka.second.cost) {
+				//	ka.second.m_position = nodes[i].m_position;
+				//	ka.second.ime = nodes[i].ime;
+
+				//	ka.second.cost = nodes[i].cost;
+				//	ka.second.beforeNo = nodes[i].beforeNo;
+				//}
 				findfrag = true;
 				break;
 			}
@@ -103,7 +104,7 @@ int keiroK::Kans(int count)
 	//	std::map<int ,ando>::iterator tmp1 = close.begin();
 		if (findfrag == false) {
 			for (auto ka : close) {
-				if (ka.second.tunagi == nodes[i].ime&&ka.second.ime == nodes[i].tunagi)
+				if (ka.second.tunagi == nodes[i].ime && ka.second.ime == nodes[i].tunagi)
 				{
 					if (nodes[i].cost < ka.second.cost) {
 						ando tmp5;
