@@ -13,13 +13,13 @@ public:
 	Pasu pasu[10];
 	bool Start(); 
 	void Update();
-	void SatRSaizon(int No)
+	void SatRSaizon(int No,int suu)
 	{
-		RAIseizon[No] = 0;
+		RAIseizon[No] = suu;
 	}
-	void SatLSaizon(int No)
+	void SatLSaizon(int No, int suu)
 	{
-		LAIseizon[No] = 0;
+		LAIseizon[No] = suu;
 	}
 	void SetLeft()
 	{

@@ -63,10 +63,10 @@ public:
 	void Play_Respiration(CVector3 m_moveDecision);//息遣いの音を再生させるかを判断する。
 
 	bool CVector_same_Decision(CVector3 a, CVector3 b);//二つのベクトルが同一なのかを調べる。
-	
-private:
+
 	CSkinModel m_skinModel;					//スキンモデル。
 	CSkinModelData m_skinModelData;			//スキンモデルデータ。
+private:
 	prefab::CDirectionLight* m_charaLight = nullptr;	//!<キャラクタ用のライト。
 	CCharacterController m_charaCon;
 	CShaderResourceView m_normalMap;		//法線マップ。

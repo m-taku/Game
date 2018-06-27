@@ -9,7 +9,7 @@ AI_manager::AI_manager()
 {
 	AI_ado = this;
 	wchar_t moveFilePath[256];
-	swprintf_s(moveFilePath, L"lever/levalAI%d%d.tks", 0, 2);
+	swprintf_s(moveFilePath, L"lever/levalAI%d%d.tks", 0, 1);
 	pasu[0].Load(moveFilePath, No);
 	No = 1;
 	swprintf_s(moveFilePath, L"lever/levalAI%d%d.tks", 2, 2);
@@ -105,14 +105,11 @@ AI_manager::AI_manager()
 AI_manager::~AI_manager()
 {
 	for (int k = 0; k < Rsimin.size(); k++) {
-		if (RAIseizon[k] >= 1) {
-			DeleteGO(Rsimin[k]);
-		}
+		DeleteGO(Rsimin[k]);
+
 	}
 	for (int k = 0; k < Lsimin.size(); k++) {
-		if (LAIseizon[k] >= 1) {
-			DeleteGO(Lsimin[k]);
-		}
+		DeleteGO(Lsimin[k]);
 	}
 }
 bool AI_manager::Start()
@@ -132,5 +129,15 @@ void AI_manager::Update()
 			zombie_sum++;
 		}
 	}
-
+	for (int i = 0; i < da2.size(); i++)
+	{
+		if (LAIseizon[i] == 1)
+		{
+			shimin_sum++;
+		}
+		if (LAIseizon[i] == 0)
+		{
+			zombie_sum++;
+		}
+	}
 }

@@ -84,8 +84,6 @@ bool car::Start()
 	if (stage->GatNo() >= 23) {//carを増やすときに変える。
 		stage->risetteNo();
 	}
-
-
 	m_skinModelData.Load(L"modelData/Vehicle_SUV1.cmo");//プレイヤーを書け
 	m_skinModel.Init(m_skinModelData);
 

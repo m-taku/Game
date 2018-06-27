@@ -196,13 +196,14 @@ private:
 	std::vector<AI*> mikatalest;
 	bool keikai_f = false;
 	CVector3 retu_position = CVector3::Zero;
-	int mobe = 50;
+	int mobe = 500;
 	std::vector<Human*>::iterator AIrest;
 
-	float atakkukyori = 100.0f;
+	float atakkukyori = 200.0f;
 	int furag = 0;
 	bool kannkaku = false;
 	int Leftfrag = 0;
+	int destination_Leftfrag = 0;
 	bool kaiten = false;
 	CObjectFrustumCulling m_objectFrustumCulling;
 	float angle = 0.0f;
@@ -221,7 +222,6 @@ private:
 	CVector3 before_m_position = CVector3::Zero;		//一つ前の座標。
 	std::vector<int> jyunban;
 	CVector3 flydist=CVector3::Zero;
-
 	AI* Chawse_Zombie;  //追跡してくるキャラを格納する。
 };
 

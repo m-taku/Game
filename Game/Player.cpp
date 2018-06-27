@@ -267,7 +267,9 @@ void Player::Update()
 						if (degree <= 45) {
 							game = false;
 							carpoint = ai;
-							carpoint->SoundklaxonPlay();
+							carpoint->SoundklaxonPlay(); 
+							m_moveSpeed = (m_forward*-1 * m_moveSpeed.Length()) + carpoint->Getforward()*1000.0f;
+							m_moveSpeed.y = 600.0f;
 							zikofrag = true;
 							muteki_Flag = true;
 						}
@@ -295,29 +297,20 @@ void Player::Update()
 	m_position = m_charaCon.Execute(GameTime().GetFrameDeltaTime(), m_moveSpeed);//à⁄ìÆÅB
 	if (zikofrag == true)
 	{
-		if ((carpoint->Getposition() - m_position).Length() <= 500&& collision_f== false)
-		{
-			collision_f = true;
-			m_moveSpeed = (m_forward*-1 * m_moveSpeed.Length()) + carpoint->Getforward()*1000.0f;
-			m_moveSpeed.y = 600.0f;
+
+		m_animation.Play(ziko, 0.4f);
+		/*//ÉÇÉmÉNÉç	if (blend <= 1.0f) {
+							GraphicsEngine().GetMonochrome().SetAlpha(blend);
+							blend += 0.1f;
+						}*/
+		if (!m_animation.IsPlaying()) {
+			zikofrag = false;
+			//	blend = 1.0f;
+			game = true;
+			//m_animation.Play(idle, 0.2f);
 		}
-		else {
-			if (collision_f == true) {
-				m_animation.Play(ziko, 0.4f);
-/*//ÉÇÉmÉNÉç	if (blend <= 1.0f) {
-					GraphicsEngine().GetMonochrome().SetAlpha(blend);
-					blend += 0.1f;
-				}*/
-				if (!m_animation.IsPlaying()) {
-					zikofrag = false;
-					collision_f = false;
-				//	blend = 1.0f;
-					game = true;
-				}
-				if (m_charaCon.IsOnGround()) {
-					m_moveSpeed = CVector3::Zero;
-				}
-			}
+		if (m_charaCon.IsOnGround()) {
+			m_moveSpeed = CVector3::Zero;
 		}
 	}
 	Setposition(m_position);
