@@ -98,17 +98,16 @@ bool Player::Start()
 	m_forward.Normalize();
 	m_animation.Play(idle, 0.2f);
 	m_skinModel.Update(m_position, m_rotation, { 20.0f,20.0f,20.0f });// CVector3::One*20.0f);
-
 	//プレイヤーの呼吸音の初期化。
 	m_Respiration = NewGO<prefab::CSoundSource>(0);
 	m_Respiration->Init("sound/iki.wav", false);
-	
 	return true;
 }
 void Player::Update()
 {
 	if (game != false) {
 		//m_animation.Play(idle,0.2);
+
 		m_moveDecision = CVector3::Zero;//判定に使用するので初期化。
 
 		// 先輩 //NewGO<prefab::CVolumeLight>(0)->Init(&m_position);
