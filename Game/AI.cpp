@@ -52,7 +52,7 @@ bool AI::Start()
 	//mRot.MakeRotationFromQuaternion();
 	A_charaCon.Init(
 		30.0,			//”¼ŒaB 
-		150.0f,			//‚‚³B
+		100.0f,			//‚‚³B
 		m_position,		//‰ŠúˆÊ’uB
 		0
 	);
@@ -166,31 +166,19 @@ void AI::NPCResistance_Player()//ƒvƒŒƒCƒ„[‚Ö‚Ì’ïR‚ÉŠÖ‚·‚éˆ—BƒI[ƒo[ƒ‰ƒCƒh‚
 
 void AI::NPCDamage()
 {
-	static int count = 0; //30ƒtƒŒ[ƒ€‚ğƒJƒEƒ“ƒg‚·‚éB
-	if (count >= 30) {
-		//30ƒtƒŒ[ƒ€Œo‰ß‚µ‚½‚çƒ]ƒ“ƒr‰»B
-		nearestpas();
-		item* ite = NewGO<item>(0, "item");
-		ite->Set_itempos(m_position);
-		lam = nullptr;
-		Chasefrag = 0;
-		Raifu_f = false;
-		SetZonbe();
-		NPCHP = 100.0f;
-		NPCMAXHP = 100.0f;
-		m_speed = 1.5;
-		if (Leftfrag <= 0) {
-			game->SatRSaizon(iNo,0);
-		}
-		else {
-			game->SatLSaizon(iNo,0);
-		}
-		pa = Zombie_Normal; //ƒpƒ^[ƒ“‚ğƒ]ƒ“ƒrƒm[ƒ}ƒ‹‚É•Ï‚¦‚éB
+	nearestpas();
+	lam = nullptr;
+	Chasefrag = 0;
+	Raifu_f = false;
+	NPCHP = 100.0f;
+	NPCMAXHP = 100.0f;
+	m_speed = 1.5;
+	if (Leftfrag <= 0) {
+		game->SatRSaizon(iNo, 0);
 	}
 	else {
-		count++; //1ƒtƒŒ[ƒ€Œo‰ß‚ğƒJƒEƒ“ƒg‚·‚éB
+		game->SatLSaizon(iNo, 0);
 	}
-
 }
 void AI::nearestpas()//ÅŠñ‚è‚ÌƒpƒXŒŸõ
 {
@@ -411,9 +399,6 @@ void AI::NPCDeath()//€–SAÁ–Åˆ—B
 		else {
 			game->SatLSaizon(iNo,-1);
 		}
-		CQuaternion qBias1;
-		qBias1.SetRotationDeg(CVector3::AxisX, 10.0f);
-		m_rotation.Multiply(qBias1);
 		//DeleteGO(this);//©ŒÈÁ–ÅB
 	}
 }
@@ -467,24 +452,24 @@ void AI::Update()
 			NPCMAXHP = NPCHP;
 		}
 	}
-	//if (GetZonbi() == true&&pa!= flyNPC) {
-	//	FindGameObjectsWithTag(20, [&](IGameObject* go) {
-	//		if (go != this) {            //©•ª‚©‚ç‚Ì‹——£‚ğŒv‘ª‚·‚é‚½‚ßAŒŸõŒ‹‰Ê‚©‚ç©•ª‚ğœŠO‚·‚éB
-	//			car* ai = (car*)go;
-	//			CVector3 kyori1 = this->m_position- ai->Getposition();//©•ª‚Æ‚Ì‹——£‚ğ‹‚ß‚éB
-	//			float f = kyori1.Length();
-	//			if (f <= 600) { //‹——£‚ªÔŠÔ‹——£‚æ‚è‚à’Z‚­‚È‚Á‚Ä‚¢‚½‚ç
-	//				kyori1.Normalize();
-	//				float kaku = acosf(kyori1.Dot(ai->Getforward()));//‚Q‚Â‚Ì‚×ƒNƒgƒ‹‚Ì“àÏ‚ÌƒA[ƒNƒRƒTƒCƒ“‚ğ‹‚ß‚éB(ƒ‰ƒWƒAƒ“)
-	//				float degree = CMath::RadToDeg(kaku);
-	//				if (degree <= 45) {
-	//					ziko_car = ai;
-	//					pa = flyNPC;
-	//				}
-	//			}
-	//		}
-	//	});
-	//}
+	if (GetZonbi() == true&&pa!= flyNPC) {
+		FindGameObjectsWithTag(20, [&](IGameObject* go) {
+			if (go != this) {            //©•ª‚©‚ç‚Ì‹——£‚ğŒv‘ª‚·‚é‚½‚ßAŒŸõŒ‹‰Ê‚©‚ç©•ª‚ğœŠO‚·‚éB
+				car* ai = (car*)go;
+				CVector3 kyori1 = this->m_position- ai->Getposition();//©•ª‚Æ‚Ì‹——£‚ğ‹‚ß‚éB
+				float f = kyori1.Length();
+				if (f <= 600) { //‹——£‚ªÔŠÔ‹——£‚æ‚è‚à’Z‚­‚È‚Á‚Ä‚¢‚½‚ç
+					kyori1.Normalize();
+					float kaku = acosf(kyori1.Dot(ai->Getforward()));//‚Q‚Â‚Ì‚×ƒNƒgƒ‹‚Ì“àÏ‚ÌƒA[ƒNƒRƒTƒCƒ“‚ğ‹‚ß‚éB(ƒ‰ƒWƒAƒ“)
+					float degree = CMath::RadToDeg(kaku);
+					if (degree <= 30) {
+						ziko_car = ai;
+						pa = flyNPC;
+					}
+				}
+			}
+		});
+	}
 	if (Gaizi != nullptr) {
 		if (Gaizi->GatFragu() >= 1.0f&& ForceFlag == false) {//“Áê•”‘à‚ªoŒ»‚µ‚½‚çA
 			ForceFlag = true;//oŒ»ƒtƒ‰ƒO‚ğ—§‚Ä‚éB
@@ -509,6 +494,7 @@ void AI::Update()
 			pa = Resistance_NPC;				//‚à‚¤ˆê“xƒ`ƒƒƒ“ƒX‚ğ‚â‚ë‚¤IIII
 			escapecaku = 30.0f;
 			m_speed = 0.0f;
+			SetZonbe();
 			HitFlag = false;
 		}
 		else {
@@ -743,10 +729,10 @@ void AI::NPCGetaway()
 		if (30.0f > work->Getlen() && counta == 1)
 		{
 			if (Leftfrag <= 0) {
-				game->SatRSaizon(iNo, -1);
+				game->SatRSaizon(iNo,-5);
 			}
 			else {
-				game->SatLSaizon(iNo, -1);
+				game->SatLSaizon(iNo,-5);
 			}
 			DeleteGO(this);//©ŒÈÁ–Å
 		}
@@ -863,7 +849,7 @@ void AI::again_move()
 		stoptaim++;
 		if (stoptaim >= 5 / GameTime().GetFrameDeltaTime())
 		{
-
+			nearestpas();
 		}
 	}
 	else {

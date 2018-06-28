@@ -87,16 +87,24 @@ int keiroK::Kans(int count)
 			n.ime * 100 + n.tunagi
 		);
 		//std::map<int,ando>::iterator tmp = open.begin();
-		for (auto& num : open) {
-			if (num.second.tunagi == nodes[i].ime && num.second.ime==nodes[i].tunagi)
+		for (auto num : open) {
+			if (num.second.ime == nodes[i].tunagi)
 			{
-				//if (nodes[i].cost < ka.second.cost) {
-				//	ka.second.m_position = nodes[i].m_position;
-				//	ka.second.ime = nodes[i].ime;
-
-				//	ka.second.cost = nodes[i].cost;
-				//	ka.second.beforeNo = nodes[i].beforeNo;
-				//}
+				if (nodes[i].cost < num.second.cost) {
+				ando tmp4;
+				Satando(
+					&tmp4,
+					nodes[i].m_position,
+					nodes[i].s_position,
+					nodes[i].ime,
+					nodes[i].tunagi,
+					nodes[i].No,
+					nodes[i].cost,
+					nodes[i].beforeNo
+				);
+				open.erase(num.second.ime * 100 + num.second.tunagi);
+				open.insert(std::pair<int, ando>((tmp4.ime * 100 + tmp4.tunagi), tmp4));
+				}
 				findfrag = true;
 				break;
 			}
@@ -104,7 +112,7 @@ int keiroK::Kans(int count)
 	//	std::map<int ,ando>::iterator tmp1 = close.begin();
 		if (findfrag == false) {
 			for (auto mun : close) {
-				if (mun.second.tunagi == nodes[i].ime && mun.second.ime == nodes[i].tunagi)
+				if (mun.second.ime == nodes[i].tunagi)
 				{
 					if (nodes[i].cost < mun.second.cost) {
 						ando tmp5;

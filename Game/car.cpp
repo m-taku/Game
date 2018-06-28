@@ -238,7 +238,7 @@ void car::Stop()
 			CVector3 kyori1 = Humanlest->Getposition() - this->m_position;//自分との距離を求める。
 			float f = kyori1.Length();
 			if(!Humanlest->GetZonbi()){
-				if (f <= 1000) { //距離が視野内だったら
+				if (f <= 500) { //距離が視野内だったら
 					kyori1.Normalize();
 					kyori1.y = 0.0f;
 					float kaku = acosf(kyori1.Dot(m_forward));//２つのべクトルの内積のアークコサインを求める。(ラジアン)

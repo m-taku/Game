@@ -14,6 +14,7 @@ public:
 	void Update();
 	//void NPCResistance_NPC();  //NPCゾンビに抵抗しているときの処理。
 	//void NPCResistance_Player();  //プレイヤーゾンビに抵抗しているときの処理。
+	void death_Animation();
 	void Idle_Animation();
 
 	void Loop_Walk_Animation();//歩き続けるときの処理。
@@ -31,11 +32,15 @@ private:
 		shiminwalk,
 		shiminrun,
 		shiminattack,
+		shiminideath,
+		shiminikai,
+		shiminioki,
 		Zonbiwalk,
 		Zonbiattack,
 		Zonbi_zico,
 		animnum
 	};
+	bool okiagari = false;
 	CAnimation ai_NPCAnimation;				//アニメーション。
 	CAnimationClip ai_NPCAnimationClips[animnum];	//アニメーションクリップ。
 	CShaderResourceView zondi;

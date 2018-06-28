@@ -41,7 +41,7 @@ public:
 	void NPCzombie_Return();					//殴った後帰る（いらん）
 	void nearestpas();			//ド～コ行こうかな～～～（ランダム徘徊処理の初期化）
 	void Retrieval_pasNo(int mokuhyou);
-	void Fardist_path_mo(CVector3 m_position);
+	void death_Animation();
 	void again_move();
 	void NPCGetaway();
 //	void NPCzombie_Escape();					

@@ -18,7 +18,7 @@ bool Osu::Start()
 {
 	m_skinModelData.Load(L"modelData/liam.cmo");//男性型を書け
 	m_skinModel.Init(m_skinModelData);
-	ai_NPCAnimationClips[shiminidle].Load(L"animData/shiminkoke.tka");//仮。後で入れろ。
+	ai_NPCAnimationClips[shiminidle].Load(L"animData/shiminidle.tka");//仮。後で入れろ。
 	ai_NPCAnimationClips[shiminidle].SetLoopFlag(false);
 	ai_NPCAnimationClips[shiminwalk].Load(L"animData/shiminwalk.tka");//仮。後で入れろ。
 	ai_NPCAnimationClips[shiminwalk].SetLoopFlag(true);
@@ -32,13 +32,18 @@ bool Osu::Start()
 	ai_NPCAnimationClips[Zonbiattack].SetLoopFlag(true);
 	ai_NPCAnimationClips[Zonbi_zico].Load(L"animData/liam_ziko.tka");//仮。後で入れろ。
 	ai_NPCAnimationClips[Zonbi_zico].SetLoopFlag(false);
+	ai_NPCAnimationClips[shiminideath].Load(L"animData/shiminkoke.tka");//仮。後で入れろ。
+	ai_NPCAnimationClips[shiminideath].SetLoopFlag(false);
+	ai_NPCAnimationClips[shiminikai].Load(L"animData/shiminkaiten.tka");//仮。後で入れろ。
+	ai_NPCAnimationClips[shiminikai].SetLoopFlag(false);
+	ai_NPCAnimationClips[shiminioki].Load(L"animData/shiminokiagari.tka");//仮。後で入れろ。
+	ai_NPCAnimationClips[shiminioki].SetLoopFlag(false);
 	
 	//アニメーションの初期化。
 	ai_NPCAnimation.Init(
 		m_skinModel,			//アニメーションを流すスキンモデル。
 									//これでアニメーションとスキンモデルが関連付けされる。
 		ai_NPCAnimationClips,	//アニメーションクリップの配列。
-
 		animnum					//アニメーションクリップの数。
 	);
 	zondi.CreateFromDDSTextureFromFile(L"modelData/LiamTexZonbi1.dds");
@@ -98,20 +103,17 @@ void Osu::Update()
 }
 void Osu::AI_Animation()//AIのアニメーション制御
 {
-	/*if (m_speed <= 1.0) {
-	Loop_Walk_Animation();
-	}
-	if (m_speed > 1.0) {
-	Loop_Run_Animation();
-	}*/
 	if (GetZonbi() == false) {
 		if (HitFlag == true)
 		{
 			NPC_Attack_Animation();
-
+		}
+		else if (pa == Death)
+		{
+			death_Animation();
 		}
 		else if (m_speed < 0.5f) {
-			Idle_Animation();
+			death_Animation();
 		}
 		else if (m_speed <= 1.0) {
 			Loop_Walk_Animation();
@@ -125,6 +127,31 @@ void Osu::AI_Animation()//AIのアニメーション制御
 		if (pa == flyNPC) {
 			Zombie_Ziko_Animation();
 		}
+		else if (pa == Resistance_NPC|| pa == Resistance_Player)
+		{
+			death_Animation();
+		}
+		else if(pa== Damage&& okiagari==false)
+		{
+			ai_NPCAnimation.Play(shiminikai, 0.7);	
+			if (!ai_NPCAnimation.IsPlaying()) {
+				okiagari = true;
+			}
+		}
+		else if (okiagari==true) 
+		{
+			ai_NPCAnimation.Play(shiminioki, 0.7);
+			if (!ai_NPCAnimation.IsPlaying()) {
+				okiagari = false;	
+				item* ite = NewGO<item>(0, "item");
+				ite->Set_itempos(Getposition());
+				pa=Zombie_Normal;
+			}
+		}
+		else if (pa == Death)
+		{
+			death_Animation();
+		}
 		else if (HitFlag == true) {
 			NPC_Attack_Animation();
 		}
@@ -137,8 +164,10 @@ void Osu::Idle_Animation() //キャラクターが歩き続ける時のアニメーションの処理。
 {
 	ai_NPCAnimation.Play(shiminidle, 0.7);
 }
-
-
+void Osu::death_Animation() //キャラクターが歩き続ける時のアニメーションの処理。
+{
+	ai_NPCAnimation.Play(shiminideath, 0.7);
+}
 void Osu::Loop_Walk_Animation()//キャラクターが歩き続ける時のアニメーションの処理。
 {
 	ai_NPCAnimation.Play(shiminwalk, 0.7);

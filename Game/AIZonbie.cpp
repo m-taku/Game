@@ -78,7 +78,7 @@ void AI::NPCZombie_Chase()
 		n.Normalize();
 		if (len >= 1300.0f)
 		{
-			Chasepas(Tansaku->m_position);
+			Chasepas(Tansaku->m_position);//Œo˜H‚½‚ñ‚³H
 			m_rotation.Multiply(work->Getkaku());
 		}
 		else if (len < atakkukyori) {//NPC‚É’Ç‚¢‚Â‚¢‚½‚ç
