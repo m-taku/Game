@@ -83,15 +83,13 @@ void Taitor::Update()
 	case push:
 		BasisVector /= 1 - (1 / (seconds / GameTime().GetFrameDeltaTime()));
 		target = player->Getbonepos();
-		player_Foeward = player->GetFoeward();
-		player_Foeward.y = 0.0f;
-		player_Foeward.Normalize();
-		player_Foeward *= -1;
-		kakudo = siya();
-		kakudo /= seconds;
+		player_Foeward = CVector3::Zero;
+		player_Foeward.z = -1.0f;
 		ka = nowkmVector- nowkmtarget;
 		ka.y = 0.0f;
 		ka.Normalize();
+		kakudo = siya();
+		kakudo /= seconds;
 		UP.Cross(ka,player_Foeward);
 		UP.Normalize();
 		Crot.SetRotationDeg(UP, kakudo*GameTime().GetFrameDeltaTime());
@@ -162,7 +160,7 @@ void Taitor::Update()
 
 float Taitor::siya()
 {
-	CVector3 muki = BasisVector;
+	CVector3 muki = ka;
 	muki.y = 0.0f;
 	muki.Normalize();//向きVectorにする。
 	float kok = acosf(muki.Dot(player_Foeward));//２つのべクトルの内積のアークコサインを求める。(ラジアン)

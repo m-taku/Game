@@ -490,7 +490,12 @@ void AI::Update()
 			ForceFlag = true;//出現フラグを立てる。
 			if (GetZonbi() != true)
 			{//自分がゾンビではなかったら
-				search(game->pasu[Leftfrag].m_pointList[0]);
+				if (Leftfrag <= 0) {
+					search(game->pasu[Leftfrag].m_pointList[0]);
+				}
+				else {
+					search(game->pasu[Leftfrag].m_pointList[35]);
+				}
 				da = 0;
 				m_speed = 4.0f;
 				work->Setkakudo(3.0f);
@@ -601,7 +606,6 @@ void AI::Update()
 		});
 	}
 	Setposition(m_position);
-
 //	AI_Animation();
 	if (!m_objectFrustumCulling.IsCulling()) {
 		m_skinModel.Update(m_position, m_rotation, { 20.0f, 20.0f,20.0f });
@@ -720,30 +724,35 @@ void AI::NPCRunangle(CVector3 kyori)//直線ベクトルをそのまま使った移動の際の、回
 void AI::pasmove(int mokuhyou)
 {
 	work->kyorikeisan(mokuhyou - 1, m_position, m_forward, game->pasu[Leftfrag].m_pointList);
-	m_movespeed = m_forward * (work->Getmuve()*m_speed + mobe* GameTime().GetFrameDeltaTime());
+	m_movespeed = work->Getbekutor() * (work->Getmuve()*m_speed + mobe* GameTime().GetFrameDeltaTime());
 	m_movespeed.y += gravity;
 	m_position = A_charaCon.Execute(GameTime().GetFrameDeltaTime(), m_movespeed);//移動
 }
 void AI::NPCGetaway()
 {
-	static int counta = 0;
-	pasmove(mokuhyou);
+	work->kyorikeisan(mokuhyou - 1, m_position, m_forward, game->pasu[Leftfrag].m_pointList);
+	m_movespeed = m_forward * (work->Getmuve()*m_speed + mobe * GameTime().GetFrameDeltaTime());
+	//m_movespeed.y += gravity;
+	m_position += m_movespeed * GameTime().GetFrameDeltaTime();//移動
+	m_rotation.Multiply(work->Getkaku());//回転
 	if (30.0f > work->Getlen()&& counta==0) {
 		mokuhyou++;
 		counta++;
 	}
-	else if(30.0f > work->Getlen()&& counta == 1)
-	{
-		if (Leftfrag <= 0) {
-			game->SatRSaizon(iNo, -1);
+	else {
+		if (30.0f > work->Getlen() && counta == 1)
+		{
+			if (Leftfrag <= 0) {
+				game->SatRSaizon(iNo, -1);
+			}
+			else {
+				game->SatLSaizon(iNo, -1);
+			}
+			DeleteGO(this);//自己消滅
 		}
-		else {
-			game->SatLSaizon(iNo, -1);
-		}
-		DeleteGO(this);//自己消滅
 	}
 }
-	void AI::Fardist_path(CVector3 m_position)//視野付きリンク先パス検索
+void AI::Fardist_path(CVector3 m_position)//視野付きリンク先パス検索
 	{
 		CVector3 minkore = { 0.0f,0.0f,0.0f };
 		for (int Linknum = 0; Linknum < game->pasu[Leftfrag].GetresutoSaiz(mokuhyouNo); Linknum++) {
@@ -822,8 +831,13 @@ void AI::NPCescape()//ゾンビから逃げる
 	}
 	else {
 		m_speed = 4.0f;
-		mobe = 50.0f; 
-		search(game->pasu[Leftfrag].m_pointList[0]);
+		mobe = 50.0f; 			
+		if (Leftfrag <= 0) {
+			search(game->pasu[Leftfrag].m_pointList[0]);
+		}
+		else {
+			search(game->pasu[Leftfrag].m_pointList[35]);
+		}
 		Gaizi->Satpoint(0.1);
 		work->Setkakudo(5.0f);
 		kaiten = false;

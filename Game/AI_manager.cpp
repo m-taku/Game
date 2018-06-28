@@ -105,16 +105,18 @@ AI_manager::AI_manager()
 AI_manager::~AI_manager()
 {
 	for (int num = 0; num < Rsimin.size(); num++) {
-		if (RAIseizon[num] < 0) {
+		if (RAIseizon[num] >= 0) {
 			DeleteGO(Rsimin[num]);
 		}
 
 	}
 	for (int num = 0; num  < Lsimin.size(); num++) {
-		if (LAIseizon[num] < 0) {
+		if (LAIseizon[num] >= 0) {
 			DeleteGO(Lsimin[num]);
 		}
 	}
+	RAIseizon.clear();
+	LAIseizon.clear();
 	Rsimin.clear();
 	Lsimin.clear();
 }

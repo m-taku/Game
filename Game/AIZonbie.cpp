@@ -26,7 +26,7 @@ void AI::NPCZombie_Normal()
 	}
 	if (Tansaku != nullptr) {
 		search(Tansaku->m_position);
-		mokuhyou=jyunban[0];
+		mokuhyou = jyunban[0];
 		Retrieval_pasNo(mokuhyou);
 		pa = Zombie_Chase; //パターンをゾンビチェイスに変える。
 	}
@@ -129,6 +129,7 @@ void AI::NPCZombie_Chase()
 				Crot.Multiply(n);
 				CVector3 Destination = (n * len) + Tansaku->m_position;
 				Destination = m_position - Destination;
+				Destination.y = 0.0f;
 				m_position = A_charaCon.Execute(GameTime().GetFrameDeltaTime(), Destination);
 
 				/*	Pboneforward = Tansaku->m_forward;

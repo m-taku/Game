@@ -18,8 +18,8 @@ bool Osu::Start()
 {
 	m_skinModelData.Load(L"modelData/liam.cmo");//男性型を書け
 	m_skinModel.Init(m_skinModelData);
-	ai_NPCAnimationClips[shiminidle].Load(L"animData/shiminidle.tka");//仮。後で入れろ。
-	ai_NPCAnimationClips[shiminidle].SetLoopFlag(true);
+	ai_NPCAnimationClips[shiminidle].Load(L"animData/shiminkoke.tka");//仮。後で入れろ。
+	ai_NPCAnimationClips[shiminidle].SetLoopFlag(false);
 	ai_NPCAnimationClips[shiminwalk].Load(L"animData/shiminwalk.tka");//仮。後で入れろ。
 	ai_NPCAnimationClips[shiminwalk].SetLoopFlag(true);
 	ai_NPCAnimationClips[shiminrun].Load(L"animData/shiminrun.tka");//仮。後で入れろ。

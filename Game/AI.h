@@ -226,6 +226,8 @@ private:
 	car* ziko_car;
 	CVector3 before_m_position = CVector3::Zero;		//一つ前の座標。
 	std::vector<int> jyunban;
+
+	int counta = 0;
 	CVector3 flydist=CVector3::Zero;
 	AI* Chawse_Zombie;  //追跡してくるキャラを格納する。
 };
