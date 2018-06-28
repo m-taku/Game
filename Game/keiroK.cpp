@@ -87,8 +87,8 @@ int keiroK::Kans(int count)
 			n.ime * 100 + n.tunagi
 		);
 		//std::map<int,ando>::iterator tmp = open.begin();
-		for (auto& ka : open) {
-			if (ka.second.tunagi == nodes[i].ime && ka.second.ime==nodes[i].tunagi)
+		for (auto& num : open) {
+			if (num.second.tunagi == nodes[i].ime && num.second.ime==nodes[i].tunagi)
 			{
 				//if (nodes[i].cost < ka.second.cost) {
 				//	ka.second.m_position = nodes[i].m_position;
@@ -103,10 +103,10 @@ int keiroK::Kans(int count)
 		}
 	//	std::map<int ,ando>::iterator tmp1 = close.begin();
 		if (findfrag == false) {
-			for (auto ka : close) {
-				if (ka.second.tunagi == nodes[i].ime && ka.second.ime == nodes[i].tunagi)
+			for (auto mun : close) {
+				if (mun.second.tunagi == nodes[i].ime && mun.second.ime == nodes[i].tunagi)
 				{
-					if (nodes[i].cost < ka.second.cost) {
+					if (nodes[i].cost < mun.second.cost) {
 						ando tmp5;
 						Satando(
 							&tmp5,
