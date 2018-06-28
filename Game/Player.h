@@ -59,7 +59,7 @@ public:
 	{
 		return attackF;
 	}
-	int set_itemcounter()
+	void set_itemcounter()
 	{
 		itemcounter++;
 	}
