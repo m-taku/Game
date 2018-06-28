@@ -65,7 +65,6 @@ void AI::NPCZombie_Chase()
 {
 	float len = GetKyori(m_position, Tansaku->m_position);
 	if (len > 2100.0f || Tansaku->Raifu_f == true) {//他のNPCを見失った(距離が2100以上あいた)、あるいは死んだら				
-		search(retu_position);//元の位置に戻る。
 		Tansaku = nullptr; //検索結果を初期化する。
 		kaiten = false;
 		angle = 0;
@@ -77,10 +76,10 @@ void AI::NPCZombie_Chase()
 		CVector3 n = m_position - Tansaku->m_position;
 		float kou = VectorAngleDeg((Tansaku->m_forward), n);
 		n.Normalize();
-		NPCRunangle(Tansaku->m_position - m_position);
 		if (len >= 1300.0f)
 		{
 			Chasepas(Tansaku->m_position);
+			m_rotation.Multiply(work->Getkaku());
 		}
 		else if (len < atakkukyori) {//NPCに追いついたら
 									//攻撃する(確実に当たる仕様)。
@@ -93,12 +92,11 @@ void AI::NPCZombie_Chase()
 		}
 		else {
 			if (kou >= 120) {
-
 				HitFlag = false;
 				n = Tansaku->m_position - m_position;
 				n.y = 0.0f;
 				n.Normalize();
-				//NPCRunangle(n);
+				NPCRunangle(n);
 				m_movespeed = n * (m_speed*200.0 + mobe);
 				m_movespeed.y += gravity;
 				m_position = A_charaCon.Execute(GameTime().GetFrameDeltaTime(), m_movespeed);//移動
@@ -130,6 +128,7 @@ void AI::NPCZombie_Chase()
 				CVector3 Destination = (n * len) + Tansaku->m_position;
 				Destination = m_position - Destination;
 				Destination.y = 0.0f;
+				NPCRunangle(Destination);
 				m_position = A_charaCon.Execute(GameTime().GetFrameDeltaTime(), Destination);
 
 				/*	Pboneforward = Tansaku->m_forward;
