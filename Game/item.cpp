@@ -34,6 +34,9 @@ void item::Update()
 		Pp->set_itemcounter();
 		DeleteGO(this);
 	}
+	itemQrot.SetRotationDeg(CVector3::AxisY, 100.0f*GameTime().GetFrameDeltaTime());
+	itemrot.Multiply(itemQrot);
+
 	itemModel.Update(itempos, itemrot, CVector3::One);
 }
 

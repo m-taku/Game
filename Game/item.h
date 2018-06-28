@@ -16,10 +16,10 @@ private:
 	float item_to_player_dist(CVector3 playerpos,CVector3 itemposition);
 	CSkinModel itemModel;					//スキンモデル。
 	CSkinModelData itemModelData;			//スキンモデルデータ。
-	CVector3 itempos=CVector3::Zero;		//アイテムのポジション
+	CVector3 itempos = CVector3::Zero;		//アイテムのポジション
 	CQuaternion itemrot=CQuaternion::Identity;//アイテムの回転
 	int itemf = 0;							//気にしない
 	Player *Pp;
-	
+	CQuaternion itemQrot = CQuaternion::Identity;
 };
 
