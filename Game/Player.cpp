@@ -260,16 +260,16 @@ void Player::Update()
 					car* ai = (car*)go;
 					CVector3 kyori1 = this->m_position - ai->Getposition();//自分との距離を求める。
 					float f = kyori1.Length();
-					if (f <= 600) { //距離が車間距離よりも短くなっていたら
+					if (f <= 500) { //距離が車間距離よりも短くなっていたら
 						kyori1.Normalize();
 						float kaku = acosf(kyori1.Dot(ai->Getforward()));//２つのべクトルの内積のアークコサインを求める。(ラジアン)
 						float degree = CMath::RadToDeg(kaku);
-						if (degree <= 45) {
+						if (degree <= 30) {
 							game = false;
 							carpoint = ai;
 							carpoint->SoundklaxonPlay(); 
 							m_moveSpeed = (m_forward*-1 * m_moveSpeed.Length()) + carpoint->Getforward()*1000.0f;
-							m_moveSpeed.y = 600.0f;
+							m_moveSpeed.y = 450.0f;
 							zikofrag = true;
 							muteki_Flag = true;
 						}

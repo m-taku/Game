@@ -104,13 +104,19 @@ AI_manager::AI_manager()
 
 AI_manager::~AI_manager()
 {
-	for (int k = 0; k < Rsimin.size(); k++) {
-		DeleteGO(Rsimin[k]);
+	for (int num = 0; num < Rsimin.size(); num++) {
+		if (RAIseizon[num] < 0) {
+			DeleteGO(Rsimin[num]);
+		}
 
 	}
-	for (int k = 0; k < Lsimin.size(); k++) {
-		DeleteGO(Lsimin[k]);
+	for (int num = 0; num  < Lsimin.size(); num++) {
+		if (LAIseizon[num] < 0) {
+			DeleteGO(Lsimin[num]);
+		}
 	}
+	Rsimin.clear();
+	Lsimin.clear();
 }
 bool AI_manager::Start()
 {

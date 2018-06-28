@@ -7,7 +7,9 @@ public:
 	~Geizi();
 	bool Start();
 	void Update();
-	void Render(CRenderContext& rc);
+//	void Render(CRenderContext& rc);
+
+	void PostRender(CRenderContext& rc);
 	void satHP(float a)
 	{
 		HP -= a;

@@ -39,9 +39,11 @@ public:
 	void NPCZombie_Chase();						//お前が、死ぬまで、殴るのをやめない！！！（ゾンビNPCが市民を殴るの処理）
 	void NPCZombie_Attack();					//主人様にたてつく奴は許さね～～～（特殊部隊とゾンビが戦う時の処理）//vs特殊部隊
 	void NPCzombie_Return();					//殴った後帰る（いらん）
-	void nearestpas();							//ド～コ行こうかな～～～（ランダム徘徊処理の初期化）
+	void nearestpas();			//ド～コ行こうかな～～～（ランダム徘徊処理の初期化）
 	void Retrieval_pasNo(int mokuhyou);
-
+	void Fardist_path_mo(CVector3 m_position);
+	void again_move();
+	void NPCGetaway();
 //	void NPCzombie_Escape();					
 	void NPCescape();							//こ、こんなの勝てるはずがねぇ、逃げるしかねぇ（ゾンビプレイヤーから逃げるときの処理）
 	void NPCReturn();							//あそこには、何かあるはずだ！！！（指定したパスまで移行する処理）
@@ -116,6 +118,7 @@ protected:
 		Zombie_Attack,      //ゾンビ化NPCの攻撃状態。
 		Zombie_Return,		//ゾンビ化NPCの元の位置に戻る
 		Death,               //NPCの死亡。
+		Getaway,
 		pa_num				//paの数
 	};
 
@@ -156,6 +159,7 @@ protected:
 	car* Car;
 	Geizi* Gaizi;
 	Player* pl;
+	CVector3 previous_position=CVector3::Zero;
 	int taime = 0;
 	bool HitFlag = false;      //ダメージを与えたかを示すフラグ。
 private:
@@ -177,6 +181,7 @@ private:
 	int Chasefrag = 0;
 	bool ForceFlag = false;     //特殊部隊の出現を表すフラグ。
 	std::vector<int>::iterator pasu;
+	int stoptaim = 0;
 	//CVector3 m_movespeed=CVector3::Zero;
 	float gravity = -3*(980.0f * GameTime().GetFrameDeltaTime());
 	int No = 0;
