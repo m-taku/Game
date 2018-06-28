@@ -28,6 +28,15 @@ public:
 	{
 		Gaizi = naka;
 	}
+	bool GetmoveStop()//carが止まっているかを判定
+	{
+		if (move < 1.0f) {//移動速度が普通じゃなかったら
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
 private:
 	float distance = 600.0f;
 	//CMeshCollider m_meshCollider;	//メッシュコライダー。

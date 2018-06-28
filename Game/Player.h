@@ -59,6 +59,10 @@ public:
 	{
 		return attackF;
 	}
+	int set_itemcounter()
+	{
+		itemcounter++;
+	}
 
 	void Play_Respiration(CVector3 m_moveDecision);//息遣いの音を再生させるかを判断する。
 
@@ -101,7 +105,7 @@ private:
 	int bonenum = 0;
 	int boneNo = 0;
 	CVector3 bonepos = CVector3::Zero;
-	bool zikofrag = false;
+	bool zikofrag = false;//はねられたかどうかを保持する。はねられたらtrueになる。
 	enum animation {
 		idle,
 		walk,
@@ -132,5 +136,6 @@ private:
 	//CVector3 m_moveSpeed_log = CVector3::Zero;//moveSpeedを保持する。
 	bool X_button_Flag = false;//Xボタンが押されたかどうかを保持するフラグ。
 	prefab::CSoundSource*m_Respiration = nullptr;//息使いの音。歩くときに流す。
+	int itemcounter = 0;
 };
 

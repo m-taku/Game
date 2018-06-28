@@ -16,6 +16,7 @@
 #include"Geizi.h"
 #include"item.h"
 #include"car.h"
+#include"BGM.h"
 Game::Game()
 {
 	//ここに基本的な発生を描く
@@ -61,11 +62,13 @@ void Game::OnDestroy()
 	DeleteGO(FindGO<AI_manager>("AI_manager"));
 	DeleteGO(gaizi);
 	stage->Car_delete();
+	DeleteGO(FindGO<BGM>("BGM"));//BGM
 	DeleteGO(camera1);
 //	DeleteGO(FindGO<item>("item"));
 	//再起動（タイトル表示）
 	NewGO<Taitor>(0, "Taitor");
 	stage->Car_create();
+	NewGO<BGM>(0, "BGM");
 	NewGO<Player>(0, "Player");
 	NewGO<AI_manager>(0, "AI_manager");
 }
