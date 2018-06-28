@@ -13,31 +13,37 @@ public:
 	Pasu pasu[10];
 	bool Start(); 
 	void Update();
+	//3DSMAX上で右側のパスに属する、No番のNPCの生存判定を初期化(suuが0で生存、-1で消滅)。
 	void SatRSaizon(int No,int suu)
 	{
 		RAIseizon[No] = suu;
 	}
+	//3DSMAX上で左側のパスに属する、No番のNPCの生存判定を初期化(suuが0で生存、-1で消滅)。
 	void SatLSaizon(int No, int suu)
 	{
 		LAIseizon[No] = suu;
 	}
+	//3DSMAX上で左側のパスに属するNPCのLeftfragを1にする。
 	void SetLeft()
 	{
 		Leftfrag = 1;
 	}
+	//NPCのLeftfragを所得(3DSMAX上で左側のパスに属する場合、Leftfragには"1"が代入されている。)。
 	int GetLeft()
 	{
 		return Leftfrag;
 	}
+	//3DSMAX上で右側のパスに属するNo番のNPCの、パス配列の長さ(一周するまでに通るパスの数。NPCのNoによってパスの長さは変化する)を取得する。
 	int gatsiz(int No)
 	{
 		return da[No].size();
 	}
+	//3DSMAX上で左側のパスに属するNo番のNPCの、パス配列の長さ(一周するまでに通るパスの数。NPCのNoによってパスの長さは変化する)を取得する。
 	int gatLsiz(int No)
 	{
 		return da2[No].size();
 	}
-
+	//使われていない???
 	int Getsize(int No)
 	{
 		return da[No].size();
@@ -51,6 +57,11 @@ public:
 	int incNo()
 	{
 		return No++;
+	}
+	//生成したNPCの合計人数を返す。
+	int Get_NPC_Number() 
+	{
+		return NPC_Number;
 	}
 private:
 	int No = 0;
@@ -159,5 +170,6 @@ private:
 	std::vector<std::vector<int>> da;
 	int zombie_sum = 0;
 	int shimin_sum = 0;
+	int NPC_Number = 0;//出現したNPCの合計人数を格納する。
 };
 extern AI_manager* AI_ado;

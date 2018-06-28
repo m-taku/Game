@@ -582,7 +582,7 @@ void tekihei::Render(CRenderContext& rc)
 {
 	for (int i = 0;i < teki;i++)
 	{
-		if(tekiheiflag[i]==1)
+		if(tekiHP[i]>0.0f)
 		tekiskinModel[i].Draw(rc, MainCamera().GetViewMatrix(), MainCamera().GetProjectionMatrix());
 	}
 }

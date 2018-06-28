@@ -15,13 +15,15 @@ bool BGM::Start()
 {
 	/*m_bdm_Title = NewGO<prefab::CSoundSource>(0);
 	m_bdm_Title->Init("sound/horror_zone1.wav", false);*/
-	m_bdm_Sneak = NewGO<prefab::CSoundSource>(0);
-	m_bdm_Sneak->Init("sound/horror_zone1.wav");
-	m_bdm_Sneak->Play(true);
+	m_bdm_Sneak1 = NewGO<prefab::CSoundSource>(0);
+	m_bdm_Sneak1->Init("sound/horror_zone1.wav");
+	m_bdm_Sneak2 = NewGO<prefab::CSoundSource>(0);
+	m_bdm_Sneak2->Init("sound/n80.wav");
 	Scene = Title;
+	ai_manager = FindGO<AI_manager>("AI_manager");//AI_manager‚ÌƒCƒ“ƒXƒ^ƒ“ƒX‚ğæ“¾B
 	/*m_bdm_Assault = NewGO<prefab::CSoundSource>(0);
 	m_bdm_Assault->Init("sound/horror_zone1.wav", false);*/
-
+	NPC_Goukei = ai_manager->Get_NPC_Number();//¶¬‚µ‚½NPC‚Ì‡Œvl”‚ğ‘ã“üB
 	return true;
 }
 
@@ -30,17 +32,38 @@ void BGM::Play_Title() //ƒ^ƒCƒgƒ‹‚ÌBGM‚ğ—¬‚µ‚Ä‚¢‚é‚Æ‚«‚É“®‚­ŠÖ”B
 	//m_bdm_Title->Play(true);//	ƒ^ƒCƒgƒ‹‚ÌBGM‚ğ—¬‚·B
 	Gauge = FindGO<Geizi>("Geizi");//ƒCƒ“ƒXƒ^ƒ“ƒX‚ª¶¬‚³‚ê‚Ä‚¢‚½‚ç“ü‚ê‚éB
 	if (Gauge != nullptr) {
-		Scene = Sneak;//ƒQ[ƒW‚ªo‚½(ƒ^ƒCƒgƒ‹‰æ–Ê‚©‚çŸ‚¬‚ÖˆÚs‚µ‚½)‚Ì‚Å—¬‚·BGM‚ğƒXƒj[ƒN‚É•Ï‚¦‚éB
+		Scene = Sneak_First;//ƒQ[ƒW‚ªo‚½(ƒ^ƒCƒgƒ‹‰æ–Ê‚©‚çŸ‚¬‚ÖˆÚs‚µ‚½)‚Ì‚Å—¬‚·BGM‚ğƒXƒj[ƒNƒtƒ@[ƒXƒg‚É•Ï‚¦‚éB
 		//m_bdm_Title->Stop();//Ÿ‚ÖØ‚è‘Ö‚í‚é‚Ì‚Å¡—¬‚ê‚Ä‚¢‚éBGM‚ğ~‚ß‚éB
 	}
 }
 
-void BGM::Play_Sneak()//ƒXƒj[ƒN‚ÌBGM‚ğ—¬‚µ‚Ä‚¢‚é‚Æ‚«‚É“®‚­ŠÖ”B
+void BGM::Play_Sneak_First()//ƒXƒj[ƒN‚ÌÅ‰‚Éˆ—‚³‚ê‚éB
 {
-	m_bdm_Sneak->Play(true);//ƒXƒj[ƒN‚ÌBGM‚ğ—¬‚·B
-	if (Gauge->Get_keifou_saiz()>=0.95) {//ƒQ[ƒW‚ª“G•º‚ªo‚Ä‚­‚éƒ‰ƒCƒ“‚ğ’´‚¦‚½‚ç
+	Scene = Sneak_Fewer_people;//ˆ—‚ªI‚í‚Á‚½‚Ì‚ÅŸ‚Ìó‘Ô‚ÖˆÚs‚·‚éB
+}
+void BGM::Play_Sneak_Fewer_people()//ƒXƒj[ƒN(ƒ]ƒ“ƒr‰»NPC‚ª1/2–¢–‚Ì)‚ÌBGM‚ğ—¬‚µ‚Ä‚¢‚é‚Æ‚«‚É“®‚­ŠÖ”B
+{
+	m_bdm_Sneak1->Play(true);//ƒXƒj[ƒN‚ÌBGM‚ğ—¬‚·B
+	if (ZombieNPC_Number>=(NPC_Goukei/2))//ƒ]ƒ“ƒr‰»NPC‚ªNPC‚Ì‡Œvl”‚Ì”¼•ªˆÈã‚ğè‚ß‚½‚ç
+	{
+		Scene = Sneak_Many_persons;//ƒ]ƒ“ƒr‰»NPC‚ª”¼•ªˆÈã‚ğè‚ß‚½ê‡‚Ìˆ—‚É•Ï‚¦‚éB
+	}
+	if (Gauge->Get_keifou_saiz()>=0.95) //ƒQ[ƒW‚ª“G•º‚ªo‚Ä‚­‚éƒ‰ƒCƒ“‚ğ’´‚¦‚½‚ç
+	{
 		Scene = Assault;//ƒQ[ƒW‚ªƒ‰ƒCƒ“‚ğ’´‚¦‚½(“G•º‚Æ‚Ìƒoƒgƒ‹‚ÉˆÚs‚·‚é)‚Ì‚Å—¬‚·BGM‚ğƒAƒTƒ‹ƒg‚É•Ï‚¦‚éB
-		m_bdm_Sneak->Stop();//Ÿ‚ÖØ‚è‘Ö‚í‚é‚Ì‚Å¡—¬‚ê‚Ä‚¢‚éBGM‚ğ~‚ß‚éB
+		m_bdm_Sneak1->Stop();//Ÿ‚ÖØ‚è‘Ö‚í‚é‚Ì‚Å¡—¬‚ê‚Ä‚¢‚éBGM‚ğ~‚ß‚éB
+	}
+}
+
+void BGM::Play_Sneak_Many_persons()//ƒXƒj[ƒN(ƒ]ƒ“ƒr‰»NPC‚ª1/2ˆÈã‚Ì)‚ÌBGM‚ğ—¬‚µ‚Ä‚¢‚é‚Æ‚«‚É“®‚­ŠÖ”B
+{
+	m_bdm_Sneak1->Play(true);//ƒXƒj[ƒN‚ÌBGM‚ğ—¬‚·B
+	m_bdm_Sneak2->Play(true);//ƒXƒj[ƒN‚ÌBGM‚ğ—¬‚·B
+	if (Gauge->Get_keifou_saiz() >= 0.95) //ƒQ[ƒW‚ª“G•º‚ªo‚Ä‚­‚éƒ‰ƒCƒ“‚ğ’´‚¦‚½‚ç
+	{
+		Scene = Assault;//ƒQ[ƒW‚ªƒ‰ƒCƒ“‚ğ’´‚¦‚½(“G•º‚Æ‚Ìƒoƒgƒ‹‚ÉˆÚs‚·‚é)‚Ì‚Å—¬‚·BGM‚ğƒAƒTƒ‹ƒg‚É•Ï‚¦‚éB
+		m_bdm_Sneak1->Stop();//Ÿ‚ÖØ‚è‘Ö‚í‚é‚Ì‚Å¡—¬‚ê‚Ä‚¢‚éBGM‚ğ~‚ß‚éB
+		m_bdm_Sneak2->Stop();//Ÿ‚ÖØ‚è‘Ö‚í‚é‚Ì‚Å¡—¬‚ê‚Ä‚¢‚éBGM‚ğ~‚ß‚éB
 	}
 }
 
@@ -52,15 +75,19 @@ void BGM::Play_Assault()//ƒAƒTƒ‹ƒg(“G•º‚Æí‚¤)‚ÌBGM‚ğ—¬‚µ‚Ä‚¢‚é‚Æ‚«‚É“®‚­ŠÖ”
 void BGM::Update()
 {
 
-	m_bdm_Sneak->Play(true);
-
 	switch (Scene)//¡A‚Ç‚ÌBGM‚ğ—¬‚·‚©‚ğ”»’f‚·‚éB
 	{
 	case Title://ƒ^ƒCƒgƒ‹
 		Play_Title();
 		break;
-	case Sneak://ƒXƒj[ƒN
-		Play_Sneak();
+	case Sneak_First://ƒXƒj[ƒN‚ÌÅ‰‚Ìˆ—B
+		Play_Sneak_First();
+		break;
+	case Sneak_Fewer_people://ƒXƒj[ƒN‚©‚Âƒ]ƒ“ƒr‚ª1/2–¢–B
+		Play_Sneak_Fewer_people();
+		break;
+	case Sneak_Many_persons://ƒXƒj[ƒN‚©‚Âƒ]ƒ“ƒr‚ª1/2ˆÈãB
+		Play_Sneak_Many_persons();
 		break;
 	case Assault://ƒAƒTƒ‹ƒg(“G•º‚Æí‚¤)
 		Play_Assault();

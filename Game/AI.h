@@ -6,6 +6,7 @@
 #include"Geizi.h"
 #include "tkEngine/culling/tkObjectFrustumCulling.h"
 #include"Game.h"
+#include"BGM.h"
 #define REACH 500.0  //ゾンビの攻撃範囲。この距離まで近づいたら攻撃する。
 #define PI 3.141592653589793 
 class Player;
@@ -223,5 +224,6 @@ private:
 	std::vector<int> jyunban;
 	CVector3 flydist=CVector3::Zero;
 	AI* Chawse_Zombie;  //追跡してくるキャラを格納する。
+	BGM* bgm=nullptr;//BGMのインスタンスを格納する。
 };
 

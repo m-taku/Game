@@ -32,6 +32,7 @@ bool AI::Start()
 	pl = FindGO<Player>("Player");
 	Gaizi = FindGO<Geizi>("Geizi");
 	Car = FindGO<car>("car");
+	bgm = FindGO<BGM>("BGM");
 	//キャラのスキンモデルのロードは各自サブクラスで行う。
 	//m_skinModelData.Load(L"modelData/liam.cmo");//プレイヤーを書け
 	//m_skinModel.Init(m_skinModelData);
@@ -165,6 +166,7 @@ void AI::NPCDamage()
 	static int count = 0; //30フレームをカウントする。
 	if (count >= 30) {
 		//30フレーム経過したらゾンビ化。
+		bgm->SetZombie();//BGMのインスタンスにゾンビが増えたことを伝える。
 		nearestpas();
 		lam = nullptr;
 		Chasefrag = 0;
@@ -173,10 +175,13 @@ void AI::NPCDamage()
 		NPCHP = 100.0f;
 		NPCMAXHP = 100.0f;
 		m_speed = 1.5;
+		//登録されているNPCが3DSMAX上で左側のパスに属していなかったら(右側のパスに属していたら)
 		if (Leftfrag <= 0) {
+			//右側に属するNPCの生存判定を初期化する(0で生存、-1で消滅)。
 			game->SatRSaizon(iNo,0);
 		}
 		else {
+			//左側に属するNPCの生存判定を初期化する(0で生存、-1で消滅)。
 			game->SatLSaizon(iNo,0);
 		}
 		pa = Zombie_Normal; //パターンをゾンビノーマルに変える。
@@ -234,7 +239,8 @@ void AI::NPCFade_Out()//一般市民が退場するときの処理。
 	}
 }
 
-float AI::GetKyori(CVector3 a, CVector3 b) //2つのオブジェクトの座標を受け取り、オブジェクト間の距離を返す。
+//2つのオブジェクトの座標を受け取り、オブジェクト間の距離を返す。
+float AI::GetKyori(CVector3 a, CVector3 b) 
 {
 	CVector3 v = a - b;
 	float len = v.Length();//長さ
@@ -795,7 +801,7 @@ void AI::NPCEscape_NPC()
 void AI::search(CVector3 mokutekipos)
 {
 	jyunban.erase(jyunban.begin(), jyunban.end());     //逃げ切ったぜ～～～～
-	keiro.tansa(m_position,mokutekipos, &jyunban, Leftfrag);
+	keiro.tansa(m_position,mokutekipos, &jyunban, Leftfrag);//ゾンビ化NPCが多いときにここでクラッシュ
 	escapecaku = 30.0f;
 	mokuhyou = jyunban[0];
 }

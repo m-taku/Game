@@ -43,6 +43,7 @@ AI_manager::AI_manager()
 	da.push_back(AIR26);
 	for (int k = 0; k < da.size(); k++) {
 		Osu* AIR = NewGO<Osu>(0, "Osu");
+		NPC_Number++;//NPCを生成したのでカウントする。
 		AIR->GetGame(this);
 		Rsimin.push_back(AIR);
 		RAIseizon.push_back(1);
@@ -94,6 +95,7 @@ AI_manager::AI_manager()
 	da2.push_back(AIL43);
 	for (int k = 0; k < da2.size(); k++) {
 		Osu* AIL = NewGO<Osu>(0, "Osu");
+		NPC_Number++;//NPCを生成したのでカウントする。
 		AIL->GetGame(this);
 		Lsimin.push_back(AIL);
 		LAIseizon.push_back(1);

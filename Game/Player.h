@@ -113,7 +113,7 @@ private:
 	CAnimation m_animation;
 	CShaderResourceView zondi;
 	CAnimationClip m_animclip[animnum];
-	int attackF = 0;
+	int attackF = 0;//アタックフラグ。これが0のときに攻撃する。1のときには出来ない。
 	int attackcounter = 0;
 	CQuaternion bonerot = CQuaternion::Identity;
 	CVector3 boneforward = CVector3::Zero;

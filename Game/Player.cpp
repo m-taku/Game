@@ -232,17 +232,18 @@ void Player::Update()
 			m_animation.Play(attack, 0.1f);
 			attackF = 1;
 		}
-		if (!(m_animation.IsPlaying()) && attackF == 1)
+		if (!(m_animation.IsPlaying()) && attackF == 1)//アニメーション再生中かつ攻撃不可能状態のとき
 		{
 			/*		if (Pad(0).IsTrigger(enButtonB))
 					{
 						m_animation.Play(attack2, 0.3);
 					}*/
 
-			if (attackcounter == 10)
+			//attackcounterが10回カウントされると攻撃可能になる。
+			if (attackcounter >= 10)
 			{
-				attackF = 0;
-				attackcounter = 0;
+				attackF = 0;//攻撃可能にする。
+				attackcounter = 0;//カウンターを初期化。
 			}
 			attackcounter++;
 		}
