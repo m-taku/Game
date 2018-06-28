@@ -165,7 +165,7 @@ void Player::Update()
 			//’n–Ê‚É‚Â‚¢‚½B
 			m_moveSpeed.y = 0.0f;
 		}
-		if (Pad(0).IsTrigger(enButtonRB1)&&taieki_F==0)
+		if (Pad(0).IsTrigger(enButtonRB1)&&taieki_F==0&&itemcounter>=5)
 		{
 			
 			Tp[taieki_sum]=NewGO<taieki>(0, "taieki");
