@@ -8,7 +8,7 @@ public:
 	bool Start();
 	void Update();
 	void Render(CRenderContext& rc);
-	CVector3 Set_itempos(CVector3 pos)
+	void Set_itempos(CVector3 pos)
 	{
 		itempos = pos;
 	}

@@ -6,6 +6,7 @@
 #include"Game.h"
 #include "AI_manager.h"
 #include"Geizi.h"
+#include"item.h"
 #include"Pasu.h"
 #include"tekihei.h"
 #include"car.h"
@@ -169,6 +170,8 @@ void AI::NPCDamage()
 	if (count >= 30) {
 		//30フレーム経過したらゾンビ化。
 		nearestpas();
+		item* ite = NewGO<item>(0, "item");
+		ite->Set_itempos(m_position);
 		lam = nullptr;
 		Chasefrag = 0;
 		Raifu_f = false;
@@ -231,7 +234,7 @@ void AI::NPCFade_Out()//一般市民が退場するときの処理。
 			switch (Leftfrag)
 			{
 			case 0:
-				da = 41;
+				da = 42;
 				break;
 			case 1:
 				da = 65;
