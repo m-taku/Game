@@ -57,7 +57,7 @@ void GameEnd::Update()
 	}
 }
 
-void GameEnd::Render(CRenderContext& rc)
+void GameEnd::PostRender(CRenderContext& rc)
 {
 	syuuryou.Draw(rc, MainCamera2D().GetViewMatrix(), MainCamera2D().GetProjectionMatrix());
 }

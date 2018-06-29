@@ -7,7 +7,8 @@ public:
 	~GameEnd();
 	bool Start();
 	void Update();
-	void Render(CRenderContext& rc);
+//	void Render(CRenderContext& rc);
+	void PostRender(CRenderContext& rc);
 private:
 	int furgu = 0;
 	Fade* fade;

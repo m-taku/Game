@@ -59,6 +59,10 @@ public:
 	{
 		return attackF;
 	}
+	void set_itemcounter()
+	{
+		itemcounter++;
+	}
 
 	void Play_Respiration(CVector3 m_moveDecision);//息遣いの音を再生させるかを判断する。
 	void Play_Attack();//攻撃攻撃した時の効果音を再生する。
@@ -131,7 +135,10 @@ private:
 	float blend = 0.0f;
 	//CVector3 m_moveSpeed_log = CVector3::Zero;//moveSpeedを保持する。
 	bool X_button_Flag = false;//Xボタンが押されたかどうかを保持するフラグ。
-	prefab::CSoundSource*m_Respiration = nullptr;//息使いの音。歩くときに流す。
+	//prefab::CSoundSource*m_Respiration = nullptr;//息使いの音。歩くときに流す。
+
 	prefab::CSoundSource*m_AttackSE = nullptr;//息使いの音。歩くときに流す。
+
+	int itemcounter = 0;
 };
 

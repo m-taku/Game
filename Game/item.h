@@ -1,6 +1,5 @@
 #pragma once
-#include"tekihei.h"
-#define tekikazu 10
+#include "Player.h"
 class item : public IGameObject
 {
 public:
@@ -9,12 +8,18 @@ public:
 	bool Start();
 	void Update();
 	void Render(CRenderContext& rc);
-	CSkinModel itemModel[tekikazu];					//スキンモデル。
+	void Set_itempos(CVector3 pos)
+	{
+		itempos = pos;
+	}
+private:
+	float item_to_player_dist(CVector3 playerpos,CVector3 itemposition);
+	CSkinModel itemModel;					//スキンモデル。
 	CSkinModelData itemModelData;			//スキンモデルデータ。
-	CVector3 itempos[tekikazu];
-	CQuaternion itemrot[tekikazu];
-	int itemf[tekikazu];
-	tekihei *tp;
-	
+	CVector3 itempos = CVector3::Zero;		//アイテムのポジション
+	CQuaternion itemrot=CQuaternion::Identity;//アイテムの回転
+	int itemf = 0;							//気にしない
+	Player *Pp;
+	CQuaternion itemQrot = CQuaternion::Identity;
 };
 

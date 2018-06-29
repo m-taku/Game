@@ -6,6 +6,7 @@
 #include"Game.h"
 #include "AI_manager.h"
 #include"Geizi.h"
+#include"item.h"
 #include"Pasu.h"
 #include"tekihei.h"
 #include"car.h"
@@ -14,6 +15,7 @@
 //AI NPC;
 //今回はmを引用するNPCのハンドルとして、jを特殊部隊のハンドルとして代用する。これは後に直しておくように。
 //NPCとNPCゾンビの両方を処理する。
+
 AI::AI()
 {
 	pa = Normal; //ここはプレイヤーの行動によって変化するようにする。
@@ -51,7 +53,7 @@ bool AI::Start()
 	//mRot.MakeRotationFromQuaternion();
 	A_charaCon.Init(
 		30.0,			//半径。 
-		150.0f,			//高さ。
+		100.0f,			//高さ。
 		m_position,		//初期位置。
 		0
 	);
@@ -93,30 +95,32 @@ bool AI::Start()
 	m_rotation.SetRotationDeg(CVector3::AxisY,VectorAngleDeg(game->pasu[Leftfrag].m_pointList[pasu[ima] - 1]));
 	SetTags(10);
 	m_skinModel.SetShadowCasterFlag(true);
+	mokuhyou = pasu[ima];
 	return true;
 }
 void AI::NPCNormal()
 {
-	pasmove(pasu[ima]);
+	pasmove(mokuhyou);
 	m_rotation.Multiply(work->Getkaku());//回転
-	if (160.0f > work->Getlen()) {
+	if (100.0f > work->Getlen()) {
 		if (Leftfrag <= 0) {
 			if (ima >= game->gatsiz(iNo) - 1) {//今のポジションが6なら
 						  //0にリセットする。0,1,2,3,4,5の順番。
 				ima = 0;
+				mokuhyou = pasu[ima];
 			}
 			else {
-					ima++;
+				mokuhyou = pasu[++ima];
 			}
 		}
 		else {
 			if (ima >= game->gatLsiz(iNo) - 1) {//今のポジションが6なら
 											   //0にリセットする。0,1,2,3,4,5の順番。
 				ima = 0;
-
+				mokuhyou = pasu[ima];
 			}
 			else {
-				ima++;
+				mokuhyou = pasu[++ima];
 			}
 		}
 	}
@@ -185,11 +189,8 @@ void AI::NPCDamage()
 			game->SatLSaizon(iNo,0);
 		}
 		pa = Zombie_Normal; //パターンをゾンビノーマルに変える。
-	}
-	else {
-		count++; //1フレーム経過をカウントする。
-	}
 
+	}
 }
 void AI::nearestpas()//最寄りのパス検索
 {
@@ -223,18 +224,29 @@ float AI::takikennsau()
 }
 void AI::NPCFade_Out()//一般市民が退場するときの処理。
 {
-	work->kyorikeisan(jyunban[da] - 1, m_position, m_forward, game->pasu[Leftfrag].m_pointList);
+	pasmove(mokuhyou);
 	m_rotation.Multiply(work->Getkaku());
-	m_movespeed = m_forward*(work->Getmuve()*m_speed + mobe* GameTime().GetFrameDeltaTime());
-	m_movespeed.y += gravity;
-	m_position = A_charaCon.Execute(GameTime().GetFrameDeltaTime(),m_movespeed);//移動
-	if (30.0f > work->Getlen()) {
+	if (30.0f > work->Getlen())
+	{
 		if (da >= jyunban.size()-1) {//指定されたパスの最後まで着いたら
-			pa = Death;
+			pa = Getaway;
 			da = 0;
+			switch (Leftfrag)
+			{
+			case 0:
+				da = 42;
+				break;
+			case 1:
+				da = 65;
+				break;
+			default:
+				break;
+			}
+			mokuhyou = da;
+			A_charaCon.RemoveRigidBoby();
 		}
 		else {
-			da++;
+			mokuhyou = jyunban[++da];
 		}
 	}
 }
@@ -282,7 +294,8 @@ float AI::Siya(CVector3 h, float g)
 			return 1;
 		}
 		else {
-			if (pl->GetMoveSpeed().Length() >= 500.0f)
+			if(0.7<sqrt(Pad(0).GetLStickXF()*Pad(0).GetLStickXF() + Pad(0).GetLStickYF()*Pad(0).GetLStickYF()))
+				//if (pl->GetMoveSpeed().Length() >= 500.0f)
 			{
 				CQuaternion kaku;
 				kaku.SetRotationDeg(CVector3::AxisY, 30.0f);
@@ -400,9 +413,6 @@ void AI::NPCDeath()//死亡、消滅処理。
 		else {
 			game->SatLSaizon(iNo,-1);
 		}
-		CQuaternion qBias1;
-		qBias1.SetRotationDeg(CVector3::AxisX, 10.0f);
-		m_rotation.Multiply(qBias1);
 		//DeleteGO(this);//自己消滅。
 	}
 }
@@ -456,30 +466,35 @@ void AI::Update()
 			NPCMAXHP = NPCHP;
 		}
 	}
-	//if (GetZonbi() == true&&pa!= flyNPC) {
-	//	FindGameObjectsWithTag(20, [&](IGameObject* go) {
-	//		if (go != this) {            //自分からの距離を計測するため、検索結果から自分を除外する。
-	//			car* ai = (car*)go;
-	//			CVector3 kyori1 = this->m_position- ai->Getposition();//自分との距離を求める。
-	//			float f = kyori1.Length();
-	//			if (f <= 600) { //距離が車間距離よりも短くなっていたら
-	//				kyori1.Normalize();
-	//				float kaku = acosf(kyori1.Dot(ai->Getforward()));//２つのべクトルの内積のアークコサインを求める。(ラジアン)
-	//				float degree = CMath::RadToDeg(kaku);
-	//				if (degree <= 45) {
-	//					ziko_car = ai;
-	//					pa = flyNPC;
-	//				}
-	//			}
-	//		}
-	//	});
-	//}
+	if (GetZonbi() == true&&pa!= flyNPC) {
+		FindGameObjectsWithTag(20, [&](IGameObject* go) {
+			if (go != this) {            //自分からの距離を計測するため、検索結果から自分を除外する。
+				car* ai = (car*)go;
+				CVector3 kyori1 = this->m_position- ai->Getposition();//自分との距離を求める。
+				float f = kyori1.Length();
+				if (f <= 600) { //距離が車間距離よりも短くなっていたら
+					kyori1.Normalize();
+					float kaku = acosf(kyori1.Dot(ai->Getforward()));//２つのべクトルの内積のアークコサインを求める。(ラジアン)
+					float degree = CMath::RadToDeg(kaku);
+					if (degree <= 30) {
+						ziko_car = ai;
+						pa = flyNPC;
+					}
+				}
+			}
+		});
+	}
 	if (Gaizi != nullptr) {
 		if (Gaizi->GatFragu() >= 1.0f&& ForceFlag == false) {//特殊部隊が出現したら、
 			ForceFlag = true;//出現フラグを立てる。
 			if (GetZonbi() != true)
 			{//自分がゾンビではなかったら
-				search(game->pasu[Leftfrag].m_pointList[0]);
+				if (Leftfrag <= 0) {
+					search(game->pasu[Leftfrag].m_pointList[0]);
+				}
+				else {
+					search(game->pasu[Leftfrag].m_pointList[35]);
+				}
 				da = 0;
 				m_speed = 4.0f;
 				work->Setkakudo(3.0f);
@@ -493,6 +508,7 @@ void AI::Update()
 			pa = Resistance_NPC;				//もう一度チャンスをやろう！！！！
 			escapecaku = 30.0f;
 			m_speed = 0.0f;
+			SetZonbe();
 			HitFlag = false;
 		}
 		else {
@@ -565,6 +581,9 @@ void AI::Update()
 		case Death:
 			NPCDeath();
 			break;
+		case Getaway:
+			NPCGetaway();
+			break;
 		default:
 			break;
 		}
@@ -587,12 +606,11 @@ void AI::Update()
 		});
 	}
 	Setposition(m_position);
-
 //	AI_Animation();
 	if (!m_objectFrustumCulling.IsCulling()) {
 		m_skinModel.Update(m_position, m_rotation, { 20.0f, 20.0f,20.0f });
 	}
-
+	again_move();
 	m_skinModel.UpdateBoundingBox();
 	m_objectFrustumCulling.Execute(m_skinModel.GetBoundingBox());
 }
@@ -706,67 +724,103 @@ void AI::NPCRunangle(CVector3 kyori)//直線ベクトルをそのまま使った移動の際の、回
 void AI::pasmove(int mokuhyou)
 {
 	work->kyorikeisan(mokuhyou - 1, m_position, m_forward, game->pasu[Leftfrag].m_pointList);
-	m_movespeed = m_forward * (work->Getmuve()*m_speed + mobe* GameTime().GetFrameDeltaTime());
+	m_movespeed = work->Getbekutor() * (work->Getmuve()*m_speed + mobe* GameTime().GetFrameDeltaTime());
 	m_movespeed.y += gravity;
 	m_position = A_charaCon.Execute(GameTime().GetFrameDeltaTime(), m_movespeed);//移動
 }
-void AI::Fardist_path(CVector3 m_position)//視野付きリンク先パス検索
+void AI::NPCGetaway()
 {
-	CVector3 minkore = { 0.0f,0.0f,0.0f };
-	for (int Linknum = 0; Linknum < game->pasu[Leftfrag].GetresutoSaiz(mokuhyouNo); Linknum++) {
-		CVector3 ma = game->pasu[Leftfrag].Getresuto(mokuhyouNo)->m_position[Linknum] - m_position;
-		if (minkore.Length() < ma.Length()) {
-			if (90 <= VectorAngleDeg(ma, m_position - this->m_position)) {
-				minkore = ma;
-				mokuhyou = game->pasu[Leftfrag].Getresuto(mokuhyouNo)->No[Linknum];
+	work->kyorikeisan(mokuhyou - 1, m_position, m_forward, game->pasu[Leftfrag].m_pointList);
+	m_movespeed = m_forward * (work->Getmuve()*m_speed + mobe * GameTime().GetFrameDeltaTime());
+	//m_movespeed.y += gravity;
+	m_position += m_movespeed * GameTime().GetFrameDeltaTime();//移動
+	m_rotation.Multiply(work->Getkaku());//回転
+	if (30.0f > work->Getlen()&& counta==0) {
+		mokuhyou++;
+		counta++;
+	}
+	else {
+		if (30.0f > work->Getlen() && counta == 1)
+		{
+			if (Leftfrag <= 0) {
+				game->SatRSaizon(iNo,-5);
 			}
+			else {
+				game->SatLSaizon(iNo,-5);
+			}
+			DeleteGO(this);//自己消滅
 		}
 	}
-	Retrieval_pasNo(mokuhyou);
 }
-void AI::hinannpas(CVector3 m_position)
-{
-	pasmove(mokuhyou);
-	NPCRunangle(work->Getbekutor());
-	if ((game->pasu[Leftfrag].Getresuto(mokuhyouNo)->m_position[0] - this->m_position).Length() < 200.0f) {
-		Fardist_path(m_position);
+void AI::Fardist_path(CVector3 m_position)//視野付きリンク先パス検索
+	{
+		CVector3 minkore = { 0.0f,0.0f,0.0f };
+		for (int Linknum = 0; Linknum < game->pasu[Leftfrag].GetresutoSaiz(mokuhyouNo); Linknum++) {
+			CVector3 ma = game->pasu[Leftfrag].Getresuto(mokuhyouNo)->m_position[Linknum] - m_position;
+			if (minkore.Length() < ma.Length()) {
+				if (90 <= VectorAngleDeg(ma, m_position - this->m_position)) {
+					minkore = ma;
+					mokuhyou = game->pasu[Leftfrag].Getresuto(mokuhyouNo)->No[Linknum];
+				}
+			}
+		}
+		Retrieval_pasNo(mokuhyou);
 	}
-}
-void AI::Chasepas(CVector3 m_position)
-{
-	pasmove(mokuhyou);
-	//NPCRunangle(work->Getbekutor());
-	if ((game->pasu[Leftfrag].Getresuto(mokuhyouNo)->m_position[0] - this->m_position).Length() < 200.0f) {
-	/*	CVector3 minkore = { FLT_MAX,FLT_MAX,FLT_MAX};
+	/*void AI::Fardist_path_mo(CVector3 m_position)//リンク先パス検索(経路)
+	{
+		CVector3 minkore = { 9999999999999.0,9999999999999990.0f,9999999999999999990.0f };
 		for (int Linknum = 0; Linknum < game->pasu[Leftfrag].GetresutoSaiz(mokuhyouNo); Linknum++) {
 			CVector3 ma = game->pasu[Leftfrag].Getresuto(mokuhyouNo)->m_position[Linknum] - m_position;
 			if (minkore.Length() > ma.Length()) {
 				minkore = ma;
 				mokuhyou = game->pasu[Leftfrag].Getresuto(mokuhyouNo)->No[Linknum];
 			}
-		}*/
-		search(m_position);
-		if (jyunban[0] == jyunban[1])
-		{
-			switch (Leftfrag)		
-			{
-				case 0:
-					destination_Leftfrag = 0;
-					Leftfrag = 1;
-					search(lam->m_position);
-					break;
-				case 1:
-					destination_Leftfrag = 1;
-					Leftfrag = 0;
-					search(lam->m_position);
-					break;
-				default:
-					break;
-			}
 		}
 		Retrieval_pasNo(mokuhyou);
+	}*/
+	void AI::hinannpas(CVector3 m_position)
+	{
+		pasmove(mokuhyou);
+		NPCRunangle(work->Getbekutor());
+		if ((game->pasu[Leftfrag].Getresuto(mokuhyouNo)->m_position[0] - this->m_position).Length() < 200.0f) {
+			Fardist_path(m_position);
+		}
 	}
-}
+	void AI::Chasepas(CVector3 m_position)
+	{
+		pasmove(mokuhyou);
+		//NPCRunangle(work->Getbekutor());
+		if ((game->pasu[Leftfrag].Getresuto(mokuhyouNo)->m_position[0] - this->m_position).Length() < 200.0f) {
+			/*	CVector3 minkore = { FLT_MAX,FLT_MAX,FLT_MAX};
+				for (int Linknum = 0; Linknum < game->pasu[Leftfrag].GetresutoSaiz(mokuhyouNo); Linknum++) {
+					CVector3 ma = game->pasu[Leftfrag].Getresuto(mokuhyouNo)->m_position[Linknum] - m_position;
+					if (minkore.Length() > ma.Length()) {
+						minkore = ma;
+						mokuhyou = game->pasu[Leftfrag].Getresuto(mokuhyouNo)->No[Linknum];
+					}
+				}*/
+			search(m_position);
+			//if (jyunban[0] == jyunban[1])
+			//{
+			//	switch (Leftfrag)		
+			//	{
+			//		case 0:
+			//			destination_Leftfrag = 0;
+			//			Leftfrag = 1;
+			//			search(m_position);
+			//			break;
+			//		case 1:
+			//			destination_Leftfrag = 1;
+			//			Leftfrag = 0;
+			//			search(m_position);
+			//			break;
+			//		default:
+			//			break;
+			//	}
+			//}
+			Retrieval_pasNo(mokuhyou);
+		}
+	}
 void AI::NPCescape()//ゾンビから逃げる
 {
 	CVector3 v = m_position - pl->Getposition();
@@ -777,8 +831,13 @@ void AI::NPCescape()//ゾンビから逃げる
 	}
 	else {
 		m_speed = 4.0f;
-		mobe = 50.0f; 
-		search(game->pasu[Leftfrag].m_pointList[0]);
+		mobe = 50.0f; 			
+		if (Leftfrag <= 0) {
+			search(game->pasu[Leftfrag].m_pointList[0]);
+		}
+		else {
+			search(game->pasu[Leftfrag].m_pointList[35]);
+		}
 		Gaizi->Satpoint(0.1);
 		work->Setkakudo(5.0f);
 		kaiten = false;
@@ -798,10 +857,26 @@ void AI::NPCEscape_NPC()
 		//1人では戦えない！！！//に～げるんだよ～～～～
 	}
 }
+void AI::again_move()
+{
+	if (m_position.x==previous_position.x&&m_position.y == previous_position.y&&m_position.y == previous_position.y) {
+		stoptaim++;
+		if (stoptaim >= 5 / GameTime().GetFrameDeltaTime())
+		{
+			nearestpas();
+		}
+	}
+	else {
+		previous_position = m_position;
+		stoptaim = 0;
+	}
+}
 void AI::search(CVector3 mokutekipos)
 {
 	jyunban.erase(jyunban.begin(), jyunban.end());     //逃げ切ったぜ～～～～
-	keiro.tansa(m_position,mokutekipos, &jyunban, Leftfrag);//ゾンビ化NPCが多いときにここでクラッシュ
+	keiroK keiro;
+	keiro.tansa(m_position,mokutekipos, &jyunban, Leftfrag);
+
 	escapecaku = 30.0f;
 	mokuhyou = jyunban[0];
 }

@@ -19,11 +19,13 @@ tekihei::~tekihei()
 			DeleteGO(tamaEF[i]);
 		}
 	}
+
 	for (auto human : Humans) {
 		AI* pointa = dynamic_cast<AI*>(human);
 		if (pointa != nullptr) {
 			pointa->Gettekihei(NULL);
 		}
+	
 	}
 }
 
@@ -540,13 +542,14 @@ void tekihei::Update()
 
 				}
 
-				if (tekiHP[i] <= 0.0f)//i”Ô–Ú‚Ì“G•º‚ÌHP‚ª0ˆÈ‰º‚É‚È‚Á‚½‚ç
-				{
-					tekiheiflag[i] = 0;//i”Ô–Ú‚Ìtekiheiflag‚ð0‚É‚·‚éB
-
-				}
+				
 				tekipos[i] = m_charaCon[i].Execute(GameTime().GetFrameDeltaTime(), tekispeed[i]);
 				tekiskinModel[i].Update(tekipos[i], tekirot[i], { 1.0f,1.0f,1.0f });
+			}
+			if (tekiHP[i] <= 0.0f)//i”Ô–Ú‚Ì“G•º‚ÌHP‚ª0ˆÈ‰º‚É‚È‚Á‚½‚ç
+			{
+				tekiheiflag[i] = 0;//i”Ô–Ú‚Ìtekiheiflag‚ð0‚É‚·‚éB
+
 			}
 		}
 		//i”Ô–Ú‚Ì“G•º‚ÌHP‚ª‚Ü‚¾‚ ‚é‚Æ‚«‚Ìƒ‹[ƒv‚Í‚±‚±‚Ü‚Å

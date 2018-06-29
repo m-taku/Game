@@ -46,5 +46,7 @@ private:
 	int hyouji = 11;
 	int taim = 11;
 	int Target = 3;
+
+	CVector3 kakakakak = target - nowkmtarget;
 };
 

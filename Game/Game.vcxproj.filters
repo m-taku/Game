@@ -68,10 +68,10 @@
     <ClCompile Include="LevelRender.cpp" />
     <ClCompile Include="AIChase.cpp" />
     <ClCompile Include="AIZonbie.cpp" />
-    <ClCompile Include="AI.cpp" />
     <ClCompile Include="Stage_Light.cpp" />
     <ClCompile Include="AI_manager.cpp" />
     <ClCompile Include="BGM.cpp" />
+    <ClCompile Include="AI.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -440,6 +440,9 @@
       <Filter>Assets\modelData</Filter>
     </CustomBuild>
     <CustomBuild Include="Assets\effect\aura3.efk" />
+    <CustomBuild Include="Assets\sound\car-horn1.wav" />
+    <CustomBuild Include="Assets\sound\klaxon.wav" />
+    <CustomBuild Include="Assets\sound\car_noise.wav" />
     <CustomBuild Include="Assets\animData\liam_ziko.tka" />
     <CustomBuild Include="Assets\animData\waon.tka">
       <Filter>Assets\animData</Filter>
@@ -448,28 +451,15 @@
       <Filter>Assets\modelData</Filter>
     </CustomBuild>
     <CustomBuild Include="Assets\lever\levalAI22.tks" />
+    <CustomBuild Include="Assets\sound\horror_zone1.wav" />
     <CustomBuild Include="Assets\shader\monochrome.fx">
       <Filter>Assets\shader</Filter>
     </CustomBuild>
     <CustomBuild Include="Assets\shader\VolumeLight.fx">
       <Filter>Assets\shader</Filter>
     </CustomBuild>
+    <CustomBuild Include="Assets\sound\Sudden_braking.wav" />
     <CustomBuild Include="Assets\sound\iki.wav" />
-    <CustomBuild Include="Assets\sound\car_noise.wav">
-      <Filter>Assets\sound</Filter>
-    </CustomBuild>
-    <CustomBuild Include="Assets\sound\car-horn1.wav">
-      <Filter>Assets\sound</Filter>
-    </CustomBuild>
-    <CustomBuild Include="Assets\sound\horror_zone1.wav">
-      <Filter>Assets\sound</Filter>
-    </CustomBuild>
-    <CustomBuild Include="Assets\sound\klaxon.wav">
-      <Filter>Assets\sound</Filter>
-    </CustomBuild>
-    <CustomBuild Include="Assets\sound\Sudden_braking.wav">
-      <Filter>Assets\sound</Filter>
-    </CustomBuild>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\modelData\livingbuildings.png">
@@ -485,10 +475,25 @@
     <Image Include="Assets\modelData\utc_all2.tga">
       <Filter>Assets\modelData</Filter>
     </Image>
+    <Image Include="Assets\sprite\HP.png">
+      <Filter>Assets\sprite</Filter>
+    </Image>
+    <Image Include="Assets\sprite\HP_waku.png">
+      <Filter>Assets\sprite</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\lever\larer_01.tks">
       <Filter>Assets\font</Filter>
+    </None>
+    <None Include="Assets\animData\shiminkaiten.tka">
+      <Filter>Assets\animData</Filter>
+    </None>
+    <None Include="Assets\animData\shiminkoke.tka">
+      <Filter>Assets\animData</Filter>
+    </None>
+    <None Include="Assets\animData\shiminokiagari.tka">
+      <Filter>Assets\animData</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -532,13 +537,5 @@
     <ImageContentTask Include="Assets\sprite\noise.png">
       <Filter>Assets\sprite</Filter>
     </ImageContentTask>
-  </ItemGroup>
-  <ItemGroup>
-    <Media Include="Assets\sound\n80.wav">
-      <Filter>Assets\sound</Filter>
-    </Media>
-    <Media Include="Assets\sound\swing2.wav">
-      <Filter>Assets\sound</Filter>
-    </Media>
   </ItemGroup>
 </Project>

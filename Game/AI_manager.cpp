@@ -79,12 +79,10 @@ AI_manager::AI_manager()
 	da2.push_back(AIL27);
 	da2.push_back(AIL28);
 	da2.push_back(AIL29);
-	da2.push_back(AIL30);
 	da2.push_back(AIL31);
 	da2.push_back(AIL32);
 	da2.push_back(AIL33);
 	da2.push_back(AIL34);
-	da2.push_back(AIL35);
 	da2.push_back(AIL36);
 	da2.push_back(AIL37);
 	da2.push_back(AIL38);
@@ -106,13 +104,21 @@ AI_manager::AI_manager()
 
 AI_manager::~AI_manager()
 {
-	for (int k = 0; k < Rsimin.size(); k++) {
-		DeleteGO(Rsimin[k]);
+	for (int num = 0; num < Rsimin.size(); num++) {
+		if (RAIseizon[num] >= -1) {
+			DeleteGO(Rsimin[num]);
+		}
 
 	}
-	for (int k = 0; k < Lsimin.size(); k++) {
-		DeleteGO(Lsimin[k]);
+	for (int num = 0; num  < Lsimin.size(); num++) {
+		if (LAIseizon[num] >= -1) {
+			DeleteGO(Lsimin[num]);
+		}
 	}
+	RAIseizon.clear();
+	LAIseizon.clear();
+	Rsimin.clear();
+	Lsimin.clear();
 }
 bool AI_manager::Start()
 {

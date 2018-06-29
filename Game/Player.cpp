@@ -165,7 +165,7 @@ void Player::Update()
 			//地面についた。
 			m_moveSpeed.y = 0.0f;
 		}
-		if (Pad(0).IsTrigger(enButtonRB1)&&taieki_F==0)
+		if (Pad(0).IsTrigger(enButtonRB1)&&taieki_F==0&&itemcounter>=5)
 		{
 			
 			Tp[taieki_sum]=NewGO<taieki>(0, "taieki");
@@ -263,20 +263,21 @@ void Player::Update()
 					if (ai->GetmoveStop() == false) {//車が止まっていたら
 						CVector3 kyori1 = this->m_position - ai->Getposition();//自分との距離を求める。
 						float f = kyori1.Length();
-						if (f <= 600) { //距離が車間距離よりも短くなっていたら
+						if (f <= 500) { //距離が車間距離よりも短くなっていたら
 							kyori1.Normalize();
 							float kaku = acosf(kyori1.Dot(ai->Getforward()));//２つのべクトルの内積のアークコサインを求める。(ラジアン)
 							float degree = CMath::RadToDeg(kaku);
-							if (degree <= 45) {
+							if (degree <= 30) {
 								game = false;
 								carpoint = ai;
 								carpoint->SoundklaxonPlay();
 								m_moveSpeed = (m_forward*-1 * m_moveSpeed.Length()) + carpoint->Getforward()*1000.0f;
-								m_moveSpeed.y = 600.0f;
+								m_moveSpeed.y = 450.0f;
 								zikofrag = true;
 								muteki_Flag = true;
 
 							}
+
 						}
 					}
 				}
