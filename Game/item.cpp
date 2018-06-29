@@ -16,7 +16,7 @@ bool item::Start()
 	Pp = FindGO<Player>("Player");
 	itemModelData.Load(L"modelData/item.cmo");
 	itemModel.Init(itemModelData);
-	
+	item_vector.Normalize();
 	
 	return true;
 }
@@ -33,6 +33,17 @@ void item::Update()
 	{
 		Pp->set_itemcounter();
 		DeleteGO(this);
+	}
+	
+	
+	
+	itempos += item_vector * 1300.0f*GameTime().GetFrameDeltaTime();
+	G += 50.0f*GameTime().GetFrameDeltaTime();
+	itempos.y -= G;
+	if (itempos.y < 20.0f)
+	{
+		item_vector = CVector3::Zero;
+		itempos.y = 20.0f;
 	}
 	itemQrot.SetRotationDeg(CVector3::AxisY, 100.0f*GameTime().GetFrameDeltaTime());
 	itemrot.Multiply(itemQrot);

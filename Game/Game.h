@@ -30,6 +30,7 @@ public:
 	Player* player;
 	camera* camera1;
 	keiroK* keiro;
+	tekihei* enemy;
 	int a = 2;
 	int stag = 0;					//ƒŒƒxƒ‹B
 	int incNo()

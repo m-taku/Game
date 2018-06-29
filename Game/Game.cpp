@@ -33,6 +33,7 @@ Game::Game()
 		na->GetGeizi(gaizi);
 	}
 	camera1 = NewGO<camera>(0, "camera");
+	//enemy= NewGO<tekihei>(0, "enemy");
 
 	/*swprintf_s(moveFilePath, L"lever/matilevel%d0%d.tks", 0, 2);
 	m_level[0].Build(moveFilePath);
@@ -64,6 +65,7 @@ void Game::OnDestroy()
 	stage->Car_delete();
 	DeleteGO(FindGO<BGM>("BGM"));//BGM
 	DeleteGO(camera1);
+	//DeleteGO(enemy);
 //	DeleteGO(FindGO<item>("item"));
 	//再起動（タイトル表示）
 	NewGO<Taitor>(0, "Taitor");
@@ -71,6 +73,7 @@ void Game::OnDestroy()
 	NewGO<BGM>(0, "BGM");
 	NewGO<Player>(0, "Player");
 	NewGO<AI_manager>(0, "AI_manager");
+	//enemy = NewGO<tekihei>(0, "enemy");
 }
 bool Game::Start()
 {
