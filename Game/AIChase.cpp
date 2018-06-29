@@ -11,7 +11,7 @@
 #define PI 3.141592653589793 
 void AI::NPCChase()
 {
-	float len = GetKyori(m_position, Tansaku->m_position);
+	float len = GetKyori(m_position, lam->m_position);
 	CVector3 mokuteki = lam->m_position - m_position;
 	NPCRunangle(mokuteki);
 	if (lam->Raifu_f == true|| len>=2200.0f) {
@@ -25,7 +25,7 @@ void AI::NPCChase()
 	else {
 		if (mokuteki.Length() >= 1300.0f)
 		{
-				Chasepas(Tansaku->m_position);//Œo˜H‚½‚ñ‚³H
+				Chasepas(lam->m_position);//Œo˜H‚½‚ñ‚³H
 				m_rotation.Multiply(work->Getkaku());
 		}
 		if (mokuteki.Length() <= atakkukyori) {

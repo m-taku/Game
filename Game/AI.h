@@ -220,13 +220,11 @@ private:
 	CVector3 m_forward;						//キャラの前方。
 	CVector3 m_rite;						//キャラの右方向。
 	CMatrix mRot;
-	keiroK keiro;
 	CMatrix m_tekirot;
 	CMatrix k_tekirot;
 	car* ziko_car;
 	CVector3 before_m_position = CVector3::Zero;		//一つ前の座標。
 	std::vector<int> jyunban;
-
 	int counta = 0;
 	CVector3 flydist=CVector3::Zero;
 	AI* Chawse_Zombie;  //追跡してくるキャラを格納する。
