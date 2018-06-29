@@ -1,6 +1,5 @@
 #include "stdafx.h"
 #include "Stage_Light.h"
-
 #include "tkEngine\light\tkDirectionLight.h"
 #include"tkEngine/graphics/tkLight.h"
 #include "tkEngine\light\tkPointLight.h"
@@ -38,7 +37,7 @@ bool Stage_Light::Start()
 		point[i]->SetAttn({ 700.0f,4.0f ,0.0f });
 		//f.y = 270.0f;
 	//ライト　ポイントに
-	    //SVolumeLightInfo volumeInfo;
+		//SVolumeLightInfo volumeInfo;
 		//volumeInfo.s_position = f;
 		//m_volumeLight->AddVolumeLight(volumeInfo);
 	}
