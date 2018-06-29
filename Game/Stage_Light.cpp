@@ -30,18 +30,17 @@ bool Stage_Light::Start()
 	CLocData loc;
 	loc.Load(L"lever/laitLv001.tks");
 	for (int i = 0; i < loc.GetNumObject(); i++) {
-		//point.push_back(NewGO<prefab::CPointLight>(0));
+		point.push_back(NewGO<prefab::CPointLight>(0));
 		CVector3 f = loc.GetObjectPosition(i);
-		//f.y -= 400.0f;
-		f.y = 270.0f;
-		//point[i]->SetPosition(f);
-		//point[i]->SetColor({ 180.0f,255.0f, 0.0f,0.0f });
-		//point[i]->SetAttn({ 700.0f,4.0f ,0.0f });
-		SVolumeLightInfo volumeInfo;
-		volumeInfo.s_position = f;
-		m_volumeLight->AddVolumeLight(volumeInfo);
+		f.y = 500.0f;
+		point[i]->SetPosition(f);
+		point[i]->SetColor({ 180.0f,255.0f, 0.0f,0.0f });
+		point[i]->SetAttn({ 700.0f,4.0f ,0.0f });
+		//SVolumeLightInfo volumeInfo;
+		//volumeInfo.s_position = f;
+		//m_volumeLight->AddVolumeLight(volumeInfo);
 	}
-	m_volumeLight->Init();
+	//m_volumeLight->Init();
 	m_sunLig = NewGO<prefab::CDirectionLight>(0);
 	CVector3 lightDir = { 0.707f, -0.707f, 0.0f };
 	m_sunLig->SetDirection(lightDir);
