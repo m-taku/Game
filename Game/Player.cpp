@@ -230,6 +230,7 @@ void Player::Update()
 		if (Pad(0).IsTrigger(enButtonB) && attackF == 0)
 		{
 			m_animation.Play(attack, 0.1f);
+			Play_Attack();//攻撃時のSEを再生する。
 			attackF = 1;
 		}
 		if (!(m_animation.IsPlaying()) && attackF == 1)//アニメーション再生中かつ攻撃不可能状態のとき
@@ -356,6 +357,13 @@ void Player::Play_Respiration(CVector3 m_moveDecision)
 	else {
 		m_Respiration->Stop();//呼吸音を止める。
 	}
+}
+//プレイヤーが攻撃した時の効果音を再生する。
+void Player::Play_Attack()
+{
+	m_AttackSE = NewGO<prefab::CSoundSource>(0);
+	m_AttackSE->Init("sound/swing2.wav", false);
+	m_Respiration->Play(false);//一回だけ再生されて破棄される。
 }
 bool Player::CVector_same_Decision(CVector3 a, CVector3 b) //2つのベクトルが同一かどうかを調べる。
 {

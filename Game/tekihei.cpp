@@ -20,8 +20,10 @@ tekihei::~tekihei()
 		}
 	}
 	for (auto human : Humans) {
-		AI* pointa = (AI*)human;
-		pointa->Gettekihei(NULL);
+		AI* pointa = dynamic_cast<AI*>(human);
+		if (pointa != nullptr) {
+			pointa->Gettekihei(NULL);
+		}
 	}
 }
 

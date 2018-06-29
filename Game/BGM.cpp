@@ -57,13 +57,13 @@ void BGM::Play_Sneak_Fewer_people()//スニーク時(ゾンビ化NPCが1/2未満の時)のBGMを
 
 void BGM::Play_Sneak_Many_persons()//スニーク時(ゾンビ化NPCが1/2以上の時)のBGMを流しているときに動く関数。
 {
-	m_bdm_Sneak1->Play(true);//スニーク時のBGMを流す。
-	m_bdm_Sneak2->Play(true);//スニーク時のBGMを流す。
+	m_bdm_Sneak1->Play(true);//スニーク時のBGM1を流す。
+	m_bdm_Sneak2->Play(true);//スニーク時のBGM2を流す。
 	if (Gauge->Get_keifou_saiz() >= 0.95) //ゲージが敵兵が出てくるラインを超えたら
 	{
 		Scene = Assault;//ゲージがラインを超えた(＝敵兵とのバトルに移行する)ので流すBGMをアサルトに変える。
-		m_bdm_Sneak1->Stop();//次へ切り替わるので今流れているBGMを止める。
-		m_bdm_Sneak2->Stop();//次へ切り替わるので今流れているBGMを止める。
+		m_bdm_Sneak1->Stop();//次へ切り替わるので今流れているBGM1を止める。
+		m_bdm_Sneak2->Stop();//次へ切り替わるので今流れているBGM2を止める。
 	}
 }
 

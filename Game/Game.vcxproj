@@ -1003,6 +1003,7 @@
   </ItemGroup>
   <ItemGroup>
     <Media Include="Assets\sound\n80.wav" />
+    <Media Include="Assets\sound\swing2.wav" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
