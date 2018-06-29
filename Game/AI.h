@@ -183,7 +183,7 @@ private:
 	std::vector<int>::iterator pasu;
 	int stoptaim = 0;
 	//CVector3 m_movespeed=CVector3::Zero;
-	float gravity = -3*(980.0f * GameTime().GetFrameDeltaTime());
+	float gravity = -10*(980.0f * GameTime().GetFrameDeltaTime());
 	int No = 0;
 	int no = 0;
 	float sinsoku = 0.0f;

@@ -281,7 +281,8 @@ float AI::Siya(CVector3 h, float g)
 			return 1;
 		}
 		else {
-			if (pl->GetMoveSpeed().Length() >= 500.0f)
+			if(0.7<sqrt(Pad(0).GetLStickXF()*Pad(0).GetLStickXF() + Pad(0).GetLStickYF()*Pad(0).GetLStickYF()))
+				//if (pl->GetMoveSpeed().Length() >= 500.0f)
 			{
 				CQuaternion kaku;
 				kaku.SetRotationDeg(CVector3::AxisY, 30.0f);

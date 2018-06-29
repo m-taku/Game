@@ -97,7 +97,7 @@ void AI::NPCZombie_Chase()
 				n.y = 0.0f;
 				n.Normalize();
 				NPCRunangle(n);
-				m_movespeed = n * (m_speed*200.0 + mobe);
+				m_movespeed = n * (m_speed*50.0f + mobe);
 				m_movespeed.y += gravity;
 				m_position = A_charaCon.Execute(GameTime().GetFrameDeltaTime(), m_movespeed);//ˆÚ“®
 

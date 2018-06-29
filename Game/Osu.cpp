@@ -129,25 +129,26 @@ void Osu::AI_Animation()//AIのアニメーション制御
 		}
 		else if (pa == Resistance_NPC|| pa == Resistance_Player)
 		{
-			death_Animation();
+			Idle_Animation();
 		}
 		else if(pa== Damage&& okiagari==false)
 		{
-			ai_NPCAnimation.Play(shiminikai, 0.7);	
+			Idle_Animation();
 			if (!ai_NPCAnimation.IsPlaying()) {
+				item* ite = NewGO<item>(0, "item");
+				ite->Set_itempos(Getposition());
+				pa = Zombie_Normal;
 				okiagari = true;
 			}
 		}
-		else if (okiagari==true) 
-		{
-			ai_NPCAnimation.Play(shiminioki, 0.7);
-			if (!ai_NPCAnimation.IsPlaying()) {
-				okiagari = false;	
-				item* ite = NewGO<item>(0, "item");
-				ite->Set_itempos(Getposition());
-				pa=Zombie_Normal;
-			}
-		}
+		//else if (okiagari==true) 
+		//{
+		//	ai_NPCAnimation.Play(shiminioki, 0.7);
+		//	if (!ai_NPCAnimation.IsPlaying()) {
+		//		okiagari = false;	
+
+		//	}
+		//}
 		else if (pa == Death)
 		{
 			death_Animation();

@@ -19,7 +19,8 @@ tekihei::~tekihei()
 			DeleteGO(tamaEF[i]);
 		}
 	}
-	for (auto human : Humans) {
+	for (auto human : Humans)
+	{
 		AI* pointa = (AI*)human;
 		pointa->Gettekihei(NULL);
 	}
