@@ -133,7 +133,7 @@ void Taitor::Update()
 		}
 		ka.Normalize();
 		if (ka.y > 0) {
-			ka.y = 1.2f;
+			ka.y = 0.7f;
 		}
 
 		if (BasisVector.Length() <= 500.0f)
