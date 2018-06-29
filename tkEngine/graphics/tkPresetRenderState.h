@@ -42,7 +42,8 @@ namespace tkEngine{
 	{
 		static ID3D11RasterizerState*	sceneRender;		//!<3Dモデルを描画する時の基本的なラスタライザステート。
 		static ID3D11RasterizerState*	spriteRender;		//!<2D描画する時の基本的なラスタライザステート。
-		/*!
+		static ID3D11RasterizerState*	volumeRender;
+															/*!
 		 * @brief	初期化。
 		 *@param[in]	ge		グラフィックエンジン
 		 */

@@ -71,6 +71,8 @@ namespace tkEngine{
 	}
 	ID3D11RasterizerState*	RasterizerState::sceneRender = nullptr;		//!<3Dモデルを描画する時の基本的なラスタライザステート。
 	ID3D11RasterizerState*	RasterizerState::spriteRender = nullptr;	//!<2D描画する時の基本的なラスタライザステート。
+	ID3D11RasterizerState*	RasterizerState::volumeRender = nullptr;
+
 	void RasterizerState::Init(CGraphicsEngine& ge)
 	{
 		D3D11_RASTERIZER_DESC desc = {}	;
@@ -82,6 +84,8 @@ namespace tkEngine{
 
 		pd3d->CreateRasterizerState(&desc, &sceneRender);
 		pd3d->CreateRasterizerState(&desc, &spriteRender);
+		desc.CullMode = D3D11_CULL_BACK;
+		pd3d->CreateRasterizerState(&desc, &volumeRender);
 
 	}
 }

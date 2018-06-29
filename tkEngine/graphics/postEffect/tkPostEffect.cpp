@@ -55,7 +55,7 @@ namespace tkEngine{
 		rc.OMSetDepthStencilState(DepthStencilState::SceneRender, 0);
 		rc.RSSetState(RasterizerState::sceneRender);
 		float blendFactor[4] = { 0.0f };
-		rc.OMSetBlendState(AlphaBlendState::add, 0, 0xFFFFFFFF);
+		rc.OMSetBlendState(AlphaBlendState::trans, 0, 0xFFFFFFFF);
 
 		rc.RSSetViewport(0.0f, 0.0f, (float)GraphicsEngine().GetFrameBufferWidth(), (float)GraphicsEngine().GetFrameBufferHeight());
 		rc.PSSetShaderResource(3, GraphicsEngine().GetZPrepass().GetDepthTextureSRV());
@@ -70,12 +70,11 @@ namespace tkEngine{
 		rc.PSSetConstantBuffer(0, constantBuffer);
 		DrawFullScreenQuad(rc);
 		EndGPUEvent();
-		rc.OMSetBlendState(AlphaBlendState::disable, 0, 0xFFFFFFFF);
 		//メインレンダリングターゲットの内容をリゾルブ。
 		GraphicsEngine().GetMainRenderTarget().ResovleMSAATexture(rc);
 		m_tonemap.Render(rc, this);
 
-		//エフェクトを描画
+		////エフェクトを描画
 		GraphicsEngine().GetEffectEngine().Render(rc, this);
 
 		//メインレンダリングターゲットの内容を最終合成用のレンダリングターゲットに描画。
@@ -89,6 +88,9 @@ namespace tkEngine{
 
 
 		m_bloom.Render(rc, this);
+
+		rc.OMSetBlendState(AlphaBlendState::disable, 0, 0xFFFFFFFF);
+
 		m_fxaa.Render(rc, this);
 		m_dithering.Render(rc, this);
 		m_monochrome.Render(rc, this);

@@ -7,7 +7,7 @@
 #include <future>
 #include "tkEngine/graphics/preRender/tkPreRender.h"
 #include "tkEngine/graphics/tkPresetRenderState.h"
-#include "tkEngine/graphics/tkSkinModelShaderConst.h"
+#include "tkEngine/graphics/tkSkinModelShaderConst.h"\:
 
 namespace tkEngine{
 	void CGameObjectManager::Execute()
@@ -87,29 +87,39 @@ namespace tkEngine{
 		EnRenderStep renderStep = renderContext.GetRenderStep();
 		renderContext.SetRenderStep(enRenderStep_ZPrepass);
 		renderContext.OMSetBlendState(AlphaBlendState::disable, 0, 0xFFFFFFFF);
+		ID3D11RasterizerState* rasterizerState = renderContext.GetRSState();
 		for (int i = 0;i < 3;i++)
 		{
+			if (i == 0)
+			{
+				renderContext.OMSetDepthStencilState(DepthStencilState::SceneRender, 0);
+			}
 			if (i == 1)
+			{
+
+				//renderContext.OMSetDepthStencilState(DepthStencilState::volumeLight, 0);
+				renderContext.RSSetState(RasterizerState::volumeRender);
+			}
+			if(i == 2)
 			{
 				for (int i = 0;i < 4;i++)
 				{
 					ClearColor[i] = 0.0f;
 				}
-				renderContext.OMSetDepthStencilState(DepthStencilState::volumeLight, 0);
-			}
-			if(i == 2)
-			{
 				renderContext.OMSetDepthStencilState(DepthStencilState::SceneRender, 0);
+				renderContext.OMSetBlendState(AlphaBlendState::disable, 0, 0xFFFFFFFF);
 				renderContext.SetRenderStep(enRenderStep_Render3DModelToScene);
+
+				renderContext.RSSetState(RasterizerState::sceneRender);
 			}
 			unsigned int setTargetNum = 1;
 			CRenderTarget* setRenderTarget[] = { &GraphicsEngine().GetVolumeLightTarget()[i] };
 			renderContext.OMSetRenderTargets(1, setRenderTarget);
-			if (i == 1)
-			{
-				renderContext.ClearRenderTargetView(0, ClearColor, true, true);
-			}
-			else
+			//if (i == 1)
+			//{
+			//	renderContext.ClearRenderTargetView(0, ClearColor, true, true);
+			//}
+			//else
 			{
 				renderContext.ClearRenderTargetView(0, ClearColor);
 			}
@@ -128,6 +138,7 @@ namespace tkEngine{
 		renderContext.OMSetRenderTargets(1, setRenderTarget);
 		renderContext.OMSetDepthStencilState(DepthStencilState::SceneRender, 0);
 		renderContext.OMSetBlendState(AlphaBlendState::disable, 0, 0xFFFFFFFF);
+		renderContext.RSSetState(rasterizerState);
 
 		//EndGPUEvent();
 		renderContext.SetRenderStep(renderStep);

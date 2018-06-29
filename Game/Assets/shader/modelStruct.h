@@ -46,6 +46,7 @@ struct PSInput{
 struct PSInput_RenderToDepth{
 	float4 Position 	: SV_POSITION;
 	float4 posInProj	: TEXCOORD0;		//ê≥ãKâªç¿ïWånÇ≈ÇÃç¿ïWÅB
+	float4 pos			: TEXCOORD1;
 };
 
 /*!

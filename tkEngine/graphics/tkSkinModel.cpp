@@ -140,8 +140,14 @@ namespace tkEngine{
 	
 	void CSkinModel::EndUpdateInstancingData()
 	{
-		GraphicsEngine().GetZPrepass().AddSkinModel(this);
-		GraphicsEngine().GetGBufferRender().AddSkinModel(this);
+		if (isZPrePass)
+		{
+			GraphicsEngine().GetZPrepass().AddSkinModel(this);
+		}
+		if (isGBuffer)
+		{
+			GraphicsEngine().GetGBufferRender().AddSkinModel(this);
+		}
 		if (m_isShadowCaster) {
 			GraphicsEngine().GetShadowMap().Entry(&m_shadowCaster);
 		}

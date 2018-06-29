@@ -31,6 +31,15 @@ namespace tkEngine{
 			DXGI_FORMAT_UNKNOWN,	//Zバッファは作らない。
 			ge.GetMainRenderTargetMSAADesc()
 		);
+		m_volumeBuffer.Create(
+			ge.GetFrameBufferWidth(),
+			ge.GetFrameBufferHeight(),
+			1,
+			1,
+			DXGI_FORMAT_R32_FLOAT,
+			DXGI_FORMAT_UNKNOWN,	//Zバッファは作らない。
+			ge.GetMainRenderTargetMSAADesc()
+		);
 		//Zバッファはメインレンダリングターゲットのものを使用する。
 		m_depthBuffer.SetDepthStencilView(
 			ge.GetMainRenderTarget().GetDepthStencilView()
@@ -53,9 +62,11 @@ namespace tkEngine{
 		float ClearColor[4] = { 0.0f, 0.0f, 0.0f, 1.0f }; //red,green,blue,alpha
 		rc.ClearRenderTargetView(0, ClearColor);
 
-		for (auto skinModel : m_skinModels) {
+		for (auto skinModel : m_skinModels) 
+		{
 			skinModel->Draw(rc, MainCamera().GetViewMatrix(), MainCamera().GetProjectionMatrix());
 		}
+
 		m_skinModels.clear();
 		//レンダリングターゲットを差し戻す。
 		rc.OMSetRenderTargets(numRenderTargetViews, oldRenderTargets);

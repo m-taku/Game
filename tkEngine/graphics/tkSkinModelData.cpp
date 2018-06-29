@@ -91,6 +91,15 @@ namespace tkEngine{
 				deviceContext->PSSetShader((ID3D11PixelShader*)m_psRenderToGBufferShader.GetBody(), NULL, 0);
 				
 				break;
+			case enRenderStep_VolumeLight:
+				if (m_numInstance == 1) {
+					deviceContext->VSSetShader((ID3D11VertexShader*)m_vsRenderToDepthShader.GetBody(), NULL, 0);
+				}
+				else {
+					deviceContext->VSSetShader((ID3D11VertexShader*)m_vsRenderToDepthShaderInstancing.GetBody(), NULL, 0);
+				}
+				deviceContext->PSSetShader((ID3D11PixelShader*)m_psRenderToVolumeLight.GetBody(), NULL, 0);
+				break;
 			default:
 				break;
 			}
