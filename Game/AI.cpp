@@ -168,7 +168,7 @@ void AI::NPCResistance_Player()//ƒvƒŒƒCƒ„[‚Ö‚Ì’ïR‚ÉŠÖ‚·‚éˆ—BƒI[ƒo[ƒ‰ƒCƒh‚
 void AI::NPCDamage()
 {
 	static int count = 0; //30ƒtƒŒ[ƒ€‚ğƒJƒEƒ“ƒg‚·‚éB
-	if (count >= 30) {
+	if (count++ >= 30) {
 		//30ƒtƒŒ[ƒ€Œo‰ß‚µ‚½‚çƒ]ƒ“ƒr‰»B
 		bgm->SetZombie();//BGM‚ÌƒCƒ“ƒXƒ^ƒ“ƒX‚Éƒ]ƒ“ƒr‚ª‘‚¦‚½‚±‚Æ‚ğ“`‚¦‚éB
 		nearestpas();
@@ -177,7 +177,9 @@ void AI::NPCDamage()
 		Raifu_f = false;
 		SetZonbe();
 		NPCHP = 100.0f;
-		NPCMAXHP = 100.0f;
+		NPCMAXHP = 100.0f;		
+		item* ite = NewGO<item>(0, "item");
+		ite->Set_itempos(Getposition());
 		m_speed = 1.5;
 		//“o˜^‚³‚ê‚Ä‚¢‚éNPC‚ª3DSMAXã‚Å¶‘¤‚ÌƒpƒX‚É‘®‚µ‚Ä‚¢‚È‚©‚Á‚½‚ç(‰E‘¤‚ÌƒpƒX‚É‘®‚µ‚Ä‚¢‚½‚ç)
 		if (Leftfrag <= 0) {

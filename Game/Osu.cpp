@@ -131,12 +131,6 @@ void Osu::AI_Animation()//AIのアニメーション制御
 		{
 			Idle_Animation();
 		}
-		else if (pa == Damage)
-		{
-			item* ite = NewGO<item>(0, "item");
-			ite->Set_itempos(Getposition());
-			pa = Zombie_Normal;
-		}
 		//else if (okiagari==true) 
 		//{
 		//	ai_NPCAnimation.Play(shiminioki, 0.7);
@@ -152,7 +146,7 @@ void Osu::AI_Animation()//AIのアニメーション制御
 		else if (HitFlag == true) {
 			NPC_Attack_Animation();
 		}
-		else if (m_speed >= 0.5f) {
+		else if (m_speed >= 0.1f) {
 			Zombie_Walk_Animation();
 		}
 	}
