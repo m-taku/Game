@@ -8,7 +8,7 @@ public:
 	void Update();
 private:
 	std::vector<prefab::CPointLight*> point;
-	prefab::CVolumeLight* m_volumeLight;
+	//prefab::CVolumeLight* m_volumeLight;
 	//prefab::CPointLight*     m_point;
 	prefab::CDirectionLight* m_sunLig = nullptr;	//	‘¾—zƒ‰ƒCƒgB
 };

@@ -131,15 +131,11 @@ void Osu::AI_Animation()//AIのアニメーション制御
 		{
 			Idle_Animation();
 		}
-		else if(pa== Damage&& okiagari==false)
+		else if (pa == Damage)
 		{
-			Idle_Animation();
-			if (!ai_NPCAnimation.IsPlaying()) {
-				item* ite = NewGO<item>(0, "item");
-				ite->Set_itempos(Getposition());
-				pa = Zombie_Normal;
-				okiagari = true;
-			}
+			item* ite = NewGO<item>(0, "item");
+			ite->Set_itempos(Getposition());
+			pa = Zombie_Normal;
 		}
 		//else if (okiagari==true) 
 		//{
