@@ -94,7 +94,7 @@ void keiroK::tansa(CVector3 i, CVector3 Ta, std::vector<int> *a,int Leftfrag)
 
 		while (currentNode != startNode) {
 			a->push_back(currentNode->No[0]);
-			currentNode = currentNode->GetParentNode();
+			currentNode = currentNode->GetParentNode();//ここでクラッシュ
 		}
 		//目標地点からの逆順になっているのでリバース。
 		std::reverse(a->begin(), a->end());
