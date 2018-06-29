@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "item.h"
-
-
+#include"AI.h"
+#include <math.h>
 item::item()
 {
 }
@@ -13,43 +13,35 @@ item::~item()
 
 bool item::Start()
 {
-	tp = FindGO<tekihei>("tekihei");
+	Pp = FindGO<Player>("Player");
 	itemModelData.Load(L"modelData/item.cmo");
-	for (int i = 0;i < tekikazu;i++)
-	{
-		itemf[i] = 0;
-		itemModel[i].Init(itemModelData);
-	}
+	itemModel.Init(itemModelData);
 	
 	
 	return true;
 }
 
+float item::item_to_player_dist(CVector3 playerpos, CVector3 itemposition)
+{
+	CVector3 item_to_player_vector = itemposition - playerpos;
+	float item_to_player_distance = sqrt(item_to_player_vector.x*item_to_player_vector.x + item_to_player_vector.y*item_to_player_vector.y + item_to_player_vector.z*item_to_player_vector.z);
+	return item_to_player_distance;
+}
 void item::Update()
 {
+	if (item_to_player_dist(Pp->GetPosition(), itempos)<50.0f)
+	{
+		Pp->set_itemcounter();
+		DeleteGO(this);
+	}
+	itemQrot.SetRotationDeg(CVector3::AxisY, 100.0f*GameTime().GetFrameDeltaTime());
+	itemrot.Multiply(itemQrot);
 
-	//for (int i = 0;i < tekikazu;i++)
-	//{
-	//	if (tp != NULL)
-	//	{
-	//		if (tp->tekiheiflag[i] == 0)
-	//		{
-	//			itemf[i] = 1;
-	//			itempos[i] = tp->tekipos[i];
-	//		}
-	//	}
-	//	if(itemf[i]==1)
-	//	itemModel[i].Update(itempos[i], itemrot[i], CVector3::One);
-	//}
-	//
+	itemModel.Update(itempos, itemrot, CVector3::One);
 }
 
 void item::Render(CRenderContext& rc)
 {
-	for (int i = 0;i < tekikazu;i++)
-	{
-		if(itemf[i]==1)
-		itemModel[i].Draw(rc, MainCamera().GetViewMatrix(), MainCamera().GetProjectionMatrix());
-	}
+	itemModel.Draw(rc, MainCamera().GetViewMatrix(), MainCamera().GetProjectionMatrix());
 		
 }

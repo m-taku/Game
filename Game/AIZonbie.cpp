@@ -26,7 +26,7 @@ void AI::NPCZombie_Normal()
 	}
 	if (Tansaku != nullptr) {
 		search(Tansaku->m_position);
-		mokuhyou=jyunban[0];
+		mokuhyou = jyunban[0];
 		Retrieval_pasNo(mokuhyou);
 		pa = Zombie_Chase; //パターンをゾンビチェイスに変える。
 	}
@@ -64,9 +64,7 @@ void AI::Zonbesiya()
 void AI::NPCZombie_Chase()
 {
 	float len = GetKyori(m_position, Tansaku->m_position);
-	if (len > 2100.0f || Tansaku->Raifu_f == true) {//他のNPCを見失った(距離が2100以上あいた)、あるいは死んだら
-													//元の位置に戻る。
-		search(retu_position);
+	if (len > 2100.0f || Tansaku->Raifu_f == true) {//他のNPCを見失った(距離が2100以上あいた)、あるいは死んだら				
 		Tansaku = nullptr; //検索結果を初期化する。
 		kaiten = false;
 		angle = 0;
@@ -75,14 +73,13 @@ void AI::NPCZombie_Chase()
 		pa = Zombie_Normal;
 	}
 	else {//NPCを見失っておらず、見つけていたら
-	
-		CVector3 	n = m_position - Tansaku->m_position;
+		CVector3 n = m_position - Tansaku->m_position;
 		float kou = VectorAngleDeg((Tansaku->m_forward), n);
 		n.Normalize();
-		NPCRunangle(Tansaku->m_position - m_position);
-		if (len >= 2000.0f)
+		if (len >= 1300.0f)
 		{
-			Chasepas(Tansaku->m_position);
+			Chasepas(Tansaku->m_position);//経路たんさ？
+			m_rotation.Multiply(work->Getkaku());
 		}
 		else if (len < atakkukyori) {//NPCに追いついたら
 									//攻撃する(確実に当たる仕様)。
@@ -95,13 +92,12 @@ void AI::NPCZombie_Chase()
 		}
 		else {
 			if (kou >= 120) {
-
 				HitFlag = false;
 				n = Tansaku->m_position - m_position;
 				n.y = 0.0f;
 				n.Normalize();
-				//NPCRunangle(n);
-				m_movespeed = n * (m_speed*200.0 + mobe);
+				NPCRunangle(n);
+				m_movespeed = n * (m_speed*50.0f + mobe);
 				m_movespeed.y += gravity;
 				m_position = A_charaCon.Execute(GameTime().GetFrameDeltaTime(), m_movespeed);//移動
 
@@ -118,12 +114,21 @@ void AI::NPCZombie_Chase()
 				n.Normalize();
 				CVector3 rotAxis;
 				rotAxis.Cross(n, Pboneforward);
-				rotAxis.Normalize();
+				rotAxis.Normalize(); 
+				if (rotAxis.y < 0.0f) {
+					rotAxis = CVector3::AxisY;
+					rotAxis.y = -1.0f;
+				}
+				else {
+					rotAxis = CVector3::AxisY;
+				}
 				angle = 10.0f;
 				Crot.SetRotationDeg(rotAxis, angle);
 				Crot.Multiply(n);
 				CVector3 Destination = (n * len) + Tansaku->m_position;
 				Destination = m_position - Destination;
+				Destination.y = 0.0f;
+				NPCRunangle(Destination);
 				m_position = A_charaCon.Execute(GameTime().GetFrameDeltaTime(), Destination);
 
 				/*	Pboneforward = Tansaku->m_forward;
@@ -143,15 +148,12 @@ void AI::NPCZombie_Chase()
 }
 void AI::NPCZombie_Attack()//vs特殊部隊
 {
-
 	static int flame = 40;
 	if (tekip != NULL) {
 		float len = GetKyori(m_position, tekip->tamapos[No]);
-		if (len > 2100.0f &&tekip->tekiheiflag[No] <= 0) {//他のNPCを見失った(距離が2100以上あいた)、あるいは死んだら
-														  //元の位置に戻る。
-														  // //検索結果を初期化する。
-			kaiten = false;
-			HitFlag = false;
+		if (len > 2100.0f &&tekip->tekiheiflag[No] <= 0) {//他のNPCを見失った(距離が2100以上あいた)、あるいは死んだら							  
+			kaiten = false;  //元の位置に戻る。
+			HitFlag = false;// //検索結果を初期化する。
 			escapecaku = 30.0f;
 			nearestpas();
 		}
@@ -183,83 +185,6 @@ void AI::NPCZombie_Attack()//vs特殊部隊
 			}
 		}
 		flame++;
-		//if (BattleFlag == false) {//部隊と戦っておらず、フリーな状態なら
-		//	if (da >= jyunban.size()) {//指定されたパスの最後まで着いたら
-		//		if (tekip->tekiheiflag[No] >= 1) {
-		//			work->kyorikeisan(tekip->tekipos[No], m_position, m_forward);
-		//		}
-		//		else {
-		//			takikennsau();
-		//		}
-		//	}
-		//	else {
-		//		work->kyorikeisan(jyunban[da] - 1, m_position, m_forward, game->pasu[Leftfrag].m_pointList);
-		//	}
-		//	m_rotation.Multiply(work->Getkaku());
-		//	CVector3 v = work->Getmokuteki() - m_position;  //一番近い部隊に移動する。
-		//	m_movespeed = m_forward * (work->Getmuve()*m_speed + mobe);
-		//	m_movespeed.y += gravity;
-		//	m_position = A_charaCon.Execute(GameTime().GetFrameDeltaTime(), m_movespeed);//移動
-		//	if (15.0f > work->Getlen()) {
-		//		if (da >= jyunban.size() - 1) {//指定されたパスの最後まで着いたら
-		//			if (tekip->tekiheiflag[No] >= 1) {
-		//				da++;
-		//			}
-		//			else {
-		//				takikennsau();
-		//			}
-		//		}
-		//		else {
-		//			da++;
-		//		}
-		//	}
-		//	float h = 9999999999999.0f;
-		//	for (int i = 0; i < 10; i++) {
-		//		if (tekip->tekiheiflag[i] >= 1) {
-		//			float max = GetKyori(m_position, tekip->tekipos[i]);
-		//			if (max < REACH) {//部隊に近づいたら
-		//				BattleFlag = true;//戦闘を開始する。
-		//				if (h > max) {
-		//					No = i;
-		//					h = max;
-		//				}
-		//			}
-		//		}
-		//	}
-		//}
-		//if (BattleFlag == true) {//戦闘状態なら
-		//	CVector3 bekutor = tekip->tekipos[No] - m_position;
-		//	float len = GetKyori(m_position, tekip->tekipos[No]);
-		//	float angle = VectorAngleDeg(bekutor);
-		//	if (angle >= 3.0) {
-		//		bekutor.y = 0.0f;
-		//		bekutor.Normalize();
-		//		//回転軸を求める。
-		//		CVector3 rotAxis;
-		//		rotAxis.Cross(m_forward, bekutor);
-		//		rotAxis.Normalize();
-		//		CQuaternion qBias1;
-		//		qBias1.SetRotationDeg(rotAxis, 5.0f);
-		//		m_rotation.Multiply(qBias1);
-		//	}
-		//	else if (150 < len) {
-		//		m_movespeed = m_forward * (m_speed + mobe);
-		//		m_movespeed.y += gravity;
-		//		m_position = A_charaCon.Execute(GameTime().GetFrameDeltaTime(), m_movespeed);
-		//	}
-		//	else {
-		//		//殴る
-		//		tekip->tekiHP[No] = tekip->tekiHP[No] - 5;
-		//		//部隊に攻撃する。
-		//		takikennsau();
-		//		BattleFlag = false;
-		//	}
-		//}
-
-		//if () {//部隊を倒したら
-		//	//「戦闘を終了した」というフラグをたてる。
-		//	BattleFlag = false;
-		//}
 	}
 
 }

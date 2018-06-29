@@ -13,31 +13,37 @@ public:
 	Pasu pasu[10];
 	bool Start(); 
 	void Update();
+	//3DSMAX上で右側のパスに属する、No番のNPCの生存判定を初期化(suuが0で生存、-1で消滅)。
 	void SatRSaizon(int No,int suu)
 	{
 		RAIseizon[No] = suu;
 	}
+	//3DSMAX上で左側のパスに属する、No番のNPCの生存判定を初期化(suuが0で生存、-1で消滅)。
 	void SatLSaizon(int No, int suu)
 	{
 		LAIseizon[No] = suu;
 	}
+	//3DSMAX上で左側のパスに属するNPCのLeftfragを1にする。
 	void SetLeft()
 	{
 		Leftfrag = 1;
 	}
+	//NPCのLeftfragを所得(3DSMAX上で左側のパスに属する場合、Leftfragには"1"が代入されている。)。
 	int GetLeft()
 	{
 		return Leftfrag;
 	}
+	//3DSMAX上で右側のパスに属するNo番のNPCの、パス配列の長さ(一周するまでに通るパスの数。NPCのNoによってパスの長さは変化する)を取得する。
 	int gatsiz(int No)
 	{
 		return da[No].size();
 	}
+	//3DSMAX上で左側のパスに属するNo番のNPCの、パス配列の長さ(一周するまでに通るパスの数。NPCのNoによってパスの長さは変化する)を取得する。
 	int gatLsiz(int No)
 	{
 		return da2[No].size();
 	}
-
+	//使われていない???
 	int Getsize(int No)
 	{
 		return da[No].size();
@@ -51,6 +57,11 @@ public:
 	int incNo()
 	{
 		return No++;
+	}
+	//生成したNPCの合計人数を返す。
+	int Get_NPC_Number() 
+	{
+		return NPC_Number;
 	}
 private:
 	int No = 0;
@@ -141,12 +152,10 @@ private:
 	std::vector<int> AIL27 = { 34,31,30,27,28,29,30,27,26,25,32,33 };
 	std::vector<int> AIL28 = { 35,37,39,42,30,29,41,40,39,37,35,36,33,32,31,34 };
 	std::vector<int> AIL29 = { 36,35,37,39,40,41,29,30,31,26,25,24,15,13,12,11,14,28,27,26,25,32,33 };
-	std::vector<int> AIL30 = { 37,62,61,60,59,58,56,55,53,49,47,46,43,44,45,51,50,52,56,58,59,66,63,37,35,34,31,30,42,39 };
 	std::vector<int> AIL31 = { 39,42,30,31,34,55,38,60,63,37 };
 	std::vector<int> AIL32 = { 40,39,37,62,61,60,59,58,56,38,57,60,63,37,35,34,31,30,42,41 };
 	std::vector<int> AIL33 = { 41,42,39,37,35,34,33,32,31,26,27,30,29 };
 	std::vector<int> AIL34 = { 42,30,31,26,25,24,23,16,17,18,19,20,21,22,9,10,11,14,28,29,41 };
-	std::vector<int> AIL35 = { 43,44,45,51,50,47,46,48,53,54,55,57,60,61,62,63,66,59,58,56,52,50,51,45,44 };
 	std::vector<int> AIL36 = { 46,48,53,54,57,62,63,59,58,56,52,50,51,43 };
 	std::vector<int> AIL37 = { 47,46,48,53,52,51,45,43 };
 	std::vector<int> AIL38 = { 49,53,55,56,58,59,60,61,63,37,35,36,33,32,25,15,13,14,28,29,30,3,34,35,37,63,61,60,59,58,56,52 };
@@ -159,5 +168,6 @@ private:
 	std::vector<std::vector<int>> da;
 	int zombie_sum = 0;
 	int shimin_sum = 0;
+	int NPC_Number = 0;//出現したNPCの合計人数を格納する。
 };
 extern AI_manager* AI_ado;

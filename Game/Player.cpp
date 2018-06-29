@@ -165,7 +165,7 @@ void Player::Update()
 			//地面についた。
 			m_moveSpeed.y = 0.0f;
 		}
-		if (Pad(0).IsTrigger(enButtonRB1)&&taieki_F==0)
+		if (Pad(0).IsTrigger(enButtonRB1)&&taieki_F==0&&itemcounter>=5)
 		{
 			
 			Tp[taieki_sum]=NewGO<taieki>(0, "taieki");
@@ -230,19 +230,21 @@ void Player::Update()
 		if (Pad(0).IsTrigger(enButtonB) && attackF == 0)
 		{
 			m_animation.Play(attack, 0.1f);
+			Play_Attack();//攻撃時のSEを再生する。
 			attackF = 1;
 		}
-		if (!(m_animation.IsPlaying()) && attackF == 1)
+		if (!(m_animation.IsPlaying()) && attackF == 1)//アニメーション再生中かつ攻撃不可能状態のとき
 		{
 			/*		if (Pad(0).IsTrigger(enButtonB))
 					{
 						m_animation.Play(attack2, 0.3);
 					}*/
 
-			if (attackcounter == 10)
+			//attackcounterが10回カウントされると攻撃可能になる。
+			if (attackcounter >= 10)
 			{
-				attackF = 0;
-				attackcounter = 0;
+				attackF = 0;//攻撃可能にする。
+				attackcounter = 0;//カウンターを初期化。
 			}
 			attackcounter++;
 		}
@@ -261,20 +263,21 @@ void Player::Update()
 					if (ai->GetmoveStop() == false) {//車が止まっていたら
 						CVector3 kyori1 = this->m_position - ai->Getposition();//自分との距離を求める。
 						float f = kyori1.Length();
-						if (f <= 600) { //距離が車間距離よりも短くなっていたら
+						if (f <= 500) { //距離が車間距離よりも短くなっていたら
 							kyori1.Normalize();
 							float kaku = acosf(kyori1.Dot(ai->Getforward()));//２つのべクトルの内積のアークコサインを求める。(ラジアン)
 							float degree = CMath::RadToDeg(kaku);
-							if (degree <= 45) {
+							if (degree <= 30) {
 								game = false;
 								carpoint = ai;
 								carpoint->SoundklaxonPlay();
 								m_moveSpeed = (m_forward*-1 * m_moveSpeed.Length()) + carpoint->Getforward()*1000.0f;
-								m_moveSpeed.y = 600.0f;
+								m_moveSpeed.y = 450.0f;
 								zikofrag = true;
 								muteki_Flag = true;
 
 							}
+
 						}
 					}
 				}
@@ -355,6 +358,13 @@ void Player::Play_Respiration(CVector3 m_moveDecision)
 	else {
 		m_Respiration->Stop();//呼吸音を止める。
 	}
+}
+//プレイヤーが攻撃した時の効果音を再生する。
+void Player::Play_Attack()
+{
+	m_AttackSE = NewGO<prefab::CSoundSource>(0);
+	m_AttackSE->Init("sound/swing2.wav", false);
+	m_Respiration->Play(false);//一回だけ再生されて破棄される。
 }
 bool Player::CVector_same_Decision(CVector3 a, CVector3 b) //2つのベクトルが同一かどうかを調べる。
 {

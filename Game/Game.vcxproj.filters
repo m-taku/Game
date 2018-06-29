@@ -68,10 +68,10 @@
     <ClCompile Include="LevelRender.cpp" />
     <ClCompile Include="AIChase.cpp" />
     <ClCompile Include="AIZonbie.cpp" />
-    <ClCompile Include="AI.cpp" />
     <ClCompile Include="Stage_Light.cpp" />
     <ClCompile Include="AI_manager.cpp" />
     <ClCompile Include="BGM.cpp" />
+    <ClCompile Include="AI.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -478,10 +478,25 @@
     <Image Include="Assets\modelData\utc_all2.tga">
       <Filter>Assets\modelData</Filter>
     </Image>
+    <Image Include="Assets\sprite\HP.png">
+      <Filter>Assets\sprite</Filter>
+    </Image>
+    <Image Include="Assets\sprite\HP_waku.png">
+      <Filter>Assets\sprite</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\lever\larer_01.tks">
       <Filter>Assets\font</Filter>
+    </None>
+    <None Include="Assets\animData\shiminkaiten.tka">
+      <Filter>Assets\animData</Filter>
+    </None>
+    <None Include="Assets\animData\shiminkoke.tka">
+      <Filter>Assets\animData</Filter>
+    </None>
+    <None Include="Assets\animData\shiminokiagari.tka">
+      <Filter>Assets\animData</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

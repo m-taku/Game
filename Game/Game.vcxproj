@@ -823,6 +823,10 @@
     <CustomBuild Include="Assets\effect\Texture\magma.png" />
     <CustomBuild Include="Assets\effect\Texture\sdfs.png" />
     <Image Include="Assets\modelData\ao.png" />
+    <ImageContentTask Include="Assets\sprite\HP.png" />
+    <ImageContentTask Include="Assets\sprite\HP_waku.png">
+      <ContentOutput Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectDir)/Resource/sprite/%(Filename).dds</ContentOutput>
+    </ImageContentTask>
     <ImageContentTask Include="Assets\sprite\noise.png" />
     <ImageContentTask Include="Assets\sprite\A_botan.png" />
     <ImageContentTask Include="Assets\sprite\Pusu_Button.png" />
@@ -910,6 +914,15 @@
       <FileType>Document</FileType>
     </CustomBuild>
     <CustomBuild Include="Assets\animData\waon.tka">
+      <FileType>Document</FileType>
+    </CustomBuild>
+    <CustomBuild Include="Assets\animData\shiminkaiten.tka">
+      <FileType>Document</FileType>
+    </CustomBuild>
+    <CustomBuild Include="Assets\animData\shiminkoke.tka">
+      <FileType>Document</FileType>
+    </CustomBuild>
+    <CustomBuild Include="Assets\animData\shiminokiagari.tka">
       <FileType>Document</FileType>
     </CustomBuild>
     <None Include="Assets\lever\larer_01.tks" />
@@ -1001,6 +1014,10 @@
     <CustomBuild Include="Assets\sound\iki.wav">
       <FileType>Document</FileType>
     </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="Assets\sound\n80.wav" />
+    <Media Include="Assets\sound\swing2.wav" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
