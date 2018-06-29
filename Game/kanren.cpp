@@ -27,4 +27,11 @@ void kanren::kanrenz(std::vector<int> &a, std::vector<CVector3> &b)
 			No.push_back(a[i]);
 		}
 	}
+	//隣接ノードへの移動コストを計算する。
+	moveCosts.resize(m_position.size());
+	moveCosts[0] = 0.0f;
+	for (int i = 1; i < m_position.size(); i++) {
+		auto vDist = m_position[0] - m_position[i];
+		moveCosts[i] = vDist.Length();
+	}
 }

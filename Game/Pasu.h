@@ -50,12 +50,16 @@ public:
 	{
 
 		return resuto.size();
-	}int GetresutoSaiz(int No)
+	}
+	int GetresutoSaiz(int No)
 	{
 
 		return resuto[No]->No.size();
 	}
-
+	std::vector<kanren*>& GetKanrenList()
+	{
+		return resuto;
+	}
 	std::vector<CVector3> m_pointList;	//!<座標のリスト。
 	kanren kan;
 	std::vector<kanren> Pasuresuto;

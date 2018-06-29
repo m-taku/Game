@@ -258,6 +258,7 @@ PSInput_RenderToDepth VSMain_RenderDepth(VSInputNmTxVcTangent In)
 	float4 pos;
 	pos = mul(mWorld, In.Position);
 	pos = mul(mView, pos);
+	psInput.pos = pos;
 	pos = mul(mProj, pos);
 	psInput.Position = pos;
 	psInput.posInProj = pos;
@@ -279,6 +280,7 @@ PSInput_RenderToDepth VSMainInstancing_RenderDepth(
 	float4 pos;
 	pos = mul(instanceMatrix[instanceID], In.Position);
 	pos = mul(mView, pos);
+	psInput.pos = pos;
 	pos = mul(mProj, pos);
 	psInput.Position = pos;
 	psInput.posInProj = pos;
@@ -298,12 +300,12 @@ PSInput_RenderToDepth VSMainSkin_RenderDepth(VSInputNmTxWeights In)
 	//ワールド座標、法線、接ベクトルを計算。
 	float4 pos = mul(skinning, In.Position);
 	pos = mul(mView, pos);
+	psInput.pos = pos;
 	pos = mul(mProj, pos);
 	
 	psInput.Position = pos;
 	psInput.posInProj = pos;
 	return psInput;
-	
 }
 //--------------------------------------------------------------------------------------
 // ピクセルシェーダーのエントリ関数。
@@ -451,7 +453,18 @@ float4 PSMain( PSInput In ) : SV_Target0
  */
 float4 PSMain_RenderDepth( PSInput_RenderToDepth In ) : SV_Target0
 {
-	float z = In.posInProj.z / In.posInProj.w;
+	float z = In.pos.z;
+	return z;
+}
+
+/*!
+*@brief	Z値を書き込むためだけの描画パスで使用されるピクセルシェーダー。(ボリュームライト用
+*@details
+* 現在はシャドウマップ作成とZPrepassで使用されています。
+*/
+float4 PSMain_RenderDepthVolume(PSInput_RenderToDepth In) : SV_Target0
+{
+	float z = In.posInProj.z;
 	return z;
 }
 /*!

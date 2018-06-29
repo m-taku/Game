@@ -6,6 +6,7 @@
 #include"Geizi.h"
 #include "tkEngine/culling/tkObjectFrustumCulling.h"
 #include"Game.h"
+#include"BGM.h"
 #define REACH 500.0  //ゾンビの攻撃範囲。この距離まで近づいたら攻撃する。
 #define PI 3.141592653589793 
 class Player;
@@ -41,7 +42,7 @@ public:
 	void NPCzombie_Return();					//殴った後帰る（いらん）
 	void nearestpas();			//ド～コ行こうかな～～～（ランダム徘徊処理の初期化）
 	void Retrieval_pasNo(int mokuhyou);
-	void Fardist_path_mo(CVector3 m_position);
+	void death_Animation();
 	void again_move();
 	void NPCGetaway();
 //	void NPCzombie_Escape();					
@@ -183,7 +184,7 @@ private:
 	std::vector<int>::iterator pasu;
 	int stoptaim = 0;
 	//CVector3 m_movespeed=CVector3::Zero;
-	float gravity = -3*(980.0f * GameTime().GetFrameDeltaTime());
+	float gravity = -10*(980.0f * GameTime().GetFrameDeltaTime());
 	int No = 0;
 	int no = 0;
 	float sinsoku = 0.0f;
@@ -220,13 +221,14 @@ private:
 	CVector3 m_forward;						//キャラの前方。
 	CVector3 m_rite;						//キャラの右方向。
 	CMatrix mRot;
-	keiroK keiro;
 	CMatrix m_tekirot;
 	CMatrix k_tekirot;
 	car* ziko_car;
 	CVector3 before_m_position = CVector3::Zero;		//一つ前の座標。
 	std::vector<int> jyunban;
+	int counta = 0;
 	CVector3 flydist=CVector3::Zero;
 	AI* Chawse_Zombie;  //追跡してくるキャラを格納する。
+	BGM* bgm=nullptr;//BGMのインスタンスを格納する。
 };
 

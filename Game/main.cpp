@@ -77,10 +77,10 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 		NewGO<Taitor>(0, "Taitor");
 		NewGO<Fade>(1, "Fade");
 		NewGO<Stage_Light>(0, "Light");
-		NewGO<BGM>(0, "BGM");
+		NewGO<AI_manager>(0, "AI_manager");
 		NewGO<Stage>(0, "stage");
 		NewGO<Player>(0, "Player");
-		NewGO<AI_manager>(0, "AI_manager");
+		NewGO<BGM>(0, "BGM");
 		GraphicsEngine().GetMonochrome().SetAlpha(0.0f);
 		//ゲームループを実行。
 		Engine().RunGameLoop();

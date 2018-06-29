@@ -13,206 +13,90 @@ keiroK::keiroK()
 keiroK::~keiroK()
 {
 }
-ando *Satando(ando* n, CVector3 m_p, CVector3 s_p,int a,int t, std::vector<int> k , int ka,int before)
+int keiroK::Kans(int currentCost)
 {
-	n->m_position = m_p;
-	n->s_position = s_p;
-	n->ime = a;
-	n->tunagi = t;
-	n->No = k;
-	n->cost = ka;
-	n->beforeNo = before;
-	return n;
-}
-int keiroK::BackTrace(int x)
-{
-	if (x%100 == f) {
-		return 1;
-	}
-	std::map<int ,ando>::iterator tmp = close.find(x);
-	if (tmp == close.end())
-		return 0;
-	return BackTrace(tmp->second.beforeNo) + GetDistance(tmp->second.m_position, tmp->second.s_position);
-}
-int keiroK::Kans(int count)
-{
-	if (open.empty())return -10000;
-	ando nodes[8];
-	resuto1;
-	std::map<int,ando>::iterator it;
-	std::map<int,ando>::iterator itmix;
-
-	int costmix = 99999;
-	int goulkost = 0;
-	int fhuj = 0,kesu =0;
-	it = open.begin();
-	while (it != open.end()) {
-		if (costmix > (it->second.cost + GetDistance(it->second.s_position, ga))) {
-			costmix = (it->second.cost + GetDistance(it->second.s_position, ga));
-			itmix = it;
-			kesu = it->first;
-		}
-		it++;
-	}
-	Satando(
-		&n,
-		itmix->second.m_position,
-		itmix->second.s_position,
-		itmix->second.ime,
-		itmix->second.tunagi,
-		itmix->second.No,
-		itmix->second.cost,
-		itmix->second.beforeNo
-	);
-	close.insert(std::pair<int, ando>(kesu,n));
-	open.erase(kesu);
-	goulkost = BackTrace(n.ime*100+n.tunagi);
-	for (No = 0; No < resuto1.size(); No++) {
-		if (resuto1[No].No[0]== n.tunagi)
-		{
-			break;
-		}
-	}
-	kanren* ka = &resuto1[No];
-	for (int i = 0; i < ka->No.size()-1; i++) {
-		bool findfrag = false;
-		Satando(
-			&nodes[i],
-			ka->m_position[0],
-			ka->m_position[i + 1],
-			n.tunagi,
-			ka->No[i + 1],
-			resuto1[No].No,
-			goulkost + GetDistance(ka->m_position[i + 1], n.s_position),
-			n.ime * 100 + n.tunagi
-		);
-		//std::map<int,ando>::iterator tmp = open.begin();
-		for (auto& num : open) {
-			if (num.second.tunagi == nodes[i].ime && num.second.ime==nodes[i].tunagi)
-			{
-				//if (nodes[i].cost < ka.second.cost) {
-				//	ka.second.m_position = nodes[i].m_position;
-				//	ka.second.ime = nodes[i].ime;
-
-				//	ka.second.cost = nodes[i].cost;
-				//	ka.second.beforeNo = nodes[i].beforeNo;
-				//}
-				findfrag = true;
-				break;
-			}
-		}
-	//	std::map<int ,ando>::iterator tmp1 = close.begin();
-		if (findfrag == false) {
-			for (auto mun : close) {
-				if (mun.second.tunagi == nodes[i].ime && mun.second.ime == nodes[i].tunagi)
-				{
-					if (nodes[i].cost < mun.second.cost) {
-						ando tmp5;
-						Satando(
-							&tmp5,
-							nodes[i].m_position,
-							nodes[i].s_position,
-							nodes[i].ime,
-							nodes[i].tunagi,
-							nodes[i].No,
-							nodes[i].cost,
-							nodes[i].beforeNo
-						);
-						open.insert(std::pair<int, ando>((tmp5.ime * 100 + tmp5.tunagi), tmp5));
-						close.erase(tmp5.tunagi * 100 + tmp5.ime);
-					}
-					findfrag = true;
-					break;
-				}
-			}
-		}
-		if (findfrag == false) {
-			// 見つからなければ新規としてOpenリストへ追加
-			open.insert(std::pair<int, ando>((nodes[i].ime * 100 + nodes[i].tunagi), nodes[i]));
-		}
-	}
-
-
-	//見つかったら探索終了
-	if (n.s_position.x== ga.x&&n.s_position.y==ga.y&&n.s_position.z==ga.z) return -1;
-
-	return Kans(count + 1);
-
-}
-int keiroK::GetDistance(CVector3 iP ,CVector3 GP)
-{
-	return (iP - GP).Length();
+	return -1000;
 }
 void keiroK::tansa(CVector3 i, CVector3 Ta, std::vector<int> *a,int Leftfrag)
 {
-
-	AI_manager *game = FindGO<AI_manager>("AI_manager");
-	for (int l = 0; l < game->pasu[Leftfrag].Pasuresuto.size(); l++) {
-		if(game->pasu[Leftfrag].Pasuresuto[l].No.size()>1)
-		resuto1.push_back(game->pasu[Leftfrag].Pasuresuto[l]);
-	}
-	CVector3 ko = game->pasu[Leftfrag].m_pointList[resuto1[0].No[0]-1] - i;
-	float sa = ko.Length();
-
-	CVector3 koj = game->pasu[Leftfrag].m_pointList[resuto1[0].No[0]-1] - Ta;
-	float saj = koj.Length();
-	int l = resuto1.size();
-	for (int h = 1; h < l; h++) {
-		CVector3 k = game->pasu[Leftfrag].m_pointList[resuto1[h].No[0]-1] - i;
-		float saa = k.Length();
-		CVector3 kf = game->pasu[Leftfrag].m_pointList[resuto1[h].No[0]-1] - Ta;
-		float san = kf.Length();
-		if (sa > saa) {
-			sa = saa;
-			f = resuto1[h].No[0];
-			No = h;
-		}
-		if (saj > san) {
-			saj = san;
-			N = resuto1[h].No[0];
+	//開始
+	auto& kanrenList = AI_ado->pasu[Leftfrag].Pasuresuto;
+	auto& LinkList = AI_ado->pasu[Leftfrag].GetKanrenList();
+	//開始ノードを検索する。
+	auto minDist = FLT_MAX;
+	kanren* startNode = nullptr;
+	for (auto& kanren : LinkList) {
+		auto vDist = i - kanren->m_position[0];
+		if (minDist > vDist.Length()) {
+			//こっちが近い。
+			minDist = vDist.Length();
+			startNode = kanren;
 		}
 	}
-	ga = game->pasu[Leftfrag].m_pointList[N-1];
-	fa = game->pasu[Leftfrag].m_pointList[f-1];
-	Satando(
-		&stuyt,
-		fa,
-		CVector3::Zero,
-		f,
-		f,
-		resuto1[No].No,
-		0,
-		f * 100 + 0
-	); 
-	open.insert(std::pair<int, ando>((f *100+ N),stuyt));
-	if (Kans(0) == -1) {
-		auto han = close.begin();
-		float hairetu= N;
-		jyunban.push_back(hairetu);
-		while (han != close.end())
-		{
-			if (hairetu == han->second.tunagi) {
-				hairetu = han->second.ime;
-				jyunban.push_back(hairetu);
-				han = close.begin();
-				if (hairetu == f)
-				{
-					break;
+	//終了ノードを検索する。
+	minDist = FLT_MAX;
+	kanren* endNode = nullptr;
+	for (auto kanren : LinkList) {
+		auto vDist = Ta - kanren->m_position[0];
+		if (minDist > vDist.Length()) {
+			//こっちが近い。
+			minDist = vDist.Length();
+			endNode = kanren;
+		}
+	}
+	if (startNode == endNode) {
+		//開始と終端が同じ。
+		a->push_back(startNode->No[0]);
+	}
+	else {
+		auto currentNode = startNode;
+		//終端ノードに到達するまでループする。
+		std::vector<int> openNodeNos;
+		std::vector<int> closeNodeNos;
+		kanren* parentNode = nullptr;
+		//開始ノードをオープンリストに積む。
+		openNodeNos.push_back(currentNode->No[0] - 1);
+		float moveCost = 0.0f;
+		while (currentNode != endNode && openNodeNos.empty() == false) {
+			//オープンされているリストへの移動コストを計算する。
+			//次に開くノードを選ぶ。
+			minDist = FLT_MAX;
+			auto nextNodeNo = -1;
+			for (auto nodeNo : openNodeNos) {
+				//終了地点までの距離を計算する。
+				//ここは要改善。
+				auto vDist = kanrenList[nodeNo].m_position[0] - Ta;
+				if (minDist > vDist.Length()) {
+					//こちらのほうが近い。
+					minDist = vDist.Length();
+					nextNodeNo = nodeNo;
 				}
 			}
-			han++;
+			//カレントノードを見つかったノードにする。
+			currentNode = &kanrenList[nextNodeNo];
+			currentNode->SetParentNode(parentNode);
+			parentNode = currentNode;
+			//次のノードをクローズ。
+			closeNodeNos.push_back(nextNodeNo);
+			//オープンリストから削除。
+			auto itFind = std::find(openNodeNos.begin(), openNodeNos.end(), nextNodeNo);
+			openNodeNos.erase(itFind);
+			//オープンリストを作成。
+			for (int i = 1; i < currentNode->No.size(); i++) {
+				//クローズされていないか調べる。
+				itFind = std::find(closeNodeNos.begin(), closeNodeNos.end(), currentNode->No[i] - 1);
+				if (itFind == closeNodeNos.end()) {
+					//クローズされていない。
+					openNodeNos.push_back(currentNode->No[i] - 1);
+				}
+			}
 		}
+
+		while (currentNode != startNode) {
+			a->push_back(currentNode->No[0]);
+			currentNode = currentNode->GetParentNode();
+		}
+		//目標地点からの逆順になっているのでリバース。
+		std::reverse(a->begin(), a->end());
 	}
-	for (int goulo = jyunban.size()-1; goulo >=0; goulo--) {
-		a->push_back(jyunban[goulo]);
-	}
-	open.clear();
-	close.clear();
-	resuto1.clear();
-	jyunban.clear();
-	f = 1;
-	N = 1;
-	sum = 0;
-	sumd = 0;
-	fghjkl = 0;
 }

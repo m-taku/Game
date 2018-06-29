@@ -18,7 +18,7 @@ bool Geizi::Start()
 	human++;
 	for (; human < Humans.end(); human++)
 	{
-		AI* ka = (AI*)human[0];
+		AI* ka = (AI*)*human;
 		ka->GetGaizi(this);
 	}
 

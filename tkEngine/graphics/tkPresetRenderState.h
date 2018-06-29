@@ -28,6 +28,7 @@ namespace tkEngine{
 															//!<深度テスト、深度書き込みともに有効なステートです。
 		static ID3D11DepthStencilState* spriteRender;		//!<2D描画する時の基本的な深度ステンシルステート。
 															//!<深度テスト、深度書き込みともに無効なステートです。
+		static ID3D11DepthStencilState* volumeLight;		//!<ボリュームライトを描画するときようのステート
 		/*!
 		* @brief	初期化。
 		*@param[in]	ge		グラフィックエンジン
@@ -41,7 +42,8 @@ namespace tkEngine{
 	{
 		static ID3D11RasterizerState*	sceneRender;		//!<3Dモデルを描画する時の基本的なラスタライザステート。
 		static ID3D11RasterizerState*	spriteRender;		//!<2D描画する時の基本的なラスタライザステート。
-		/*!
+		static ID3D11RasterizerState*	volumeRender;
+															/*!
 		 * @brief	初期化。
 		 *@param[in]	ge		グラフィックエンジン
 		 */

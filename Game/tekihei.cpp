@@ -19,9 +19,13 @@ tekihei::~tekihei()
 			DeleteGO(tamaEF[i]);
 		}
 	}
+
 	for (auto human : Humans) {
-		AI* pointa = (AI*)human;
-		pointa->Gettekihei(NULL);
+		AI* pointa = dynamic_cast<AI*>(human);
+		if (pointa != nullptr) {
+			pointa->Gettekihei(NULL);
+		}
+	
 	}
 }
 
@@ -620,7 +624,7 @@ void tekihei::Render(CRenderContext& rc)
 {
 	for (int i = 0;i < teki;i++)
 	{
-		if(tekiheiflag[i]==1)
+		if(tekiHP[i]>0.0f)
 		tekiskinModel[i].Draw(rc, MainCamera().GetViewMatrix(), MainCamera().GetProjectionMatrix());
 	}
 }

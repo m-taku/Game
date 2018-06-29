@@ -7,7 +7,7 @@
 #include <future>
 #include "tkEngine/graphics/preRender/tkPreRender.h"
 #include "tkEngine/graphics/tkPresetRenderState.h"
-#include "tkEngine/graphics/tkSkinModelShaderConst.h"
+#include "tkEngine/graphics/tkSkinModelShaderConst.h"\:
 
 namespace tkEngine{
 	void CGameObjectManager::Execute()
@@ -76,69 +76,72 @@ namespace tkEngine{
 			}
 		}
 
-		ID3D11DepthStencilState* depthState = renderContext.GetDepthStencilState();
-		D3D11_DEPTH_STENCIL_DESC volumeLightDesc;
-		depthState->GetDesc(&volumeLightDesc);
-		volumeLightDesc.DepthFunc = D3D11_COMPARISON_GREATER;
-		ID3D11DepthStencilState* volumeLightState;
-		GraphicsEngine().GetD3DDevice()->CreateDepthStencilState(&volumeLightDesc, &volumeLightState);
-
 		EndGPUEvent();
 
-		//BeginGPUEvent(L"enRenderStep_Render3DModelToScene");
-		//renderContext.SetRenderStep(enRenderStep_Render3DModelToScene);
-		//for (int i = 0;i < 4;i++)
-		//{
-		//	ClearColor[i] = 1.0f;
-		//}
-		//EnRenderStep renderStep = renderContext.GetRenderStep();
-		//renderContext.SetRenderStep(enRenderStep_ZPrepass);
-		//renderContext.OMSetBlendState(AlphaBlendState::disable, 0, 0xFFFFFFFF);
-		//for (int i = 0;i < 3;i++)
-		//{
-		//	if (i == 1)
-		//	{
-		//		for (int i = 0;i < 4;i++)
-		//		{
-		//			ClearColor[i] = 0.0f;
-		//		}
-		//		renderContext.OMSetDepthStencilState(volumeLightState, 0);
-		//	}
-		//	if(i == 2)
-		//	{
-		//		renderContext.OMSetDepthStencilState(DepthStencilState::SceneRender, 0);
-		//		renderContext.SetRenderStep(enRenderStep_Render3DModelToScene);
-		//	}
-		//	unsigned int setTargetNum = 1;
-		//	CRenderTarget* setRenderTarget[] = { &GraphicsEngine().GetVolumeLightTarget()[i] };
-		//	renderContext.OMSetRenderTargets(1, setRenderTarget);
-		//	if (i == 1)
-		//	{
-		//		renderContext.ClearRenderTargetView(0, ClearColor, true, true);
-		//	}
-		//	else
-		//	{
-		//		renderContext.ClearRenderTargetView(0, ClearColor);
-		//	}
-		//	LightManager().Render(renderContext);
-		//	renderContext.RSSetViewport(0.0f, 0.0f, (float)GraphicsEngine().GetFrameBufferWidth(), (float)GraphicsEngine().GetFrameBufferHeight());
+		BeginGPUEvent(L"enRenderStep_Render3DModelToScene");
+		renderContext.SetRenderStep(enRenderStep_Render3DModelToScene);
+		for (int i = 0;i < 4;i++)
+		{
+			ClearColor[i] = 1.0f;
+		}
+		EnRenderStep renderStep = renderContext.GetRenderStep();
+		renderContext.SetRenderStep(enRenderStep_ZPrepass);
+		renderContext.OMSetBlendState(AlphaBlendState::disable, 0, 0xFFFFFFFF);
+		ID3D11RasterizerState* rasterizerState = renderContext.GetRSState();
+		for (int i = 0;i < 3;i++)
+		{
+			if (i == 0)
+			{
+				renderContext.OMSetDepthStencilState(DepthStencilState::SceneRender, 0);
+			}
+			if (i == 1)
+			{
 
-		//	for (GameObjectList objList : m_gameObjectListArray)
-		//	{
-		//		for (IGameObject* obj : objList)
-		//		{
-		//			obj->VolumeLightRenderWrapper(renderContext);
-		//		}
-		//	}
-		//}
-		//CRenderTarget* setRenderTarget[] = { &GraphicsEngine().GetMainRenderTarget() };
-		//renderContext.OMSetRenderTargets(1, setRenderTarget);
-		//volumeLightState->Release();
-		//renderContext.OMSetDepthStencilState(DepthStencilState::SceneRender, 0);
-		//renderContext.OMSetBlendState(AlphaBlendState::disable, 0, 0xFFFFFFFF);
+				//renderContext.OMSetDepthStencilState(DepthStencilState::volumeLight, 0);
+				renderContext.RSSetState(RasterizerState::volumeRender);
+			}
+			if(i == 2)
+			{
+				for (int i = 0;i < 4;i++)
+				{
+					ClearColor[i] = 0.0f;
+				}
+				renderContext.OMSetDepthStencilState(DepthStencilState::SceneRender, 0);
+				renderContext.OMSetBlendState(AlphaBlendState::disable, 0, 0xFFFFFFFF);
+				renderContext.SetRenderStep(enRenderStep_Render3DModelToScene);
+
+				renderContext.RSSetState(RasterizerState::sceneRender);
+			}
+			unsigned int setTargetNum = 1;
+			CRenderTarget* setRenderTarget[] = { &GraphicsEngine().GetVolumeLightTarget()[i] };
+			renderContext.OMSetRenderTargets(1, setRenderTarget);
+			//if (i == 1)
+			//{
+			//	renderContext.ClearRenderTargetView(0, ClearColor, true, true);
+			//}
+			//else
+			{
+				renderContext.ClearRenderTargetView(0, ClearColor);
+			}
+			LightManager().Render(renderContext);
+			renderContext.RSSetViewport(0.0f, 0.0f, (float)GraphicsEngine().GetFrameBufferWidth(), (float)GraphicsEngine().GetFrameBufferHeight());
+
+			for (GameObjectList objList : m_gameObjectListArray)
+			{
+				for (IGameObject* obj : objList)
+				{
+					obj->VolumeLightRenderWrapper(renderContext);
+				}
+			}
+		}
+		CRenderTarget* setRenderTarget[] = { &GraphicsEngine().GetMainRenderTarget() };
+		renderContext.OMSetRenderTargets(1, setRenderTarget);
+		renderContext.OMSetDepthStencilState(DepthStencilState::SceneRender, 0);
+		renderContext.OMSetBlendState(AlphaBlendState::disable, 0, 0xFFFFFFFF);
+		renderContext.RSSetState(rasterizerState);
 
 		//EndGPUEvent();
-		//renderContext.SetRenderStep(renderStep);
+		renderContext.SetRenderStep(renderStep);
 		
 
 		//ポストエフェクト。
