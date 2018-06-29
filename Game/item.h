@@ -21,5 +21,7 @@ private:
 	int itemf = 0;							//‹C‚É‚µ‚È‚¢
 	Player *Pp;
 	CQuaternion itemQrot = CQuaternion::Identity;
+	float G = 0;
+	CVector3 item_vector = { 2.0f,20.0f,2.0f };
 };
 
