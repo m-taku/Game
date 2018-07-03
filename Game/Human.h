@@ -1,4 +1,5 @@
 #pragma once
+class tekihei;
 class Human : public IGameObject
 {
 public:
@@ -21,8 +22,14 @@ public:
 	bool GetZonbi()
 	{
 		return Zonbe;
+	}	
+	void Gettekihei(tekihei* pointa)
+	{
+		tekip = pointa;
 	}
-private:
+protected:
+	tekihei* tekip;
+private:	
 	CVector3 H_position = CVector3::Zero;		//座標。
 	CVector3 kakudai;
 	bool Zonbe =false;//ゾンビ化したときに+1する。

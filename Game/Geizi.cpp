@@ -56,7 +56,6 @@ void Geizi::Update()
 	if (HP_saiz <= 0) {
 		HP_saiz = 0.0;
 		if (HPfurag <= 0) {
-			DeleteGO(haus);
 			HPfurag++;
 			NewGO<GameEnd>(0,"End");
 		}
@@ -70,10 +69,6 @@ void Geizi::Update()
 	}
 	if (keifou_saiz >= 0.95) {
 		keifou_saiz = 0.95;
-		if (furag <= 0) {//1度敵兵のインスタンスが出来たらNewGOされないようにする。
-			haus=NewGO<tekihei>(0, "tekihei");
-			
-		}
 	} 
 
 

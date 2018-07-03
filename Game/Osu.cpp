@@ -1,8 +1,8 @@
 #include "stdafx.h"
 #include"Game.h"
 #include "AIMove.h"
+#include"Human.h"
 #include "Osu.h"
-
 
 
 Osu::Osu()
@@ -38,7 +38,6 @@ bool Osu::Start()
 	ai_NPCAnimationClips[shiminikai].SetLoopFlag(false);
 	ai_NPCAnimationClips[shiminioki].Load(L"animData/shiminokiagari.tka");//仮。後で入れろ。
 	ai_NPCAnimationClips[shiminioki].SetLoopFlag(false);
-	
 	//アニメーションの初期化。
 	ai_NPCAnimation.Init(
 		m_skinModel,			//アニメーションを流すスキンモデル。

@@ -91,6 +91,9 @@ AI_manager::AI_manager()
 	da2.push_back(AIL41);
 	da2.push_back(AIL42);
 	da2.push_back(AIL43);
+	da2.push_back(AIL50);
+	da2.push_back(AIL51);
+	da2.push_back(AIL52);
 	for (int k = 0; k < da2.size(); k++) {
 		Osu* AIL = NewGO<Osu>(0, "Osu");
 		NPC_Number++;//NPCを生成したのでカウントする。

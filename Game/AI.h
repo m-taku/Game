@@ -91,10 +91,7 @@ public:
 	{
 		return m_position;
 	}
-	void Gettekihei(tekihei* pointa)
-	{
-		tekip = pointa;
-	}
+
 	CVector3 Getforward()
 	{
 		return m_forward;
@@ -197,7 +194,6 @@ private:
 	float escapecaku = 30.0f;
 	int radam = 0;
 	int mokuhyouNo = 0;			//目的地のパス番号の入っている＜配列番号＞
-	tekihei* tekip;
 	int mokuhyou=1;					//目的地のパス番号
 	std::vector<AI*> mikatalest;
 	bool keikai_f = false;

@@ -486,24 +486,24 @@ void AI::Update()
 			}
 		});
 	}
-	if (Gaizi != nullptr) {
-		if (Gaizi->GatFragu() >= 1.0f&& ForceFlag == false) {//特殊部隊が出現したら、
-			ForceFlag = true;//出現フラグを立てる。
-			if (GetZonbi() != true)
-			{//自分がゾンビではなかったら
-				if (Leftfrag <= 0) {
-					search(game->pasu[Leftfrag].m_pointList[0]);
-				}
-				else {
-					search(game->pasu[Leftfrag].m_pointList[35]);
-				}
-				da = 0;
-				m_speed = 4.0f;
-				work->Setkakudo(3.0f);
-				pa = Fade_Out; //パターンをフェードアウトに切り替える。
-			}
-		}
-	}
+	//if (Gaizi != nullptr) {
+	//	if (Gaizi->GatFragu() >= 1.0f&& ForceFlag == false) {//特殊部隊が出現したら、
+	//		ForceFlag = true;//出現フラグを立てる。
+	//		if (GetZonbi() != true)
+	//		{//自分がゾンビではなかったら
+	//			if (Leftfrag <= 0) {
+	//				search(game->pasu[Leftfrag].m_pointList[0]);
+	//			}
+	//			else {
+	//				search(game->pasu[Leftfrag].m_pointList[35]);
+	//			}
+	//			da = 0;
+	//			m_speed = 4.0f;
+	//			work->Setkakudo(3.0f);
+	//			pa = Fade_Out; //パターンをフェードアウトに切り替える。
+	//		}
+	//	}
+	//}
 	if (NPCHP <= 0.0&&Raifu_f==false) {//ＨＰがなくなってしまったら
 		Raifu_f = true;							//死んでしまうとはなさけない！！
 		if (GetZonbi() == false) {				//ゾンビではないなら

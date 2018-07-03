@@ -23,7 +23,7 @@ Game::Game()
 	gaizi = NewGO<Geizi>(1, "Geizi");
 
 	player = FindGO<Player>("Player");
-
+	enemy = NewGO<tekihei>(0, "tekihei");
 	player->trueGame();
 
 //	pasu2.clear();
@@ -65,8 +65,8 @@ void Game::OnDestroy()
 	stage->Car_delete();
 	DeleteGO(FindGO<BGM>("BGM"));//BGM
 	DeleteGO(camera1);
-	//DeleteGO(enemy);
-//	DeleteGO(FindGO<item>("item"));
+	DeleteGO(enemy);
+	//DeleteGO(FindGO<item>("item"));
 	//再起動（タイトル表示）
 	NewGO<Taitor>(0, "Taitor");
 	stage->Car_create();
