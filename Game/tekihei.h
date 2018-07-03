@@ -33,7 +33,7 @@ public:
 	float teki_angle[teki];
 	CQuaternion trot[teki];
 	float teki_siya[teki];
-	prefab::CEffect* tamaEF[teki];//弾のエフェクトの配列。CEffect型。
+	prefab::CEffect* tamaEF[teki];//弾のエフェクトの配列。CEffect型
 	CVector3 tamapos[teki];
 	int tamaflag[teki];
 	CVector3 tamamuki[teki];
@@ -77,9 +77,20 @@ public:
 	int stop_target_num[teki];
 	int stop_f[teki];
 	int min_f[teki];
+	//
+	bool bom_f[teki];
+	CVector3 Scale[teki];
+	prefab::CEffect* bomEF[teki];//弾のエフェクトの配列。CEffect型。
+	//
 	float minDist = FLT_MAX;//一番短い距離を調べる時に使う。
 	int nearPathNo[teki];//teki番目の敵兵にいちばん短い距離のパス番号を格納する。
 	CVector3 teki_to_teki_vector[teki];
 	float teki_to_teki_dist[teki];
 	float collide_siya[teki];
+	void SetOnDestoryCb(std::function<void()> cb)
+	{
+		m_onDestroyCb = cb;
+	}
+private:
+	std::function<void()> m_onDestroyCb;		//死亡したときに呼ばれるコールバック。
 };

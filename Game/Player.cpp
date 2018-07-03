@@ -115,8 +115,8 @@ void Player::Update()
 		m_moveSpeed.z = 0.0f;
 		m_moveSpeed.x = 0.0f;
 		//左スティックの入力量を受け取る。
-		float lStick_x = Pad(0).GetLStickXF()*500.0f;
-		float lStick_y = Pad(0).GetLStickYF()*600.0f;
+		float lStick_x = Pad(0).GetLStickXF()*150.0f;
+		float lStick_y = Pad(0).GetLStickYF()*300.0f;
 
 		//右スティックの入力量を受け取る。
 		float rStick_x = Pad(0).GetRStickXF();
@@ -165,7 +165,7 @@ void Player::Update()
 			//地面についた。
 			m_moveSpeed.y = 0.0f;
 		}
-		if (Pad(0).IsTrigger(enButtonRB1)&&taieki_F==0&&itemcounter>=5)
+		if (Pad(0).IsTrigger(enButtonRB1)&&taieki_F==0&&itemcounter>=1)
 		{
 			
 			Tp[taieki_sum]=NewGO<taieki>(0, "taieki");
@@ -263,7 +263,7 @@ void Player::Update()
 					if (ai->GetmoveStop() == false) {//車が止まっていたら
 						CVector3 kyori1 = this->m_position - ai->Getposition();//自分との距離を求める。
 						float f = kyori1.Length();
-						if (f <= 500) { //距離が車間距離よりも短くなっていたら
+						if (f <= 300) { //距離が車間距離よりも短くなっていたら
 							kyori1.Normalize();
 							float kaku = acosf(kyori1.Dot(ai->Getforward()));//２つのべクトルの内積のアークコサインを求める。(ラジアン)
 							float degree = CMath::RadToDeg(kaku);

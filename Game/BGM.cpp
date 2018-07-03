@@ -44,6 +44,7 @@ void BGM::Play_Sneak_First()//スニーク時の最初に処理される。
 void BGM::Play_Sneak_Fewer_people()//スニーク時(ゾンビ化NPCが1/2未満の時)のBGMを流しているときに動く関数。
 {
 	m_bdm_Sneak1->Play(true);//スニーク時のBGMを流す。
+	
 	if (ZombieNPC_Number>=(NPC_Goukei/2))//ゾンビ化NPCがNPCの合計人数の半分以上を占めたら
 	{
 		Scene = Sneak_Many_persons;//ゾンビ化NPCが半分以上を占めた場合の処理に変える。
@@ -59,6 +60,7 @@ void BGM::Play_Sneak_Many_persons()//スニーク時(ゾンビ化NPCが1/2以上の時)のBGMを
 {
 	m_bdm_Sneak1->Play(true);//スニーク時のBGM1を流す。
 	m_bdm_Sneak2->Play(true);//スニーク時のBGM2を流す。
+	m_bdm_Sneak2->SetVolume(0.09f);
 	if (Gauge->Get_keifou_saiz() >= 0.95) //ゲージが敵兵が出てくるラインを超えたら
 	{
 		Scene = Assault;//ゲージがラインを超えた(＝敵兵とのバトルに移行する)ので流すBGMをアサルトに変える。

@@ -27,6 +27,9 @@ tekihei::~tekihei()
 		}
 	
 	}
+	if (m_onDestroyCb != nullptr) {
+		m_onDestroyCb();
+	}
 }
 
 bool tekihei::Start()
@@ -88,6 +91,8 @@ bool tekihei::Start()
 
 	for (int i = 0;i < teki;i++)//敵兵の数だけ初期化する。
 	{	
+		bomEF[i] = false;
+		Scale[i] = { 150.0f,150.0f,150.0f };
 		collide_siya[i] = 0.0f;
 		teki_to_teki_dist[i] = 0.0f;
 		teki_to_teki_vector[i] = CVector3::Zero;	                        
@@ -548,8 +553,8 @@ void tekihei::Update()
 			}
 			if (tekiHP[i] <= 0.0f)//i番目の敵兵のHPが0以下になったら
 			{
-				tekiheiflag[i] = 0;//i番目のtekiheiflagを0にする。
-
+				tekiheiflag[i] = 0;
+				
 			}
 		}
 		//i番目の敵兵のHPがまだあるときのループはここまで
@@ -569,6 +574,32 @@ void tekihei::Update()
 		}
 		if (tekiheiflag[i]==0)
 		{
+			//
+			if (bom_f[i] == false)
+			{
+				bomEF[i] = NewGO<prefab::CEffect>(0);//エフェクトの生成。
+				bomEF[i]->Play(L"effect/aura.efk");
+				bomEF[i]->SetPosition({ tekipos[i].x,tekipos[i].y+70.0f,tekipos[i].z });
+				bomEF[i]->SetScale( Scale[i] );
+				bom_f[i] = true;
+			}
+			//
+			//
+			
+			if (bom_f[i] == true)
+			{
+				Scale[i].x -= 1.0f;
+				Scale[i].y -= 1.0f;
+				Scale[i].z -= 1.0f;
+
+				bomEF[i]->SetScale(Scale[i]);
+			}
+			if (bom_f[i]==true&&Scale[i].x <= 1.0f)
+			{
+				bomEF[i]->Release();
+				bom_f[i] = false;
+			}
+			//
 			if (tamaEF[i] != NULL) {//NULLじゃなかったら消す(ここでクラッシュしている。NULLが反応していない)。
 				tamaEF[i]->Release();
 				tamaflag[i] = 0;

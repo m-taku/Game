@@ -651,7 +651,7 @@ void AI::FlyNPC()
 			CVector3 tobu= this->Getforward()*-1;
 			flydist =/* ziko_car->Getforward() +*/ tobu;
 			flydist.y = 0.0f;
-			flydist = { flydist.x*1000.0f,flydist.y,flydist.z*1000.0f };
+			flydist = { flydist.x*2000.0f,flydist.y,flydist.z*2000.0f };
 			//flydist /= (1.0f / GameTime().GetFrameDeltaTime());
 			m_movespeed = flydist;
 			ziko_frag = true;
