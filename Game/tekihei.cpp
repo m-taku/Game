@@ -20,12 +20,9 @@ tekihei::~tekihei()
 		}
 	}
 
-	for (auto human : Humans) {
-		AI* pointa = dynamic_cast<AI*>(human);
-		if (pointa != nullptr) {
-			pointa->Gettekihei(NULL);
-		}
-	
+	for (auto& human : Humans)
+	{
+		human->Gettekihei(NULL);
 	}
 }
 
@@ -170,11 +167,10 @@ bool tekihei::Start()
 	
 	gaizi->SatFragu();//フラグをセットして、これ以上敵兵のインスタンスが生成されないようにする。
 	Pp = FindGO<Player>("Player");//プレイヤーのインスタンスを代入。
-	auto human = Humans.begin();
-	human++;
-	for (; human < Humans.end(); human++) {
-		AI* pointa = (AI*)human[0];
-		pointa->Gettekihei(this);
+	
+	for (auto& human: Humans)
+	{
+		human->Gettekihei(this);
 	}
 	return true;
 }

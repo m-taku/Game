@@ -878,7 +878,6 @@ void AI::search(CVector3 mokutekipos)
 	jyunban.erase(jyunban.begin(), jyunban.end());     //ì¶Ç∞êÿÇ¡ÇΩÇ∫Å`Å`Å`Å`
 	keiroK keiro;
 	keiro.tansa(m_position,mokutekipos, &jyunban, Leftfrag);
-
 	escapecaku = 30.0f;
 	mokuhyou = jyunban[0];
 }
