@@ -268,7 +268,7 @@
       <ContentOutput>$(ProjectDir)/Resource/modelData/%(Filename).cmo</ContentOutput>
     </MeshContentTask>
     <ImageContentTask>
-      <ContentOutput>$(ProjectDir)/Assets/sprite/%(Filename).dds</ContentOutput>
+      <ContentOutput>$(ProjectDir)/Resource/sprite/%(Filename).dds</ContentOutput>
     </ImageContentTask>
     <CustomBuild>
       <Command>call $(ProjectDir)..\tkTools\tkContentTools.bat %(Identity) $(OutDir)</Command>
@@ -325,7 +325,7 @@
       <ContentOutput>$(ProjectDir)/Resource/modelData/%(Filename).cmo</ContentOutput>
     </MeshContentTask>
     <ImageContentTask>
-      <ContentOutput>$(ProjectDir)/Assets/sprite/%(Filename).dds</ContentOutput>
+      <ContentOutput>$(ProjectDir)/Resource/sprite/%(Filename).dds</ContentOutput>
     </ImageContentTask>
     <CustomBuild>
       <Command>call $(ProjectDir)..\tkTools\tkContentTools.bat %(Identity) $(OutDir)</Command>
@@ -823,15 +823,18 @@
     <CustomBuild Include="Assets\effect\Texture\magma.png" />
     <CustomBuild Include="Assets\effect\Texture\sdfs.png" />
     <Image Include="Assets\modelData\ao.png" />
-    <ImageContentTask Include="Assets\sprite\HP.png" />
-    <ImageContentTask Include="Assets\sprite\HP_waku.png">
-      <ContentOutput Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(ProjectDir)/Resource/sprite/%(Filename).dds</ContentOutput>
-    </ImageContentTask>
-    <ImageContentTask Include="Assets\sprite\noise.png" />
     <ImageContentTask Include="Assets\sprite\A_botan.png" />
-    <ImageContentTask Include="Assets\sprite\Pusu_Button.png" />
-    <ImageContentTask Include="Assets\sprite\Game_Title2.png" />
+    <ImageContentTask Include="Assets\sprite\fade.png" />
     <ImageContentTask Include="Assets\sprite\Game_Title.png" />
+    <ImageContentTask Include="Assets\sprite\Game_Title2.png" />
+    <ImageContentTask Include="Assets\sprite\ge-ji.png" />
+    <ImageContentTask Include="Assets\sprite\ka-soru.png" />
+    <ImageContentTask Include="Assets\sprite\kajy.png" />
+    <ImageContentTask Include="Assets\sprite\noise.png" />
+    <ImageContentTask Include="Assets\sprite\Pusu_Button.png" />
+    <ImageContentTask Include="Assets\sprite\syoujun.png" />
+    <ImageContentTask Include="Assets\sprite\waku.png" />
+    <ImageContentTask Include="Assets\sprite\yaji.png" />
     <ImageContentTask Include="Assets\modelData\LiamTexZonbi.png">
       <ContentOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(ProjectDir)/Resource/modelData/%(Filename).dds</ContentOutput>
       <ContentOutput Condition="'$(Configuration)|$(Platform)'=='Preview|Win32'">$(ProjectDir)/Resource/modelData/%(Filename).dds</ContentOutput>
@@ -844,25 +847,12 @@
     <Image Include="Assets\modelData\utc_all2.tga" />
     <Image Include="Assets\modelData\white.png" />
     <Image Include="Assets\modelData\worktops007.jpg" />
-    <ImageContentTask Include="Assets\sprite\fade.png" />
     <ImageContentTask Include="Assets\sprite\GameClear.png">
       <ContentOutput Condition="'$(Configuration)|$(Platform)'=='Preview|Win32'">$(ProjectDir)/Resource/sprite/%(Filename).dds</ContentOutput>
     </ImageContentTask>
     <ImageContentTask Include="Assets\sprite\GameOver.png">
       <ContentOutput Condition="'$(Configuration)|$(Platform)'=='Preview|Win32'">$(ProjectDir)/Resource/sprite/%(Filename).dds</ContentOutput>
     </ImageContentTask>
-    <ImageContentTask Include="Assets\sprite\yaji.png" />
-    <ImageContentTask Include="Assets\sprite\kajy.png">
-      <ContentOutput Condition="'$(Configuration)|$(Platform)'=='Preview|Win32'">$(ProjectDir)/Resource/sprite/%(Filename).dds</ContentOutput>
-    </ImageContentTask>
-    <ImageContentTask Include="Assets\sprite\ka-soru.png">
-      <ContentOutput Condition="'$(Configuration)|$(Platform)'=='Preview|Win32'">$(ProjectDir)/Resource/sprite/%(Filename).dds</ContentOutput>
-    </ImageContentTask>
-    <ImageContentTask Include="Assets\sprite\syoujun.png" />
-    <ImageContentTask Include="Assets\sprite\ge-ji.png">
-      <ContentOutput Condition="'$(Configuration)|$(Platform)'=='Preview|Win32'">$(ProjectDir)/Resource/sprite/%(Filename).dds</ContentOutput>
-    </ImageContentTask>
-    <ImageContentTask Include="Assets\sprite\waku.png" />
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="Assets\effect\mqo\ball2.efkmodel">

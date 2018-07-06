@@ -149,13 +149,18 @@ void Taitor::Update()
 		break;
 
 	}
+	camera_to_player_vector = player->GetPosition() - nowkmVector;
+	camera_to_player_dist = camera_to_player_vector.Length();
+	float t = max( min(1.0f, nowkmVector.y / 5000.0f ), 0.0f);
+	t = pow(t, 30);
+	cm_near = 1.0 * (1.0f - t) + 2000.0f * t;
 
 	nowkmVector = (BasisVector - ka) + nowkmtarget;
 	BasisVector -= ka;
 	MainCamera().SetTarget(nowkmtarget);
-	MainCamera().SetNear(1.0f);
+	MainCamera().SetNear(cm_near);
 	MainCamera().SetUp(CVector3::AxisY);
-	MainCamera().SetFar(50000.0f);
+	MainCamera().SetFar(25000.0f);
 	MainCamera().SetPosition(nowkmVector);
 	MainCamera().Update();
 }

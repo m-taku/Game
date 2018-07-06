@@ -53,7 +53,9 @@ private:
 	int hyouji = 11;
 	int taim = 11;
 	int Target = 3;
-
+	CVector3 camera_to_player_vector = CVector3::Zero;
+	float camera_to_player_dist = 0.0f;
+	float cm_near = 2000.0f;
 	CVector3 kakakakak = target - nowkmtarget;
 };
 

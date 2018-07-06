@@ -43,6 +43,6 @@ private:
 	bool okiagari = false;
 	CAnimation ai_NPCAnimation;				//アニメーション。
 	CAnimationClip ai_NPCAnimationClips[animnum];	//アニメーションクリップ。
-	CShaderResourceView zondi;
+	static CShaderResourceView* zondi ;
 };
 

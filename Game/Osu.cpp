@@ -5,6 +5,8 @@
 #include "Osu.h"
 
 
+CShaderResourceView* Osu::zondi = nullptr;
+
 Osu::Osu()
 {
 }
@@ -45,9 +47,12 @@ bool Osu::Start()
 		ai_NPCAnimationClips,	//アニメーションクリップの配列。
 		animnum					//アニメーションクリップの数。
 	);
-	zondi.CreateFromDDSTextureFromFile(L"modelData/LiamTexZonbi1.dds");
+	if (zondi == nullptr) {
+		zondi = new CShaderResourceView;
+		zondi->CreateFromDDSTextureFromFile(L"modelData/LiamTexZonbi1.dds");
+	}
 	m_skinModel.FindMaterial([&](CModelEffect* material) {
-	material->Setm_zonbi(zondi.GetBody());
+		material->Setm_zonbi(zondi->GetBody());
 	});
 	AI::Start();
 
