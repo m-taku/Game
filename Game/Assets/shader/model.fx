@@ -258,7 +258,6 @@ PSInput_RenderToDepth VSMain_RenderDepth(VSInputNmTxVcTangent In)
 	float4 pos;
 	pos = mul(mWorld, In.Position);
 	pos = mul(mView, pos);
-	psInput.pos = pos;
 	pos = mul(mProj, pos);
 	psInput.Position = pos;
 	psInput.posInProj = pos;
@@ -280,7 +279,6 @@ PSInput_RenderToDepth VSMainInstancing_RenderDepth(
 	float4 pos;
 	pos = mul(instanceMatrix[instanceID], In.Position);
 	pos = mul(mView, pos);
-	psInput.pos = pos;
 	pos = mul(mProj, pos);
 	psInput.Position = pos;
 	psInput.posInProj = pos;
@@ -300,12 +298,12 @@ PSInput_RenderToDepth VSMainSkin_RenderDepth(VSInputNmTxWeights In)
 	//ワールド座標、法線、接ベクトルを計算。
 	float4 pos = mul(skinning, In.Position);
 	pos = mul(mView, pos);
-	psInput.pos = pos;
 	pos = mul(mProj, pos);
 	
 	psInput.Position = pos;
 	psInput.posInProj = pos;
 	return psInput;
+	
 }
 //--------------------------------------------------------------------------------------
 // ピクセルシェーダーのエントリ関数。
@@ -355,17 +353,27 @@ float4 PSMain( PSInput In ) : SV_Target0
 	float3 lig = 0.0f;
 	//視点までのベクトルを求める。
 	float3 toEye = normalize(eyePos - In.Pos);
-	//従ベクトルを計算する。
-	float3 biNormal = normalize(cross(In.Tangent, In.Normal));
+	
 	//アルベド。
 	float4 albedo = float4(albedoTexture.Sample(Sampler, In.TexCoord).xyz, 1.0f);
+
 	//法線を計算。
 	if (haszonbi >= 1) {
 		float4 zonbi = zonbiTexture.Sample(Sampler, In.TexCoord);
 		albedo = albedo * (1.0f - burend) + zonbi * burend;
 	}
-	float3 normal = CalcNormal( In.Normal, biNormal, In.Tangent, In.TexCoord);
-		
+	//接ベクトルを計算する。
+	float3 tangent = float3(0.0f, 0.0f, 0.0f);
+	if (In.Normal.y > 0.998f) {
+		//法線がほぼY軸と並行。
+		tangent = normalize(cross(In.Normal, float3(1.0f, 0.0f, 0.0f)));
+	}
+	else {
+		tangent = normalize(cross(In.Normal, float3(0.0f, 1.0f, 0.0f)));
+	}
+	float3 normal = In.Normal;
+	float3 biNormal = normalize(cross(normal, tangent));
+	
 	float specPow = 0.0f;
 	float roughness = 1.0f;
 	if(hasSpecularMap){
@@ -394,7 +402,7 @@ float4 PSMain( PSInput In ) : SV_Target0
 			albedo,
 			In.Pos, 
 			normal, 
-			In.Tangent,
+			tangent,
 			biNormal,
 			toEyeDir,
 			toEyeReflection, 
@@ -409,7 +417,7 @@ float4 PSMain( PSInput In ) : SV_Target0
 		In.Pos, 
 		In.posInProj, 
 		normal,
-		In.Tangent,
+		tangent,
 		biNormal,
 		toEyeDir,
 		toEyeReflection, 
@@ -421,7 +429,7 @@ float4 PSMain( PSInput In ) : SV_Target0
 	finalColor += CalcAmbientLight(
 		albedo,
 		normal,
-		In.Tangent,
+		tangent,
 		biNormal,
 		toEyeDir,
 		roughness,
@@ -453,18 +461,7 @@ float4 PSMain( PSInput In ) : SV_Target0
  */
 float4 PSMain_RenderDepth( PSInput_RenderToDepth In ) : SV_Target0
 {
-	float z = In.pos.z;
-	return z;
-}
-
-/*!
-*@brief	Z値を書き込むためだけの描画パスで使用されるピクセルシェーダー。(ボリュームライト用
-*@details
-* 現在はシャドウマップ作成とZPrepassで使用されています。
-*/
-float4 PSMain_RenderDepthVolume(PSInput_RenderToDepth In) : SV_Target0
-{
-	float z = In.posInProj.z;
+	float z = In.posInProj.z / In.posInProj.w;
 	return z;
 }
 /*!

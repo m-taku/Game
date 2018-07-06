@@ -7,6 +7,30 @@
 AI_manager* AI_ado;
 AI_manager::AI_manager()
 {
+
+}
+
+
+AI_manager::~AI_manager()
+{
+	for (int num = 0; num < Rsimin.size(); num++) {
+		if (RAIseizon[num] >= -1) {
+			DeleteGO(Rsimin[num]);
+		}
+
+	}
+	for (int num = 0; num  < Lsimin.size(); num++) {
+		if (LAIseizon[num] >= -1) {
+			DeleteGO(Lsimin[num]);
+		}
+	}
+	RAIseizon.clear();
+	LAIseizon.clear();
+	Rsimin.clear();
+	Lsimin.clear();
+}
+bool AI_manager::Start()
+{
 	AI_ado = this;
 	wchar_t moveFilePath[256];
 	swprintf_s(moveFilePath, L"lever/levalAI%d%d.tks", 0, 1);
@@ -102,29 +126,6 @@ AI_manager::AI_manager()
 		LAIseizon.push_back(1);
 	}
 	No = 0;
-}
-
-
-AI_manager::~AI_manager()
-{
-	for (int num = 0; num < Rsimin.size(); num++) {
-		if (RAIseizon[num] >= -1) {
-			DeleteGO(Rsimin[num]);
-		}
-
-	}
-	for (int num = 0; num  < Lsimin.size(); num++) {
-		if (LAIseizon[num] >= -1) {
-			DeleteGO(Lsimin[num]);
-		}
-	}
-	RAIseizon.clear();
-	LAIseizon.clear();
-	Rsimin.clear();
-	Lsimin.clear();
-}
-bool AI_manager::Start()
-{
 	return true;
 }
 void AI_manager::Update()

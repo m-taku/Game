@@ -33,7 +33,7 @@ bool Stage_Light::Start()
 		CVector3 f = loc.GetObjectPosition(i);
 		f.y = 400.0f;
 		point[i]->SetPosition(f);
-		point[i]->SetColor({ 180.0f,255.0f, 0.0f,0.0f });
+		point[i]->SetColor({ 150.0f,200.0f, 0.0f,0.0f });
 		point[i]->SetAttn({ 700.0f,4.0f ,0.0f });
 		//f.y = 270.0f;
 	//ライト　ポイントに

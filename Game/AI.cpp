@@ -155,14 +155,14 @@ void AI::NPCResistance_NPC()//NPCƒ]ƒ“ƒr‚Ö‚Ì’ïR‚ÉŠÖ‚·‚éˆ—BƒI[ƒo[ƒ‰ƒCƒh‚³‚¹‚
 }
 void AI::NPCResistance_Player()//ƒvƒŒƒCƒ„[‚Ö‚Ì’ïR‚ÉŠÖ‚·‚éˆ—BƒI[ƒo[ƒ‰ƒCƒh‚³‚¹‚éB
 {
-	m_speed = 0.0f;
-	if (sinsoku < 1.0) {
-		m_skinModel.Satburend(sinsoku);
-		sinsoku += 0.01;
-	}
-	else {
-		pa = Damage;
-	}
+	//m_speed = 0.0f;
+	//if (sinsoku < 1.0) {
+	//	m_skinModel.Satburend(sinsoku);
+	//	sinsoku += 0.01;
+	//}
+	//else {
+	//	pa = Damage;
+	//}
 }
 
 void AI::NPCDamage()

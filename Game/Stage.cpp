@@ -23,7 +23,8 @@ bool Stage::Start()
 {
 
 
-	Stege_No = 3;//FindGO<Game>("Game")->stag;
+	Stege_No = 3;
+	//FindGO<Game>("Game")->stag;
 	wchar_t moveFilePath[256];//ファイルパス。
 	swprintf_s(moveFilePath, L"modelData/stage%d.cmo", Stege_No);//ステージ。
 	m_skinModelData.Load(moveFilePath);

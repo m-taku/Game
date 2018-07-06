@@ -8,13 +8,10 @@ taieki::taieki()
 {
 	effect = NewGO<prefab::CEffect>(0);
 }
-
-
 taieki::~taieki()
 {
 	effect->Release();
 }
-
 bool taieki::Start()
 {
 	for (int i = 0;i < teki;i++)

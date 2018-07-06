@@ -45,7 +45,5 @@ namespace tkEngine{
 	private:
 		std::vector<CSkinModel*>	m_skinModels;			//!<スキンモデルのリスト。
 		CRenderTarget				m_depthBuffer;			//!<深度値を書き込むためのレンダリングターゲット。
-		CRenderTarget				m_volumeBuffer;			//!<深度値を書き込むためのレンダリングターゲット。
-
 	};
 }

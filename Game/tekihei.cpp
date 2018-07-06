@@ -172,6 +172,7 @@ bool tekihei::Start()
 	{
 		human->Gettekihei(this);
 	}
+
 	return true;
 }
 float tekihei::length(CVector3 vector)

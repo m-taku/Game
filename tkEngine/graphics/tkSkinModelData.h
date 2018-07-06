@@ -24,7 +24,8 @@ namespace tkEngine{
 		CShader m_vsRenderToDepthShaderInstancing;	//!<Z値書き込み用の頂点シェーダー。インスタンシング用。
 		CShader m_psRenderToDepthShader;	//!<Z値書き込み用のピクセルシェーダー。
 		CShader m_psRenderToGBufferShader;	//!<G-Buffer書き込み用のピクセルシェーダー。
-		CShader m_psRenderToVolumeLight;
+		CShader m_vsVolumeLight;
+		CShader m_psVolumeLight;
 		ID3D11ShaderResourceView* m_diffuseTex = nullptr;
 		ID3D11ShaderResourceView* m_zonbi = nullptr;
 		ID3D11ShaderResourceView* m_normalMap = nullptr;
@@ -55,7 +56,7 @@ namespace tkEngine{
 			m_psShader.Load("shader/model.fx", "PSMain", CShader::EnType::PS);
 			m_psRenderToDepthShader.Load("shader/model.fx", "PSMain_RenderDepth", CShader::EnType::PS);
 			m_psRenderToGBufferShader.Load("shader/model.fx", "PSMain_RenderGBuffer", CShader::EnType::PS);
-			m_psRenderToVolumeLight.Load("shader/model.fx", "PSMain_RenderDepthVolume", CShader::EnType::PS);
+			m_psVolumeLight.Load("shader/model.fx", "PSMain_RenderDepth", CShader::EnType::PS);
 			m_pPSShader = &m_psShader;
 		}
 		virtual ~CModelEffect()
@@ -195,7 +196,6 @@ namespace tkEngine{
 		 *@return	trueが返ってきたらロード成功。
 		 */
 		bool Load( const wchar_t* filePath );
-
 		DirectX::Model& GetBody()
 		{
 			return *m_modelDx;

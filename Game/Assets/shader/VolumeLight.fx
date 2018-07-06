@@ -31,26 +31,13 @@ float4 PSMain( PSInput In ) : SV_Target0
 	float mainDepth = mainDepthTexture.Sample(Sampler, In.uv).x;
 	float frontDepth = frontDepthTexture.Sample(Sampler, In.uv).x;
 	float backDepth = backDepthTexture.Sample(Sampler, In.uv).x;
-	float4 color = colorTexture.Sample(Sampler, In.uv);
-	float wValue = color.r;
-	color.w = 0.0f;
-	float adjustment = 0.1f;
-	float adjustment2 = 2.0f;
-	float scale = 0.0f;
-	float powNum = 10.0f;
-	if (frontDepth < mainDepth && mainDepth < backDepth)
+	float4 color = float4(0.0f, 0.0f, 0.0f, 0.0f);
+	float adjustment = 8000.0f;
+	if (frontDepth < mainDepth)
 	{
 		float depthWidth = mainDepth - frontDepth;
-		scale = pow(min(1.0f, depthWidth * adjustment), powNum) * adjustment2;
-		color *= scale;
-		color.w = wValue;
-	}
-	else if(frontDepth < mainDepth)
-	{
-		float depthWidth = backDepth - frontDepth;
-		scale = pow(min(1.0f, depthWidth * adjustment), powNum) * adjustment2;
-		color *= scale;
-		color.w = wValue;
+		color *= depthWidth * adjustment;
+		color = colorTexture.Sample(Sampler, In.uv);
 	}
 	return color;
 }
