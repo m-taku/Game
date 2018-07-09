@@ -24,6 +24,12 @@ Player::~Player()
 }
 bool Player::Start()
 {
+	////////////////////////////////////////////////////////
+	test_font;
+	///////////////////////////////////////////////////////
+
+
+
 	m_animclip[idle].Load(L"animData/playeridle.tka");
 	m_animclip[walk].Load(L"animData/playerwalk.tka");
 	m_animclip[attack].Load(L"animData/playerattack.tka");
@@ -105,7 +111,12 @@ bool Player::Start()
 }
 void Player::Update()
 {
+	//Ç®ééÇµfont
+	//////////////////////////////////////////////////
+	//////////////////////////////////////////////////
+	
 	if (game != false) {
+		
 		//m_animation.Play(idle,0.2);
 
 		m_moveDecision = CVector3::Zero;//îªíËÇ…égópÇ∑ÇÈÇÃÇ≈èâä˙âªÅB
@@ -388,4 +399,10 @@ void Player::Render(CRenderContext& rc)
 {
 	m_skinModel.Draw(rc, MainCamera().GetViewMatrix(), MainCamera().GetProjectionMatrix());
 	//m_sprite.Draw(rc, MainCamera2D().GetViewMatrix(), MainCamera2D().GetProjectionMatrix());
+}
+void Player::PostRender(CRenderContext& renderContext)
+{
+	m_font.Begin(renderContext);
+	m_font.Draw(L"Ç†Ç¢Ç§Ç¶Ç®", font_pos, {255.0f,255.0f,255.0f,1.0f}, 0.0f, 1.0f, fomt_pivot);
+	m_font.End(renderContext);
 }
