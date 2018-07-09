@@ -53,12 +53,10 @@ void AI::Zonbesiya()
 			}
 		}
 	}
-	if (ForceFlag == true) {
-		float len = takikennsau();
-		if (len <= 1500) {
-			pa = Zombie_Attack;
-			kannkaku = true;
-		}
+	float len = takikennsau();
+	if (len <= 1500) {
+		pa = Zombie_Attack;
+		kannkaku = true;
 	}
 }
 void AI::NPCZombie_Chase()
@@ -148,14 +146,14 @@ void AI::NPCZombie_Chase()
 }
 void AI::NPCZombie_Attack()//vs特殊部隊
 {
-	static int flame = 40;
 	if (tekip != NULL) {
 		float len = GetKyori(m_position, tekip->tamapos[No]);
-		if (len > 2100.0f &&tekip->tekiheiflag[No] <= 0) {//他のNPCを見失った(距離が2100以上あいた)、あるいは死んだら							  
+		if (len > 2100.0f||tekip->tekiheiflag[No] <= 0) {//他のNPCを見失った(距離が2100以上あいた)、あるいは死んだら							  
 			kaiten = false;  //元の位置に戻る。
 			HitFlag = false;// //検索結果を初期化する。
 			escapecaku = 30.0f;
 			nearestpas();
+			pa = Zombie_Normal;
 		}
 		else {//NPCを見失っておらず、見つけていたら
 			kannkaku = true;
@@ -164,10 +162,7 @@ void AI::NPCZombie_Attack()//vs特殊部隊
 			if (len < atakkukyori) {//NPCに追いついたら
 									//攻撃する(確実に当たる仕様)。
 				HitFlag = true;//「NPCに攻撃を当てた」というフラグをたてる。
-				if (flame >= 40) {
-					tekip->tekiHP[No] -= 3;
-					flame = 0;
-				}
+					tekip->tekiHP[No] -= 5;
 				atakkukyori = 200.0f;
 				//NPC_Attack_Animation();//攻撃アニメーションを流す。
 			}
@@ -184,7 +179,6 @@ void AI::NPCZombie_Attack()//vs特殊部隊
 				/////////////////////////////////
 			}
 		}
-		flame++;
 	}
 
 }

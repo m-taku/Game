@@ -9,6 +9,7 @@ public:
 	bool Start();
 	float siya();
 	void PostRender(CRenderContext& rc) override;
+	void kaiten();
 	void Update();
 private:
 	enum kaiten {
@@ -17,7 +18,13 @@ private:
 		suii,
 		tyoku
 	};
+	enum kakudo
+	{
+		kaiton,
+		idor
+	};
 	enum kaiten furag;
+	enum kakudo kakudu;
 	Fade * fase;
 	CSprite n_sprite;				//スプライト（中身）。
 	CShaderResourceView n_texture;	//テクスチャ。*/

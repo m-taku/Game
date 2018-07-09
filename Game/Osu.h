@@ -4,7 +4,7 @@
 /*NPCの男性型クラス(AIクラスから継承)。
 
 */
-class Osu: public AI
+class Osu : public AI
 {
 public:
 	Osu();

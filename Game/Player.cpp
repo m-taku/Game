@@ -129,6 +129,7 @@ void Player::Update()
 		float lStick_x = Pad(0).GetLStickXF()*150.0f;
 		float lStick_y = Pad(0).GetLStickYF()*300.0f;
 
+
 		//右スティックの入力量を受け取る。
 		float rStick_x = Pad(0).GetRStickXF();
 		float rStick_y = Pad(0).GetRStickYF();
@@ -335,7 +336,7 @@ void Player::Update()
 	Setposition(m_position);
 	m_skinModel.Update(m_position, m_rotation, { 20.0f,20.0f,20.0f });// CVector3::One*20.0f);
 	const CMatrix& boneM = m_skinModelData.GetSkeleton().GetBone(boneNo)->GetWorldMatrix();
-
+	
 	bonepos.x = boneM.m[3][0];
 	bonepos.y = boneM.m[3][1];
 	bonepos.z = boneM.m[3][2];

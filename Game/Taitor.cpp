@@ -103,21 +103,15 @@ void Taitor::Update()
 		//kakudo /= seconds;
 		kaunto = seconds / GameTime().GetFrameDeltaTime();
 		nowkmtarget += target / kaunto;
-		Crot.SetRotationDeg(UP, kakudo*GameTime().GetFrameDeltaTime());
-		Crot.Multiply(BasisVector);
+		kaiten();
 		BasisVector *= 1 - (1 / (seconds  / GameTime().GetFrameDeltaTime()));
 		kakakakak = target - nowkmtarget;
 		if ((target - nowkmtarget).Length() <= 50.0f)
 		{
-			float ka_ka =siya();
+			float Player_back = siya();
 			nowkmtarget = target;
 			ka = nowkmVector - target;
-			UP.Cross(ka, player_Foeward);
-			UP.Normalize();
-			Crot.SetRotationDeg(UP, ka_ka);
-			Crot.Multiply(BasisVector);
 			ka.Normalize();
-
 			ka.y = 1.2f;
 			ka *= (speed * GameTime().GetFrameDeltaTime());
 			speed--;
@@ -125,6 +119,7 @@ void Taitor::Update()
 		}
 		break;
 	case tyoku:
+		kaiten();
 		ka = nowkmVector - target;
 		if (0.0f >= nowkmVector.y - target.y) {
 			ka.y = 0.0f;
@@ -133,7 +128,7 @@ void Taitor::Update()
 		}
 		ka.Normalize();
 		if (ka.y > 0) {
-			ka.y = 0.7f;
+			ka.y = 0.8f;
 		}
 
 		if (BasisVector.Length() <= 500.0f)
@@ -169,6 +164,35 @@ void Taitor::Update()
 	MainCamera().SetPosition(nowkmVector);
 	MainCamera().Update();
 }
+void  Taitor::PostRender(CRenderContext& rc)
+{
+	if (furag == steat) {
+		n_sprite.Draw(rc, MainCamera2D().GetViewMatrix(), MainCamera2D().GetViewProjectionMatrix());
+	}
+}
+void Taitor::kaiten()
+{
+	float Player_back = siya();
+	switch (kakudu)
+	{
+	case kaiton:
+		if (Player_back >= 2.0f)
+		{
+			Crot.SetRotationDeg(UP, kakudo*GameTime().GetFrameDeltaTime());
+			Crot.Multiply(BasisVector);
+		}
+		else {
+			Crot.SetRotationDeg(UP, Player_back);
+			Crot.Multiply(BasisVector);
+			kakudu = idor;
+		}
+		break;
+	case idor:
+		break;
+	default:
+		break;
+	}
+}
 
 float Taitor::siya()
 {
@@ -179,11 +203,4 @@ float Taitor::siya()
 
 	float degree = CMath::RadToDeg(kok);
 	return degree;
-}
-
-void  Taitor::PostRender(CRenderContext& rc)
-{
-	if (furag == steat) {
-		n_sprite.Draw(rc, MainCamera2D().GetViewMatrix(), MainCamera2D().GetViewProjectionMatrix());
-	}
 }

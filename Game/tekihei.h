@@ -4,7 +4,7 @@
 #include "tkEngine/graphics/effect/tkEffect.h"
 #include "tkEngine/character/tkCharacterController.h"
 #define teki 45
-#define path 45
+#define path 63
 class tekihei : public IGameObject
 {
 public:
@@ -71,7 +71,7 @@ public:
 	int old_old_old_target_num[teki];
 	int moving[teki];
 	CVector3 old_pos[teki];
-	int tekistop_counter[teki];
+	float tekistop_counter[teki];
 	CVector3 oldpos_to_tekipos_vector[teki];
 	float oldpos_to_tekipos[teki];
 	int stop_target_num[teki];

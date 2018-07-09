@@ -91,7 +91,6 @@ void keiroK::tansa(CVector3 i, CVector3 Ta, std::vector<int> *a,int Leftfrag)
 				}
 			}
 		}
-
 		while (currentNode != startNode) {
 			a->push_back(currentNode->No[0]);
 			if (currentNode == currentNode->GetParentNode()) {
