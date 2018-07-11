@@ -481,42 +481,6 @@
     <Image Include="Assets\modelData\utc_all2.tga">
       <Filter>Assets\modelData</Filter>
     </Image>
-    <Image Include="Assets\sprite\A_botan.png">
-      <Filter>Assets\sprite</Filter>
-    </Image>
-    <Image Include="Assets\sprite\fade.png">
-      <Filter>Assets\sprite</Filter>
-    </Image>
-    <Image Include="Assets\sprite\Game_Title.png">
-      <Filter>Assets\sprite</Filter>
-    </Image>
-    <Image Include="Assets\sprite\Game_Title2.png">
-      <Filter>Assets\sprite</Filter>
-    </Image>
-    <Image Include="Assets\sprite\ge-ji.png">
-      <Filter>Assets\sprite</Filter>
-    </Image>
-    <Image Include="Assets\sprite\kajy.png">
-      <Filter>Assets\sprite</Filter>
-    </Image>
-    <Image Include="Assets\sprite\ka-soru.png">
-      <Filter>Assets\sprite</Filter>
-    </Image>
-    <Image Include="Assets\sprite\noise.png">
-      <Filter>Assets\sprite</Filter>
-    </Image>
-    <Image Include="Assets\sprite\Pusu_Button.png">
-      <Filter>Assets\sprite</Filter>
-    </Image>
-    <Image Include="Assets\sprite\waku.png">
-      <Filter>Assets\sprite</Filter>
-    </Image>
-    <Image Include="Assets\sprite\yaji.png">
-      <Filter>Assets\sprite</Filter>
-    </Image>
-    <Image Include="Assets\sprite\syoujun.png">
-      <Filter>Assets\sprite</Filter>
-    </Image>
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\lever\larer_01.tks">
@@ -532,8 +496,27 @@
     <ImageContentTask Include="Assets\modelData\LiamTexZonbi1.png">
       <Filter>Assets\modelData</Filter>
     </ImageContentTask>
-    <ImageContentTask Include="Assets\sprite\HP.png" />
-    <ImageContentTask Include="Assets\sprite\HP_waku.png" />
+    <ImageContentTask Include="Assets\sprite\A_botan.png" />
+    <ImageContentTask Include="Assets\sprite\fade.png" />
+    <ImageContentTask Include="Assets\sprite\Game_Title.png" />
+    <ImageContentTask Include="Assets\sprite\Game_Title2.png" />
+    <ImageContentTask Include="Assets\sprite\ge-ji.png" />
+    <ImageContentTask Include="Assets\sprite\ka-soru.png" />
+    <ImageContentTask Include="Assets\sprite\kajy.png" />
+    <ImageContentTask Include="Assets\sprite\noise.png" />
+    <ImageContentTask Include="Assets\sprite\Pusu_Button.png" />
+    <ImageContentTask Include="Assets\sprite\syoujun.png" />
+    <ImageContentTask Include="Assets\sprite\waku.png" />
+    <ImageContentTask Include="Assets\sprite\yaji.png" />
+    <ImageContentTask Include="Assets\sprite\HP.png">
+      <Filter>Assets\sprite</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\HP_waku.png">
+      <Filter>Assets\sprite</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\dame_ji.png">
+      <Filter>Assets\sprite</Filter>
+    </ImageContentTask>
   </ItemGroup>
   <ItemGroup>
     <Media Include="Assets\sound\n80.wav" />

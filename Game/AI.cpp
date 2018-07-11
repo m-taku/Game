@@ -760,7 +760,7 @@ void AI::Fardist_path(CVector3 m_position)//視野付きリンク先パス検索
 		for (int Linknum = 0; Linknum < game->pasu[Leftfrag].GetresutoSaiz(mokuhyouNo); Linknum++) {
 			CVector3 ma = game->pasu[Leftfrag].Getresuto(mokuhyouNo)->m_position[Linknum] - m_position;
 			if (minkore.Length() < ma.Length()) {
-				if (90 <= VectorAngleDeg(ma, m_position - this->m_position)) {
+				if (45 <= VectorAngleDeg(ma, m_position - this->m_position)) {
 					minkore = ma;
 					mokuhyou = game->pasu[Leftfrag].Getresuto(mokuhyouNo)->No[Linknum];
 				}
