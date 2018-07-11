@@ -24,6 +24,12 @@ Player::~Player()
 }
 bool Player::Start()
 {
+	////////////////////////////////////////////////////////
+	test_font;
+	///////////////////////////////////////////////////////
+
+
+
 	m_animclip[idle].Load(L"animData/playeridle.tka");
 	m_animclip[walk].Load(L"animData/playerwalk.tka");
 	m_animclip[attack].Load(L"animData/playerattack.tka");
@@ -105,7 +111,12 @@ bool Player::Start()
 }
 void Player::Update()
 {
+	//お試しfont
+	//////////////////////////////////////////////////
+	//////////////////////////////////////////////////
+	
 	if (game != false) {
+		
 		//m_animation.Play(idle,0.2);
 
 		m_moveDecision = CVector3::Zero;//判定に使用するので初期化。
@@ -114,33 +125,45 @@ void Player::Update()
 
 		m_moveSpeed.z = 0.0f;
 		m_moveSpeed.x = 0.0f;
+
 		//左スティックの入力量を受け取る。
 		float lStick_x = Pad(0).GetLStickXF()*150.0f;
 		float lStick_y = Pad(0).GetLStickYF()*300.0f;
 
 
-		//右スティックの入力量を受け取る。
-		float rStick_x = Pad(0).GetRStickXF();
-		float rStick_y = Pad(0).GetRStickYF();
-
-		if (Pad(0).IsTrigger(enButtonX)) //Xボタンが押されたら
+		if (Pad(0).IsTrigger(enButtonA)) //Aボタンが押されたら
 		{
-			switch (X_button_Flag)
+			switch (A_button_Flag)
 			{
-			case false://まだXボタンを押されていなかったら
-				Log_lStick_x = lStick_x;
-				Log_lStick_y = lStick_y;
-				X_button_Flag = true;//Xボタンが押されて、ロックされた
+			case false://まだAボタンを押されていなかったら
+				A_button_Flag = true;//Xボタンが押されて、ロックされた
 				break;
-			case true://既にXボタンが押されていたら
-				Log_lStick_x = 0.0f;
-				Log_lStick_y = 0.0f;
-				X_button_Flag = false;//再度Xボタンが押されたので、ロックを解除
+			case true://既にAボタンが押されていたら
+				A_button_Flag = false;//再度Aボタンが押されたので、ロックを解除
 			default:
-				X_button_Flag = false;//再度Xボタンが押されたので、ロックを解除
+				A_button_Flag = false;//再度Aボタンが押されたので、ロックを解除
 				break;
 			}
 		}
+
+		float lStick_x;
+		float lStick_y;
+		if (A_button_Flag == false) //非スニークモード時
+		{
+			//左スティックの入力量を受け取る。
+			lStick_x = Pad(0).GetLStickXF()*500.0f;
+			lStick_y = Pad(0).GetLStickYF()*600.0f;
+		}
+		else //スニークモード時
+		{
+			//左スティックの入力量を受け取る。
+			lStick_x = Pad(0).GetLStickXF()*250.0f;
+			lStick_y = Pad(0).GetLStickYF()*300.0f;
+		}
+		
+		//右スティックの入力量を受け取る。
+		float rStick_x = Pad(0).GetRStickXF();
+		float rStick_y = Pad(0).GetRStickYF();
 
 		/*rotX += rStick_y * 5;*/
 		rotY = rStick_x * 3;
@@ -154,13 +177,13 @@ void Player::Update()
 		}
 
 
-		if (Pad(0).IsTrigger(enButtonA) //Aボタンが押されたら
-			&& m_charaCon.IsOnGround()  //かつ、地面に居たら
-			) {
-			//ジャンプする。
-			m_moveSpeed.y = 400.0f;	//上方向に速度を設定して、
-			m_charaCon.Jump();		//キャラクターコントローラーにジャンプしたことを通知する。
-		}
+		//if (Pad(0).IsTrigger(enButtonA) //Aボタンが押されたら
+		//	&& m_charaCon.IsOnGround()  //かつ、地面に居たら
+		//	) {
+		//	//ジャンプする。
+		//	m_moveSpeed.y = 400.0f;	//上方向に速度を設定して、
+		//	m_charaCon.Jump();		//キャラクターコントローラーにジャンプしたことを通知する。
+		//}
 		//キャラクターコントローラーを使用して、座標を更新。
 		if (m_charaCon.IsOnGround()) {
 			//地面についた。
@@ -198,16 +221,9 @@ void Player::Update()
 		m_rite.y = mRot.m[0][1];
 		m_rite.z = mRot.m[0][2];
 		m_rite.Normalize();
-		if (X_button_Flag == false) {//Xボタンが押されていなかったら
-			m_moveSpeed += m_forward * lStick_y;
-			m_moveSpeed += m_rite * lStick_x;
-			m_moveDecision = m_moveSpeed;//少しでも動いていたら代入される。
-		}
-		else if (X_button_Flag == true) {//Xボタンが押されていたら
-			m_moveSpeed += m_forward * Log_lStick_y;
-			m_moveSpeed += m_rite * lStick_x;
-			m_moveDecision = m_moveSpeed;//少しでも動いていたら代入される。
-		}
+		m_moveSpeed += m_forward * lStick_y;
+		m_moveSpeed += m_rite * lStick_x;
+		m_moveDecision = m_moveSpeed;//少しでも動いていたら代入される。
 
 		Play_Respiration(m_moveDecision);
 
@@ -365,7 +381,7 @@ void Player::Play_Attack()
 {
 	m_AttackSE = NewGO<prefab::CSoundSource>(0);
 	m_AttackSE->Init("sound/swing2.wav", false);
-	m_Respiration->Play(false);//一回だけ再生されて破棄される。
+	m_AttackSE->Play(false);//一回だけ再生されて破棄される。
 }
 bool Player::CVector_same_Decision(CVector3 a, CVector3 b) //2つのベクトルが同一かどうかを調べる。
 {
@@ -389,4 +405,10 @@ void Player::Render(CRenderContext& rc)
 {
 	m_skinModel.Draw(rc, MainCamera().GetViewMatrix(), MainCamera().GetProjectionMatrix());
 	//m_sprite.Draw(rc, MainCamera2D().GetViewMatrix(), MainCamera2D().GetProjectionMatrix());
+}
+void Player::PostRender(CRenderContext& renderContext)
+{
+	m_font.Begin(renderContext);
+	m_font.Draw(L"あいうえお", font_pos, {255.0f,255.0f,255.0f,1.0f}, 0.0f, 1.0f, fomt_pivot);
+	m_font.End(renderContext);
 }

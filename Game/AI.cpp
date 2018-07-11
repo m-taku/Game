@@ -136,7 +136,7 @@ void AI::NPCNormal_Search()//NPCの警戒処理。
 		m_speed = 4.0f;
 		nearestpas();
 		Fardist_path(pl->Getposition());
-		pa = Escape;
+        pa = Escape;       
 	}
 	if (hann >= 2) {
 		kannkaku = true;
@@ -347,7 +347,7 @@ void AI::NPC_Search_Zonbi() //全てのゾンビと距離でダメージ判定をする。
 								keikai_f = true;
 								lam = ai;
 								nearestpas();
-								pa = Escape_NPC;
+								pa = Escape_NPC;                     
 								m_speed = 3.0f;
 								retu_position = m_position;
 								break;
