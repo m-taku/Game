@@ -8,13 +8,10 @@ taieki::taieki()
 {
 	effect = NewGO<prefab::CEffect>(0);
 }
-
-
 taieki::~taieki()
 {
 	effect->Release();
 }
-
 bool taieki::Start()
 {
 	for (int i = 0;i < teki;i++)
@@ -23,6 +20,14 @@ bool taieki::Start()
 	}
 	player = FindGO<Player>("Player");
 	tekip = FindGO<tekihei>("tekihei");//“G•º‚ª‚¢‚½‚ç‚»‚ÌƒCƒ“ƒXƒ^ƒ“ƒX‚ðŠi”[‚·‚éB
+	if (tekip != nullptr) {
+		tekip->SetOnDestoryCb([&]() {
+			tekip = nullptr;
+		});
+	}
+	else {
+
+	}
 	/*m_taiekiModelData.Load(L"modelData/taieki.cmo");
 	m_taieki.Init(m_taiekiModelData);*/
 	CF = MainCamera().GetForward();

@@ -20,23 +20,20 @@ tekihei::~tekihei()
 		}
 	}
 
-	for (auto human : Humans) {
-		AI* pointa = dynamic_cast<AI*>(human);
-		if (pointa != nullptr) {
-			pointa->Gettekihei(NULL);
-		}
-	
+	for (auto& human : Humans)
+	{
+		human->Gettekihei(NULL);
+	}
+	if (m_onDestroyCb != nullptr) {
+		m_onDestroyCb();
 	}
 }
 
 bool tekihei::Start()
 {
-	
 	gaizi = FindGO<Geizi>("Geizi");
 	/*animclip[0].Load(L"animData/tekiidle.tka");
 	animclip[0].SetLoopFlag(true);*/
-
-
 	//パスの初期化
 	EnemyPath[0] = { 0.0f,0.0f,0.0f };
 	EnemyPath[1] = { 0.0f,0.0f,1950.0f };
@@ -83,11 +80,30 @@ bool tekihei::Start()
 	EnemyPath[42] = { 2010.0f,0.0f,-8000.0f };
 	EnemyPath[43] = { 4000.0f,0.0f,-8000.0f };
 	EnemyPath[44] = { 6200.0f,0.0f,-8000.0f };
-
+	EnemyPath[45] = { -2646.0f,0.0f,2650.0f };
+	EnemyPath[46] = { -2674.0f,0.0f,2650.0f };
+	EnemyPath[47] = { -5329.0f,0.0f,1843.0f };
+	EnemyPath[48] = { -5281.0f,0.0f,2677.0f };
+	EnemyPath[49] = { -5533.0f,0.0f,4919.0f };
+	EnemyPath[50] = { -4288.0f,0.0f,5380.0f };
+	EnemyPath[51] = { -2680.0f,0.0f,4898.0f };
+	EnemyPath[52] = { -2586.0f,0.0f,5614.0f };
+	EnemyPath[53] = { -2585.0f,0.0f,7146.0f };
+	EnemyPath[54] = { -4272.0f,0.0f,7144.0f };
+	EnemyPath[55] = { -5467.0f,0.0f,6888.0f };
+	EnemyPath[56] = { -6904.0f,0.0f,2660.0f };
+	EnemyPath[57] = { -5354.0f,0.0f,940.0f };
+	EnemyPath[58] = { -2618.0f,0.0f,892.0f };
+	EnemyPath[59] = { -1088.0f,0.0f,2687.0f };
+	EnemyPath[60] = { -1027.0f,0.0f,4814.0f };
+	EnemyPath[61] = { -1076.0f,0.0f,4870.0f };
+	EnemyPath[62] = { -2055.0f,0.0f,4822.0f };
 	
 
 	for (int i = 0;i < teki;i++)//敵兵の数だけ初期化する。
 	{	
+		bomEF[i] = false;
+		Scale[i] = { 150.0f,150.0f,150.0f };
 		collide_siya[i] = 0.0f;
 		teki_to_teki_dist[i] = 0.0f;
 		teki_to_teki_vector[i] = CVector3::Zero;	                        
@@ -101,7 +117,7 @@ bool tekihei::Start()
 			teki_to_path_vector[i][j] = CVector3::Zero;
 		}
 		oldpos_to_tekipos_vector[i] = CVector3::Zero;
-		tekistop_counter[i] = 0;
+		tekistop_counter[i] = 0.0f;
 
 		old_old_target_num[i] = 100;
 		target_num[i] = 100;
@@ -156,12 +172,12 @@ bool tekihei::Start()
 	
 	gaizi->SatFragu();//フラグをセットして、これ以上敵兵のインスタンスが生成されないようにする。
 	Pp = FindGO<Player>("Player");//プレイヤーのインスタンスを代入。
-	auto human = Humans.begin();
-	human++;
-	for (; human < Humans.end(); human++) {
-		AI* pointa = (AI*)human[0];
-		pointa->Gettekihei(this);
+	
+	for (auto& human: Humans)
+	{
+		human->Gettekihei(this);
 	}
+
 	return true;
 }
 float tekihei::length(CVector3 vector)
@@ -204,7 +220,10 @@ void tekihei::Update()
 						//nearPathNo = target_num[i];
 						for (int c = 0; c < path; c++)
 						{
-
+							if (c == stop_target_num[i])
+							{
+								continue;
+							}
 							if (c == old_target_num[i])//ひとつ前のパスだったら
 							{
 								continue;
@@ -269,13 +288,13 @@ void tekihei::Update()
 
 					//}
 
-					if (length(teki_to_path_vector[i][target_num[i]]) < 300.0f)//i番目の敵兵と一番近いパスとの距離が300未満だったら(目的地に着いたら)
+					if (length(teki_to_path_vector[i][target_num[i]]) < 100.0f)//i番目の敵兵と一番近いパスとの距離が300未満だったら(目的地に着いたら)
 					{
 						old_old_old_target_num[i] = old_old_target_num[i];//二つ前のパスを三つ前のパスにする。
 						old_old_target_num[i] = old_target_num[i];//一つ前のパスを二つ前のパスにする。
 
 						old_target_num[i] = target_num[i];//目的地だったパスを一つ前のパスにする。
-
+						stop_target_num[i] = 999;
 
 
 						stop_f[i] = 0;
@@ -296,7 +315,7 @@ void tekihei::Update()
 
 					for (int j = 0; j < path; j++)
 					{
-						teki_to_path_vector[i][j] = EnemyPath[j] + tekiright[i] * 100.0f - tekipos[i];
+						teki_to_path_vector[i][j] = EnemyPath[j] + tekiright[i] * 50.0f - tekipos[i];
 						teki_to_path[i][j] = length(teki_to_path_vector[i][j]);
 					}
 
@@ -396,6 +415,23 @@ void tekihei::Update()
 
 					}
 				}//落下しているときはこのカッコ内の処理はされない。
+
+				if (tekistop_counter[i] == 0.0f)
+				{
+					old_pos[i] = tekipos[i];
+				}
+				tekistop_counter[i] += 1.0f*GameTime().GetFrameDeltaTime();
+				if (tekistop_counter[i] >= 5.0f)
+				{
+					oldpos_to_tekipos_vector[i] = old_pos[i] - tekipos[i];
+					oldpos_to_tekipos[i] = length(oldpos_to_tekipos_vector[i]);
+					if (oldpos_to_tekipos[i] <= 100.0f)
+					{
+						stop_target_num[i] = target_num[i];
+						moving[i] = 0;
+					}
+					tekistop_counter[i] = 0.00000f;
+				}
 
 				tekipos[i] = m_charaCon[i].Execute(GameTime().GetFrameDeltaTime(), tekispeed[i]);
 				tekiskinModel[i].Update(tekipos[i], tekirot[i], { 1.0f,1.0f,1.0f });
@@ -548,8 +584,8 @@ void tekihei::Update()
 			}
 			if (tekiHP[i] <= 0.0f)//i番目の敵兵のHPが0以下になったら
 			{
-				tekiheiflag[i] = 0;//i番目のtekiheiflagを0にする。
-
+				tekiheiflag[i] = 0;
+				
 			}
 		}
 		//i番目の敵兵のHPがまだあるときのループはここまで
@@ -569,6 +605,32 @@ void tekihei::Update()
 		}
 		if (tekiheiflag[i]==0)
 		{
+			//
+			if (bom_f[i] == false)
+			{
+				bomEF[i] = NewGO<prefab::CEffect>(0);//エフェクトの生成。
+				bomEF[i]->Play(L"effect/aura.efk");
+				bomEF[i]->SetPosition({ tekipos[i].x,tekipos[i].y+70.0f,tekipos[i].z });
+				bomEF[i]->SetScale( Scale[i] );
+				bom_f[i] = true;
+			}
+			//
+			//
+			
+			if (bom_f[i] == true)
+			{
+				Scale[i].x -= 1.0f;
+				Scale[i].y -= 1.0f;
+				Scale[i].z -= 1.0f;
+
+				bomEF[i]->SetScale(Scale[i]);
+			}
+			if (bom_f[i]==true&&Scale[i].x <= 1.0f)
+			{
+				bomEF[i]->Release();
+				bom_f[i] = false;
+			}
+			//
 			if (tamaEF[i] != NULL) {//NULLじゃなかったら消す(ここでクラッシュしている。NULLが反応していない)。
 				tamaEF[i]->Release();
 				tamaflag[i] = 0;

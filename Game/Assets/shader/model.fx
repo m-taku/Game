@@ -353,17 +353,27 @@ float4 PSMain( PSInput In ) : SV_Target0
 	float3 lig = 0.0f;
 	//視点までのベクトルを求める。
 	float3 toEye = normalize(eyePos - In.Pos);
-	//従ベクトルを計算する。
-	float3 biNormal = normalize(cross(In.Tangent, In.Normal));
+	
 	//アルベド。
 	float4 albedo = float4(albedoTexture.Sample(Sampler, In.TexCoord).xyz, 1.0f);
+
 	//法線を計算。
 	if (haszonbi >= 1) {
 		float4 zonbi = zonbiTexture.Sample(Sampler, In.TexCoord);
 		albedo = albedo * (1.0f - burend) + zonbi * burend;
 	}
-	float3 normal = CalcNormal( In.Normal, biNormal, In.Tangent, In.TexCoord);
-		
+	//接ベクトルを計算する。
+	float3 tangent = float3(0.0f, 0.0f, 0.0f);
+	if (In.Normal.y > 0.998f) {
+		//法線がほぼY軸と並行。
+		tangent = normalize(cross(In.Normal, float3(1.0f, 0.0f, 0.0f)));
+	}
+	else {
+		tangent = normalize(cross(In.Normal, float3(0.0f, 1.0f, 0.0f)));
+	}
+	float3 normal = In.Normal;
+	float3 biNormal = normalize(cross(normal, tangent));
+	
 	float specPow = 0.0f;
 	float roughness = 1.0f;
 	if(hasSpecularMap){
@@ -392,7 +402,7 @@ float4 PSMain( PSInput In ) : SV_Target0
 			albedo,
 			In.Pos, 
 			normal, 
-			In.Tangent,
+			tangent,
 			biNormal,
 			toEyeDir,
 			toEyeReflection, 
@@ -407,7 +417,7 @@ float4 PSMain( PSInput In ) : SV_Target0
 		In.Pos, 
 		In.posInProj, 
 		normal,
-		In.Tangent,
+		tangent,
 		biNormal,
 		toEyeDir,
 		toEyeReflection, 
@@ -419,7 +429,7 @@ float4 PSMain( PSInput In ) : SV_Target0
 	finalColor += CalcAmbientLight(
 		albedo,
 		normal,
-		In.Tangent,
+		tangent,
 		biNormal,
 		toEyeDir,
 		roughness,

@@ -50,9 +50,13 @@ private:
 	CVector3 n_position = CVector3::Zero;
 	CSprite hn_sprite;				//スプライトh（中身）。
 	CVector3 hn_position = CVector3::Zero;
-	tekihei* haus;
 	CSprite hy_sprite;				//スプライト(枠)。
 	CShaderResourceView hy_texture;	//テクスチャ。
+
+	CShaderResourceView HP_texture;	//テクスチャ。
+
+	CShaderResourceView HPframe_texture;	//テクスチャ。
+	tekihei* haus;
 	float point = 0.0f;
 	float HP = 0.95f;
 	float  furag = 0.0f; //特殊部隊が出たら1になる。

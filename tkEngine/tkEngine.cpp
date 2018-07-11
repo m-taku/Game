@@ -57,11 +57,11 @@ namespace tkEngine {
 		{
 			sizeof(WNDCLASSEX), CS_CLASSDC, MsgProc, 0L, 0L,
 			GetModuleHandle(nullptr), nullptr, nullptr, nullptr, nullptr,
-			TEXT("GameDemo"), nullptr
+			TEXT("The Pandemic City"), nullptr
 		};
 		RegisterClassEx(&wc);
 		// Create the application's window
-		m_hWnd = CreateWindow(TEXT("GameDemo"), TEXT("GameDemo"),
+		m_hWnd = CreateWindow(TEXT("The Pandemic City"), TEXT("The Pandemic City"),
 			WS_OVERLAPPEDWINDOW, 0, 0, m_screenWidth, m_screenHeight,
 			nullptr, nullptr, wc.hInstance, nullptr);
 
@@ -126,7 +126,7 @@ namespace tkEngine {
 			
 		}
 		
-		m_font->Begin(GraphicsEngine().GetRenderContext());
+		/*m_font->Begin(GraphicsEngine().GetRenderContext());
 		wchar_t fps[256];
 		swprintf_s(fps, L"FPS = %f", m_fps);
 		float w = (float)GraphicsEngine().Get2DSpaceScreenWidth();
@@ -142,7 +142,7 @@ namespace tkEngine {
 			1.0f,
 			{0.0f, 1.0f}
 		);
-		m_font->End(GraphicsEngine().GetRenderContext());
+		m_font->End(GraphicsEngine().GetRenderContext());*/
 #endif
 		m_graphicsEngine.EndRender();
 		

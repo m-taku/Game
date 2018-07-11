@@ -24,6 +24,12 @@ Player::~Player()
 }
 bool Player::Start()
 {
+	////////////////////////////////////////////////////////
+	test_font;
+	///////////////////////////////////////////////////////
+
+
+
 	m_animclip[idle].Load(L"animData/playeridle.tka");
 	m_animclip[walk].Load(L"animData/playerwalk.tka");
 	m_animclip[attack].Load(L"animData/playerattack.tka");
@@ -105,7 +111,12 @@ bool Player::Start()
 }
 void Player::Update()
 {
+	//お試しfont
+	//////////////////////////////////////////////////
+	//////////////////////////////////////////////////
+	
 	if (game != false) {
+		
 		//m_animation.Play(idle,0.2);
 
 		m_moveDecision = CVector3::Zero;//判定に使用するので初期化。
@@ -114,6 +125,11 @@ void Player::Update()
 
 		m_moveSpeed.z = 0.0f;
 		m_moveSpeed.x = 0.0f;
+
+		//左スティックの入力量を受け取る。
+		float lStick_x = Pad(0).GetLStickXF()*150.0f;
+		float lStick_y = Pad(0).GetLStickYF()*300.0f;
+
 
 		if (Pad(0).IsTrigger(enButtonA)) //Aボタンが押されたら
 		{
@@ -173,7 +189,7 @@ void Player::Update()
 			//地面についた。
 			m_moveSpeed.y = 0.0f;
 		}
-		if (Pad(0).IsTrigger(enButtonRB1)&&taieki_F==0&&itemcounter>=5)
+		if (Pad(0).IsTrigger(enButtonRB1)&&taieki_F==0&&itemcounter>=1)
 		{
 			
 			Tp[taieki_sum]=NewGO<taieki>(0, "taieki");
@@ -264,7 +280,7 @@ void Player::Update()
 					if (ai->GetmoveStop() == false) {//車が止まっていたら
 						CVector3 kyori1 = this->m_position - ai->Getposition();//自分との距離を求める。
 						float f = kyori1.Length();
-						if (f <= 500) { //距離が車間距離よりも短くなっていたら
+						if (f <= 300) { //距離が車間距離よりも短くなっていたら
 							kyori1.Normalize();
 							float kaku = acosf(kyori1.Dot(ai->Getforward()));//２つのべクトルの内積のアークコサインを求める。(ラジアン)
 							float degree = CMath::RadToDeg(kaku);
@@ -325,7 +341,7 @@ void Player::Update()
 	Setposition(m_position);
 	m_skinModel.Update(m_position, m_rotation, { 20.0f,20.0f,20.0f });// CVector3::One*20.0f);
 	const CMatrix& boneM = m_skinModelData.GetSkeleton().GetBone(boneNo)->GetWorldMatrix();
-
+	
 	bonepos.x = boneM.m[3][0];
 	bonepos.y = boneM.m[3][1];
 	bonepos.z = boneM.m[3][2];
@@ -389,4 +405,10 @@ void Player::Render(CRenderContext& rc)
 {
 	m_skinModel.Draw(rc, MainCamera().GetViewMatrix(), MainCamera().GetProjectionMatrix());
 	//m_sprite.Draw(rc, MainCamera2D().GetViewMatrix(), MainCamera2D().GetProjectionMatrix());
+}
+void Player::PostRender(CRenderContext& renderContext)
+{
+	m_font.Begin(renderContext);
+	m_font.Draw(L"あいうえお", font_pos, {255.0f,255.0f,255.0f,1.0f}, 0.0f, 1.0f, fomt_pivot);
+	m_font.End(renderContext);
 }

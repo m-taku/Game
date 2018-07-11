@@ -745,6 +745,7 @@
     <MeshContentTask Include="Assets\modelData\Vehicle_SUV1.FBX" />
     <MeshContentTask Include="Assets\modelData\Vehicle_SUV2.FBX" />
     <MeshContentTask Include="Assets\modelData\Vehicle_SUV3.FBX" />
+    <MeshContentTask Include="Assets\modelData\VolumeLight.FBX" />
     <MeshContentTask Include="Assets\modelData\Zonbiliam.FBX" />
   </ItemGroup>
   <ItemGroup>

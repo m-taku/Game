@@ -4,7 +4,7 @@
 /*NPCの男性型クラス(AIクラスから継承)。
 
 */
-class Osu: public AI
+class Osu : public AI
 {
 public:
 	Osu();
@@ -43,6 +43,6 @@ private:
 	bool okiagari = false;
 	CAnimation ai_NPCAnimation;				//アニメーション。
 	CAnimationClip ai_NPCAnimationClips[animnum];	//アニメーションクリップ。
-	CShaderResourceView zondi;
+	static CShaderResourceView* zondi ;
 };
 

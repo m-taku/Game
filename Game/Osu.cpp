@@ -1,9 +1,11 @@
 #include "stdafx.h"
 #include"Game.h"
 #include "AIMove.h"
+#include"Human.h"
 #include "Osu.h"
 
 
+CShaderResourceView* Osu::zondi = nullptr;
 
 Osu::Osu()
 {
@@ -38,7 +40,6 @@ bool Osu::Start()
 	ai_NPCAnimationClips[shiminikai].SetLoopFlag(false);
 	ai_NPCAnimationClips[shiminioki].Load(L"animData/shiminokiagari.tka");//仮。後で入れろ。
 	ai_NPCAnimationClips[shiminioki].SetLoopFlag(false);
-	
 	//アニメーションの初期化。
 	ai_NPCAnimation.Init(
 		m_skinModel,			//アニメーションを流すスキンモデル。
@@ -46,9 +47,12 @@ bool Osu::Start()
 		ai_NPCAnimationClips,	//アニメーションクリップの配列。
 		animnum					//アニメーションクリップの数。
 	);
-	zondi.CreateFromDDSTextureFromFile(L"modelData/LiamTexZonbi1.dds");
+	if (zondi == nullptr) {
+		zondi = new CShaderResourceView;
+		zondi->CreateFromDDSTextureFromFile(L"modelData/LiamTexZonbi1.dds");
+	}
 	m_skinModel.FindMaterial([&](CModelEffect* material) {
-	material->Setm_zonbi(zondi.GetBody());
+		material->Setm_zonbi(zondi->GetBody());
 	});
 	AI::Start();
 
@@ -131,16 +135,6 @@ void Osu::AI_Animation()//AIのアニメーション制御
 		{
 			Idle_Animation();
 		}
-		else if(pa== Damage&& okiagari==false)
-		{
-			Idle_Animation();
-			if (!ai_NPCAnimation.IsPlaying()) {
-				item* ite = NewGO<item>(0, "item");
-				ite->Set_itempos(Getposition());
-				pa = Zombie_Normal;
-				okiagari = true;
-			}
-		}
 		//else if (okiagari==true) 
 		//{
 		//	ai_NPCAnimation.Play(shiminioki, 0.7);
@@ -156,7 +150,7 @@ void Osu::AI_Animation()//AIのアニメーション制御
 		else if (HitFlag == true) {
 			NPC_Attack_Animation();
 		}
-		else if (m_speed >= 0.5f) {
+		else if (m_speed >= 0.1f) {
 			Zombie_Walk_Animation();
 		}
 	}

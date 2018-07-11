@@ -155,14 +155,14 @@ void AI::NPCResistance_NPC()//NPCƒ]ƒ“ƒr‚Ö‚Ì’ïR‚ÉŠÖ‚·‚éˆ—BƒI[ƒo[ƒ‰ƒCƒh‚³‚¹‚
 }
 void AI::NPCResistance_Player()//ƒvƒŒƒCƒ„[‚Ö‚Ì’ïR‚ÉŠÖ‚·‚éˆ—BƒI[ƒo[ƒ‰ƒCƒh‚³‚¹‚éB
 {
-	m_speed = 0.0f;
-	if (sinsoku < 1.0) {
-		m_skinModel.Satburend(sinsoku);
-		sinsoku += 0.01;
-	}
-	else {
-		pa = Damage;
-	}
+	//m_speed = 0.0f;
+	//if (sinsoku < 1.0) {
+	//	m_skinModel.Satburend(sinsoku);
+	//	sinsoku += 0.01;
+	//}
+	//else {
+	//	pa = Damage;
+	//}
 }
 
 void AI::NPCDamage()
@@ -486,24 +486,24 @@ void AI::Update()
 			}
 		});
 	}
-	if (Gaizi != nullptr) {
-		if (Gaizi->GatFragu() >= 1.0f&& ForceFlag == false) {//“Áê•”‘à‚ªoŒ»‚µ‚½‚çA
-			ForceFlag = true;//oŒ»ƒtƒ‰ƒO‚ğ—§‚Ä‚éB
-			if (GetZonbi() != true)
-			{//©•ª‚ªƒ]ƒ“ƒr‚Å‚Í‚È‚©‚Á‚½‚ç
-				if (Leftfrag <= 0) {
-					search(game->pasu[Leftfrag].m_pointList[0]);
-				}
-				else {
-					search(game->pasu[Leftfrag].m_pointList[35]);
-				}
-				da = 0;
-				m_speed = 4.0f;
-				work->Setkakudo(3.0f);
-				pa = Fade_Out; //ƒpƒ^[ƒ“‚ğƒtƒF[ƒhƒAƒEƒg‚ÉØ‚è‘Ö‚¦‚éB
-			}
-		}
-	}
+	//if (Gaizi != nullptr) {
+	//	if (Gaizi->GatFragu() >= 1.0f&& ForceFlag == false) {//“Áê•”‘à‚ªoŒ»‚µ‚½‚çA
+	//		ForceFlag = true;//oŒ»ƒtƒ‰ƒO‚ğ—§‚Ä‚éB
+	//		if (GetZonbi() != true)
+	//		{//©•ª‚ªƒ]ƒ“ƒr‚Å‚Í‚È‚©‚Á‚½‚ç
+	//			if (Leftfrag <= 0) {
+	//				search(game->pasu[Leftfrag].m_pointList[0]);
+	//			}
+	//			else {
+	//				search(game->pasu[Leftfrag].m_pointList[35]);
+	//			}
+	//			da = 0;
+	//			m_speed = 4.0f;
+	//			work->Setkakudo(3.0f);
+	//			pa = Fade_Out; //ƒpƒ^[ƒ“‚ğƒtƒF[ƒhƒAƒEƒg‚ÉØ‚è‘Ö‚¦‚éB
+	//		}
+	//	}
+	//}
 	if (NPCHP <= 0.0&&Raifu_f==false) {//‚g‚o‚ª‚È‚­‚È‚Á‚Ä‚µ‚Ü‚Á‚½‚ç
 		Raifu_f = true;							//€‚ñ‚Å‚µ‚Ü‚¤‚Æ‚Í‚È‚³‚¯‚È‚¢II
 		if (GetZonbi() == false) {				//ƒ]ƒ“ƒr‚Å‚Í‚È‚¢‚È‚ç
@@ -651,7 +651,7 @@ void AI::FlyNPC()
 			CVector3 tobu= this->Getforward()*-1;
 			flydist =/* ziko_car->Getforward() +*/ tobu;
 			flydist.y = 0.0f;
-			flydist = { flydist.x*1000.0f,flydist.y,flydist.z*1000.0f };
+			flydist = { flydist.x*2000.0f,flydist.y,flydist.z*2000.0f };
 			//flydist /= (1.0f / GameTime().GetFrameDeltaTime());
 			m_movespeed = flydist;
 			ziko_frag = true;
@@ -878,7 +878,6 @@ void AI::search(CVector3 mokutekipos)
 	jyunban.erase(jyunban.begin(), jyunban.end());     //“¦‚°Ø‚Á‚½‚º````
 	keiroK keiro;
 	keiro.tansa(m_position,mokutekipos, &jyunban, Leftfrag);
-
 	escapecaku = 30.0f;
 	mokuhyou = jyunban[0];
 }

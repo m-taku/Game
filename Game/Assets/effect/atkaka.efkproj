@@ -544,6 +544,124 @@
         <CommonValues>
           <RemoveWhenLifeIsExtinct>False</RemoveWhenLifeIsExtinct>
           <Life>
+            <Center>1</Center>
+            <Max>1</Max>
+            <Min>1</Min>
+          </Life>
+        </CommonValues>
+        <RotationValues>
+          <Type>1</Type>
+          <PVA>
+            <Rotation>
+              <X>
+                <Center>-30</Center>
+                <Max>-30</Max>
+                <Min>-30</Min>
+              </X>
+              <Y>
+                <Center>90</Center>
+                <Max>90</Max>
+                <Min>90</Min>
+              </Y>
+            </Rotation>
+          </PVA>
+          <AxisPVA>
+            <Velocity>
+              <Max>1</Max>
+              <Min>-1</Min>
+            </Velocity>
+          </AxisPVA>
+        </RotationValues>
+        <ScalingValues>
+          <Type>3</Type>
+          <Fixed>
+            <Scale>
+              <X>0.005</X>
+              <Y>0.005</Y>
+              <Z>0.005</Z>
+            </Scale>
+          </Fixed>
+          <SinglePVA>
+            <Scale>
+              <Center>0.0072</Center>
+              <Max>0.0072</Max>
+              <Min>0.0072</Min>
+            </Scale>
+          </SinglePVA>
+        </ScalingValues>
+        <RendererCommonValues>
+          <ColorTexture>../../../tkTools/Effekseer132/Sample/01_Suzuki01/001_magma_effect/Texture/aura3_type2.png</ColorTexture>
+          <AlphaBlend>2</AlphaBlend>
+          <UV>3</UV>
+          <UVScroll>
+            <Size>
+              <X>
+                <Center>2000</Center>
+                <Max>2000</Max>
+                <Min>2000</Min>
+              </X>
+              <Y>
+                <Center>2000</Center>
+                <Max>2000</Max>
+                <Min>2000</Min>
+              </Y>
+            </Size>
+            <Speed>
+              <X>
+                <Center>2</Center>
+                <Max>2</Max>
+                <Min>2</Min>
+              </X>
+              <Y>
+                <Center>8</Center>
+                <Max>8</Max>
+                <Min>8</Min>
+              </Y>
+            </Speed>
+          </UVScroll>
+        </RendererCommonValues>
+        <DrawingValues>
+          <Type>5</Type>
+          <Model>
+            <Model>mqo/ball2.efkmodel</Model>
+            <Lighting>False</Lighting>
+            <Color_Fixed>
+              <R>0</R>
+              <B>0</B>
+              <A>130</A>
+            </Color_Fixed>
+            <Color_Random>
+              <R>
+                <Center>14</Center>
+                <Max>14</Max>
+                <Min>14</Min>
+              </R>
+              <G>
+                <Center>191</Center>
+                <Max>191</Max>
+                <Min>191</Min>
+              </G>
+              <B>
+                <Center>176</Center>
+                <Min>98</Min>
+              </B>
+              <A>
+                <Center>125</Center>
+                <Max>200</Max>
+                <Min>50</Min>
+              </A>
+              <DrawnAs>0</DrawnAs>
+              <ColorSpace>1</ColorSpace>
+            </Color_Random>
+          </Model>
+        </DrawingValues>
+        <Name>mqoCloud2</Name>
+        <Children />
+      </Node>
+      <Node>
+        <CommonValues>
+          <RemoveWhenLifeIsExtinct>False</RemoveWhenLifeIsExtinct>
+          <Life>
             <Center>20</Center>
             <Max>20</Max>
             <Min>20</Min>
@@ -641,7 +759,7 @@
         <DrawingValues>
           <Type>5</Type>
           <Model>
-            <Model>../../../tkTools/Effekseer132/Sample/01_Suzuki01/001_magma_effect/mqo/ball2.efkmodel</Model>
+            <Model>mqo/ball2.efkmodel</Model>
             <Color_Fixed>
               <R>0</R>
               <B>0</B>
@@ -700,124 +818,6 @@
           </Model>
         </DrawingValues>
         <Name>mqoMagma</Name>
-        <Children />
-      </Node>
-      <Node>
-        <CommonValues>
-          <RemoveWhenLifeIsExtinct>False</RemoveWhenLifeIsExtinct>
-          <Life>
-            <Center>1</Center>
-            <Max>1</Max>
-            <Min>1</Min>
-          </Life>
-        </CommonValues>
-        <RotationValues>
-          <Type>1</Type>
-          <PVA>
-            <Rotation>
-              <X>
-                <Center>-30</Center>
-                <Max>-30</Max>
-                <Min>-30</Min>
-              </X>
-              <Y>
-                <Center>90</Center>
-                <Max>90</Max>
-                <Min>90</Min>
-              </Y>
-            </Rotation>
-          </PVA>
-          <AxisPVA>
-            <Velocity>
-              <Max>1</Max>
-              <Min>-1</Min>
-            </Velocity>
-          </AxisPVA>
-        </RotationValues>
-        <ScalingValues>
-          <Type>3</Type>
-          <Fixed>
-            <Scale>
-              <X>0.005</X>
-              <Y>0.005</Y>
-              <Z>0.005</Z>
-            </Scale>
-          </Fixed>
-          <SinglePVA>
-            <Scale>
-              <Center>0.0072</Center>
-              <Max>0.0072</Max>
-              <Min>0.0072</Min>
-            </Scale>
-          </SinglePVA>
-        </ScalingValues>
-        <RendererCommonValues>
-          <ColorTexture>../../../tkTools/Effekseer132/Sample/01_Suzuki01/001_magma_effect/Texture/aura3_type2.png</ColorTexture>
-          <AlphaBlend>2</AlphaBlend>
-          <UV>3</UV>
-          <UVScroll>
-            <Size>
-              <X>
-                <Center>2000</Center>
-                <Max>2000</Max>
-                <Min>2000</Min>
-              </X>
-              <Y>
-                <Center>2000</Center>
-                <Max>2000</Max>
-                <Min>2000</Min>
-              </Y>
-            </Size>
-            <Speed>
-              <X>
-                <Center>2</Center>
-                <Max>2</Max>
-                <Min>2</Min>
-              </X>
-              <Y>
-                <Center>8</Center>
-                <Max>8</Max>
-                <Min>8</Min>
-              </Y>
-            </Speed>
-          </UVScroll>
-        </RendererCommonValues>
-        <DrawingValues>
-          <Type>5</Type>
-          <Model>
-            <Model>../../../tkTools/Effekseer132/Sample/01_Suzuki01/001_magma_effect/mqo/ball2.efkmodel</Model>
-            <Lighting>False</Lighting>
-            <Color_Fixed>
-              <R>0</R>
-              <B>0</B>
-              <A>130</A>
-            </Color_Fixed>
-            <Color_Random>
-              <R>
-                <Center>14</Center>
-                <Max>14</Max>
-                <Min>14</Min>
-              </R>
-              <G>
-                <Center>191</Center>
-                <Max>191</Max>
-                <Min>191</Min>
-              </G>
-              <B>
-                <Center>176</Center>
-                <Min>98</Min>
-              </B>
-              <A>
-                <Center>125</Center>
-                <Max>200</Max>
-                <Min>50</Min>
-              </A>
-              <DrawnAs>0</DrawnAs>
-              <ColorSpace>1</ColorSpace>
-            </Color_Random>
-          </Model>
-        </DrawingValues>
-        <Name>mqoCloud2</Name>
         <Children />
       </Node>
       <Node>
@@ -898,7 +898,7 @@
         <DrawingValues>
           <Type>5</Type>
           <Model>
-            <Model>../../../tkTools/Effekseer132/Sample/01_Suzuki01/001_magma_effect/mqo/ball2.efkmodel</Model>
+            <Model>mqo/ball2.efkmodel</Model>
             <Lighting>False</Lighting>
             <Color_Fixed>
               <R>0</R>

@@ -123,6 +123,7 @@ private:
 	std::vector<int> AIL23 = { 30,27,26,25,24,23,16,17,18,19,20,21,22,3,2,1,10,11,14,28,29,41,42 };
 	std::vector<int> AIL24 = { 31,34,35,37,39,42,30 };
 	std::vector<int> AIL25 = { 32,33,34,31,26,25,24,15,16,7,6,23,24,25 };*/
+
 	std::vector<int> AIL1 = { 48,57,56,52 };
 	std::vector<int> AIL2 = { 1,10,11,14,28,29,41,40,39,37,35,36,33,32,25,24,23,6,5,4,3,2 };
 	std::vector<int> AIL3 = { 2,3,4,7,20,17,16,15,13,12,12,12,11,10,1 };
@@ -163,6 +164,10 @@ private:
 	std::vector<int> AIL40 = { 51,52,53,54,57,58,56,55,53,48,46,47,50,43,45 };
 	std::vector<int> AIL41 = { 52,50,51,45,44,46,48,53,54,57,58,56 };
 	std::vector<int> AIL42 = { 53,54,57,62,63,66,52 };
+	std::vector<int> AIL50 = { 9,8 };
+	std::vector<int> AIL51 = { 9,7 };
+
+	std::vector<int> AIL52 = { 9,7 };
 	std::vector<int> AIL43 = { 54,55,34,33,36,35,37,63,61,57 };
 	std::vector<std::vector<int>> da2;
 	std::vector<std::vector<int>> da;

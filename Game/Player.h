@@ -3,6 +3,11 @@
 #include "tkEngine/character/tkCharacterController.h"
 #include "tkEngine/graphics/effect/tkEffect.h"
 #include"tkEngine/sound/tkSoundSource.h"
+#include<string>
+//Fontのテスト
+///////////////////////////////////////////////////////
+#include "tkEngine/graphics/font/tkFont.h"
+///////////////////////////////////////////////////////
 #define tama 20
 class taieki;
 class car;
@@ -14,6 +19,7 @@ public:
 	bool Start();
 	void Update();
 	void Render(CRenderContext& rc);
+	void PostRender(CRenderContext& renderContext);
 	CVector3 GetPosition()
 	{
 		return m_position;
@@ -75,16 +81,16 @@ private:
 	CCharacterController m_charaCon;
 	CShaderResourceView m_normalMap;		//法線マップ。
 	CShaderResourceView m_specMap;
-			//キャラクタコントローラ。
+	//キャラクタコントローラ。
 	CVector3 m_moveSpeed = CVector3::Zero;
 	CVector3 m_position = CVector3::Zero;
 	CVector3 m_moveDecision = CVector3::Zero;//動いているのかを判定する。
 				//スペキュラマップ。
-	CVector3 m_forward=CVector3::Zero;						//プレイヤーの前方。
-	CVector3 m_rite= CVector3::Zero;						//プレイヤーの右方向
+	CVector3 m_forward = CVector3::Zero;						//プレイヤーの前方。
+	CVector3 m_rite = CVector3::Zero;						//プレイヤーの右方向
 	float rotY = 0.0f; //回転
 	float rotX = 0.0f; //回転
-	CQuaternion qBias=CQuaternion::Identity;
+	CQuaternion qBias = CQuaternion::Identity;
 	CQuaternion qBias1 = CQuaternion::Identity;
 	CQuaternion qrot = CQuaternion::Identity;
 	CMatrix mRot;
@@ -140,5 +146,17 @@ private:
 	prefab::CSoundSource*m_AttackSE = nullptr;//息使いの音。歩くときに流す。
 
 	int itemcounter = 0;
+
+
+
+
+
+	////////////////////////////////////////////////////
+	std::wstring inputwstr = L"ABCDEFG";
+	CFont m_font;
+	wchar_t* test_font[255];
+	CVector2 font_pos = { 0.0f,0.0f };
+	CVector2 fomt_pivot = { 0.0f,0.0f };
+	
 };
 

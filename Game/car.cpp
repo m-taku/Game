@@ -9,8 +9,6 @@
 car::car()
 {
 }
-
-
 car::~car()
 {
 	DeleteGO(ran);

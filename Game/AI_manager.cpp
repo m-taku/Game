@@ -7,6 +7,30 @@
 AI_manager* AI_ado;
 AI_manager::AI_manager()
 {
+
+}
+
+
+AI_manager::~AI_manager()
+{
+	for (int num = 0; num < Rsimin.size(); num++) {
+		if (RAIseizon[num] >= -1) {
+			DeleteGO(Rsimin[num]);
+		}
+
+	}
+	for (int num = 0; num  < Lsimin.size(); num++) {
+		if (LAIseizon[num] >= -1) {
+			DeleteGO(Lsimin[num]);
+		}
+	}
+	RAIseizon.clear();
+	LAIseizon.clear();
+	Rsimin.clear();
+	Lsimin.clear();
+}
+bool AI_manager::Start()
+{
 	AI_ado = this;
 	wchar_t moveFilePath[256];
 	swprintf_s(moveFilePath, L"lever/levalAI%d%d.tks", 0, 1);
@@ -91,6 +115,9 @@ AI_manager::AI_manager()
 	da2.push_back(AIL41);
 	da2.push_back(AIL42);
 	da2.push_back(AIL43);
+	da2.push_back(AIL50);
+	da2.push_back(AIL51);
+	da2.push_back(AIL52);
 	for (int k = 0; k < da2.size(); k++) {
 		Osu* AIL = NewGO<Osu>(0, "Osu");
 		NPC_Number++;//NPCを生成したのでカウントする。
@@ -99,29 +126,6 @@ AI_manager::AI_manager()
 		LAIseizon.push_back(1);
 	}
 	No = 0;
-}
-
-
-AI_manager::~AI_manager()
-{
-	for (int num = 0; num < Rsimin.size(); num++) {
-		if (RAIseizon[num] >= -1) {
-			DeleteGO(Rsimin[num]);
-		}
-
-	}
-	for (int num = 0; num  < Lsimin.size(); num++) {
-		if (LAIseizon[num] >= -1) {
-			DeleteGO(Lsimin[num]);
-		}
-	}
-	RAIseizon.clear();
-	LAIseizon.clear();
-	Rsimin.clear();
-	Lsimin.clear();
-}
-bool AI_manager::Start()
-{
 	return true;
 }
 void AI_manager::Update()

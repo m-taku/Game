@@ -10,7 +10,7 @@ namespace tkEngine{
 	{
 		m_spriteBatch = GraphicsEngine().GetSpriteBatch();
 		m_spriteFont = GraphicsEngine().GetSpriteFont();
-		m_scaleMat.MakeScaling({ GraphicsEngine().GetFrameBufferWidth() / 1280.0f, GraphicsEngine().GetFrameBufferHeight() / 720.0f, 1.0f });
+		m_scaleMat.MakeScaling({ GraphicsEngine().GetFrameBufferWidth() / 1920.0f, GraphicsEngine().GetFrameBufferHeight() / 1080.0f, 1.0f });
 	}
 	CFont::~CFont()
 	{

@@ -10,6 +10,7 @@
 #include"BGM.h"
 #include"Player.h"
 
+//#define USE_LOW_SPEC_SETTINGS
 
 int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, int nCmdShow)
 {
@@ -52,6 +53,8 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 	initParam.screenHeight = 1080;
 	initParam.frameBufferWidth = 1920;
 	initParam.frameBufferHeight = 1080;
+	initParam.screenWidth2D = 1920;
+	initParam.screenHeight2D = 1080;
 	//âeÇÃê›íËÅB
 	initParam.graphicsConfing.shadowRenderConfig.isEnable = true;
 	initParam.graphicsConfing.shadowRenderConfig.shadowMapWidth = 2048;
@@ -66,7 +69,7 @@ int WINAPI wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 	//Bloom
 	initParam.graphicsConfing.bloomConfig.isEnable = true;
 	//tonemap
-	initParam.graphicsConfing.tonemapConfig.isEnable = true;
+	initParam.graphicsConfing.tonemapConfig.isEnable = false;
 #endif
 	GraphicsEngine().GetShadowMap().SetFar(1000.0f);
 	GraphicsEngine().GetShadowMap().SetNear(50.0f);

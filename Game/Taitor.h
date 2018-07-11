@@ -9,6 +9,7 @@ public:
 	bool Start();
 	float siya();
 	void PostRender(CRenderContext& rc) override;
+	void kaiten();
 	void Update();
 private:
 	enum kaiten {
@@ -17,7 +18,13 @@ private:
 		suii,
 		tyoku
 	};
+	enum kakudo
+	{
+		kaiton,
+		idor
+	};
 	enum kaiten furag;
+	enum kakudo kakudu;
 	Fade * fase;
 	CSprite n_sprite;				//スプライト（中身）。
 	CShaderResourceView n_texture;	//テクスチャ。*/
@@ -46,7 +53,9 @@ private:
 	int hyouji = 11;
 	int taim = 11;
 	int Target = 3;
-
+	CVector3 camera_to_player_vector = CVector3::Zero;
+	float camera_to_player_dist = 0.0f;
+	float cm_near = 2000.0f;
 	CVector3 kakakakak = target - nowkmtarget;
 };
 
