@@ -33,7 +33,7 @@ bool Geizi::Start()
 	//n_sprite.Init(n_texture, 400, 100);
 	//n_sprite.Update(n_position, CQuaternion::Identity, { 1.0f,1.0f,1.0f }, { 0.0f,1.0f });
 
-	HP_texture.CreateFromDDSTextureFromFile(L"sprite/dame_ji.dds");
+	HP_texture.CreateFromDDSTextureFromFile(L"sprite/damage.dds");
 	hm_sprite.Init(HP_texture, 1280,720);
 	hm_sprite.Update(CVector3::Zero, CQuaternion::Identity, { 1.0f,1.0f,1.0f }, { 0.5f,0.5f });
 	hy_texture.CreateFromDDSTextureFromFile(L"sprite/syoujun.dds");
@@ -64,7 +64,7 @@ void Geizi::Update()
 		}
 		break;
 	case Down:
-		if (HP_saiz <=HP+0.1)
+		if (HP_saiz <=HP+0.2)
 		{
 			HP_saiz += 0.01;
 			if (HP_saiz >= HP + 0.1)
@@ -75,7 +75,6 @@ void Geizi::Update()
 		}
 		break;
 	case idor:
-
 		break;
 	default:
 		break;

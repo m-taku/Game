@@ -13,8 +13,9 @@ public:
 	void satHP(float a)
 	{
 		HP -= a;
-		HP_saiz = HP+0.5;
-		Dame = UP;
+		HP_saiz = HP+0.2;
+		Dame = UP; 
+		time = 30;
 	}
 	void Satpoint(float a)
 	{
@@ -42,7 +43,7 @@ public:
 		return keifou_saiz;//これが0.95以上になると敵兵が出てくる。
 	}
 private:
-
+	int time = 0;
 	CSprite hy_sprite;				//スプライト(照準)。
 	CShaderResourceView hy_texture;	//テクスチャ。
 	enum Damage

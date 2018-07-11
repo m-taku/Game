@@ -146,8 +146,8 @@ void Player::Update()
 			}
 		}
 
-		float lStick_x;
-		float lStick_y;
+		//float lStick_x;
+		//float lStick_y;
 		if (A_button_Flag == false) //非スニークモード時
 		{
 			//左スティックの入力量を受け取る。
