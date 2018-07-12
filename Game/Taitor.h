@@ -59,5 +59,6 @@ private:
 	float camera_to_player_dist = 0.0f;
 	float cm_near = 2000.0f;
 	CVector3 kakakakak = target - nowkmtarget;
+	
 };
 

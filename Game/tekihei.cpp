@@ -87,7 +87,7 @@ bool tekihei::Start()
 	EnemyPath[49] = { -5533.0f,0.0f,4919.0f };
 	EnemyPath[50] = { -4288.0f,0.0f,5380.0f };
 	EnemyPath[51] = { -2680.0f,0.0f,4898.0f };
-	EnemyPath[52] = { -2586.0f,0.0f,5614.0f };
+	EnemyPath[52] = { -2586.0f,0.0f,6014.0f };
 	EnemyPath[53] = { -2585.0f,0.0f,7146.0f };
 	EnemyPath[54] = { -4272.0f,0.0f,7144.0f };
 	EnemyPath[55] = { -5467.0f,0.0f,6888.0f };
@@ -98,6 +98,9 @@ bool tekihei::Start()
 	EnemyPath[60] = { -1027.0f,0.0f,4814.0f };
 	EnemyPath[61] = { -1076.0f,0.0f,4870.0f };
 	EnemyPath[62] = { -2055.0f,0.0f,4822.0f };
+	EnemyPath[63] = { -5535.0f,0.0f,6002.0f };
+	EnemyPath[64] = { -5223.0f,0.0f,3950.0f };
+	EnemyPath[65] = { -4423.0f,0.0f,4024.0f };
 	
 
 	for (int i = 0;i < teki;i++)//“G•º‚Ì”‚¾‚¯‰Šú‰»‚·‚éB
@@ -188,6 +191,7 @@ float tekihei::length(CVector3 vector)
 }
 void tekihei::Update()
 {
+	
 	for (int i = 0;i < teki;i++)//“G•º‚Ì”‚¾‚¯ŒJ‚è•Ô‚·B
 	{
 
@@ -438,7 +442,10 @@ void tekihei::Update()
 
 			}//find_f‚±‚±‚Ü‚Å
 
-
+			if (gaizi->GatHPfurag() == 1)
+			{
+				find_f[i] = 0;
+			}
 			/////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 

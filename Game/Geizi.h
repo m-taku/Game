@@ -13,6 +13,9 @@ public:
 	void satHP(float a)
 	{
 		HP -= a;
+		HP_saiz = HP+0.2;
+		Dame = UP; 
+		time = 30;
 	}
 	void Satpoint(float a)
 	{
@@ -40,28 +43,23 @@ public:
 		return keifou_saiz;//これが0.95以上になると敵兵が出てくる。
 	}
 private:
-	CSprite m_sprite;				//スプライト(枠)。
-	CShaderResourceView m_texture;	//テクスチャ。
-	CVector3 m_position = CVector3::Zero;
-	CSprite hm_sprite;				//スプライトh(枠)。
-	CVector3 hm_position = CVector3::Zero;
-	CSprite n_sprite;				//スプライト（中身）。
-	CShaderResourceView n_texture;	//テクスチャ。*/
-	CVector3 n_position = CVector3::Zero;
-	CSprite hn_sprite;				//スプライトh（中身）。
-	CVector3 hn_position = CVector3::Zero;
-	CSprite hy_sprite;				//スプライト(枠)。
+	int time = 0;
+	CSprite hy_sprite;				//スプライト(照準)。
 	CShaderResourceView hy_texture;	//テクスチャ。
-
+	enum Damage
+	{
+		UP,
+		Down,
+		idor
+	};
+	Damage Dame;
 	CShaderResourceView HP_texture;	//テクスチャ。
-
-	CShaderResourceView HPframe_texture;	//テクスチャ。
+	CSprite hm_sprite;				//スプライトh(枠)。
 	tekihei* haus;
 	float point = 0.0f;
 	float HP = 0.95f;
 	float  furag = 0.0f; //特殊部隊が出たら1になる。
 	int HPfurag = 0;
 	float keifou_saiz = 0.0f, HP_saiz = 0.95f;
-	float kasoku = 0;
 };
 

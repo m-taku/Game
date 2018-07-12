@@ -520,6 +520,12 @@
     <ImageContentTask Include="Assets\sprite\syoujun.png" />
     <ImageContentTask Include="Assets\sprite\waku.png" />
     <ImageContentTask Include="Assets\sprite\yaji.png" />
+    <ImageContentTask Include="Assets\sprite\dame_ji.png" />
+    <ImageContentTask Include="Assets\sprite\HP.png" />
+    <ImageContentTask Include="Assets\sprite\HP_waku.png" />
+    <ImageContentTask Include="Assets\sprite\damage.png">
+      <Filter>Assets\sprite</Filter>
+    </ImageContentTask>
   </ItemGroup>
   <ItemGroup>
     <Media Include="Assets\sound\n80.wav">
