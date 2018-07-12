@@ -69,7 +69,14 @@ public:
 	{
 		itemcounter++;
 	}
-
+	void set_camera_f()
+	{
+		camera_f = true;
+	}
+	void set_bullet_sum()
+	{
+		bullet_sum += 5;
+	}
 	void Play_Respiration(CVector3 m_moveDecision);//息遣いの音を再生させるかを判断する。
 	void Play_Attack();//攻撃攻撃した時の効果音を再生する。
 	bool CVector_same_Decision(CVector3 a, CVector3 b);//二つのベクトルが同一なのかを調べる。
@@ -147,16 +154,17 @@ private:
 
 	int itemcounter = 0;
 
-
-
+	
+	bool camera_f = false;
 
 
 	////////////////////////////////////////////////////
 	std::wstring inputwstr = L"ABCDEFG";
 	CFont m_font;
-	wchar_t* test_font[255];
-	CVector2 font_pos = { 0.0f,0.0f };
+	wchar_t test_font[255];
+	CVector2 font_pos = { -600.0f,300.0f };
 	CVector2 fomt_pivot = { 0.0f,0.0f };
+	int bullet_sum = 5;
+	
 	
 };
-

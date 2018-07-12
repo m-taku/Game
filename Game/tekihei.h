@@ -4,7 +4,7 @@
 #include "tkEngine/graphics/effect/tkEffect.h"
 #include "tkEngine/character/tkCharacterController.h"
 #define teki 45
-#define path 63
+#define path 66
 class tekihei : public IGameObject
 {
 public:
@@ -93,4 +93,5 @@ public:
 	}
 private:
 	std::function<void()> m_onDestroyCb;		//死亡したときに呼ばれるコールバック。
+	bool deth_player = false;
 };

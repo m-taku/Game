@@ -24,8 +24,8 @@ Player::~Player()
 }
 bool Player::Start()
 {
+	swprintf_s(test_font,L"%d", bullet_sum);
 	////////////////////////////////////////////////////////
-	test_font;
 	///////////////////////////////////////////////////////
 
 
@@ -177,7 +177,7 @@ void Player::Update()
 			//’n–Ê‚É‚Â‚¢‚½B
 			m_moveSpeed.y = 0.0f;
 		}
-		if (Pad(0).IsTrigger(enButtonRB1)&&taieki_F==0&&itemcounter>=1)
+		if (Pad(0).IsTrigger(enButtonRB1)&&taieki_F==0&&bullet_sum>0)
 		{
 			
 			Tp[taieki_sum]=NewGO<taieki>(0, "taieki");
@@ -187,6 +187,8 @@ void Player::Update()
 			{
 				taieki_sum = 0;
 			}
+			bullet_sum--;
+			swprintf_s(test_font, L"%d", bullet_sum);
 		}
 		if (taieki_F == 1)
 		{
@@ -403,7 +405,11 @@ void Player::Render(CRenderContext& rc)
 }
 void Player::PostRender(CRenderContext& renderContext)
 {
-	m_font.Begin(renderContext);
-	m_font.Draw(L"‚ ‚¢‚¤‚¦‚¨", font_pos, {255.0f,255.0f,255.0f,1.0f}, 0.0f, 1.0f, fomt_pivot);
-	m_font.End(renderContext);
+	if (camera_f == true)
+	{
+		m_font.Begin(renderContext);
+		m_font.Draw(test_font, font_pos, { 0.0f,255.0f,0.0f,1.0f }, 0.0f, 4.0f, fomt_pivot);
+		m_font.End(renderContext);
+	}
+	
 }
