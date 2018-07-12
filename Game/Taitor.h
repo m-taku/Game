@@ -1,6 +1,7 @@
 #pragma once
 #include"Fade.h"
 #include"Player.h"
+#include"BGM.h"
 class Taitor : public IGameObject
 {
 public:
@@ -26,6 +27,7 @@ private:
 	enum kaiten furag;
 	enum kakudo kakudu;
 	Fade * fase;
+	BGM* bgm;
 	CSprite n_sprite;				//スプライト（中身）。
 	CShaderResourceView n_texture;	//テクスチャ。*/
 	CQuaternion Quaternion = CQuaternion::Identity; //回転

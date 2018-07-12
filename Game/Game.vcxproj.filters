@@ -528,5 +528,11 @@
     <Media Include="Assets\sound\swing2.wav">
       <Filter>Assets\sound</Filter>
     </Media>
+    <Media Include="Assets\sound\StartbuttonSE.wav">
+      <Filter>Assets\sound</Filter>
+    </Media>
+    <Media Include="Assets\sound\Zombie_Title_Theme.wav">
+      <Filter>Assets\sound</Filter>
+    </Media>
   </ItemGroup>
 </Project>

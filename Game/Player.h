@@ -70,6 +70,17 @@ public:
 		itemcounter++;
 	}
 
+	//左スティックのX軸の入力量を返す。
+	float GetlStick_x()
+	{
+		return lStick_x;
+	}
+	//左スティックのY軸の入力量を返す。
+	float GetlStick_y()
+	{
+		return lStick_y;
+	}
+
 	void Play_Respiration(CVector3 m_moveDecision);//息遣いの音を再生させるかを判断する。
 	void Play_Attack();//攻撃攻撃した時の効果音を再生する。
 	bool CVector_same_Decision(CVector3 a, CVector3 b);//二つのベクトルが同一なのかを調べる。
@@ -132,9 +143,11 @@ private:
 	CMatrix bonerot_M;
 	bool game = false;
 	//////////T.M////////////////////////////
-	float Log_lStick_x = 0.0f;
 
-	float Log_lStick_y = 0.0f;
+	//左スティックの入力量を受け取る。
+	float lStick_x;
+	float lStick_y;
+
 	float muteki_count = 0;//無敵時間のカウント。
 	bool  muteki_Flag = false;
 	bool collision_f = false;
