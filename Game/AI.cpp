@@ -136,7 +136,7 @@ void AI::NPCNormal_Search()//NPCの警戒処理。
 		m_speed = 4.0f;
 		nearestpas();
 		Fardist_path(pl->Getposition());
-		pa = Escape;
+        pa = Escape;       
 	}
 	if (hann >= 2) {
 		kannkaku = true;
@@ -347,7 +347,7 @@ void AI::NPC_Search_Zonbi() //全てのゾンビと距離でダメージ判定をする。
 								keikai_f = true;
 								lam = ai;
 								nearestpas();
-								pa = Escape_NPC;
+								pa = Escape_NPC;                     
 								m_speed = 3.0f;
 								retu_position = m_position;
 								break;
@@ -760,7 +760,7 @@ void AI::Fardist_path(CVector3 m_position)//視野付きリンク先パス検索
 		for (int Linknum = 0; Linknum < game->pasu[Leftfrag].GetresutoSaiz(mokuhyouNo); Linknum++) {
 			CVector3 ma = game->pasu[Leftfrag].Getresuto(mokuhyouNo)->m_position[Linknum] - m_position;
 			if (minkore.Length() < ma.Length()) {
-				if (90 <= VectorAngleDeg(ma, m_position - this->m_position)) {
+				if (45 <= VectorAngleDeg(ma, m_position - this->m_position)) {
 					minkore = ma;
 					mokuhyou = game->pasu[Leftfrag].Getresuto(mokuhyouNo)->No[Linknum];
 				}

@@ -13,6 +13,7 @@ Taitor::~Taitor()
 }
 bool Taitor::Start()
 {
+	kakudu = kaiton;
 	n_texture.CreateFromDDSTextureFromFile(L"sprite/Game_Title2.dds");
 	n_sprite.Init(n_texture, 1280, 600);
 	n_sprite.Update(n_position, CQuaternion::Identity, { 1.0f,1.0f,1.0f });
@@ -24,7 +25,6 @@ bool Taitor::Start()
 	BasisVector = { 0.0f,5000.0f,5000.0f };
 	fase->StartFadeIn();
 	furag = steat;
-	fase->StartFadeIn();
 	return true;
 }
 void Taitor::Update()
