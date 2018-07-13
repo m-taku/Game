@@ -17,6 +17,7 @@ bool camera::Start()
 	
 	//プレイヤーのインスタンスを探す。
 	m_player = FindGO<Player>("Player");
+	m_player->set_camera_f();
 	return true;
 }
 void camera::Update()

@@ -20,12 +20,12 @@ Player::Player()
 Player::~Player()
 {
 	DeleteGO(FindGO<taieki>("taieki"));
-	
+	m_Respiration->Stop();//呼吸音を止める。
 }
 bool Player::Start()
 {
+	swprintf_s(test_font,L"%d", bullet_sum);
 	////////////////////////////////////////////////////////
-	test_font;
 	///////////////////////////////////////////////////////
 
 
@@ -126,9 +126,7 @@ void Player::Update()
 		m_moveSpeed.z = 0.0f;
 		m_moveSpeed.x = 0.0f;
 
-		//左スティックの入力量を受け取る。
-		float lStick_x = Pad(0).GetLStickXF()*150.0f;
-		float lStick_y = Pad(0).GetLStickYF()*300.0f;
+		
 
 
 		if (Pad(0).IsTrigger(enButtonA)) //Aボタンが押されたら
@@ -146,6 +144,7 @@ void Player::Update()
 			}
 		}
 
+
 		//float lStick_x;
 		//float lStick_y;
 		if (A_button_Flag == false) //非スニークモード時
@@ -157,8 +156,8 @@ void Player::Update()
 		else //スニークモード時
 		{
 			//左スティックの入力量を受け取る。
-			lStick_x = Pad(0).GetLStickXF()*250.0f;
-			lStick_y = Pad(0).GetLStickYF()*300.0f;
+			lStick_x = Pad(0).GetLStickXF()*200.0f;
+			lStick_y = Pad(0).GetLStickYF()*240.0f;
 		}
 		
 		//右スティックの入力量を受け取る。
@@ -189,7 +188,7 @@ void Player::Update()
 			//地面についた。
 			m_moveSpeed.y = 0.0f;
 		}
-		if (Pad(0).IsTrigger(enButtonRB1)&&taieki_F==0&&itemcounter>=1)
+		if (Pad(0).IsTrigger(enButtonRB1)&&taieki_F==0&&bullet_sum>0)
 		{
 			
 			Tp[taieki_sum]=NewGO<taieki>(0, "taieki");
@@ -199,6 +198,8 @@ void Player::Update()
 			{
 				taieki_sum = 0;
 			}
+			bullet_sum--;
+			swprintf_s(test_font, L"%d", bullet_sum);
 		}
 		if (taieki_F == 1)
 		{
@@ -408,7 +409,11 @@ void Player::Render(CRenderContext& rc)
 }
 void Player::PostRender(CRenderContext& renderContext)
 {
-	m_font.Begin(renderContext);
-	//m_font.Draw(L"あいうえお", font_pos, {255.0f,255.0f,255.0f,1.0f}, 0.0f, 1.0f, fomt_pivot);
-	m_font.End(renderContext);
+
+	if (camera_f == true)
+	{
+		m_font.Begin(renderContext);
+		m_font.Draw(test_font, font_pos, { 0.0f,255.0f,0.0f,1.0f }, 0.0f, 4.0f, fomt_pivot);
+		m_font.End(renderContext);
+	}
 }

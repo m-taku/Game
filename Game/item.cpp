@@ -31,7 +31,8 @@ void item::Update()
 {
 	if (item_to_player_dist(Pp->GetPosition(), itempos)<50.0f)
 	{
-		Pp->set_itemcounter();
+		
+		Pp->set_bullet_sum();
 		DeleteGO(this);
 	}
 	

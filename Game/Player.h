@@ -71,6 +71,28 @@ public:
 		itemcounter++;
 	}
 
+
+	//左スティックのX軸の入力量を返す。
+	float GetlStick_x()
+	{
+		return lStick_x;
+	}
+	//左スティックのY軸の入力量を返す。
+	float GetlStick_y()
+	{
+		return lStick_y;
+	}
+
+
+	void set_camera_f()
+	{
+		camera_f = true;
+	}
+	void set_bullet_sum()
+	{
+		bullet_sum += 5;
+	}
+
 	void Play_Respiration(CVector3 m_moveDecision);//息遣いの音を再生させるかを判断する。
 	void Play_Attack();//攻撃攻撃した時の効果音を再生する。
 	bool CVector_same_Decision(CVector3 a, CVector3 b);//二つのベクトルが同一なのかを調べる。
@@ -133,9 +155,11 @@ private:
 	CMatrix bonerot_M;
 	bool game = false;
 	//////////T.M////////////////////////////
-	float Log_lStick_x = 0.0f;
 
-	float Log_lStick_y = 0.0f;
+	//左スティックの入力量を受け取る。
+	float lStick_x;
+	float lStick_y;
+
 	float muteki_count = 0;//無敵時間のカウント。
 	bool  muteki_Flag = false;
 	bool collision_f = false;
@@ -148,16 +172,17 @@ private:
 
 	int itemcounter = 0;
 
-
-
+	
+	bool camera_f = false;
 
 
 	////////////////////////////////////////////////////
 	std::wstring inputwstr = L"ABCDEFG";
 	CFont m_font;
-	wchar_t* test_font[255];
-	CVector2 font_pos = { 0.0f,0.0f };
+	wchar_t test_font[255];
+	CVector2 font_pos = { -600.0f,300.0f };
 	CVector2 fomt_pivot = { 0.0f,0.0f };
+	int bullet_sum = 5;
+	
 	
 };
-
