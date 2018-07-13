@@ -19,6 +19,7 @@ bool Taitor::Start()
 	n_sprite.Update(n_position, CQuaternion::Identity, { 1.0f,1.0f,1.0f });
 	fase = FindGO<Fade>("Fade");
 	player= FindGO<Player>("Player");
+	bgm = FindGO<BGM>("BGM");
 	//y_texture.CreateFromDDSTextureFromFile(L"sprite/yaji.dds");
 	//y_sprite.Init(y_texture, 100, 50);
 	//y_sprite.Update(n_position, Quaternion, { 1.0f,1.0f,1.0f });
@@ -77,6 +78,7 @@ void Taitor::Update()
 		Crot.Multiply(BasisVector);
 		if (Pad(0).IsTrigger(enButtonA)) {
 			//	fase->StartFadeOut();
+			bgm->Set_Startbutton_push();
 			furag = push;
 		}
 		break;
