@@ -9,6 +9,10 @@ BGM::BGM()
 
 BGM::~BGM()
 {
+	m_bdm_Title->Stop();
+	m_bdm_Sneak1->Stop();
+	m_bdm_Sneak2->Stop();
+	ZombieNPC_Number = 0;
 }
 
 bool BGM::Start()

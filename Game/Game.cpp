@@ -70,10 +70,10 @@ void Game::OnDestroy()
 	//再起動（タイトル表示）
 	NewGO<Taitor>(0, "Taitor");
 	stage->Car_create();
-	NewGO<BGM>(0, "BGM");
 	NewGO<Player>(0, "Player");
 	NewGO<AI_manager>(0, "AI_manager");
 	//enemy = NewGO<tekihei>(0, "enemy");
+	NewGO<BGM>(0, "BGM");
 }
 bool Game::Start()
 {

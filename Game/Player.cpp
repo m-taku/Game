@@ -20,7 +20,7 @@ Player::Player()
 Player::~Player()
 {
 	DeleteGO(FindGO<taieki>("taieki"));
-	
+	m_Respiration->Stop();//ŒÄ‹z‰¹‚ğ~‚ß‚éB
 }
 bool Player::Start()
 {
