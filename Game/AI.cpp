@@ -148,8 +148,9 @@ void AI::NPCResistance_NPC()//NPCƒ]ƒ“ƒr‚Ö‚Ì’ïR‚ÉŠÖ‚·‚éˆ—BƒI[ƒo[ƒ‰ƒCƒh‚³‚¹‚
 	if (sinsoku < 1.0) {
 		m_skinModel.Satburend(sinsoku);
 		sinsoku += 0.01;
-	}
-	else {
+	}else
+	{
+
 		pa = Damage;
 	}
 }
@@ -525,8 +526,8 @@ void AI::Update()
 		case Normal:
 			//NPC‚Ì“®‚«‚ğ‘‚­B
 			NPCNormal_Search();
-			if (kannkaku != true) {
-			//	m_speed = 1.0;
+			if (kannkaku != true)
+			{
 				NPCNormal();
 			}
 			break;

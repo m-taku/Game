@@ -409,6 +409,6 @@ void Player::Render(CRenderContext& rc)
 void Player::PostRender(CRenderContext& renderContext)
 {
 	m_font.Begin(renderContext);
-	m_font.Draw(L"‚ ‚¢‚¤‚¦‚¨", font_pos, {255.0f,255.0f,255.0f,1.0f}, 0.0f, 1.0f, fomt_pivot);
+	//m_font.Draw(L"‚ ‚¢‚¤‚¦‚¨", font_pos, {255.0f,255.0f,255.0f,1.0f}, 0.0f, 1.0f, fomt_pivot);
 	m_font.End(renderContext);
 }

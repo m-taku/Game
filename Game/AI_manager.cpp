@@ -126,6 +126,7 @@ bool AI_manager::Start()
 		LAIseizon.push_back(1);
 	}
 	No = 0;
+
 	return true;
 }
 void AI_manager::Update()

@@ -22,10 +22,6 @@ public:
 	{
 		game = ka;
 	}
-	void GetGaizi(Geizi*ka)
-	{
-		Gaizi = ka;
-	}
 	void NPCNormal();							//この時はまだ知らなかった…この街にゾンビがいるなんて…（市民の通常行動の処理）
 	void NPCNormal_Search();				    //おや？あれは？？？？？（市民の視野処理）
 	void NPCEscape_NPC();						//に～げるんだよ～～～（市民がゾンビNPCから逃げるときの処理。）
@@ -155,7 +151,6 @@ protected:
 	float m_speed;
 	bool ziko_frag = false;
 	car* Car;
-	Geizi* Gaizi;
 	Player* pl;
 	CVector3 previous_position=CVector3::Zero;
 	int taime = 0;

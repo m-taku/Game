@@ -40,6 +40,7 @@ public:
 	void falseGame()
 	{
 		game = false;
+		m_moveSpeed = CVector3::Zero;
 
 	}
 	CVector3& GetFoeward()

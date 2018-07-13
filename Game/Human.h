@@ -1,4 +1,5 @@
 #pragma once
+#include"Geizi.h"
 class tekihei;
 class Human : public IGameObject
 {
@@ -23,12 +24,17 @@ public:
 	{
 		return Zonbe;
 	}	
+	void GetGaizi(Geizi*ka)
+	{
+		Gaizi = ka;
+	}
 	void Gettekihei(tekihei* pointa)
 	{
 		tekip = pointa;
 	}
 protected:
 	tekihei* tekip;
+	Geizi* Gaizi;
 private:	
 	CVector3 H_position = CVector3::Zero;		//ç¿ïWÅB
 	CVector3 kakudai;

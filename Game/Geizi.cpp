@@ -21,7 +21,6 @@ bool Geizi::Start()
 		AI* ka = (AI*)*human;
 		ka->GetGaizi(this);
 	}
-
 	//m_texture.CreateFromDDSTextureFromFile(L"sprite/waku.dds");
 	//m_sprite.Init(m_texture, 400, 100);
 	//m_position = {-600.0,300.0,0.0};
@@ -55,7 +54,7 @@ void Geizi::Update()
 	case UP:
 		if (HP_saiz >= HP)
 		{
-			HP_saiz -=0.01;
+			HP_saiz -=0.2*GameTime().GetFrameDeltaTime();
 			if (HP_saiz <= HP)
 			{
 				HP_saiz = HP;
@@ -66,7 +65,7 @@ void Geizi::Update()
 	case Down:
 		if (HP_saiz <=HP+0.2)
 		{
-			HP_saiz += 0.01;
+			HP_saiz += 0.2*GameTime().GetFrameDeltaTime();
 			if (HP_saiz >= HP + 0.1)
 			{
 				HP_saiz = HP+0.1;
