@@ -73,7 +73,7 @@ void Game::OnDestroy()
 	NewGO<Player>(0, "Player");
 	NewGO<AI_manager>(0, "AI_manager");
 	//enemy = NewGO<tekihei>(0, "enemy");
-	NewGO<BGM>(0, "BGM");
+	NewGO<BGM>(0, "BGM");//àÍî‘ç≈å„Ç…èëÇ≠Ç±Ç∆!
 }
 bool Game::Start()
 {
@@ -105,7 +105,7 @@ void Game::Update()
 				timer_s = 60.0f;
 			}
 		}
-		swprintf_s(test_font, L"%d:%f", timer_m, timer_s);
+		swprintf_s(test_font, L"%d:%2f", timer_m, timer_s);
 	}
 	
 
