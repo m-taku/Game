@@ -55,6 +55,10 @@ void GameEnd::Update()
 			DeleteGO(this);
 		}
 	}
+	if (Pad(0).IsTrigger(enButtonA)) //Aボタンが押されたら
+	{
+		taim += 300;//ボタン入力による強制終了
+	}
 }
 
 void GameEnd::PostRender(CRenderContext& rc)
