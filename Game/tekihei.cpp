@@ -173,7 +173,7 @@ bool tekihei::Start()
 
 	}//初期化ループこ↑こ↓まで
 	
-	gaizi->SatFragu();//フラグをセットして、これ以上敵兵のインスタンスが生成されないようにする。
+//	gaizi->SatFragu();//フラグをセットして、これ以上敵兵のインスタンスが生成されないようにする。
 	Pp = FindGO<Player>("Player");//プレイヤーのインスタンスを代入。
 	
 	for (auto& human: Humans)

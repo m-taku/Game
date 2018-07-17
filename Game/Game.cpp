@@ -14,6 +14,7 @@
 #include"carRender.h"
 #include"tekihei.h"
 #include"Geizi.h"
+#include"GameEnd.h"
 #include"item.h"
 #include"car.h"
 #include"BGM.h"
@@ -92,7 +93,17 @@ void Game::Update()
 		if (timer_s <= 0.0f)
 		{
 			timer_m--;
-			timer_s = 60.0f;
+			if (timer_m < 0)
+			{
+				NewGO<GameEnd>(0,"GameEnd");
+				player->false_camera_f();
+				timer_m = 0;
+				timer_s = 0.0f;
+			}
+			else
+			{
+				timer_s = 60.0f;
+			}
 		}
 		swprintf_s(test_font, L"%d:%f", timer_m, timer_s);
 	}

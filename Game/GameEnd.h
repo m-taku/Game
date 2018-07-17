@@ -15,11 +15,12 @@ private:
 	int taim = 0;
 	enum muve
 	{
+		White_fade,
 		UP,
 		slide,
 		idle
 	};
-	muve flag = UP;
+	muve flag = White_fade;
 	CSprite syuuryou;				//スプライト(枠)。
 	CShaderResourceView you;	//テクスチャ。
 	CVector3 m_position;
@@ -28,9 +29,11 @@ private:
 	CVector2 result_pivot = { 0.5f,0.5f };
 	CVector2 score_pos = { 0.0f,-800.0f };
 	CVector2 score_pivot = { 0.5f,0.5f };
-
+	CVector2 subscore_pos = { 0.0f,-800.0f };
+	float toumeiodo=0.0f;
 	wchar_t inputscore[256];
 	wchar_t inputsubscore[256];
+
 
 };
 

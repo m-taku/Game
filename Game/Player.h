@@ -88,6 +88,10 @@ public:
 	{
 		camera_f = true;
 	}
+	void false_camera_f()
+	{
+		camera_f = false;
+	}
 	void set_bullet_sum()
 	{
 

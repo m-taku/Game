@@ -60,6 +60,6 @@ private:
 	float HP = 0.95f;
 	float  furag = 0.0f; //“Áê•”‘à‚ªo‚½‚ç1‚É‚È‚éB
 	int HPfurag = 0;
-	float keifou_saiz = 0.0f, HP_saiz = 0.95f;
+	float keifou_saiz = 0.0f, HP_saiz = 1.0f;
 };
 

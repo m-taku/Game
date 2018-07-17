@@ -46,7 +46,7 @@ void Geizi::Update()
 		HP = 0.0;
 		if (HPfurag <= 0) {
 			HPfurag++;
-			NewGO<GameEnd>(0, "End");
+			//NewGO<GameEnd>(0, "End");
 		}
 	}
 	switch (Dame)

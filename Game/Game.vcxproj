@@ -823,6 +823,7 @@
     <CustomBuild Include="Assets\effect\Texture\magma.png" />
     <CustomBuild Include="Assets\effect\Texture\sdfs.png" />
     <Image Include="Assets\modelData\ao.png" />
+    <ImageContentTask Include="Assets\sprite\White.png" />
     <ImageContentTask Include="Assets\sprite\damage.png" />
     <ImageContentTask Include="Assets\sprite\dame_ji.png" />
     <ImageContentTask Include="Assets\sprite\HP.png" />

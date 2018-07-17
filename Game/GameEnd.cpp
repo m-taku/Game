@@ -15,9 +15,9 @@ GameEnd::GameEnd()
 GameEnd::~GameEnd()
 {
 }
+
 bool GameEnd::Start()
 {
-
 	fade = FindGO<Fade>("Fade");
 	Geizi* hama= FindGO<Geizi>("Geizi");
 	Player* player = FindGO<Player>("Player");
@@ -26,47 +26,64 @@ bool GameEnd::Start()
 		furgu++;
 	}
 	m_position = { 0.0,300.0,0.0 };
-	switch (furgu)
-	{
-	case 0://プレイヤーの勝ち
-		you.CreateFromDDSTextureFromFile(L"sprite/GameClear.dds");//ここに勝利時のリザルト画面を表示
-		syuuryou.Init(you, 110, 100);
-		syuuryou.Update(m_position, CQuaternion::Identity, { 10.0f,10.0f,10.0f });
-		break;
-	case 1://プレイヤーの負け
-		player->falseGame();
-		you.CreateFromDDSTextureFromFile(L"sprite/GameOver.dds");//ここに敗北時のリザルト画面を表示
-		syuuryou.Init(you, 110, 100);
-		syuuryou.Update(m_position, CQuaternion::Identity, { 10.0f,10.0f,10.0f });
-		break;
-	default:
-		break;
-	}
+	//switch (furgu)
+	//{
+	//case 0://プレイヤーの勝ち
+		you.CreateFromDDSTextureFromFile(L"sprite/White.dds");//ここに勝利時のリザルト画面を表示
+		syuuryou.Init(you, 1280, 780);
+		//syuuryou.Update(m_position, CQuaternion::Identity, { 10.0f,10.0f,10.0f });
+	//	break;
+	//case 1://プレイヤーの負け
+	//	player->falseGame();
+	//	you.CreateFromDDSTextureFromFile(L"sprite/GameOver.dds");//ここに敗北時のリザルト画面を表示
+	//	syuuryou.Init(you, 110, 100);
+	//	syuuryou.Update(m_position, CQuaternion::Identity, { 10.0f,10.0f,10.0f });
+	//	break;
+	//default:
+	//	break;
+	//}
 
 	int isa = AI_ado->Get_NPC_Number();
 	int zonbisuu = 0;
+	int hinansuu = 0;
 	for (int i = 0; i<AI_ado->Getsize(); i++)
 	{
-		if (AI_ado->RAIseizon[i] <= 0)
+		if (AI_ado->RAIseizon[i] <= 0&& AI_ado->RAIseizon[i] >= -4)
 		{
 			zonbisuu++;
+		}if (AI_ado->RAIseizon[i] <=-5)
+		{
+			hinansuu++;
 		}
 	}	for (int i = 0; i<AI_ado->Get2size(); i++)
 	{
-		if (AI_ado->LAIseizon[i] <= 0)
+		if (AI_ado->LAIseizon[i] <= 0&& AI_ado->LAIseizon[i] >= -4)
 		{
 			zonbisuu++;
+		}if (AI_ado->LAIseizon[i] <=-5)
+		{
+			hinansuu++;
 		}
-	}float wariai = 0.00f;
+	}
+	float wariai = 0.00f;
 	wariai = ((float)zonbisuu / (float)AI_ado->Get_NPC_Number())*50;
 	wariai +=((float)Tekhei->soma / (float)teki)*50;
 	swprintf_s( inputscore, L"得点：%d点", (int)wariai);
+	swprintf_s(inputsubscore, L"ゾンビ総数：%d体,敵兵撃破数:%d体,逃げられた数:%d人", zonbisuu, Tekhei->soma, hinansuu);
 	return true;
 }
 void GameEnd::Update()
 {
 	switch (flag)
 	{
+	case White_fade:
+		toumeiodo += 00.1;
+		if (toumeiodo >= 1.0f)
+		{
+			toumeiodo = 1.0f;
+			flag = UP;
+		}
+		break;
 	case UP:
 		result_pos.y += 30.0f;
 		if (result_pos.y >= 300.0f)
@@ -80,6 +97,7 @@ void GameEnd::Update()
 		if (score_pos.y >= 100.0f)
 		{
 			score_pos.y = 100.0f;
+			subscore_pos.y = -300.0f;
 			flag = idle;
 		}
 		break;
@@ -109,12 +127,11 @@ void GameEnd::Update()
 
 void GameEnd::PostRender(CRenderContext& rc)
 {
-	//syuuryou.Draw(rc, MainCamera2D().GetViewMatrix(), MainCamera2D().GetProjectionMatrix());
+	syuuryou.SetMulColor({ 1.0f, 1.0f, 1.0f, toumeiodo });
+	syuuryou.Draw(rc, MainCamera2D().GetViewMatrix(), MainCamera2D().GetProjectionMatrix());
 	m_font.Begin(rc);
-
-	m_font.Draw(L"最終結果", result_pos, { 0.0f,0.0f,0.0f,255.0f }, 0.0f, 3.0f, result_pivot);
-
-	m_font.Draw(inputscore, score_pos, { 1.0f,1.0f,1.0f,255.0f }, 0.0f,5.0f, score_pivot);
-
+	m_font.Draw(L"最終結果", result_pos, { 0.0f,0.0f,0.0f,255.0f }, 0.0f, 5.0f, result_pivot);
+	m_font.Draw(inputscore, score_pos, { 0.0f,0.0f,0.0f,255.0f }, 0.0f,5.0f, score_pivot);
+	m_font.Draw(inputsubscore, subscore_pos, { 0.0f,0.0f,0.0f,255.0f }, 0.0f, 1.0f, score_pivot);
 	m_font.End(rc);
 }
