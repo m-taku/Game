@@ -66,9 +66,9 @@ void Geizi::Update()
 		if (HP_saiz <=HP+0.2)
 		{
 			HP_saiz += 0.2*GameTime().GetFrameDeltaTime();
-			if (HP_saiz >= HP + 0.1)
+			if (HP_saiz >= HP + 0.2)
 			{
-				HP_saiz = HP+0.1;
+				HP_saiz = HP+0.2;
 				Dame = UP;
 			}
 		}

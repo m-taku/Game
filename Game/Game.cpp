@@ -25,7 +25,6 @@ Game::Game()
 	player = FindGO<Player>("Player");
 	enemy = NewGO<tekihei>(0, "tekihei");
 	player->trueGame();
-
 //	pasu2.clear();
 	stage = FindGO<Stage>("stage");
 	auto car = stage->getcarv();

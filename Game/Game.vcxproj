@@ -1007,13 +1007,23 @@
   <ItemGroup>
     <CustomBuild Include="Assets\sound\iki.wav">
       <FileType>Document</FileType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Preview|Win32'">
+      </ExcludedFromBuild>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
-    <Media Include="Assets\sound\n80.wav" />
-    <Media Include="Assets\sound\StartbuttonSE.wav" />
-    <Media Include="Assets\sound\swing2.wav" />
-    <Media Include="Assets\sound\Zombie_Title_Theme.wav" />
+    <CustomBuild Include="Assets\sound\n80.wav">
+      <FileType>Document</FileType>
+    </CustomBuild>
+    <CustomBuild Include="Assets\sound\StartbuttonSE.wav">
+      <FileType>Document</FileType>
+    </CustomBuild>
+    <CustomBuild Include="Assets\sound\swing2.wav">
+      <FileType>Document</FileType>
+    </CustomBuild>
+    <CustomBuild Include="Assets\sound\Zombie_Title_Theme.wav">
+      <FileType>Document</FileType>
+    </CustomBuild>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

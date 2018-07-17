@@ -602,12 +602,9 @@ void tekihei::Update()
 			m_charaCon[i].RemoveRigidBoby();//i”Ô–Ú‚Ì“G•º‚Ì„‘Ì‚ð„‘Ì‚ÌƒŠƒXƒg‚©‚çíœ‚·‚éB
 			clearcount++;
 		}
-		if (clearcount >= teki)
-		{
-			soma = clearcount;
-		}
 		if (i == teki - 1)
 		{
+			soma = clearcount;
 			clearcount = 0;
 		}
 		if (tekiheiflag[i]==0)
