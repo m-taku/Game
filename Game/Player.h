@@ -89,7 +89,13 @@ public:
 	}
 	void set_bullet_sum()
 	{
+
 		bullet_sum += 5;
+		swprintf_s(test_font, L"%d", bullet_sum);
+	}
+	bool getcamera_f()
+	{
+		return camera_f;
 	}
 
 	void Play_Respiration(CVector3 m_moveDecision);//ëßå≠Ç¢ÇÃâπÇçƒê∂Ç≥ÇπÇÈÇ©ÇîªífÇ∑ÇÈÅB
@@ -173,13 +179,11 @@ private:
 
 	
 	bool camera_f = false;
-
-
 	////////////////////////////////////////////////////
 	std::wstring inputwstr = L"ABCDEFG";
 	CFont m_font;
 	wchar_t test_font[255];
-	CVector2 font_pos = { -600.0f,300.0f };
+	CVector2 font_pos = { 700.0f,400.0f };
 	CVector2 fomt_pivot = { 0.0f,0.0f };
 	int bullet_sum = 5;
 	

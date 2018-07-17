@@ -7,6 +7,8 @@
 #include"camera.h"
 #include"item.h"
 #include "tkEngine/graphics/effect/tkEffect.h"
+#include "tkEngine/graphics/font/tkFont.h"
+#include<codecvt>
 class Fade;
 class AI;
 class car;
@@ -20,6 +22,7 @@ public:
 	void Update();
 	void Render(CRenderContext& rc);
 	void OnDestroy();
+	void PostRender(CRenderContext& renderContext);
 	prefab::CSkinModelRender* m_skinModelRender = nullptr;	//スキンモデルレンダラー。
 	CAnimationClip m_animClip[1];							//アニメーションクリップ。
 	CAnimation m_animation;
@@ -133,4 +136,11 @@ private:
 	//{ 18, 11, 7, 8, 10, 19, 30, 39, 41, 42, 43, 44, 36, 33, 25, 26 }
 	float g = 0.0f, f = 0.0;
 	int i = 0;
+	//タイマー
+	CFont m_font;
+	wchar_t test_font[255];
+	CVector2 font_pos = { -700.0f,400.0f };
+	CVector2 fomt_pivot = { 0.0f,0.0f };
+	float timer_s = 60.0f;
+	int timer_m = 3;
 };

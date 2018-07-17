@@ -33,6 +33,7 @@ void item::Update()
 	{
 		
 		Pp->set_bullet_sum();
+
 		DeleteGO(this);
 	}
 	
