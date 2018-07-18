@@ -105,7 +105,7 @@ void Game::Update()
 				timer_s = 60.0f;
 			}
 		}
-		swprintf_s(test_font, L"%d:%2f", timer_m, timer_s);
+		swprintf_s(test_font, L"%d:%.2f", timer_m, timer_s);
 	}
 	
 

@@ -1,5 +1,6 @@
 #pragma once
 class tekihei;
+class Player;
 class Geizi : public IGameObject
 {
 public:
@@ -52,6 +53,7 @@ private:
 		Down,
 		idor
 	};
+	Player* player;
 	Damage Dame;
 	CShaderResourceView HP_texture;	//テクスチャ。
 	CSprite hm_sprite;				//スプライトh(枠)。

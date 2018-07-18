@@ -31,7 +31,10 @@ tekihei::~tekihei()
 
 bool tekihei::Start()
 {
+	kikenn_texture.CreateFromDDSTextureFromFile(L"sprite/kikenn.dds");
+	kikenn_sprite.Init(kikenn_texture, 300, 150);
 	gaizi = FindGO<Geizi>("Geizi");
+	kikenn_sprite.Update(CVector3::Zero, CQuaternion::Identity, { 1.0f,1.0f,1.0f }, { 0.5,0.5f });
 	/*animclip[0].Load(L"animData/tekiidle.tka");
 	animclip[0].SetLoopFlag(true);*/
 	//パスの初期化
@@ -191,12 +194,12 @@ float tekihei::length(CVector3 vector)
 }
 void tekihei::Update()
 {
-	
-	for (int i = 0;i < teki;i++)//敵兵の数だけ繰り返す。
+
+	for (int i = 0; i < teki; i++)//敵兵の数だけ繰り返す。
 	{
 
 		//tekianimation[i].Play(0);
-		
+
 		if (tekiheiflag[i] == 1)//i番目の敵兵のtekiheiflagが1(i番目の敵兵のHPがまだある)のときのループ
 		{
 
@@ -585,14 +588,14 @@ void tekihei::Update()
 
 				}
 
-				
+
 				tekipos[i] = m_charaCon[i].Execute(GameTime().GetFrameDeltaTime(), tekispeed[i]);
 				tekiskinModel[i].Update(tekipos[i], tekirot[i], { 1.0f,1.0f,1.0f });
 			}
 			if (tekiHP[i] <= 0.0f)//i番目の敵兵のHPが0以下になったら
 			{
 				tekiheiflag[i] = 0;
-				
+
 			}
 		}
 		//i番目の敵兵のHPがまだあるときのループはここまで
@@ -607,20 +610,20 @@ void tekihei::Update()
 			soma = clearcount;
 			clearcount = 0;
 		}
-		if (tekiheiflag[i]==0)
+		if (tekiheiflag[i] == 0)
 		{
 			//
 			if (bom_f[i] == false)
 			{
 				bomEF[i] = NewGO<prefab::CEffect>(0);//エフェクトの生成。
 				bomEF[i]->Play(L"effect/aura.efk");
-				bomEF[i]->SetPosition({ tekipos[i].x,tekipos[i].y+70.0f,tekipos[i].z });
-				bomEF[i]->SetScale( Scale[i] );
+				bomEF[i]->SetPosition({ tekipos[i].x,tekipos[i].y + 70.0f,tekipos[i].z });
+				bomEF[i]->SetScale(Scale[i]);
 				bom_f[i] = true;
 			}
 			//
 			//
-			
+
 			if (bom_f[i] == true)
 			{
 				Scale[i].x -= 1.0f;
@@ -629,7 +632,7 @@ void tekihei::Update()
 
 				bomEF[i]->SetScale(Scale[i]);
 			}
-			if (bom_f[i]==true&&Scale[i].x <= 1.0f)
+			if (bom_f[i] == true && Scale[i].x <= 1.0f)
 			{
 				bomEF[i]->Release();
 				bom_f[i] = false;
@@ -647,8 +650,91 @@ void tekihei::Update()
 		NewGO<GameEnd>(0, "End");
 		DeleteGO(this);
 	}
+	Enemy_Discovery();
 }
+void tekihei::Enemy_Discovery()
+{
 
+	int DiscoveryNo = -1;
+	float MinLength = FLT_MAX;			//距離が近いエネミー発見用
+	CVector3 nearvec = CVector3::Zero;
+	CVector3 Forward = CVector3::Zero;
+
+	Forward = Pp->Getboneforward();
+	//playerの右方向を求める
+	CVector3 playerCross = Forward;
+	for (int i = 0; i <teki; i++) {
+		//敵兵のpositionを代入
+		CVector4 posInScreen = tekipos[i];
+		//カメラ行列を取得
+		CMatrix mView = MainCamera().GetViewMatrix();
+		//プロジェクション行列を取得
+		CMatrix mProj = MainCamera().GetProjectionMatrix();
+		//mView * mProjでカメラ空間の座標に変換
+		mView.Mul(posInScreen);
+		//スクリーン空間？に変換する
+		mProj.Mul(posInScreen);
+		//wで除算して正規化座標系（-1.0 ～1.0)にする
+		posInScreen.x /= posInScreen.w;
+		posInScreen.y /= posInScreen.w;
+		posInScreen.z /= posInScreen.w;
+		//敵兵が画面内にいるか判定
+		if (posInScreen.x<1.0f && posInScreen.x>-1.0f
+			&& posInScreen.y<1.0f && posInScreen.y>-1.0f
+			&& posInScreen.z<1.0f && posInScreen.z>0.0f)
+		{
+			Icon_state = null;
+			continue;
+		}
+		else {
+			nearvec = tekipos[i] - Pp->GetPosition();
+			float len = nearvec.Length();
+			//カメラに写っていないplayerとtekiheiで
+			//一番近い敵兵を見つける
+			if (MinLength > len)
+			{
+				MinLength = len;
+				DiscoveryNo = i;
+			}
+		}
+	}
+	//敵兵を発見しその敵兵との距離が800以下なら
+	if (DiscoveryNo != -1 && MinLength <800.0f) {
+		CVector3 len = CVector3::Zero;
+		len = tekipos[DiscoveryNo] - Pp->GetPosition();
+		len.y = 0.0f;
+		float nearLen = len.Length();
+		len.Normalize();
+		playerCross.Cross(len);
+		//左手座標系なので外積をとって
+		//y軸が負なら左側にいる正なら右側にいる
+		CVector3 axis;
+		if (playerCross.y < 0)
+		{
+			axis = CVector3::AxisZ;
+			Icon_state = left;
+		}
+		else {
+			axis = (CVector3::AxisZ)*-1;
+			Icon_state = right;
+		}
+		playerCross = Forward;
+		float kakudo = acos(playerCross.Dot(len));
+		kakudo = CMath::RadToDeg(kakudo);
+		CQuaternion Rod = CQuaternion::Identity;
+		Rod.SetRotationDeg(axis, kakudo);
+		kikenn_sprite.Update(CVector3::Zero, Rod, { 1.0f,1.0f,1.0f }, { 0.5,0.0f });
+	}
+}
+void tekihei::PostRender(CRenderContext& rc)
+{
+	if (Icon_state == left) {
+		kikenn_sprite.Draw(rc, MainCamera2D().GetViewMatrix(), MainCamera2D().GetViewProjectionMatrix());
+	}
+	if (Icon_state == right) {
+		kikenn_sprite.Draw(rc, MainCamera2D().GetViewMatrix(), MainCamera2D().GetViewProjectionMatrix());
+	}
+}
 void tekihei::Render(CRenderContext& rc)
 {
 	for (int i = 0;i < teki;i++)

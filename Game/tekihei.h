@@ -13,6 +13,19 @@ public:
 	bool Start();
 	void Update();
 	void Render(CRenderContext& rc);
+	void PostRender(CRenderContext& rc);
+	void Enemy_Discovery();
+
+	enum enemyDiscoveryIcon
+	{
+		null,		//見つからなかった
+		left,		//プレイヤーから見て左側にいる
+		right,		//プレイヤーから見て右側にいる
+	};
+	enemyDiscoveryIcon Icon_state = null;
+	CFont m_font;
+
+
 
 	CSkinModel tekiskinModel[teki];					//スキンモデル。
 	CSkinModelData tekiskinModelData[teki];
@@ -92,6 +105,8 @@ public:
 		m_onDestroyCb = cb;
 	}
 private:
+	CSprite kikenn_sprite;				//スプライト（中身）。
+	CShaderResourceView kikenn_texture;	//テクスチャ。*/
 	std::function<void()> m_onDestroyCb;		//死亡したときに呼ばれるコールバック。
 	bool deth_player = false;
 };

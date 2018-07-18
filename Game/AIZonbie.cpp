@@ -162,7 +162,7 @@ void AI::NPCZombie_Attack()//vs特殊部隊
 			if (len < atakkukyori) {//NPCに追いついたら
 									//攻撃する(確実に当たる仕様)。
 				HitFlag = true;     //「NPCに攻撃を当てた」というフラグをたてる。
-				tekip->tekiHP[No] -= 5;
+				tekip->tekiHP[No] -= 2.5*GameTime().GetFrameDeltaTime();
 				atakkukyori = 200.0f;
 				//NPC_Attack_Animation();//攻撃アニメーションを流す。
 			}
