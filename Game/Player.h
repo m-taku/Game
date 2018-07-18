@@ -62,6 +62,10 @@ public:
 	{
 		return m_moveSpeed;
 	}
+	void Playkoke()
+	{
+		m_animation.Play(koke, 2.0f);
+	}
 	int GetattackF()
 	{
 		return attackF;
@@ -150,6 +154,7 @@ private:
 		walk,
 		attack,
 		ziko,
+		koke,
 		animnum
 	};
 	car* carpoint;

@@ -3,6 +3,7 @@
 #include"tekihei.h"
 #include"GameEnd.h"
 #include"AI.h"
+#include"Player.h"
 Geizi::Geizi()
 {
 }
@@ -21,6 +22,7 @@ bool Geizi::Start()
 		AI* ka = (AI*)*human;
 		ka->GetGaizi(this);
 	}
+	player = FindGO<Player>("Player");
 	//m_texture.CreateFromDDSTextureFromFile(L"sprite/waku.dds");
 	//m_sprite.Init(m_texture, 400, 100);
 	//m_position = {-600.0,300.0,0.0};
@@ -45,8 +47,20 @@ void Geizi::Update()
 	if (HP <= 0) {
 		HP = 0.0;
 		if (HPfurag <= 0) {
-			HPfurag++;
+			HPfurag++; 
+			player->falseGame();
+			player->Playkoke();
 			//NewGO<GameEnd>(0, "End");
+		}
+	}
+	if (HPfurag >= 1)
+	{
+		HP_saiz += 0.1*GameTime().GetFrameDeltaTime();
+		if (HP_saiz >= 1.0f)
+		{
+			HP = 1.0f;
+			HPfurag = 0;
+			player->trueGame();
 		}
 	}
 	switch (Dame)

@@ -9,14 +9,10 @@
 #define taime 15.0f*30.0f
 #include<string>
 #include<codecvt>
-
-
 Player::Player()
 {
 	hakaba=NewGO<prefab::CEffect>(0);
 }
-
-
 Player::~Player()
 {
 	DeleteGO(FindGO<taieki>("taieki"));
@@ -27,13 +23,11 @@ bool Player::Start()
 	swprintf_s(test_font,L"%d", bullet_sum);
 	////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////
-
-
-
 	m_animclip[idle].Load(L"animData/playeridle.tka");
 	m_animclip[walk].Load(L"animData/playerwalk.tka");
 	m_animclip[attack].Load(L"animData/playerattack.tka");
-	m_animclip[ziko].Load(L"animData/liam_ziko.tka");
+	m_animclip[ziko].Load(L"animData/liam_ziko.tka");	
+	m_animclip[koke].Load(L"animData/shiminkoke.tka");//âºÅBå„Ç≈ì¸ÇÍÇÎÅB
 	/*animclip[1].Load(L"animData/demoanime/walk.tka");
 	animclip[2].Load(L"animData/demoanime/run.tka");
 
@@ -55,6 +49,7 @@ bool Player::Start()
 	m_animclip[walk].SetLoopFlag(true);
 	m_animclip[attack].SetLoopFlag(false);
 	m_animclip[ziko].SetLoopFlag(false);
+	m_animclip[koke].SetLoopFlag(false);
 	m_animation.Init(
 		m_skinModel,
 		m_animclip,
