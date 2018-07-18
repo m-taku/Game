@@ -36,7 +36,7 @@ bool tekihei::Start()
 	/*animclip[0].Load(L"animData/tekiidle.tka");
 	animclip[0].SetLoopFlag(true);*/
 	//ÉpÉXÇÃèâä˙âª
-	EnemyPath[0] = { 0.0f,0.0f,0.0f };
+	/*EnemyPath[0] = { 0.0f,0.0f,0.0f };
 	EnemyPath[1] = { 0.0f,0.0f,1950.0f };
 	EnemyPath[2] = { 0.0f,0.0f,4000.0f };
 	EnemyPath[3] = { 0.0f,0.0f,6030.0f };
@@ -80,29 +80,70 @@ bool tekihei::Start()
 	EnemyPath[41] = { -2020.0f,0.0f,-8000.0f };
 	EnemyPath[42] = { 2010.0f,0.0f,-8000.0f };
 	EnemyPath[43] = { 4000.0f,0.0f,-8000.0f };
-	EnemyPath[44] = { 6200.0f,0.0f,-8000.0f };
-	EnemyPath[45] = { -2646.0f,0.0f,2650.0f };
-	EnemyPath[46] = { -2674.0f,0.0f,2650.0f };
-	EnemyPath[47] = { -5329.0f,0.0f,1843.0f };
-	EnemyPath[48] = { -5281.0f,0.0f,2677.0f };
-	EnemyPath[49] = { -5533.0f,0.0f,4919.0f };
-	EnemyPath[50] = { -4288.0f,0.0f,5380.0f };
-	EnemyPath[51] = { -2680.0f,0.0f,4898.0f };
-	EnemyPath[52] = { -2586.0f,0.0f,6014.0f };
-	EnemyPath[53] = { -2585.0f,0.0f,7146.0f };
-	EnemyPath[54] = { -4272.0f,0.0f,7144.0f };
-	EnemyPath[55] = { -5467.0f,0.0f,6888.0f };
-	EnemyPath[56] = { -6904.0f,0.0f,2660.0f };
-	EnemyPath[57] = { -5354.0f,0.0f,940.0f };
-	EnemyPath[58] = { -2618.0f,0.0f,892.0f };
-	EnemyPath[59] = { -1088.0f,0.0f,2687.0f };
-	EnemyPath[60] = { -1027.0f,0.0f,4814.0f };
-	EnemyPath[61] = { -1076.0f,0.0f,4870.0f };
-	EnemyPath[62] = { -2055.0f,0.0f,4822.0f };
-	EnemyPath[63] = { -5535.0f,0.0f,6002.0f };
-	EnemyPath[64] = { -5223.0f,0.0f,3950.0f };
-	EnemyPath[65] = { -4423.0f,0.0f,4024.0f };
-	
+	EnemyPath[44] = { 6200.0f,0.0f,-8000.0f };*/
+	EnemyPath[0] = { -2646.0f,0.0f,2650.0f };
+	EnemyPath[1] = { -2674.0f,0.0f,2650.0f };
+	EnemyPath[2] = { -5329.0f,0.0f,1843.0f };
+	EnemyPath[3] = { -5281.0f,0.0f,2677.0f };
+	EnemyPath[4] = { -5533.0f,0.0f,4919.0f };
+	EnemyPath[5] = { -4288.0f,0.0f,5380.0f };
+	EnemyPath[6] = { -2680.0f,0.0f,4898.0f };
+	EnemyPath[7] = { -2586.0f,0.0f,6014.0f };
+	EnemyPath[8] = { -2585.0f,0.0f,7146.0f };
+	EnemyPath[9] = { -4272.0f,0.0f,7144.0f };
+	EnemyPath[10] = { -5467.0f,0.0f,6888.0f };
+	EnemyPath[11] = { -6904.0f,0.0f,2660.0f };
+	EnemyPath[12] = { -5354.0f,0.0f,940.0f };
+	EnemyPath[13] = { -2618.0f,0.0f,892.0f };
+	EnemyPath[14] = { -1088.0f,0.0f,2687.0f };
+	EnemyPath[15] = { -1027.0f,0.0f,4814.0f };
+	EnemyPath[16] = { -1076.0f,0.0f,4870.0f };
+	EnemyPath[17] = { -2055.0f,0.0f,4822.0f };
+	EnemyPath[18] = { -5535.0f,0.0f,6002.0f };
+	EnemyPath[19] = { -5223.0f,0.0f,3950.0f };
+	EnemyPath[20] = { -4423.0f,0.0f,4024.0f };
+	EnemyPath[21] = { -881.0f,0.0f,3707.0f };
+	EnemyPath[22] = { -881.0f,0.0f,4300.0f };
+	EnemyPath[23] = { -7000.0f,0.0f,892.0f };
+	EnemyPath[24] = { -893.0f,0.0f,892.0f };
+	EnemyPath[25] = { -3533.0f,0.0f,5114.0f };
+	EnemyPath[26] = { -911.0f,0.0f,7190.0f };
+	EnemyPath[27] = { -7090.0f,0.0f,-882.0f };
+	EnemyPath[28] = { -7074.0f,0.0f,-1798.0f };
+	EnemyPath[29] = { -7029.0f,0.0f,-2621.0f };
+	EnemyPath[30] = { -6287.0f,0.0f,-2681.0f };
+	EnemyPath[31] = { -5448.0f,0.0f,-2719.0f };
+	EnemyPath[32] = { -5349.0f,0.0f,-1909.0f };
+	EnemyPath[33] = { -5314.0f,0.0f,-983.0f };
+	EnemyPath[34] = { -6187.0f,0.0f,-940.0f };
+	EnemyPath[35] = { -4480.0f,0.0f,-2757.0f };
+	EnemyPath[36] = { -3663.0f,0.0f,-2768.0f };
+	EnemyPath[37] = { -3630.0f,0.0f,-1881.0f };
+	EnemyPath[38] = { -3597.0f,0.0f,-928.0f };
+	EnemyPath[39] = { -4406.0f,0.0f,-844.0f };
+	EnemyPath[40] = { -2751.0f,0.0f,-893.0f };
+	EnemyPath[41] = { -1892.0f,0.0f,-864.0f };
+	EnemyPath[42] = { -1055.0f,0.0f,-897.0f };
+	EnemyPath[43] = { -1731.0f,0.0f,895.0f };
+	EnemyPath[44] = { -811.0f,0.0f,1719.0f };
+	EnemyPath[45] = { -930.0f,0.0f,-1862.0f };
+	EnemyPath[46] = { -881.0f,0.0f,-2855.0f };
+	EnemyPath[47] = { -1842.0f,0.0f,-2895.0f };
+	EnemyPath[48] = { -2841.0f,0.0f,-3231.0f };
+	EnemyPath[49] = { -2847.0f,0.0f,-4077.0f };
+	EnemyPath[50] = { -2825.0f,0.0f,-4838.0f };
+
+
+
+
+	for (int i = 0; i < path;i++)
+	{
+		
+		pointpos[i] = EnemyPath[i];
+		pointpos[i].y += 30.0f;
+		pointskinModelData[i].Load(L"modelData/item.cmo");
+		pointskinModel[i].Init(pointskinModelData[i]);
+	}
 
 	for (int i = 0;i < teki;i++)//ìGï∫ÇÃêîÇæÇØèâä˙âªÇ∑ÇÈÅB
 	{
@@ -653,6 +694,12 @@ void tekihei::Update()
 		NewGO<GameEnd>(0, "End");
 		DeleteGO(this);
 	}
+
+
+	for (int i = 0; i < path; i++)
+	{
+		pointskinModel[i].Update(pointpos[i], CQuaternion::Identity, CVector3::One);
+        }
 	Enemy_Discovery();
 }
 void tekihei::Enemy_Discovery()
@@ -741,5 +788,9 @@ void tekihei::Render(CRenderContext& rc)
 	{
 		if(tekiHP[i]>0.0f)
 		tekiskinModel[i].Draw(rc, MainCamera().GetViewMatrix(), MainCamera().GetProjectionMatrix());
+	}
+	for (int i = 0; i < path; i++)
+	{
+		pointskinModel[i].Draw(rc, MainCamera().GetViewMatrix(), MainCamera().GetProjectionMatrix());
 	}
 }

@@ -3,8 +3,8 @@
 #include"Geizi.h"
 #include "tkEngine/graphics/effect/tkEffect.h"
 #include "tkEngine/character/tkCharacterController.h"
-#define teki 45
-#define path 66
+#define teki 51
+#define path 51
 class tekihei : public IGameObject
 {
 public:
@@ -68,7 +68,7 @@ public:
 
 
 
-	//経路探査用プログラム
+	//ポイント移動プログラム
 
 	
 	float length(CVector3 vector);
@@ -118,4 +118,10 @@ private:
 	CShaderResourceView kikenn_texture;	//テクスチャ。*/
 	std::function<void()> m_onDestroyCb;		//死亡したときに呼ばれるコールバック。
 	bool deth_player = false;
+
+
+
+	CVector3 pointpos[path];
+	CSkinModel pointskinModel[path];					//スキンモデル。
+	CSkinModelData pointskinModelData[path];
 };
