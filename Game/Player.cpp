@@ -58,8 +58,8 @@ bool Player::Start()
 		animnum
 	);
 	m_skinModel.SetShadowCasterFlag(true);
-	m_position.x = -2910.12085;
-	m_position.z = 3936.80713;
+	m_position.x = 2910.12085;
+	m_position.z = -3936.80713;
 	//キャラクターコントローラーを初期化。
 	m_charaCon.Init(
 		30.0,			//半径。 
@@ -75,7 +75,7 @@ bool Player::Start()
 	hakaba->Release();
 	hakaba->Play(L"effect/aura1.efk");
 	hakaba->SetScale({ 40.0f,40.0f,40.0f });
-	
+	hakaba->Release();
 	bonenum = m_skinModelData.GetSkeleton().GetNumBones();
 	for (int i = 1;i < bonenum;i++)
 	{

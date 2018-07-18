@@ -215,6 +215,7 @@ private:
 	CMatrix mRot;
 	CMatrix m_tekirot;
 	CMatrix k_tekirot;
+	CVector3 m_right = CVector3::Zero;
 	car* ziko_car;
 	CVector3 before_m_position = CVector3::Zero;		//ˆê‚Â‘O‚ÌÀ•WB
 	std::vector<int> jyunban;
