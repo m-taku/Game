@@ -34,12 +34,12 @@ bool Osu::Start()
 	ai_NPCAnimationClips[Zonbiattack].SetLoopFlag(true);
 	ai_NPCAnimationClips[Zonbi_zico].Load(L"animData/liam_ziko.tka");//仮。後で入れろ。
 	ai_NPCAnimationClips[Zonbi_zico].SetLoopFlag(false);
-	ai_NPCAnimationClips[shiminideath].Load(L"animData/shiminkoke.tka");//仮。後で入れろ。
-	ai_NPCAnimationClips[shiminideath].SetLoopFlag(false);
-	ai_NPCAnimationClips[shiminikai].Load(L"animData/shiminkaiten.tka");//仮。後で入れろ。
-	ai_NPCAnimationClips[shiminikai].SetLoopFlag(false);
-	ai_NPCAnimationClips[shiminioki].Load(L"animData/shiminokiagari.tka");//仮。後で入れろ。
-	ai_NPCAnimationClips[shiminioki].SetLoopFlag(false);
+	ai_NPCAnimationClips[shimindeath].Load(L"animData/shiminkoke.tka");//仮。後で入れろ。
+	ai_NPCAnimationClips[shimindeath].SetLoopFlag(false);
+	ai_NPCAnimationClips[shiminkai].Load(L"animData/shiminkaiten.tka");//仮。後で入れろ。
+	ai_NPCAnimationClips[shiminkai].SetLoopFlag(false);
+	ai_NPCAnimationClips[shiminoki].Load(L"animData/shiminokiagari2.tka");//仮。後で入れろ。
+	ai_NPCAnimationClips[shiminoki].SetLoopFlag(false);
 	//アニメーションの初期化。
 	ai_NPCAnimation.Init(
 		m_skinModel,			//アニメーションを流すスキンモデル。
@@ -131,18 +131,18 @@ void Osu::AI_Animation()//AIのアニメーション制御
 		if (pa == flyNPC) {
 			Zombie_Ziko_Animation();
 		}
+		else if (okiagari == true)
+		{
+			ai_NPCAnimation.Play(shiminoki,0.7f);
+			if (!ai_NPCAnimation.IsPlaying()) {
+				okiagari = false;
+				pa = Damage;
+			}
+		}
 		else if (pa == Resistance_NPC|| pa == Resistance_Player)
 		{
-			Idle_Animation();
+			death_Animation();
 		}
-		//else if (okiagari==true) 
-		//{
-		//	ai_NPCAnimation.Play(shiminioki, 0.7);
-		//	if (!ai_NPCAnimation.IsPlaying()) {
-		//		okiagari = false;	
-
-		//	}
-		//}
 		else if (pa == Death)
 		{
 			death_Animation();
@@ -161,7 +161,7 @@ void Osu::Idle_Animation() //キャラクターが歩き続ける時のアニメーションの処理。
 }
 void Osu::death_Animation() //キャラクターが歩き続ける時のアニメーションの処理。
 {
-	ai_NPCAnimation.Play(shiminideath, 0.7);
+	ai_NPCAnimation.Play(shimindeath, 0.7);
 }
 void Osu::Loop_Walk_Animation()//キャラクターが歩き続ける時のアニメーションの処理。
 {

@@ -478,6 +478,21 @@
     <CustomBuild Include="Assets\sound\Sudden_braking.wav">
       <Filter>Assets\sound</Filter>
     </CustomBuild>
+    <CustomBuild Include="Assets\sound\Zombie_Title_Theme.wav">
+      <Filter>Assets\sound</Filter>
+    </CustomBuild>
+    <CustomBuild Include="Assets\sound\StartbuttonSE.wav">
+      <Filter>Assets\sound</Filter>
+    </CustomBuild>
+    <CustomBuild Include="Assets\sound\swing2.wav">
+      <Filter>Assets\sound</Filter>
+    </CustomBuild>
+    <CustomBuild Include="Assets\sound\n80.wav">
+      <Filter>Assets\sound</Filter>
+    </CustomBuild>
+    <CustomBuild Include="Assets\animData\shiminokiagari2.tka">
+      <Filter>Assets\animData</Filter>
+    </CustomBuild>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\modelData\livingbuildings.png">
@@ -526,19 +541,11 @@
     <ImageContentTask Include="Assets\sprite\damage.png">
       <Filter>Assets\sprite</Filter>
     </ImageContentTask>
-  </ItemGroup>
-  <ItemGroup>
-    <Media Include="Assets\sound\n80.wav">
-      <Filter>Assets\sound</Filter>
-    </Media>
-    <Media Include="Assets\sound\swing2.wav">
-      <Filter>Assets\sound</Filter>
-    </Media>
-    <Media Include="Assets\sound\StartbuttonSE.wav">
-      <Filter>Assets\sound</Filter>
-    </Media>
-    <Media Include="Assets\sound\Zombie_Title_Theme.wav">
-      <Filter>Assets\sound</Filter>
-    </Media>
+    <ImageContentTask Include="Assets\sprite\White.png">
+      <Filter>Assets\sprite</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\kikenn.png">
+      <Filter>Assets\sprite</Filter>
+    </ImageContentTask>
   </ItemGroup>
 </Project>

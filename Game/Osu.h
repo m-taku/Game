@@ -32,15 +32,14 @@ private:
 		shiminwalk,
 		shiminrun,
 		shiminattack,
-		shiminideath,
-		shiminikai,
-		shiminioki,
+		shimindeath,
+		shiminkai,
+		shiminoki,
 		Zonbiwalk,
 		Zonbiattack,
 		Zonbi_zico,
 		animnum
 	};
-	bool okiagari = false;
 	CAnimation ai_NPCAnimation;				//アニメーション。
 	CAnimationClip ai_NPCAnimationClips[animnum];	//アニメーションクリップ。
 	static CShaderResourceView* zondi ;

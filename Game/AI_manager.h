@@ -44,9 +44,13 @@ public:
 		return da2[No].size();
 	}
 	//Žg‚í‚ê‚Ä‚¢‚È‚¢???
-	int Getsize(int No)
+	int Getsize()
 	{
-		return da[No].size();
+		return da.size();
+	}
+	int Get2size()
+	{
+		return da2.size();
 	}
 	std::vector<int>::iterator getAIDate(int i) {
 		return da[i].begin();
@@ -63,13 +67,13 @@ public:
 	{
 		return NPC_Number;
 	}
+	std::vector<int> RAIseizon;
+	std::vector<int> LAIseizon;
 private:
 	int No = 0;
 	int Leftfrag = 0;
 	std::vector<Osu*> Rsimin;
 	std::vector<Osu*> Lsimin;
-	std::vector<int> RAIseizon;
-	std::vector<int> LAIseizon;
 
 	std::vector<int> AIR1 = { 26,25,17,16,15,14,19,18,24,28,27 };
 	std::vector<int> AIR2 = { 22, 29, 28, 31, 36, 35, 32, 27, 26, 25, 23 };

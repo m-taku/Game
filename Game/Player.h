@@ -40,6 +40,7 @@ public:
 	void falseGame()
 	{
 		game = false;
+		m_moveSpeed = CVector3::Zero;
 
 	}
 	CVector3& GetFoeward()
@@ -60,6 +61,16 @@ public:
 	CVector3 &GetMoveSpeed()
 	{
 		return m_moveSpeed;
+	}
+	void Playkoke()
+	{
+		m_animation.Play(koke, 0.2f);
+	}
+	void Playoki();
+
+	bool anine_Playing()
+	{
+		return m_animation.IsPlaying();
 	}
 	int GetattackF()
 	{
@@ -87,6 +98,10 @@ public:
 	{
 		camera_f = true;
 	}
+	void false_camera_f()
+	{
+		camera_f = false;
+	}
 	void set_bullet_sum()
 	{
 
@@ -96,6 +111,10 @@ public:
 	bool getcamera_f()
 	{
 		return camera_f;
+	}
+	void SetController_end()
+	{
+		controller_end = true;
 	}
 
 	void Play_Respiration(CVector3 m_moveDecision);//息遣いの音を再生させるかを判断する。
@@ -145,6 +164,8 @@ private:
 		walk,
 		attack,
 		ziko,
+		oki,
+		koke,
 		animnum
 	};
 	car* carpoint;
@@ -170,14 +191,14 @@ private:
 	bool collision_f = false;
 	float blend = 0.0f;
 	//CVector3 m_moveSpeed_log = CVector3::Zero;//moveSpeedを保持する。
-	bool A_button_Flag = false;//Xボタンが押されたかどうかを保持するフラグ。
+	bool L3_button_Flag = false;//L3ボタンが押されたかどうかを保持するフラグ。
 	prefab::CSoundSource*m_Respiration = nullptr;//息使いの音。歩くときに流す。
 
 	prefab::CSoundSource*m_AttackSE = nullptr;//息使いの音。歩くときに流す。
 
 	int itemcounter = 0;
 
-	
+	bool controller_end ;//プレイヤーのコントロールできる期間が終了したことを受け取る。
 	bool camera_f = false;
 	////////////////////////////////////////////////////
 	std::wstring inputwstr = L"ABCDEFG";

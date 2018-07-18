@@ -9,14 +9,10 @@
 #define taime 15.0f*30.0f
 #include<string>
 #include<codecvt>
-
-
 Player::Player()
 {
 	hakaba=NewGO<prefab::CEffect>(0);
 }
-
-
 Player::~Player()
 {
 	DeleteGO(FindGO<taieki>("taieki"));
@@ -27,13 +23,12 @@ bool Player::Start()
 	swprintf_s(test_font,L"%d", bullet_sum);
 	////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////
-
-
-
 	m_animclip[idle].Load(L"animData/playeridle.tka");
 	m_animclip[walk].Load(L"animData/playerwalk.tka");
 	m_animclip[attack].Load(L"animData/playerattack.tka");
-	m_animclip[ziko].Load(L"animData/liam_ziko.tka");
+	m_animclip[ziko].Load(L"animData/liam_ziko.tka");	
+	m_animclip[koke].Load(L"animData/shiminkoke.tka");//仮。後で入れろ。
+	m_animclip[oki].Load(L"animData/shiminokiagari2.tka");//仮。後で入れろ。
 	/*animclip[1].Load(L"animData/demoanime/walk.tka");
 	animclip[2].Load(L"animData/demoanime/run.tka");
 
@@ -55,6 +50,8 @@ bool Player::Start()
 	m_animclip[walk].SetLoopFlag(true);
 	m_animclip[attack].SetLoopFlag(false);
 	m_animclip[ziko].SetLoopFlag(false);
+	m_animclip[oki].SetLoopFlag(false);
+	m_animclip[koke].SetLoopFlag(false);
 	m_animation.Init(
 		m_skinModel,
 		m_animclip,
@@ -107,6 +104,7 @@ bool Player::Start()
 	//プレイヤーの呼吸音の初期化。
 	m_Respiration = NewGO<prefab::CSoundSource>(0);
 	m_Respiration->Init("sound/iki.wav", false);
+	controller_end = false;
 	return true;
 }
 void Player::Update()
@@ -115,7 +113,7 @@ void Player::Update()
 	//////////////////////////////////////////////////
 	//////////////////////////////////////////////////
 	
-	if (game != false) {
+	if ((game != false)&&(controller_end==false)) {
 		
 		//m_animation.Play(idle,0.2);
 
@@ -129,17 +127,17 @@ void Player::Update()
 		
 
 
-		if (Pad(0).IsTrigger(enButtonA)) //Aボタンが押されたら
+		if ((Pad(0).IsTrigger(enButtonLB3))|| (Pad(0).IsTrigger(enButtonA))) //Aボタンが押されたら
 		{
-			switch (A_button_Flag)
+			switch (L3_button_Flag)
 			{
 			case false://まだAボタンを押されていなかったら
-				A_button_Flag = true;//Xボタンが押されて、ロックされた
+				L3_button_Flag = true;//Xボタンが押されて、ロックされた
 				break;
 			case true://既にAボタンが押されていたら
-				A_button_Flag = false;//再度Aボタンが押されたので、ロックを解除
+				L3_button_Flag = false;//再度Aボタンが押されたので、ロックを解除
 			default:
-				A_button_Flag = false;//再度Aボタンが押されたので、ロックを解除
+				L3_button_Flag = false;//再度Aボタンが押されたので、ロックを解除
 				break;
 			}
 		}
@@ -147,7 +145,7 @@ void Player::Update()
 
 		//float lStick_x;
 		//float lStick_y;
-		if (A_button_Flag == false) //非スニークモード時
+		if (L3_button_Flag == false) //非スニークモード時
 		{
 			//左スティックの入力量を受け取る。
 			lStick_x = Pad(0).GetLStickXF()*500.0f;
@@ -266,11 +264,11 @@ void Player::Update()
 			}
 			attackcounter++;
 		}
-		if (m_moveSpeed.x == 0.0f&&m_moveSpeed.z == 0.0f&&m_charaCon.IsOnGround() && attackF == 0)//プレイヤーが止まっているとき
+		if (m_moveSpeed.x == 0.0f&&m_moveSpeed.z == 0.0f&& m_charaCon.IsOnGround() && attackF == 0)//プレイヤーが止まっているとき
 		{
 			m_animation.Play(idle, 0.2f);
 		}
-		if (m_moveSpeed.x != 0.0f&&m_moveSpeed.z != 0.0f&&m_charaCon.IsOnGround() && attackF == 0)//プレイヤーが歩いているとき
+		if (m_moveSpeed.x != 0.0f&&m_moveSpeed.z != 0.0f&& m_charaCon.IsOnGround() && attackF == 0)//プレイヤーが歩いているとき
 		{
 			m_animation.Play(walk, 0.2f);	
 		}
@@ -366,7 +364,6 @@ void Player::Update()
 
 		}
 	});*/
-
 }
 void Player::Play_Respiration(CVector3 m_moveDecision)
 {
@@ -402,6 +399,10 @@ bool Player::CVector_same_Decision(CVector3 a, CVector3 b) //2つのベクトルが同一
 		return false;//2つのベクトルが一致しなかったのでfalseを返す。
 	}
 }
+void Player::Playoki()
+{
+	m_animation.Play(oki, 0.2f);
+}
 void Player::Render(CRenderContext& rc)
 {
 	m_skinModel.Draw(rc, MainCamera().GetViewMatrix(), MainCamera().GetProjectionMatrix());
@@ -409,11 +410,11 @@ void Player::Render(CRenderContext& rc)
 }
 void Player::PostRender(CRenderContext& renderContext)
 {
+
 	if (camera_f == true)
 	{
 		m_font.Begin(renderContext);
 		m_font.Draw(test_font, font_pos, { 0.0f,255.0f,0.0f,1.0f }, 0.0f, 4.0f, fomt_pivot);
 		m_font.End(renderContext);
 	}
-	
 }

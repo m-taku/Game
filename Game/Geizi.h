@@ -1,5 +1,6 @@
 #pragma once
 class tekihei;
+class Player;
 class Geizi : public IGameObject
 {
 public:
@@ -52,6 +53,7 @@ private:
 		Down,
 		idor
 	};
+	Player* player;
 	Damage Dame;
 	CShaderResourceView HP_texture;	//テクスチャ。
 	CSprite hm_sprite;				//スプライトh(枠)。
@@ -60,6 +62,6 @@ private:
 	float HP = 0.95f;
 	float  furag = 0.0f; //特殊部隊が出たら1になる。
 	int HPfurag = 0;
-	float keifou_saiz = 0.0f, HP_saiz = 0.95f;
+	float keifou_saiz = 0.0f, HP_saiz = 1.0f;
 };
 

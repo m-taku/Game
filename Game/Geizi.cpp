@@ -3,6 +3,7 @@
 #include"tekihei.h"
 #include"GameEnd.h"
 #include"AI.h"
+#include"Player.h"
 Geizi::Geizi()
 {
 }
@@ -21,7 +22,7 @@ bool Geizi::Start()
 		AI* ka = (AI*)*human;
 		ka->GetGaizi(this);
 	}
-
+	player = FindGO<Player>("Player");
 	//m_texture.CreateFromDDSTextureFromFile(L"sprite/waku.dds");
 	//m_sprite.Init(m_texture, 400, 100);
 	//m_position = {-600.0,300.0,0.0};
@@ -43,19 +44,37 @@ bool Geizi::Start()
 }
 void Geizi::Update()
 {	
+	if (HPfurag >= 1)
+	{
+		HP_saiz += 0.1*GameTime().GetFrameDeltaTime();
+		if (HP_saiz >= 1.0f)
+		{
+			HP_saiz = 1.0f;
+			player->Playoki();
+			if (player->anine_Playing())
+			{
+				HP = 1.0f;
+				HPfurag = 0;
+				player->trueGame();
+			}
+		}
+	}
 	if (HP <= 0) {
 		HP = 0.0;
 		if (HPfurag <= 0) {
-			HPfurag++;
-			NewGO<GameEnd>(0, "End");
+			HPfurag++; 
+			player->falseGame();
+			player->Playkoke();
+			//NewGO<GameEnd>(0, "End");
 		}
 	}
+	
 	switch (Dame)
 	{
 	case UP:
 		if (HP_saiz >= HP)
 		{
-			HP_saiz -=0.01;
+			HP_saiz -=0.2*GameTime().GetFrameDeltaTime();
 			if (HP_saiz <= HP)
 			{
 				HP_saiz = HP;
@@ -66,10 +85,10 @@ void Geizi::Update()
 	case Down:
 		if (HP_saiz <=HP+0.2)
 		{
-			HP_saiz += 0.01;
-			if (HP_saiz >= HP + 0.1)
+			HP_saiz += 0.2*GameTime().GetFrameDeltaTime();
+			if (HP_saiz >= HP + 0.2)
 			{
-				HP_saiz = HP+0.1;
+				HP_saiz = HP+0.2;
 				Dame = UP;
 			}
 		}
@@ -95,6 +114,9 @@ void Geizi::Update()
 }
 void Geizi::PostRender(CRenderContext& rc)
 {
-	hm_sprite.Draw(rc, MainCamera2D().GetViewMatrix(), MainCamera2D().GetProjectionMatrix());
-	hy_sprite.Draw(rc, MainCamera2D().GetViewMatrix(), MainCamera2D().GetProjectionMatrix());
+	if (player->getcamera_f())
+	{
+		hm_sprite.Draw(rc, MainCamera2D().GetViewMatrix(), MainCamera2D().GetProjectionMatrix());
+		hy_sprite.Draw(rc, MainCamera2D().GetViewMatrix(), MainCamera2D().GetProjectionMatrix());
+	}
 }
