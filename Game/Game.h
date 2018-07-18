@@ -49,6 +49,10 @@ public:
 		No = 0;
 	}
 	
+	int Gettimer_m()
+	{
+		return timer_m;
+	}
 	
 private:
 	void InitSceneLight();

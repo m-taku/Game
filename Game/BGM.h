@@ -1,6 +1,7 @@
 #pragma once
 #include"Geizi.h"
 #include"AI_manager.h"
+#include"Game.h"
 class BGM : public IGameObject
 {
 public:
@@ -35,6 +36,7 @@ public:
 private:
 	AI_manager * ai_manager = nullptr;//登録されたNPCの合計人数を調べるために使用する。
 	Geizi * Gauge=nullptr;//nullptrで初期化する。Geiziクラスのインスタンスが生成されない限りGaugeはnullptrのまま。
+	Game* game = nullptr;
 	enum BGM_Scene Scene; //switch文に使う。
 	prefab::CSoundSource*m_bdm_Title = nullptr;//タイトルで流すBGM
 	prefab::CSoundSource*m_bdm_Sneak1 = nullptr;//市民を強襲するときに流すBGM1

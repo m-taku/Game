@@ -29,6 +29,7 @@ bool BGM::Start()
 	Scene = Title;
 	ai_manager = FindGO<AI_manager>("AI_manager");//AI_managerのインスタンスを取得。
 	NPC_Goukei = ai_manager->Get_NPC_Number();//生成したNPCの合計人数を代入。
+	
 	return true;
 }
 
@@ -59,13 +60,14 @@ void BGM::Play_Title() //タイトルのBGMを流しているときに動く関数。
 
 void BGM::Play_Sneak_First()//スニーク時の最初に処理される。
 {
+	game = FindGO<Game>("Game");//タイム計測に使う。
 	Scene = Sneak_Fewer_people;//処理が終わったので次の状態へ移行する。
 }
 void BGM::Play_Sneak_Fewer_people()//スニーク時(ゾンビ化NPCが1/2未満の時)のBGMを流しているときに動く関数。
 {
 	m_bdm_Sneak1->Play(true);//スニーク時のBGMを流す。
 	
-	if (ZombieNPC_Number>=(NPC_Goukei/2))//ゾンビ化NPCがNPCの合計人数の半分以上を占めたら
+	if (game->Gettimer_m()<=0)//ゾンビ化NPCがNPCの合計人数の半分以上を占めたら
 	{
 		//BGMのフェードアウト
 		if (bgm_volume > 0.01f) {
