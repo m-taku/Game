@@ -38,7 +38,7 @@ bool Osu::Start()
 	ai_NPCAnimationClips[shimindeath].SetLoopFlag(false);
 	ai_NPCAnimationClips[shiminkai].Load(L"animData/shiminkaiten.tka");//仮。後で入れろ。
 	ai_NPCAnimationClips[shiminkai].SetLoopFlag(false);
-	ai_NPCAnimationClips[shiminoki].Load(L"animData/shiminokiagari.tka");//仮。後で入れろ。
+	ai_NPCAnimationClips[shiminoki].Load(L"animData/shiminokiagari2.tka");//仮。後で入れろ。
 	ai_NPCAnimationClips[shiminoki].SetLoopFlag(false);
 	//アニメーションの初期化。
 	ai_NPCAnimation.Init(
@@ -131,17 +131,17 @@ void Osu::AI_Animation()//AIのアニメーション制御
 		if (pa == flyNPC) {
 			Zombie_Ziko_Animation();
 		}
+		else if (okiagari == true)
+		{
+			ai_NPCAnimation.Play(shiminoki,0.7f);
+			if (!ai_NPCAnimation.IsPlaying()) {
+				okiagari = false;
+				pa = Damage;
+			}
+		}
 		else if (pa == Resistance_NPC|| pa == Resistance_Player)
 		{
 			death_Animation();
-		}
-
-		else if (okiagari==true) 
-		{
-			ai_NPCAnimation.Play(shiminoki, 0.7);
-			if (!ai_NPCAnimation.IsPlaying()) {
-				okiagari = false;	
-			}
 		}
 		else if (pa == Death)
 		{

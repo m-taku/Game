@@ -64,7 +64,13 @@ public:
 	}
 	void Playkoke()
 	{
-		m_animation.Play(koke, 2.0f);
+		m_animation.Play(koke, 0.2f);
+	}
+	void Playoki();
+
+	bool anine_Playing()
+	{
+		return m_animation.IsPlaying();
 	}
 	int GetattackF()
 	{
@@ -154,6 +160,7 @@ private:
 		walk,
 		attack,
 		ziko,
+		oki,
 		koke,
 		animnum
 	};

@@ -155,6 +155,7 @@ protected:
 	CVector3 previous_position=CVector3::Zero;
 	int taime = 0;
 	bool HitFlag = false;      //ダメージを与えたかを示すフラグ。
+	bool okiagari = false;
 private:
 	bool muteki_Flag = false;//無敵になっているかどうかを表すフラグ。
 	bool DamageFlag = false;      //ダメージを受けたかを示すフラグ。

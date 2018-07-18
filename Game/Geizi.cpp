@@ -44,6 +44,21 @@ bool Geizi::Start()
 }
 void Geizi::Update()
 {	
+	if (HPfurag >= 1)
+	{
+		HP_saiz += 0.1*GameTime().GetFrameDeltaTime();
+		if (HP_saiz >= 1.0f)
+		{
+			HP_saiz = 1.0f;
+			player->Playoki();
+			if (player->anine_Playing())
+			{
+				HP = 1.0f;
+				HPfurag = 0;
+				player->trueGame();
+			}
+		}
+	}
 	if (HP <= 0) {
 		HP = 0.0;
 		if (HPfurag <= 0) {
@@ -53,16 +68,7 @@ void Geizi::Update()
 			//NewGO<GameEnd>(0, "End");
 		}
 	}
-	if (HPfurag >= 1)
-	{
-		HP_saiz += 0.1*GameTime().GetFrameDeltaTime();
-		if (HP_saiz >= 1.0f)
-		{
-			HP = 1.0f;
-			HPfurag = 0;
-			player->trueGame();
-		}
-	}
+	
 	switch (Dame)
 	{
 	case UP:
@@ -108,6 +114,9 @@ void Geizi::Update()
 }
 void Geizi::PostRender(CRenderContext& rc)
 {
-	hm_sprite.Draw(rc, MainCamera2D().GetViewMatrix(), MainCamera2D().GetProjectionMatrix());
-	hy_sprite.Draw(rc, MainCamera2D().GetViewMatrix(), MainCamera2D().GetProjectionMatrix());
+	if (player->getcamera_f())
+	{
+		hm_sprite.Draw(rc, MainCamera2D().GetViewMatrix(), MainCamera2D().GetProjectionMatrix());
+		hy_sprite.Draw(rc, MainCamera2D().GetViewMatrix(), MainCamera2D().GetProjectionMatrix());
+	}
 }

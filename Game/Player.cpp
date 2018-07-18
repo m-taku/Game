@@ -28,6 +28,7 @@ bool Player::Start()
 	m_animclip[attack].Load(L"animData/playerattack.tka");
 	m_animclip[ziko].Load(L"animData/liam_ziko.tka");	
 	m_animclip[koke].Load(L"animData/shiminkoke.tka");//仮。後で入れろ。
+	m_animclip[oki].Load(L"animData/shiminokiagari2.tka");//仮。後で入れろ。
 	/*animclip[1].Load(L"animData/demoanime/walk.tka");
 	animclip[2].Load(L"animData/demoanime/run.tka");
 
@@ -49,6 +50,7 @@ bool Player::Start()
 	m_animclip[walk].SetLoopFlag(true);
 	m_animclip[attack].SetLoopFlag(false);
 	m_animclip[ziko].SetLoopFlag(false);
+	m_animclip[oki].SetLoopFlag(false);
 	m_animclip[koke].SetLoopFlag(false);
 	m_animation.Init(
 		m_skinModel,
@@ -261,11 +263,11 @@ void Player::Update()
 			}
 			attackcounter++;
 		}
-		if (m_moveSpeed.x == 0.0f&&m_moveSpeed.z == 0.0f&&m_charaCon.IsOnGround() && attackF == 0)//プレイヤーが止まっているとき
+		if (m_moveSpeed.x == 0.0f&&m_moveSpeed.z == 0.0f&& m_charaCon.IsOnGround() && attackF == 0)//プレイヤーが止まっているとき
 		{
 			m_animation.Play(idle, 0.2f);
 		}
-		if (m_moveSpeed.x != 0.0f&&m_moveSpeed.z != 0.0f&&m_charaCon.IsOnGround() && attackF == 0)//プレイヤーが歩いているとき
+		if (m_moveSpeed.x != 0.0f&&m_moveSpeed.z != 0.0f&& m_charaCon.IsOnGround() && attackF == 0)//プレイヤーが歩いているとき
 		{
 			m_animation.Play(walk, 0.2f);	
 		}
@@ -361,7 +363,6 @@ void Player::Update()
 
 		}
 	});*/
-
 }
 void Player::Play_Respiration(CVector3 m_moveDecision)
 {
@@ -396,6 +397,10 @@ bool Player::CVector_same_Decision(CVector3 a, CVector3 b) //2つのベクトルが同一
 	else {
 		return false;//2つのベクトルが一致しなかったのでfalseを返す。
 	}
+}
+void Player::Playoki()
+{
+	m_animation.Play(oki, 0.2f);
 }
 void Player::Render(CRenderContext& rc)
 {
