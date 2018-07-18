@@ -102,6 +102,7 @@ bool Player::Start()
 	//プレイヤーの呼吸音の初期化。
 	m_Respiration = NewGO<prefab::CSoundSource>(0);
 	m_Respiration->Init("sound/iki.wav", false);
+	controller_end = false;
 	return true;
 }
 void Player::Update()
@@ -110,7 +111,7 @@ void Player::Update()
 	//////////////////////////////////////////////////
 	//////////////////////////////////////////////////
 	
-	if (game != false) {
+	if ((game != false)&&(controller_end==false)) {
 		
 		//m_animation.Play(idle,0.2);
 
@@ -124,17 +125,17 @@ void Player::Update()
 		
 
 
-		if (Pad(0).IsTrigger(enButtonA)) //Aボタンが押されたら
+		if ((Pad(0).IsTrigger(enButtonLB3))|| (Pad(0).IsTrigger(enButtonA))) //Aボタンが押されたら
 		{
-			switch (A_button_Flag)
+			switch (L3_button_Flag)
 			{
 			case false://まだAボタンを押されていなかったら
-				A_button_Flag = true;//Xボタンが押されて、ロックされた
+				L3_button_Flag = true;//Xボタンが押されて、ロックされた
 				break;
 			case true://既にAボタンが押されていたら
-				A_button_Flag = false;//再度Aボタンが押されたので、ロックを解除
+				L3_button_Flag = false;//再度Aボタンが押されたので、ロックを解除
 			default:
-				A_button_Flag = false;//再度Aボタンが押されたので、ロックを解除
+				L3_button_Flag = false;//再度Aボタンが押されたので、ロックを解除
 				break;
 			}
 		}
@@ -142,7 +143,7 @@ void Player::Update()
 
 		//float lStick_x;
 		//float lStick_y;
-		if (A_button_Flag == false) //非スニークモード時
+		if (L3_button_Flag == false) //非スニークモード時
 		{
 			//左スティックの入力量を受け取る。
 			lStick_x = Pad(0).GetLStickXF()*500.0f;
