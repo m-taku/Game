@@ -921,6 +921,9 @@
     <CustomBuild Include="Assets\animData\shiminokiagari.tka">
       <FileType>Document</FileType>
     </CustomBuild>
+    <CustomBuild Include="Assets\animData\shiminokiagari2.tka">
+      <FileType>Document</FileType>
+    </CustomBuild>
     <None Include="Assets\lever\larer_01.tks" />
     <CustomBuild Include="Assets\lever\leval00.tks">
       <FileType>Document</FileType>

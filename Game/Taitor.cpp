@@ -15,7 +15,7 @@ bool Taitor::Start()
 {
 	kakudu = kaiton;
 	n_texture.CreateFromDDSTextureFromFile(L"sprite/Game_Title2.dds");
-	n_sprite.Init(n_texture, 100, 600);
+	n_sprite.Init(n_texture, 1280, 720);
 	Crot.SetRotationDeg(CVector3::AxisZ, 30.0f);
 	n_sprite.Update(n_position, CQuaternion::Identity, { 1.0f,1.0f,1.0f });
 	fase = FindGO<Fade>("Fade");

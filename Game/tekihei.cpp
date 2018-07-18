@@ -32,9 +32,7 @@ tekihei::~tekihei()
 bool tekihei::Start()
 {
 	kikenn_texture.CreateFromDDSTextureFromFile(L"sprite/kikenn.dds");
-	kikenn_sprite.Init(kikenn_texture, 300, 150);
 	gaizi = FindGO<Geizi>("Geizi");
-	kikenn_sprite.Update(CVector3::Zero, CQuaternion::Identity, { 1.0f,1.0f,1.0f }, { 0.5,0.5f });
 	/*animclip[0].Load(L"animData/tekiidle.tka");
 	animclip[0].SetLoopFlag(true);*/
 	//パスの初期化
@@ -107,7 +105,8 @@ bool tekihei::Start()
 	
 
 	for (int i = 0;i < teki;i++)//敵兵の数だけ初期化する。
-	{	
+	{
+		kikenn_sprite[i].Init(kikenn_texture, 30, 150);
 		bomEF[i] = false;
 		Scale[i] = { 150.0f,150.0f,150.0f };
 		collide_siya[i] = 0.0f;
@@ -654,18 +653,19 @@ void tekihei::Update()
 }
 void tekihei::Enemy_Discovery()
 {
-
-	int DiscoveryNo = -1;
-	float MinLength = FLT_MAX;			//距離が近いエネミー発見用
+	//float MinLength = FLT_MAX;			//距離が近いエネミー発見用
 	CVector3 nearvec = CVector3::Zero;
 	CVector3 Forward = CVector3::Zero;
-
 	Forward = Pp->Getboneforward();
 	//playerの右方向を求める
 	CVector3 playerCross = Forward;
-	for (int i = 0; i <teki; i++) {
+	for (int i = 0; i < teki; i++) {
+		if (tekiheiflag[i] != 0) {
+			continue;
+		}
 		//敵兵のpositionを代入
 		CVector4 posInScreen = tekipos[i];
+		posInScreen.y += 120.0f;
 		//カメラ行列を取得
 		CMatrix mView = MainCamera().GetViewMatrix();
 		//プロジェクション行列を取得
@@ -683,56 +683,51 @@ void tekihei::Enemy_Discovery()
 			&& posInScreen.y<1.0f && posInScreen.y>-1.0f
 			&& posInScreen.z<1.0f && posInScreen.z>0.0f)
 		{
-			Icon_state = null;
+			m_enemyDiscovery[i].discovery = false;
+			m_enemyDiscovery[i].alpha = 0.0f;
 			continue;
 		}
 		else {
+			//ついでに初期化
+			m_enemyDiscovery[i].discovery = false;
+			m_enemyDiscovery[i].alpha = 0.0f;
+
 			nearvec = tekipos[i] - Pp->GetPosition();
 			float len = nearvec.Length();
-			//カメラに写っていないplayerとtekiheiで
-			//一番近い敵兵を見つける
-			if (MinLength > len)
+			CVector3 axis;
+			if (len <= 1000.0f)
 			{
-				MinLength = len;
-				DiscoveryNo = i;
+				m_enemyDiscovery[i].discovery = true;
+				m_enemyDiscovery[i].alpha = 1 - (len * 0.001);
+				nearvec.Normalize();
+				playerCross.Cross(nearvec);
+				//左手座標系なので外積をとって
+				//y軸が負なら左側にいる正なら右側にいる
+				if (playerCross.y < 0)
+				{
+					axis = CVector3::AxisZ;
+				}
+				else {
+					axis = (CVector3::AxisZ)*-1;
+				}
 			}
+			playerCross = Forward;
+			float kakudo = acos(playerCross.Dot(nearvec));
+			kakudo = CMath::RadToDeg(kakudo);
+			CQuaternion Rod = CQuaternion::Identity;
+			Rod.SetRotationDeg(axis, kakudo);
+			kikenn_sprite[i].Update(CVector3::Zero, Rod, { 1.0f,1.0f,1.0f }, { 0.5,0.0f });
 		}
-	}
-	//敵兵を発見しその敵兵との距離が800以下なら
-	if (DiscoveryNo != -1 && MinLength <800.0f) {
-		CVector3 len = CVector3::Zero;
-		len = tekipos[DiscoveryNo] - Pp->GetPosition();
-		len.y = 0.0f;
-		float nearLen = len.Length();
-		len.Normalize();
-		playerCross.Cross(len);
-		//左手座標系なので外積をとって
-		//y軸が負なら左側にいる正なら右側にいる
-		CVector3 axis;
-		if (playerCross.y < 0)
-		{
-			axis = CVector3::AxisZ;
-			Icon_state = left;
-		}
-		else {
-			axis = (CVector3::AxisZ)*-1;
-			Icon_state = right;
-		}
-		playerCross = Forward;
-		float kakudo = acos(playerCross.Dot(len));
-		kakudo = CMath::RadToDeg(kakudo);
-		CQuaternion Rod = CQuaternion::Identity;
-		Rod.SetRotationDeg(axis, kakudo);
-		kikenn_sprite.Update(CVector3::Zero, Rod, { 1.0f,1.0f,1.0f }, { 0.5,0.0f });
 	}
 }
 void tekihei::PostRender(CRenderContext& rc)
 {
-	if (Icon_state == left) {
-		kikenn_sprite.Draw(rc, MainCamera2D().GetViewMatrix(), MainCamera2D().GetViewProjectionMatrix());
-	}
-	if (Icon_state == right) {
-		kikenn_sprite.Draw(rc, MainCamera2D().GetViewMatrix(), MainCamera2D().GetViewProjectionMatrix());
+	for (int i = 0; i < teki; i++)
+	{
+		if (m_enemyDiscovery[i].discovery == true && m_enemyDiscovery[i].alpha>0) {
+			kikenn_sprite[i].SetMulColor({ 1.0f, 1.0f, 1.0f,m_enemyDiscovery[i].alpha });
+			kikenn_sprite[i].Draw(rc, MainCamera2D().GetViewMatrix(), MainCamera2D().GetViewProjectionMatrix());
+		}
 	}
 }
 void tekihei::Render(CRenderContext& rc)

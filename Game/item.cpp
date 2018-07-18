@@ -31,14 +31,9 @@ void item::Update()
 {
 	if (item_to_player_dist(Pp->GetPosition(), itempos)<50.0f)
 	{
-		
 		Pp->set_bullet_sum();
-
 		DeleteGO(this);
-	}
-	
-	
-	
+	}	
 	itempos += item_vector * 1300.0f*GameTime().GetFrameDeltaTime();
 	G += 50.0f*GameTime().GetFrameDeltaTime();
 	itempos.y -= G;

@@ -52,6 +52,7 @@ void camera::Update()
 		}*/
 	}
 	Ppos = position_of_player + m_player->Getboneforward()*17.0f;
+
 	//Ppos.z -= 300.0f;
 	//カメラのニアクリップとファークリップを設定する。
 	MainCamera().SetTarget(target);

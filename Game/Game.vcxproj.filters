@@ -490,6 +490,9 @@
     <CustomBuild Include="Assets\sound\n80.wav">
       <Filter>Assets\sound</Filter>
     </CustomBuild>
+    <CustomBuild Include="Assets\animData\shiminokiagari2.tka">
+      <Filter>Assets\animData</Filter>
+    </CustomBuild>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Assets\modelData\livingbuildings.png">

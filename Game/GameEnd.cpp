@@ -33,7 +33,6 @@ bool GameEnd::Start()
 		//syuuryou.Update(m_position, CQuaternion::Identity, { 10.0f,10.0f,10.0f });
 	//	break;
 	//case 1://プレイヤーの負け
-	//	player->falseGame();
 	//	you.CreateFromDDSTextureFromFile(L"sprite/GameOver.dds");//ここに敗北時のリザルト画面を表示
 	//	syuuryou.Init(you, 110, 100);
 	//	syuuryou.Update(m_position, CQuaternion::Identity, { 10.0f,10.0f,10.0f });
@@ -41,6 +40,7 @@ bool GameEnd::Start()
 	//default:
 	//	break;
 	//}
+		player->falseGame();
 
 	int isa = AI_ado->Get_NPC_Number();
 	int zonbisuu = 0;

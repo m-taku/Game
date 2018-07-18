@@ -105,7 +105,16 @@ public:
 		m_onDestroyCb = cb;
 	}
 private:
-	CSprite kikenn_sprite;				//スプライト（中身）。
+	CSprite kikenn_sprite[teki];		//スプライト（中身）。
+
+
+	struct enemyDiscovery
+	{
+		bool discovery = false;		//発見したときtrue
+		float alpha = 0.0f;		//発見したときの画像の透明度
+	};
+	enemyDiscovery m_enemyDiscovery[teki];
+
 	CShaderResourceView kikenn_texture;	//テクスチャ。*/
 	std::function<void()> m_onDestroyCb;		//死亡したときに呼ばれるコールバック。
 	bool deth_player = false;
