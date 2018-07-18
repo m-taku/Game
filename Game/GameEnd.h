@@ -1,4 +1,5 @@
 #pragma once
+#include"Player.h"
 class Fade;
 class GameEnd : public IGameObject
 {
@@ -33,7 +34,6 @@ private:
 	float toumeiodo=0.0f;
 	wchar_t inputscore[256];
 	wchar_t inputsubscore[256];
-
-
+	Player* player = nullptr;
 };
 

@@ -1,7 +1,6 @@
 #include "stdafx.h"
 #include "GameEnd.h"
 #include"Geizi.h"
-#include"Player.h"
 #include"AI_manager.h"
 #include"Game.h"
 #include"Fade.h"
@@ -20,7 +19,7 @@ bool GameEnd::Start()
 {
 	fade = FindGO<Fade>("Fade");
 	Geizi* hama= FindGO<Geizi>("Geizi");
-	Player* player = FindGO<Player>("Player");
+	player = FindGO<Player>("Player");
 	tekihei* Tekhei = FindGO<tekihei>("tekihei");
 	if (hama->GatHPfurag() >= 1) {
 		furgu++;
@@ -81,6 +80,7 @@ void GameEnd::Update()
 		if (toumeiodo >= 1.0f)
 		{
 			toumeiodo = 1.0f;
+			player->SetController_end();//プレイヤーのコントロールを停止。
 			flag = UP;
 		}
 		break;
