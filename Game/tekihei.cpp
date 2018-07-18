@@ -661,6 +661,7 @@ void tekihei::Enemy_Discovery()
 	CVector3 playerCross = Forward;
 	for (int i = 0; i < teki; i++) {
 		if (tekiheiflag[i] != 0) {
+			m_enemyDiscovery[i].discovery = false;
 			continue;
 		}
 		//“G•º‚Ìposition‚ð‘ã“ü
