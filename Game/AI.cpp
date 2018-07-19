@@ -432,6 +432,11 @@ void AI::Update()
 	m_forward.z = m_tekirot.m[2][2];
 	m_forward.y = 0.0f;
 	m_forward.Normalize();
+	m_right.x = m_tekirot.m[0][0];
+	m_right.y = m_tekirot.m[0][1];
+	m_right.z = m_tekirot.m[0][2];
+	m_right.y = 0.0f;
+	m_right.Normalize();
 	kannkaku = false;
 	if (GetZonbi() == false) { //自分がゾンビではなかったら
 		if (muteki_Flag == false) {//無敵ではなかったら
@@ -599,12 +604,13 @@ void AI::Update()
 				CVector3 kyori1 = ai->m_position - this->m_position;//自分との距離を求める。
 				float f = kyori1.Length();
 				if (f<100.0f) { //距離が
-					kyori1 /= 5.0f;
-					kyori1.y = 0.0f;
-					m_movespeed = kyori1 * m_speed*-1;
-					m_movespeed.y += gravity;
-					m_position = A_charaCon.Execute(GameTime().GetFrameDeltaTime(),m_movespeed);//移動
-
+					if (20 >= VectorAngleDeg(kyori1)) {
+						m_right *= 20.0f;
+						kyori1 = m_right;
+						m_movespeed = kyori1 * m_speed*-1;
+						m_movespeed.y += gravity;
+						m_position = A_charaCon.Execute(GameTime().GetFrameDeltaTime(), m_movespeed);//移動
+					}
 				}
 			}
 		});
@@ -784,8 +790,8 @@ void AI::Fardist_path(CVector3 m_position)//視野付きリンク先パス検索
 	}*/
 void AI::hinannpas(CVector3 m_position)
 {
-	pasmove(mokuhyou);
-	NPCRunangle(work->Getbekutor());
+	pasmove(mokuhyou); 
+	m_rotation.Multiply(work->Getkaku());
 	if ((game->pasu[Leftfrag].Getresuto(mokuhyouNo)->m_position[0] - this->m_position).Length() < 200.0f) {
 		Fardist_path(m_position);
 	}
@@ -842,7 +848,7 @@ void AI::NPCescape()//ゾンビから逃げる
 		else {
 			search(game->pasu[Leftfrag].m_pointList[35]);
 		}
-		Gaizi->Satpoint(0.1);
+	//	Gaizi->Satpoint(0.1);
 		work->Setkakudo(5.0f);
 		kaiten = false;
 		pa = Fade_Out;										//こんな町......もうおさらばだ！！
