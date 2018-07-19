@@ -400,6 +400,7 @@ void AI::NPC_Search_Zonbi() //全てのゾンビと距離でダメージ判定をする。
 			m_speed = 0.0;
 			NPCHP -= 1000.0f;
 			HitFlag = false;
+
 		}
 	}
 }
@@ -449,10 +450,10 @@ void AI::Update()
 		}
 	}
 	else {
-		if (Pad(0).IsTrigger(enButtonY))
-		{
-			pa = Zonbie_Gathered;
-		}
+		//if (Pad(0).IsTrigger(enButtonY))
+		//{
+		//	pa = Zonbie_Gathered;
+		//}
 	}
 
 	if (muteki_Flag == true) {
@@ -795,7 +796,8 @@ void AI::hinannpas(CVector3 m_position)
 {
 	pasmove(mokuhyou); 
 	m_rotation.Multiply(work->Getkaku());
-	if ((game->pasu[Leftfrag].Getresuto(mokuhyouNo)->m_position[0] - this->m_position).Length() < 200.0f) {
+	if ((game->pasu[Leftfrag].Getresuto(mokuhyouNo)->m_position[0] - this->m_position).Length() < 200.0f) 
+	{
 		Fardist_path(m_position);
 	}
 }
@@ -874,7 +876,7 @@ void AI::again_move()
 {
 	if (m_position.x==previous_position.x&&m_position.y == previous_position.y&&m_position.y == previous_position.y) {
 		stoptaim++;
-		if (stoptaim >= 5 / GameTime().GetFrameDeltaTime())
+		if (stoptaim >= 2 / GameTime().GetFrameDeltaTime())
 		{
 			nearestpas();
 		}

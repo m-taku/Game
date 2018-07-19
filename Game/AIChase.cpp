@@ -23,31 +23,34 @@ void AI::NPCChase()
 		HitFlag = false;
 	}
 	else {
-		if (mokuteki.Length() >= 1300.0f)
+		if (mokuteki.Length() >= 800.0f)
 		{
-				Chasepas(lam->m_position);//経路たんさ？
-				m_rotation.Multiply(work->Getkaku());
+			Chasepas(lam->m_position);//経路たんさ？
+			m_rotation.Multiply(work->Getkaku());
 		}
-		if (mokuteki.Length() <= atakkukyori) {
-			m_speed = 0.0f;
-			HitFlag = true;
-			if (lam->muteki_Flag == false) {
-				lam->NPCHP -= 20.0f;
+		else
+		{
+			if (mokuteki.Length() <= atakkukyori) {
+				m_speed = 0.0f;
+				HitFlag = true;
+				if (lam->muteki_Flag == false) {
+					lam->NPCHP -= 20.0f;
+				}
+				atakkukyori = 300.0f;
 			}
-			atakkukyori = 300.0f;
-		}
-		else {
-			//Chasepas(lam->m_position);
-			//m_rotation.Multiply(work->Getkaku());	
-			HitFlag = false;
-			furag = 0;
-			m_speed = 4.0f;
-			mokuteki.y = 0.0f;
-			mokuteki.Normalize();//正規化して向きベクトルにする。
-			m_movespeed = mokuteki * (150 * m_speed + mobe);
-			m_movespeed.y += gravity;
-			m_position = A_charaCon.Execute(GameTime().GetFrameDeltaTime(), m_movespeed);
-			atakkukyori = 100.0f;
+			else {
+				//Chasepas(lam->m_position);
+				//m_rotation.Multiply(work->Getkaku());	
+				HitFlag = false;
+				furag = 0;
+				m_speed = 4.0f;
+				mokuteki.y = 0.0f;
+				mokuteki.Normalize();//正規化して向きベクトルにする。
+				m_movespeed = mokuteki * (150 * m_speed + mobe);
+				m_movespeed.y += gravity;
+				m_position = A_charaCon.Execute(GameTime().GetFrameDeltaTime(), m_movespeed);
+				atakkukyori = 100.0f;
+			}
 		}
 	}
 }

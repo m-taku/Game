@@ -22,7 +22,6 @@ Game::Game()
 {
 	//ここに基本的な発生を描く
 	gaizi = NewGO<Geizi>(1, "Geizi");
-
 	player = FindGO<Player>("Player");
 	enemy = NewGO<tekihei>(0, "tekihei");
 	player->trueGame();
@@ -47,8 +46,6 @@ Game::Game()
 	//m_level[1].Build(L"lever/leval01.tks");
 	//ここに基本的な発生を描く
 }
-
-
 Game::~Game()
 {
 }

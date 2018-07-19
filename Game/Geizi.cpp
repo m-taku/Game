@@ -16,11 +16,9 @@ Geizi::~Geizi()
 bool Geizi::Start()
 {
 	auto& human = Humans.begin();
-	human++;
 	for (; human < Humans.end(); human++)
 	{
-		AI* ka = (AI*)*human;
-		ka->GetGaizi(this);
+		(*human)->GetGaizi(this);
 	}
 	player = FindGO<Player>("Player");
 	//m_texture.CreateFromDDSTextureFromFile(L"sprite/waku.dds");
@@ -43,26 +41,32 @@ bool Geizi::Start()
 	return true;
 }
 void Geizi::Update()
-{	
+{
+	if (revival == true) {
+		if (player->anine_Playing()==false)
+		{
+			HPfurag = 0;
+			player->trueGame();
+			revival = false;
+		}
+	}
 	if (HPfurag >= 1)
 	{
-		HP_saiz += 0.1*GameTime().GetFrameDeltaTime();
-		if (HP_saiz >= 1.0f)
-		{
-			HP_saiz = 1.0f;
-			player->Playoki();
-			if (player->anine_Playing())
+		if (HP <= 0) {
+			HP_saiz += 0.1*GameTime().GetFrameDeltaTime();
+			if (HP_saiz >= 1.0f)
 			{
+				HP_saiz = 1.0f;
 				HP = 1.0f;
-				HPfurag = 0;
-				player->trueGame();
+				player->Playoki();
+				revival = true;
 			}
 		}
 	}
 	if (HP <= 0) {
 		HP = 0.0;
 		if (HPfurag <= 0) {
-			HPfurag++; 
+			HPfurag = 1;
 			player->falseGame();
 			player->Playkoke();
 			//NewGO<GameEnd>(0, "End");
@@ -85,7 +89,7 @@ void Geizi::Update()
 	case Down:
 		if (HP_saiz <=HP+0.2)
 		{
-			HP_saiz += 0.3*(GameTime().GetFrameDeltaTime());
+			HP_saiz += flash * (GameTime().GetFrameDeltaTime());
 			if (HP_saiz >= HP + flash)
 			{
 				HP_saiz = HP + flash;

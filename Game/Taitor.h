@@ -11,8 +11,15 @@ public:
 	float siya();
 	void PostRender(CRenderContext& rc) override;
 	void kaiten();
+	void Transparency();
 	void Update();
 private:
+	enum fade
+	{
+		Up,
+		Down,
+		Idor
+	};
 	enum kaiten {
 		steat,
 		push,
@@ -26,21 +33,23 @@ private:
 	};
 	enum kaiten furag;
 	enum kakudo kakudu;
+	enum fade FADE= Up;
 	Fade * fase;
 	BGM* bgm;
-	CSprite n_sprite;				//スプライト（中身）。
-	CShaderResourceView n_texture;	//テクスチャ。*/
-	CQuaternion Quaternion = CQuaternion::Identity; //回転
-	CSprite Abotan_sprite;				//スプライト（矢印）。
-	CShaderResourceView Abotan_texture;	//テクスチャ。*/
-	CSprite Pusu_sprite;				//スプライト（矢印）。
-	//CShaderResourceView Abotan_texture;	//テクスチャ。*/
+		CSprite n_sprite;				//スプライト（中身）。
+		CShaderResourceView n_texture;	//テクスチャ。*/
+		CQuaternion Quaternion = CQuaternion::Identity; //回転
+		CSprite Abotan_sprite;				//スプライト（Aボタン）。
+		CShaderResourceView Abotan_texture;	//テクスチャ（Aボタン）。
+		CSprite Pusu_sprite;				//スプライト（Press）。
+		CShaderResourceView Pusu_texture;	//テクスチャ（Press）
+		CSprite start_sprite;				//スプライト（start）。
+		CShaderResourceView start_texture;	//テクスチャ（start）
 
 	CVector3 n_position = { 0.0f ,180.0f,0.0f };
-
 	Player* player = nullptr;
 	CVector3 target = CVector3::Zero;
-
+	float toumei = 1.0f;
 	CVector3 nowkmtarget = CVector3::Zero;
 	CVector3 Ppos = CVector3::Zero;
 	float d = 0.0f;

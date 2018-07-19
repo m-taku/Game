@@ -144,7 +144,6 @@ bool tekihei::Start()
 		pointskinModelData[i].Load(L"modelData/item.cmo");
 		pointskinModel[i].Init(pointskinModelData[i]);
 	}
-
 	for (int i = 0;i < teki;i++)//敵兵の数だけ初期化する。
 	{
 		kikenn_sprite[i].Init(kikenn_texture, 30, 150);
@@ -222,7 +221,6 @@ bool tekihei::Start()
 	tamaEF[0]->Release();
 //	gaizi->SatFragu();//フラグをセットして、これ以上敵兵のインスタンスが生成されないようにする。
 	Pp = FindGO<Player>("Player");//プレイヤーのインスタンスを代入。
-	
 	for (auto& human: Humans)
 	{
 		human->Gettekihei(this);
@@ -711,7 +709,7 @@ void tekihei::Enemy_Discovery()
 	//playerの右方向を求める
 	CVector3 playerCross = Forward;
 	for (int i = 0; i < teki; i++) {
-		if (tekiheiflag[i] != 0) {
+		if (tekiheiflag[i] == 0) {
 			m_enemyDiscovery[i].discovery = false;
 			continue;
 		}

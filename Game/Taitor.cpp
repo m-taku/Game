@@ -15,15 +15,25 @@ bool Taitor::Start()
 {
 	kakudu = kaiton;
 	n_texture.CreateFromDDSTextureFromFile(L"sprite/Game_Title2.dds");
-	n_sprite.Init(n_texture, 1280, 720);
+	n_sprite.Init(n_texture, 1280.0f, 720.0f);
 	n_sprite.Update(n_position, CQuaternion::Identity, { 1.0f,1.0f,1.0f });
 	fase = FindGO<Fade>("Fade");
 	player= FindGO<Player>("Player");
 	bgm = FindGO<BGM>("BGM"); 
 	Abotan_texture.CreateFromDDSTextureFromFile(L"sprite/A_botan.dds");
-	Abotan_sprite.Init(Abotan_texture, 300,350);
-	n_position.y -= 300.0f;
-	Abotan_sprite.Update(n_position, CQuaternion::Identity, { 1.0f,1.0f,1.0f });
+	Abotan_sprite.Init(Abotan_texture, 163.3333f,233.3333f);
+	n_position.y -= 360.0f; 
+	Abotan_sprite.Update(n_position, CQuaternion::Identity, { 1.0f,1.0f,1.0f }, {0.5f,0.5f});
+	Pusu_texture.CreateFromDDSTextureFromFile(L"sprite/Press_Button.dds");
+	Pusu_sprite.Init(Pusu_texture, 800.0f, 400.0f);
+	n_position.x -= 150.0f;
+	n_position.y += 5.0f;
+	Pusu_sprite.Update(n_position, CQuaternion::Identity, { 1.0f,1.0f,1.0f }, { 0.5f,0.5f });
+	start_texture.CreateFromDDSTextureFromFile(L"sprite/Start_Button.dds");
+	start_sprite.Init(start_texture, 800.0f, 400.0f);
+	n_position.x += 280.0f;
+	n_position.y -= 10.0f;
+	start_sprite.Update(n_position, CQuaternion::Identity, { 1.0f,1.0f,1.0f }, { 0.5f,0.5f });
 	BasisVector = { 0.0f,5000.0f,5000.0f };
 	fase->StartFadeIn();
 	furag = steat;
@@ -172,8 +182,46 @@ void  Taitor::PostRender(CRenderContext& rc)
 {
 	if (furag == steat) {
 		n_sprite.Draw(rc, MainCamera2D().GetViewMatrix(), MainCamera2D().GetViewProjectionMatrix());
+		Transparency();
 		Abotan_sprite.Draw(rc, MainCamera2D().GetViewMatrix(), MainCamera2D().GetViewProjectionMatrix());
+		Pusu_sprite.Draw(rc, MainCamera2D().GetViewMatrix(), MainCamera2D().GetViewProjectionMatrix());
+		start_sprite.Draw(rc, MainCamera2D().GetViewMatrix(), MainCamera2D().GetViewProjectionMatrix());
 	}
+}
+void Taitor::Transparency()
+{
+	switch (FADE)
+	{
+	case Up:
+		if (toumei >= 0)
+		{
+			toumei -= GameTime().GetFrameDeltaTime();
+			if (toumei <= 0)
+			{
+				toumei = 0;
+				FADE = Down;
+			}
+		}
+		break;
+	case Down:
+		if (toumei <= 1.0f)
+		{
+			toumei += GameTime().GetFrameDeltaTime();
+			if (toumei >= 1)
+			{
+				toumei = 1;
+				FADE = Up;
+			}
+		}
+		break;
+	case Idor:
+		break;
+	default:
+		break;
+	}
+	Pusu_sprite.SetMulColor({ 1.0f,1.0f,1.0f,toumei });
+	start_sprite.SetMulColor({ 1.0f,1.0f,1.0f,toumei });
+	Abotan_sprite.SetMulColor({ 1.0f,1.0f,1.0f,toumei });
 }
 void Taitor::kaiten()
 {
