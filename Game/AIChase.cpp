@@ -14,7 +14,8 @@ void AI::NPCChase()
 	float len = GetKyori(m_position, lam->m_position);
 	CVector3 mokuteki = lam->m_position - m_position;
 	NPCRunangle(mokuteki);
-	if (lam->Raifu_f == true|| len>=2200.0f) {
+	if (lam->Raifu_f == true|| len>=2200.0f) 
+	{
 		pa = Return;
 		search(retu_position);
 		Chasefrag = 0;
@@ -23,7 +24,7 @@ void AI::NPCChase()
 		HitFlag = false;
 	}
 	else {
-		if (mokuteki.Length() >= 800.0f)
+		if (mokuteki.Length() >= 1200.0f)
 		{
 			Chasepas(lam->m_position);//Œo˜H‚½‚ñ‚³H
 			m_rotation.Multiply(work->Getkaku());
