@@ -29,7 +29,7 @@ float item::item_to_player_dist(CVector3 playerpos, CVector3 itemposition)
 }
 void item::Update()
 {
-	if (item_to_player_dist(Pp->GetPosition(), itempos)<50.0f)
+	if (item_to_player_dist(Pp->GetPosition(), itempos)<100.0f)
 	{
 		Pp->set_bullet_sum();
 		DeleteGO(this);
