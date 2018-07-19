@@ -53,7 +53,7 @@ bool AI::Start()
 	//mRot.MakeRotationFromQuaternion();
 	A_charaCon.Init(
 		30.0,			//”¼ŒaB 
-		100.0f,			//‚‚³B
+		150.0f,			//‚‚³B
 		m_position,		//‰ŠúˆÊ’uB
 		0
 	);
@@ -147,9 +147,12 @@ void AI::NPCResistance_NPC()//NPCƒ]ƒ“ƒr‚Ö‚Ì’ïR‚ÉŠÖ‚·‚éˆ—BƒI[ƒo[ƒ‰ƒCƒh‚³‚¹‚
 	m_speed = 0.0f;
 	if (sinsoku < 1.0) {
 		m_skinModel.Satburend(sinsoku);
-		sinsoku += 0.01;
-	}else
+		sinsoku += GameTime().GetFrameDeltaTime()/3;
+	}
+	else
 	{
+		sinsoku = 1.0f;
+		m_skinModel.Satburend(sinsoku);
 		okiagari=true;
 	}
 }
@@ -397,6 +400,7 @@ void AI::NPC_Search_Zonbi() //‘S‚Ä‚Ìƒ]ƒ“ƒr‚Æ‹——£‚Åƒ_ƒ[ƒW”»’è‚ğ‚·‚éB
 			m_speed = 0.0;
 			NPCHP -= 1000.0f;
 			HitFlag = false;
+
 		}
 	}
 }
@@ -446,10 +450,10 @@ void AI::Update()
 		}
 	}
 	else {
-		if (Pad(0).IsTrigger(enButtonY))
-		{
-			pa = Zonbie_Gathered;
-		}
+		//if (Pad(0).IsTrigger(enButtonY))
+		//{
+		//	pa = Zonbie_Gathered;
+		//}
 	}
 
 	if (muteki_Flag == true) {
@@ -792,7 +796,8 @@ void AI::hinannpas(CVector3 m_position)
 {
 	pasmove(mokuhyou); 
 	m_rotation.Multiply(work->Getkaku());
-	if ((game->pasu[Leftfrag].Getresuto(mokuhyouNo)->m_position[0] - this->m_position).Length() < 200.0f) {
+	if ((game->pasu[Leftfrag].Getresuto(mokuhyouNo)->m_position[0] - this->m_position).Length() < 200.0f) 
+	{
 		Fardist_path(m_position);
 	}
 }
@@ -871,7 +876,7 @@ void AI::again_move()
 {
 	if (m_position.x==previous_position.x&&m_position.y == previous_position.y&&m_position.y == previous_position.y) {
 		stoptaim++;
-		if (stoptaim >= 5 / GameTime().GetFrameDeltaTime())
+		if (stoptaim >= 2 / GameTime().GetFrameDeltaTime())
 		{
 			nearestpas();
 		}

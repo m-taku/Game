@@ -85,7 +85,7 @@ void AI::NPCZombie_Chase()
 			if (Tansaku->muteki_Flag == false) {
 				Tansaku->NPCHP -= 40.0f;
 			}
-			atakkukyori = 300.0f;
+			atakkukyori = 200.0f;
 			//NPC_Attack_Animation();//攻撃アニメーションを流す。
 		}
 		else {
@@ -100,7 +100,7 @@ void AI::NPCZombie_Chase()
 				m_position = A_charaCon.Execute(GameTime().GetFrameDeltaTime(), m_movespeed);//移動
 
 				//Chasepas(Tansaku->m_position);
-				atakkukyori = 200.0f;
+				atakkukyori = 150.0f;
 				/////////////////////////////////
 				//市民NPCを追跡する処理。
 				/////////////////////////////////

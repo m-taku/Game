@@ -6,7 +6,7 @@
 #include"Geizi.h"
 #include"car.h"
 #define counter 10
-#define taime 15.0f*30.0f
+#define taime GameTime().GetFrameDeltaTime()/20.0f
 #include<string>
 #include<codecvt>
 Player::Player()
@@ -290,6 +290,7 @@ void Player::Update()
 								m_moveSpeed = (m_forward*-1 * m_moveSpeed.Length()) + carpoint->Getforward()*1000.0f;
 								m_moveSpeed.y = 450.0f;
 								zikofrag = true;
+								Gaizi->SatHPFragu(1);
 								muteki_Flag = true;
 
 							}
@@ -321,7 +322,6 @@ void Player::Update()
 	//Ô‚Æ‚ÌÕ“Ë”»’è
 	if (zikofrag == true)
 	{
-
 		m_animation.Play(ziko, 0.4f);
 		/*//ƒ‚ƒmƒNƒ	if (blend <= 1.0f) {
 							GraphicsEngine().GetMonochrome().SetAlpha(blend);
@@ -331,6 +331,7 @@ void Player::Update()
 			zikofrag = false;
 			//	blend = 1.0f;
 			game = true;
+			Gaizi->SatHPFragu(0);
 			//m_animation.Play(idle, 0.2f);
 		}
 		if (m_charaCon.IsOnGround()) {
