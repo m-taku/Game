@@ -504,6 +504,12 @@ void AI::Update()
 		Raifu_f = true;							//死んでしまうとはなさけない！！
 		if (GetZonbi() == false) {				//ゾンビではないなら
 			pa = Resistance_NPC;				//もう一度チャンスをやろう！！！！
+			prefab::CSoundSource*m_SE_Down = nullptr;
+			m_SE_Down = NewGO<prefab::CSoundSource>(0);
+			m_SE_Down->Init("sound/tumbling1.wav", true);
+			m_SE_Down->SetVolume(1.2f);
+			m_SE_Down->SetPosition(m_position);
+			m_SE_Down->Play(false);//一回だけ再生されて破棄される。
 			escapecaku = 30.0f;
 			m_speed = 0.0f;
 			SetZonbe();

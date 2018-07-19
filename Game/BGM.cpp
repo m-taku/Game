@@ -71,7 +71,7 @@ void BGM::Play_Sneak_Fewer_people()//スニーク時(ゾンビ化NPCが1/2未満の時)のBGMを
 	{
 		//BGMのフェードアウト
 		if (bgm_volume > 0.01f) {
-			bgm_volume = bgm_volume - 0.03f;
+			bgm_volume = bgm_volume - 0.04f;
 			m_bdm_Sneak1->SetVolume(bgm_volume);
 		}
 		else {
