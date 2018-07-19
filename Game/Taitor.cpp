@@ -16,14 +16,14 @@ bool Taitor::Start()
 	kakudu = kaiton;
 	n_texture.CreateFromDDSTextureFromFile(L"sprite/Game_Title2.dds");
 	n_sprite.Init(n_texture, 1280, 720);
-	Crot.SetRotationDeg(CVector3::AxisZ, 30.0f);
 	n_sprite.Update(n_position, CQuaternion::Identity, { 1.0f,1.0f,1.0f });
 	fase = FindGO<Fade>("Fade");
 	player= FindGO<Player>("Player");
-	bgm = FindGO<BGM>("BGM");
-	//y_texture.CreateFromDDSTextureFromFile(L"sprite/yaji.dds");
-	//y_sprite.Init(y_texture, 100, 50);
-	//y_sprite.Update(n_position, Quaternion, { 1.0f,1.0f,1.0f });
+	bgm = FindGO<BGM>("BGM"); 
+	Abotan_texture.CreateFromDDSTextureFromFile(L"sprite/A_botan.dds");
+	Abotan_sprite.Init(Abotan_texture, 300,350);
+	n_position.y -= 300.0f;
+	Abotan_sprite.Update(n_position, CQuaternion::Identity, { 1.0f,1.0f,1.0f });
 	BasisVector = { 0.0f,5000.0f,5000.0f };
 	fase->StartFadeIn();
 	furag = steat;
@@ -172,6 +172,7 @@ void  Taitor::PostRender(CRenderContext& rc)
 {
 	if (furag == steat) {
 		n_sprite.Draw(rc, MainCamera2D().GetViewMatrix(), MainCamera2D().GetViewProjectionMatrix());
+		Abotan_sprite.Draw(rc, MainCamera2D().GetViewMatrix(), MainCamera2D().GetViewProjectionMatrix());
 	}
 }
 void Taitor::kaiten()

@@ -74,7 +74,7 @@ void Geizi::Update()
 	case UP:
 		if (HP_saiz >= HP)
 		{
-			HP_saiz -=0.2*(GameTime().GetFrameDeltaTime());
+			HP_saiz -= flash *(GameTime().GetFrameDeltaTime());
 			if (HP_saiz <= HP)
 			{
 				HP_saiz = HP;
@@ -85,10 +85,10 @@ void Geizi::Update()
 	case Down:
 		if (HP_saiz <=HP+0.2)
 		{
-			HP_saiz += 0.2*(GameTime().GetFrameDeltaTime());
-			if (HP_saiz >= HP + 0.2)
+			HP_saiz += 0.3*(GameTime().GetFrameDeltaTime());
+			if (HP_saiz >= HP + flash)
 			{
-				HP_saiz = HP+0.2;
+				HP_saiz = HP + flash;
 				Dame = UP;
 			}
 		}

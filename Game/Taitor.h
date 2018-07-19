@@ -31,8 +31,11 @@ private:
 	CSprite n_sprite;				//スプライト（中身）。
 	CShaderResourceView n_texture;	//テクスチャ。*/
 	CQuaternion Quaternion = CQuaternion::Identity; //回転
-	CSprite y_sprite;				//スプライト（矢印）。
-	CShaderResourceView y_texture;	//テクスチャ。*/
+	CSprite Abotan_sprite;				//スプライト（矢印）。
+	CShaderResourceView Abotan_texture;	//テクスチャ。*/
+	CSprite Pusu_sprite;				//スプライト（矢印）。
+	//CShaderResourceView Abotan_texture;	//テクスチャ。*/
+
 	CVector3 n_position = { 0.0f ,180.0f,0.0f };
 
 	Player* player = nullptr;

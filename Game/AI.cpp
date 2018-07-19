@@ -53,7 +53,7 @@ bool AI::Start()
 	//mRot.MakeRotationFromQuaternion();
 	A_charaCon.Init(
 		30.0,			//”¼ŒaB 
-		100.0f,			//‚‚³B
+		150.0f,			//‚‚³B
 		m_position,		//‰ŠúˆÊ’uB
 		0
 	);
@@ -147,9 +147,12 @@ void AI::NPCResistance_NPC()//NPCƒ]ƒ“ƒr‚Ö‚Ì’ïR‚ÉŠÖ‚·‚éˆ—BƒI[ƒo[ƒ‰ƒCƒh‚³‚¹‚
 	m_speed = 0.0f;
 	if (sinsoku < 1.0) {
 		m_skinModel.Satburend(sinsoku);
-		sinsoku += 0.01;
-	}else
+		sinsoku += GameTime().GetFrameDeltaTime()/3;
+	}
+	else
 	{
+		sinsoku = 1.0f;
+		m_skinModel.Satburend(sinsoku);
 		okiagari=true;
 	}
 }
