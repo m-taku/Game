@@ -3,8 +3,8 @@
 #include"Geizi.h"
 #include "tkEngine/graphics/effect/tkEffect.h"
 #include "tkEngine/character/tkCharacterController.h"
-#define teki 51
-#define path 51
+#define teki 33
+#define path 99
 class tekihei : public IGameObject
 {
 public:
@@ -121,7 +121,5 @@ private:
 
 
 
-	CVector3 pointpos[path];
-	CSkinModel pointskinModel[path];					//スキンモデル。
-	CSkinModelData pointskinModelData[path];
+	
 };

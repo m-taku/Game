@@ -143,7 +143,7 @@ private:
 	//タイマー
 	CFont m_font;
 	wchar_t test_font[255];
-	CVector2 font_pos = { -700.0f,400.0f };
+	CVector2 font_pos = { -1000.0f,400.0f };
 	CVector2 fomt_pivot = { 0.0f,0.0f };
 	float timer_s = 60.0f;
 	int timer_m = 2;
