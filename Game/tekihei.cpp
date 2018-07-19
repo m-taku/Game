@@ -259,10 +259,13 @@ bool tekihei::Start()
 		);
 
 	}//初期化ループこ↑こ↓まで
-	
+
+	tamaEF[0] = NewGO<prefab::CEffect>(0);//エフェクトの生成。
+	tamaEF[0]->Play(L"effect/aura.efk");
+	tamaEF[0]->SetPosition({0.0f,-11000.0f,0.0f});
+	tamaEF[0]->Release();
 //	gaizi->SatFragu();//フラグをセットして、これ以上敵兵のインスタンスが生成されないようにする。
 	Pp = FindGO<Player>("Player");//プレイヤーのインスタンスを代入。
-	
 	for (auto& human: Humans)
 	{
 		human->Gettekihei(this);
@@ -748,7 +751,7 @@ void tekihei::Enemy_Discovery()
 	//playerの右方向を求める
 	CVector3 playerCross = Forward;
 	for (int i = 0; i < teki; i++) {
-		if (tekiheiflag[i] != 0) {
+		if (tekiheiflag[i] == 0) {
 			m_enemyDiscovery[i].discovery = false;
 			continue;
 		}

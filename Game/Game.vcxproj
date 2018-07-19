@@ -823,6 +823,8 @@
     <CustomBuild Include="Assets\effect\Texture\magma.png" />
     <CustomBuild Include="Assets\effect\Texture\sdfs.png" />
     <Image Include="Assets\modelData\ao.png" />
+    <ImageContentTask Include="Assets\sprite\Press_Button.png" />
+    <ImageContentTask Include="Assets\sprite\Start_Button.png" />
     <ImageContentTask Include="Assets\sprite\kikenn.png" />
     <ImageContentTask Include="Assets\sprite\White.png" />
     <ImageContentTask Include="Assets\sprite\damage.png" />
@@ -1027,6 +1029,16 @@
       <FileType>Document</FileType>
     </CustomBuild>
     <CustomBuild Include="Assets\sound\Zombie_Title_Theme.wav">
+      <FileType>Document</FileType>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="Assets\sound\desperate.wav">
+      <FileType>Document</FileType>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="Assets\sound\tumbling1.wav">
       <FileType>Document</FileType>
     </CustomBuild>
   </ItemGroup>

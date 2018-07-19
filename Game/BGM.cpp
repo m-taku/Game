@@ -21,7 +21,7 @@ bool BGM::Start()
 	m_bdm_Title->Init("sound/Zombie_Title_Theme.wav");
 	m_bdm_Title->SetVolume(bgm_volume);
 	m_bdm_Sneak1 = NewGO<prefab::CSoundSource>(0);
-	m_bdm_Sneak1->Init("sound/horror_zone1.wav");
+	m_bdm_Sneak1->Init("sound/desperate.wav");
 	m_bdm_Sneak1->SetVolume(bgm_volume);
 	m_bdm_Sneak2 = NewGO<prefab::CSoundSource>(0);
 	m_bdm_Sneak2->Init("sound/n80.wav");
@@ -71,7 +71,7 @@ void BGM::Play_Sneak_Fewer_people()//スニーク時(ゾンビ化NPCが1/2未満の時)のBGMを
 	{
 		//BGMのフェードアウト
 		if (bgm_volume > 0.01f) {
-			bgm_volume = bgm_volume - 0.01f;
+			bgm_volume = bgm_volume - 0.04f;
 			m_bdm_Sneak1->SetVolume(bgm_volume);
 		}
 		else {

@@ -41,8 +41,6 @@ bool GameEnd::Start()
 	//	break;
 	//}
 		player->falseGame();
-
-	int isa = AI_ado->Get_NPC_Number();
 	int zonbisuu = 0;
 	int hinansuu = 0;
 	for (int i = 0; i<AI_ado->Getsize(); i++)
@@ -65,8 +63,8 @@ bool GameEnd::Start()
 		}
 	}
 	float wariai = 0.00f;
-	wariai = ((float)zonbisuu / (float)AI_ado->Get_NPC_Number())*50;
-	wariai +=((float)Tekhei->soma / (float)teki)*50;
+	wariai = ((float)zonbisuu / (float)AI_ado->Get_NPC_Number()) * 70;
+	wariai += ((float)Tekhei->soma / (float)teki) * 30;
 	swprintf_s( inputscore, L"“¾“_F%d“_", (int)wariai);
 	swprintf_s(inputsubscore, L"ƒ]ƒ“ƒr‘”F%d‘Ì,“G•ºŒ‚”j”:%d‘Ì,“¦‚°‚ç‚ê‚½”:%dl", zonbisuu, Tekhei->soma, hinansuu);
 	return true;

@@ -1,6 +1,7 @@
 #pragma once
 class tekihei;
 class Player;
+#define flash 0.4f
 class Geizi : public IGameObject
 {
 public:
@@ -14,7 +15,7 @@ public:
 	void satHP(float a)
 	{
 		HP -= a;
-		HP_saiz = HP+0.2;
+		HP_saiz = HP+ flash;
 		Dame = UP; 
 		time = 30;
 	}
@@ -30,9 +31,10 @@ public:
 	{
 		return furag;
 	}
-	void SatFragu()
+	void SatHPFragu(int No)
 	{
-		furag++;
+
+		HPfurag = No;
 	}
 	int GatHPfurag()
 	{
@@ -62,6 +64,7 @@ private:
 	float HP = 0.95f;
 	float  furag = 0.0f; //“Áê•”‘à‚ªo‚½‚ç1‚É‚È‚éB
 	int HPfurag = 0;
+	bool revival = false;
 	float keifou_saiz = 0.0f, HP_saiz = 1.0f;
 };
 

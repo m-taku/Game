@@ -168,10 +168,6 @@ private:
 	std::vector<int> AIL40 = { 51,52,53,54,57,58,56,55,53,48,46,47,50,43,45 };
 	std::vector<int> AIL41 = { 52,50,51,45,44,46,48,53,54,57,58,56 };
 	std::vector<int> AIL42 = { 53,54,57,62,63,66,52 };
-	std::vector<int> AIL50 = { 9,8 };
-	std::vector<int> AIL51 = { 9,7 };
-
-	std::vector<int> AIL52 = { 9,7 };
 	std::vector<int> AIL43 = { 54,55,34,33,36,35,37,63,61,57 };
 	std::vector<std::vector<int>> da2;
 	std::vector<std::vector<int>> da;

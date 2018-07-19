@@ -69,7 +69,7 @@
           </SingleEasing>
         </ScalingValues>
         <RendererCommonValues>
-          <ColorTexture>../../../tkTools/Effekseer132/Sample/01_Suzuki01/001_magma_effect/Texture/aura3_type2.png</ColorTexture>
+          <ColorTexture>Texture/aura3_type2.png</ColorTexture>
           <AlphaBlend>2</AlphaBlend>
           <FadeInType>1</FadeInType>
           <FadeIn>
@@ -278,7 +278,7 @@
           </SingleEasing>
         </ScalingValues>
         <RendererCommonValues>
-          <ColorTexture>../../../tkTools/Effekseer132/Sample/01_Suzuki01/001_magma_effect/Texture/Particle01.png</ColorTexture>
+          <ColorTexture>Texture/Particle01.png</ColorTexture>
           <AlphaBlend>2</AlphaBlend>
           <FadeIn>
             <Frame>3</Frame>
@@ -390,7 +390,7 @@
           </SingleEasing>
         </ScalingValues>
         <RendererCommonValues>
-          <ColorTexture>../../../tkTools/Effekseer132/Sample/01_Suzuki01/001_magma_effect/Texture/aura3_type2.png</ColorTexture>
+          <ColorTexture>Texture/aura3_type2.png</ColorTexture>
           <AlphaBlend>2</AlphaBlend>
           <FadeOutType>1</FadeOutType>
           <FadeOut>
@@ -590,7 +590,7 @@
           </SinglePVA>
         </ScalingValues>
         <RendererCommonValues>
-          <ColorTexture>../../../tkTools/Effekseer132/Sample/01_Suzuki01/001_magma_effect/Texture/aura3_type2.png</ColorTexture>
+          <ColorTexture>Texture/aura3_type2.png</ColorTexture>
           <AlphaBlend>2</AlphaBlend>
           <UV>3</UV>
           <UVScroll>
@@ -708,7 +708,7 @@
           </SinglePVA>
         </ScalingValues>
         <RendererCommonValues>
-          <ColorTexture>../../../tkTools/Effekseer132/Sample/01_Suzuki01/001_magma_effect/Texture/aura3_type2.png</ColorTexture>
+          <ColorTexture>Texture/aura3_type2.png</ColorTexture>
           <Filter>0</Filter>
           <FadeIn>
             <Frame>2</Frame>
@@ -865,7 +865,7 @@
           </SinglePVA>
         </ScalingValues>
         <RendererCommonValues>
-          <ColorTexture>../../../tkTools/Effekseer132/Sample/01_Suzuki01/001_magma_effect/Texture/aura3_type2.png</ColorTexture>
+          <ColorTexture>Texture/aura3_type2.png</ColorTexture>
           <AlphaBlend>2</AlphaBlend>
           <UV>3</UV>
           <UVScroll>
@@ -1006,7 +1006,7 @@
           </Sphere>
         </GenerationLocationValues>
         <RendererCommonValues>
-          <ColorTexture>../../../tkTools/Effekseer132/Sample/01_Suzuki01/001_magma_effect/Texture/Particle01.png</ColorTexture>
+          <ColorTexture>Texture/Particle01.png</ColorTexture>
           <AlphaBlend>2</AlphaBlend>
         </RendererCommonValues>
         <DrawingValues>
@@ -1037,6 +1037,118 @@
           </Sprite>
         </DrawingValues>
         <Name>Needle2</Name>
+        <Children />
+      </Node>
+      <Node>
+        <CommonValues>
+          <RemoveWhenLifeIsExtinct>False</RemoveWhenLifeIsExtinct>
+          <Life>
+            <Center>10</Center>
+            <Max>10</Max>
+            <Min>10</Min>
+          </Life>
+        </CommonValues>
+        <ScalingValues>
+          <Type>3</Type>
+          <Fixed>
+            <Scale>
+              <X>3</X>
+            </Scale>
+          </Fixed>
+          <Easing>
+            <End>
+              <X>
+                <Center>2</Center>
+                <Max>2</Max>
+                <Min>2</Min>
+              </X>
+              <Y>
+                <Center>2</Center>
+                <Max>2</Max>
+                <Min>2</Min>
+              </Y>
+              <Z>
+                <Center>2</Center>
+                <Max>2</Max>
+                <Min>2</Min>
+              </Z>
+            </End>
+          </Easing>
+          <SinglePVA>
+            <Scale>
+              <Center>1.5</Center>
+              <Max>1.5</Max>
+              <Min>1.5</Min>
+            </Scale>
+          </SinglePVA>
+          <SingleEasing>
+            <Start>
+              <Center>3</Center>
+              <Max>3</Max>
+              <Min>3</Min>
+            </Start>
+            <End>
+              <Center>4</Center>
+              <Max>4</Max>
+              <Min>4</Min>
+            </End>
+            <StartSpeed>-30</StartSpeed>
+            <EndSpeed>-30</EndSpeed>
+          </SingleEasing>
+        </ScalingValues>
+        <RendererCommonValues>
+          <ColorTexture>Texture/glow.png</ColorTexture>
+          <AlphaBlend>2</AlphaBlend>
+          <FadeIn>
+            <Frame>3</Frame>
+          </FadeIn>
+          <FadeOut>
+            <Frame>6</Frame>
+          </FadeOut>
+        </RendererCommonValues>
+        <DrawingValues>
+          <Sprite>
+            <ColorAll_Fixed>
+              <R>0</R>
+              <B>0</B>
+              <A>140</A>
+            </ColorAll_Fixed>
+            <ColorAll_Random>
+              <R>
+                <Center>121</Center>
+                <Max>174</Max>
+                <Min>68</Min>
+              </R>
+              <G>
+                <Center>126</Center>
+                <Max>179</Max>
+                <Min>74</Min>
+              </G>
+              <B>
+                <Center>141</Center>
+                <Max>213</Max>
+                <Min>70</Min>
+              </B>
+              <A>
+                <Center>200</Center>
+                <Max>200</Max>
+                <Min>200</Min>
+              </A>
+            </ColorAll_Random>
+            <Color_Fixed_LL>
+              <B>128</B>
+            </Color_Fixed_LL>
+            <Color_Fixed_LR>
+              <R>0</R>
+              <G>0</G>
+            </Color_Fixed_LR>
+          </Sprite>
+          <Ring>
+            <Billboard>0</Billboard>
+            <VertexCount>30</VertexCount>
+          </Ring>
+        </DrawingValues>
+        <Name>Glow</Name>
         <Children />
       </Node>
       <Node>
@@ -1175,118 +1287,6 @@
         <Name>Needle</Name>
         <Children />
       </Node>
-      <Node>
-        <CommonValues>
-          <RemoveWhenLifeIsExtinct>False</RemoveWhenLifeIsExtinct>
-          <Life>
-            <Center>10</Center>
-            <Max>10</Max>
-            <Min>10</Min>
-          </Life>
-        </CommonValues>
-        <ScalingValues>
-          <Type>3</Type>
-          <Fixed>
-            <Scale>
-              <X>3</X>
-            </Scale>
-          </Fixed>
-          <Easing>
-            <End>
-              <X>
-                <Center>2</Center>
-                <Max>2</Max>
-                <Min>2</Min>
-              </X>
-              <Y>
-                <Center>2</Center>
-                <Max>2</Max>
-                <Min>2</Min>
-              </Y>
-              <Z>
-                <Center>2</Center>
-                <Max>2</Max>
-                <Min>2</Min>
-              </Z>
-            </End>
-          </Easing>
-          <SinglePVA>
-            <Scale>
-              <Center>1.5</Center>
-              <Max>1.5</Max>
-              <Min>1.5</Min>
-            </Scale>
-          </SinglePVA>
-          <SingleEasing>
-            <Start>
-              <Center>3</Center>
-              <Max>3</Max>
-              <Min>3</Min>
-            </Start>
-            <End>
-              <Center>4</Center>
-              <Max>4</Max>
-              <Min>4</Min>
-            </End>
-            <StartSpeed>-30</StartSpeed>
-            <EndSpeed>-30</EndSpeed>
-          </SingleEasing>
-        </ScalingValues>
-        <RendererCommonValues>
-          <ColorTexture>../../../tkTools/Effekseer132/Sample/01_Suzuki01/001_magma_effect/Texture/glow.png</ColorTexture>
-          <AlphaBlend>2</AlphaBlend>
-          <FadeIn>
-            <Frame>3</Frame>
-          </FadeIn>
-          <FadeOut>
-            <Frame>6</Frame>
-          </FadeOut>
-        </RendererCommonValues>
-        <DrawingValues>
-          <Sprite>
-            <ColorAll_Fixed>
-              <R>0</R>
-              <B>0</B>
-              <A>140</A>
-            </ColorAll_Fixed>
-            <ColorAll_Random>
-              <R>
-                <Center>121</Center>
-                <Max>174</Max>
-                <Min>68</Min>
-              </R>
-              <G>
-                <Center>126</Center>
-                <Max>179</Max>
-                <Min>74</Min>
-              </G>
-              <B>
-                <Center>141</Center>
-                <Max>213</Max>
-                <Min>70</Min>
-              </B>
-              <A>
-                <Center>200</Center>
-                <Max>200</Max>
-                <Min>200</Min>
-              </A>
-            </ColorAll_Random>
-            <Color_Fixed_LL>
-              <B>128</B>
-            </Color_Fixed_LL>
-            <Color_Fixed_LR>
-              <R>0</R>
-              <G>0</G>
-            </Color_Fixed_LR>
-          </Sprite>
-          <Ring>
-            <Billboard>0</Billboard>
-            <VertexCount>30</VertexCount>
-          </Ring>
-        </DrawingValues>
-        <Name>Glow</Name>
-        <Children />
-      </Node>
     </Children>
   </Root>
   <Behavior>
@@ -1295,6 +1295,6 @@
   <ToolVersion>1.32</ToolVersion>
   <Version>3</Version>
   <StartFrame>0</StartFrame>
-  <EndFrame>800</EndFrame>
+  <EndFrame>150</EndFrame>
   <IsLoop>True</IsLoop>
 </EffekseerProject>
