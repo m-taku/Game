@@ -38,7 +38,7 @@ public:
 	void NPCzombie_Return();					//殴った後帰る（いらん）
 	void nearestpas();			//ド～コ行こうかな～～～（ランダム徘徊処理の初期化）
 	void Retrieval_pasNo(int mokuhyou);
-	void death_Animation();
+
 	void again_move();
 	void NPCGetaway();
 //	void NPCzombie_Escape();					
@@ -70,7 +70,7 @@ public:
 	//////////////////////////////////////////////////////////////////////////
 	void Animation_Walk();					    //歩き始めと歩き続けの一連のアニメーションの処理。
 	void Animation_Run();						//走り始めと走り続けの一連のアニメーションの処理。
-
+	void death_Animation();
 	void Idle_Animation();
 	
 	void Loop_Walk_Animation();//歩き続けるときの処理。

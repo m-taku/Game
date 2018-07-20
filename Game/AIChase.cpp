@@ -98,7 +98,10 @@ void AI::Idle_Animation() //キャラクターが歩き続ける時のアニメーションの処理。
 	ai_NPCAnimation.Play(shiminidle, 0.7);
 }
 
-
+void AI::death_Animation() //キャラクターが歩き続ける時のアニメーションの処理。
+{
+	ai_NPCAnimation.Play(shiminidle, 0.7);
+}
 void AI::Loop_Walk_Animation()//キャラクターが歩き続ける時のアニメーションの処理。
 {
 	ai_NPCAnimation.Play(shiminwalk, 0.7);

@@ -281,7 +281,6 @@ float tekihei::length(CVector3 vector)
 }
 void tekihei::Update()
 {
-
 	for (int i = 0; i < teki; i++)//“G•º‚Ì”‚¾‚¯ŒJ‚è•Ô‚·B
 	{
 
@@ -686,7 +685,6 @@ void tekihei::Update()
 			}
 		}
 		//i”Ô–Ú‚Ì“G•º‚ÌHP‚ª‚Ü‚¾‚ ‚é‚Æ‚«‚Ìƒ‹[ƒv‚Í‚±‚±‚Ü‚Å
-
 		if (tekiheiflag[i] == 0)//i”Ô–Ú‚Ìtekiheiflag‚ª0(i”Ô–Ú‚Ì“G•º‚ÌHP‚ª0ˆÈ‰º‚É‚È‚Á‚½)‚Æ‚«
 		{
 			m_charaCon[i].RemoveRigidBoby();//i”Ô–Ú‚Ì“G•º‚Ì„‘Ì‚ð„‘Ì‚ÌƒŠƒXƒg‚©‚çíœ‚·‚éB
@@ -737,9 +735,6 @@ void tekihei::Update()
 		NewGO<GameEnd>(0, "End");
 		DeleteGO(this);
 	}
-
-
-	
 	Enemy_Discovery();
 }
 void tekihei::Enemy_Discovery()

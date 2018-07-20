@@ -15,7 +15,6 @@ public:
 	void Render(CRenderContext& rc);
 	void PostRender(CRenderContext& rc);
 	void Enemy_Discovery();
-
 	enum enemyDiscoveryIcon
 	{
 		null,		//Œ©‚Â‚©‚ç‚È‚©‚Á‚½
