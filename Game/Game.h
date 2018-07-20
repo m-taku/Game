@@ -53,6 +53,11 @@ public:
 	{
 		return timer_m;
 	}
+
+	int Gettimer_s()
+	{
+		return timer_s;
+	}
 	
 private:
 	void InitSceneLight();

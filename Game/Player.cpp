@@ -338,6 +338,8 @@ void Player::Update()
 			m_moveSpeed = CVector3::Zero;
 		}
 	}
+
+	
 	Setposition(m_position);
 	m_skinModel.Update(m_position, m_rotation, { 20.0f,20.0f,20.0f });// CVector3::One*20.0f);
 	const CMatrix& boneM = m_skinModelData.GetSkeleton().GetBone(boneNo)->GetWorldMatrix();
@@ -373,6 +375,12 @@ void Player::Play_Respiration(CVector3 m_moveDecision)
 	}
 	else {
 		m_Respiration->Stop();//呼吸音を止める。
+	}
+
+	if (camera_f == false) {
+		if (m_Respiration->IsPlaying() == true) {
+			m_Respiration->Stop();//呼吸音を止める。
+		}
 	}
 }
 //プレイヤーが攻撃した時の効果音を再生する。

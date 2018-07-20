@@ -92,7 +92,7 @@ void Game::Update()
 			timer_m--;
 			if (timer_m < 0)
 			{
-				NewGO<GameEnd>(0,"GameEnd");
+				//NewGO<GameEnd>(0,"GameEnd");
 				player->false_camera_f();
 				timer_m = 0;
 				timer_s = 0.0f;

@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "BGM.h"
+#include"GameEnd.h"
 
 
 BGM::BGM()
@@ -25,7 +26,7 @@ bool BGM::Start()
 	m_bdm_Sneak1->SetVolume(bgm_volume);
 	m_bdm_Sneak2 = NewGO<prefab::CSoundSource>(0);
 	m_bdm_Sneak2->Init("sound/n80.wav");
-	m_bdm_Sneak2->SetVolume(0.3f);
+	m_bdm_Sneak2->SetVolume(0.5f);
 	Scene = Title;
 	ai_manager = FindGO<AI_manager>("AI_manager");//AI_managerのインスタンスを取得。
 	NPC_Goukei = ai_manager->Get_NPC_Number();//生成したNPCの合計人数を代入。
@@ -71,7 +72,7 @@ void BGM::Play_Sneak_Fewer_people()//スニーク時(ゾンビ化NPCが1/2未満の時)のBGMを
 	{
 		//BGMのフェードアウト
 		if (bgm_volume > 0.01f) {
-			bgm_volume = bgm_volume - 0.04f;
+			bgm_volume = bgm_volume - 0.02f;
 			m_bdm_Sneak1->SetVolume(bgm_volume);
 		}
 		else {
@@ -85,7 +86,24 @@ void BGM::Play_Sneak_Fewer_people()//スニーク時(ゾンビ化NPCが1/2未満の時)のBGMを
 void BGM::Play_Sneak_Many_persons()//スニーク時(ゾンビ化NPCが1/2以上の時)のBGMを流しているときに動く関数。
 {
 	m_bdm_Sneak2->Play(true);//スニーク時のBGM2を流す。
-	m_bdm_Sneak2->SetVolume(0.5f);
+	if ((game->Gettimer_m() <= 0)&&(game->Gettimer_s() <= 0))//
+	{
+		//BGMのフェードアウト
+		if (bgm_volume > 0.01f) {
+			bgm_volume = bgm_volume - 0.02f;
+			m_bdm_Sneak2->SetVolume(bgm_volume);
+		}
+		else {
+			m_bdm_Sneak2->Stop();
+			NewGO<GameEnd>(0, "GameEnd");
+			Scene = Game_End;
+			bgm_volume = 1.0f;
+		}
+	}
+}
+void BGM::Play_Game_End()
+{
+
 }
 
 void BGM::Update()
@@ -104,6 +122,9 @@ void BGM::Update()
 		break;
 	case Sneak_Many_persons://スニークかつゾンビが1/2以上。
 		Play_Sneak_Many_persons();
+		break;
+	case Game_End:
+		Play_Game_End();
 		break;
 	default:
 		break;
