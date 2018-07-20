@@ -43,6 +43,14 @@ bool Geizi::Start()
 }
 void Geizi::Update()
 {
+	if (player->Getbonepos().y <= 10.0f)
+	{
+		Red_sprite.SetMulColor({ 1.0f,1.0f,1.0f,1-HP_saiz });
+	}
+	else
+	{
+		Red_sprite.SetMulColor({ 1.0f,1.0f,1.0f,0.0f });
+	}
 	if (revival == true) {
 		if (player->anine_Playing()==false)
 		{
@@ -54,7 +62,6 @@ void Geizi::Update()
 	if (HPfurag >= 1)
 	{
 		if (HP <= 0) {
-			if (player->Getbonepos().y <= 10.0f);
 			HP_saiz += 0.1*GameTime().GetFrameDeltaTime();
 			if (HP_saiz >= 1.0f)
 			{
