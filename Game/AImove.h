@@ -62,7 +62,7 @@ private:
 	Game* game;									
 	CVector3 mokuteki = CVector3::Zero;			//目的地の座標
 	float kaku = 0.0f;							//回転角度
-	float haba = 3.0f;							//目的地の角度のごさ
+	float haba = 5.0f;							//目的地の角度のごさ
 	float kakudo = 3.0f;						//曲げる角度
 };
 
