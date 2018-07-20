@@ -43,9 +43,9 @@ bool Geizi::Start()
 }
 void Geizi::Update()
 {
-	if (player->Getbonepos().y <= 10.0f)
+	if (player->Getbonepos().y <= 40.0f)
 	{
-		Red_sprite.SetMulColor({ 1.0f,1.0f,1.0f,1-HP_saiz });
+		Red_sprite.SetMulColor({ 1.0f,1.0f,1.0f,1.5f-HP_saiz });
 	}
 	else
 	{

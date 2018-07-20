@@ -17,7 +17,6 @@ bool item::Start()
 	itemModelData.Load(L"modelData/item.cmo");
 	itemModel.Init(itemModelData);
 	item_vector.Normalize();
-	
 	return true;
 }
 
