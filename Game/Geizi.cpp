@@ -31,7 +31,7 @@ bool Geizi::Start()
 	//n_texture.CreateFromDDSTextureFromFile(L"sprite/ge-ji.dds");
 	//n_sprite.Init(n_texture, 400, 100);
 	//n_sprite.Update(n_position, CQuaternion::Identity, { 1.0f,1.0f,1.0f }, { 0.0f,1.0f });
-	Red_texture.CreateFromDDSTextureFromFile(L"sprite/Rad_fade.dds");
+	Red_texture.CreateFromDDSTextureFromFile(L"sprite/Red_fade.dds");
 	Red_sprite.Init(Red_texture, 1280, 720);
 	HP_texture.CreateFromDDSTextureFromFile(L"sprite/damage.dds");
 	hm_sprite.Init(HP_texture, 1280,720);

@@ -91,7 +91,7 @@ bool AI::Start()
 	m_forward.y = m_tekirot.m[2][1];
 	m_forward.z = m_tekirot.m[2][2];
 	m_forward.Normalize();
-	work->Setkakudo(5.0f);
+	work->Setkakudo(10.0f);
 	m_rotation.SetRotationDeg(CVector3::AxisY,VectorAngleDeg(game->pasu[Leftfrag].m_pointList[pasu[ima] - 1]));
 	SetTags(10);
 	m_skinModel.SetShadowCasterFlag(true);
@@ -110,6 +110,7 @@ void AI::NPCNormal()
 				mokuhyou = pasu[ima];
 			}
 			else {
+
 				mokuhyou = pasu[++ima];
 			}
 		}
@@ -135,7 +136,6 @@ void AI::NPCNormal_Search()//NPC‚ÌŒx‰úˆ—B
 		da = 0;
 		m_speed = 4.0f;
 		nearestpas();
-		Fardist_path(pl->Getposition());
         pa = Escape;       
 	}
 	if (hann >= 2) {
@@ -170,28 +170,28 @@ void AI::NPCResistance_Player()//ƒvƒŒƒCƒ„[‚Ö‚Ì’ïR‚ÉŠÖ‚·‚éˆ—BƒI[ƒo[ƒ‰ƒCƒh‚
 
 void AI::NPCDamage()
 {
-		//30ƒtƒŒ[ƒ€Œo‰ß‚µ‚½‚çƒ]ƒ“ƒr‰»B
-		bgm->SetZombie();//BGM‚ÌƒCƒ“ƒXƒ^ƒ“ƒX‚Éƒ]ƒ“ƒr‚ª‘‚¦‚½‚±‚Æ‚ğ“`‚¦‚éB
-		nearestpas();
-		lam = nullptr;
-		Chasefrag = 0;
-		Raifu_f = false;
-		SetZonbe();
-		NPCHP = 100.0f;
-		NPCMAXHP = 100.0f;		
-		item* ite = NewGO<item>(0, "item");
-		ite->Set_itempos(Getposition());
-		m_speed = 1.5;
-		//“o˜^‚³‚ê‚Ä‚¢‚éNPC‚ª3DSMAXã‚Å¶‘¤‚ÌƒpƒX‚É‘®‚µ‚Ä‚¢‚È‚©‚Á‚½‚ç(‰E‘¤‚ÌƒpƒX‚É‘®‚µ‚Ä‚¢‚½‚ç)
-		if (Leftfrag <= 0) {
-			//‰E‘¤‚É‘®‚·‚éNPC‚Ì¶‘¶”»’è‚ğ‰Šú‰»‚·‚é(0‚Å¶‘¶A-1‚ÅÁ–Å)B
-			game->SatRSaizon(iNo,0);
-		}
-		else {
-			//¶‘¤‚É‘®‚·‚éNPC‚Ì¶‘¶”»’è‚ğ‰Šú‰»‚·‚é(0‚Å¶‘¶A-1‚ÅÁ–Å)B
-			game->SatLSaizon(iNo,0);
-		}
-		pa = Zombie_Normal; //ƒpƒ^[ƒ“‚ğƒ]ƒ“ƒrƒm[ƒ}ƒ‹‚É•Ï‚¦‚éB
+	//30ƒtƒŒ[ƒ€Œo‰ß‚µ‚½‚çƒ]ƒ“ƒr‰»B
+	bgm->SetZombie();//BGM‚ÌƒCƒ“ƒXƒ^ƒ“ƒX‚Éƒ]ƒ“ƒr‚ª‘‚¦‚½‚±‚Æ‚ğ“`‚¦‚éB
+	nearestpas();
+	lam = nullptr;
+	Chasefrag = 0;
+	Raifu_f = false;
+	SetZonbe();
+	NPCHP = 100.0f;
+	NPCMAXHP = 100.0f;
+	item* ite = NewGO<item>(0, "item");
+	ite->Set_itempos(Getposition());
+	m_speed = 1.5;
+	//“o˜^‚³‚ê‚Ä‚¢‚éNPC‚ª3DSMAXã‚Å¶‘¤‚ÌƒpƒX‚É‘®‚µ‚Ä‚¢‚È‚©‚Á‚½‚ç(‰E‘¤‚ÌƒpƒX‚É‘®‚µ‚Ä‚¢‚½‚ç)
+	if (Leftfrag <= 0) {
+		//‰E‘¤‚É‘®‚·‚éNPC‚Ì¶‘¶”»’è‚ğ‰Šú‰»‚·‚é(0‚Å¶‘¶A-1‚ÅÁ–Å)B
+		game->SatRSaizon(iNo, 0);
+	}
+	else {
+		//¶‘¤‚É‘®‚·‚éNPC‚Ì¶‘¶”»’è‚ğ‰Šú‰»‚·‚é(0‚Å¶‘¶A-1‚ÅÁ–Å)B
+		game->SatLSaizon(iNo, 0);
+	}
+	pa = Zombie_Normal; //ƒpƒ^[ƒ“‚ğƒ]ƒ“ƒrƒm[ƒ}ƒ‹‚É•Ï‚¦‚éB
 }
 void AI::nearestpas()//ÅŠñ‚è‚ÌƒpƒXŒŸõ
 {
@@ -521,7 +521,6 @@ void AI::Update()
 			m_SE_Down->Play(false);//ˆê‰ñ‚¾‚¯Ä¶‚³‚ê‚Ä”jŠü‚³‚ê‚éB
 			escapecaku = 30.0f;
 			m_speed = 0.0f;
-			SetZonbe();
 			HitFlag = false;
 		}
 		else {
