@@ -15,7 +15,8 @@ public:
 		Title,//タイトル
 		Sneak_First,//スニークの最初の一回だけ動かす。
 		Sneak_Fewer_people,//ゾンビ化NPCの人数が少ないとき(NPC総数の二分の一未満の人数)の処理。
-		Sneak_Many_persons,//ゾンビ化NPCの人数が多いとき(NPC総数の二分の一以上の人数)の処理(二分の一ちょうども含む)。
+		Sneak_Many_persons,//残り１分のとき。
+		Game_End//ゲームが終わってフェードアウトするときの処理。
 	};
 
 	//NPCがゾンビ化した数だけカウントする。
@@ -27,6 +28,7 @@ public:
 	void Play_Sneak_First();//スニーク時のBGMを流しているときの処理。
 	void Play_Sneak_Fewer_people();
 	void Play_Sneak_Many_persons();
+	void Play_Game_End();
 
 	//タイトル画面でスタートボタンが押されたことを受け取る。
 	void Set_Startbutton_push();
