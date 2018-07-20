@@ -91,7 +91,7 @@ bool AI::Start()
 	m_forward.y = m_tekirot.m[2][1];
 	m_forward.z = m_tekirot.m[2][2];
 	m_forward.Normalize();
-	work->Setkakudo(4.0f);
+	work->Setkakudo(5.0f);
 	m_rotation.SetRotationDeg(CVector3::AxisY,VectorAngleDeg(game->pasu[Leftfrag].m_pointList[pasu[ima] - 1]));
 	SetTags(10);
 	m_skinModel.SetShadowCasterFlag(true);
@@ -509,10 +509,10 @@ void AI::Update()
 	//		}
 	//	}
 	//}
-	if (NPCHP <= 0.0&&Raifu_f==false) {//ＨＰがなくなってしまったら
-		Raifu_f = true;							//死んでしまうとはなさけない！！
-		if (GetZonbi() == false) {				//ゾンビではないなら
-			pa = Resistance_NPC;				//もう一度チャンスをやろう！！！！
+	if (NPCHP <= 0.0&&Raifu_f==false) {					//ＨＰがなくなってしまったら
+		Raifu_f = true;									//死んでしまうとはなさけない！！
+		if (GetZonbi() == false) {						//ゾンビではないなら
+			pa = Resistance_NPC;						//もう一度チャンスをやろう！！！！
 			prefab::CSoundSource*m_SE_Down = nullptr;
 			m_SE_Down = NewGO<prefab::CSoundSource>(0);
 			m_SE_Down->Init("sound/tumbling1.wav", true);

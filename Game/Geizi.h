@@ -10,7 +10,6 @@ public:
 	bool Start();
 	void Update();
 //	void Render(CRenderContext& rc);
-
 	void PostRender(CRenderContext& rc);
 	void satHP(float a)
 	{
@@ -59,6 +58,8 @@ private:
 	Damage Dame;
 	CShaderResourceView HP_texture;	//テクスチャ。
 	CSprite hm_sprite;				//スプライトh(枠)。
+	CShaderResourceView Red_texture;	//テクスチャ。
+	CSprite Red_sprite;				//スプライトh(枠)。
 	tekihei* haus;
 	float point = 0.0f;
 	float HP = 0.95f;

@@ -512,12 +512,6 @@
     <Image Include="Assets\modelData\ao.png">
       <Filter>Assets\sprite</Filter>
     </Image>
-    <Image Include="Assets\sprite\Press_Button.png">
-      <Filter>Assets\sprite</Filter>
-    </Image>
-    <Image Include="Assets\sprite\Start_Button.png">
-      <Filter>Assets\sprite</Filter>
-    </Image>
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\lever\larer_01.tks">
@@ -559,6 +553,11 @@
       <Filter>Assets\sprite</Filter>
     </ImageContentTask>
     <ImageContentTask Include="Assets\sprite\dame_ji.png">
+      <Filter>Assets\sprite</Filter>
+    </ImageContentTask>
+    <ImageContentTask Include="Assets\sprite\Press_Button.png" />
+    <ImageContentTask Include="Assets\sprite\Start_Button.png" />
+    <ImageContentTask Include="Assets\sprite\Red_fade.png">
       <Filter>Assets\sprite</Filter>
     </ImageContentTask>
   </ItemGroup>

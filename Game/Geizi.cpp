@@ -31,7 +31,8 @@ bool Geizi::Start()
 	//n_texture.CreateFromDDSTextureFromFile(L"sprite/ge-ji.dds");
 	//n_sprite.Init(n_texture, 400, 100);
 	//n_sprite.Update(n_position, CQuaternion::Identity, { 1.0f,1.0f,1.0f }, { 0.0f,1.0f });
-
+	Red_texture.CreateFromDDSTextureFromFile(L"sprite/Rad_fade.dds");
+	Red_sprite.Init(Red_texture, 1280, 720);
 	HP_texture.CreateFromDDSTextureFromFile(L"sprite/damage.dds");
 	hm_sprite.Init(HP_texture, 1280,720);
 	hm_sprite.Update(CVector3::Zero, CQuaternion::Identity, { 1.0f,1.0f,1.0f }, { 0.5f,0.5f });
@@ -53,6 +54,7 @@ void Geizi::Update()
 	if (HPfurag >= 1)
 	{
 		if (HP <= 0) {
+			if (player->Getbonepos().y <= 10.0f);
 			HP_saiz += 0.1*GameTime().GetFrameDeltaTime();
 			if (HP_saiz >= 1.0f)
 			{
@@ -121,6 +123,7 @@ void Geizi::PostRender(CRenderContext& rc)
 	if (player->getcamera_f())
 	{
 		hm_sprite.Draw(rc, MainCamera2D().GetViewMatrix(), MainCamera2D().GetProjectionMatrix());
+		Red_sprite.Draw(rc, MainCamera2D().GetViewMatrix(), MainCamera2D().GetProjectionMatrix());
 		hy_sprite.Draw(rc, MainCamera2D().GetViewMatrix(), MainCamera2D().GetProjectionMatrix());
 	}
 }
