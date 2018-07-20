@@ -153,7 +153,7 @@ void AI::NPCResistance_NPC()//NPCƒ]ƒ“ƒr‚Ö‚Ì’ïR‚ÉŠÖ‚·‚éˆ—BƒI[ƒo[ƒ‰ƒCƒh‚³‚¹‚
 	{
 		sinsoku = 1.0f;
 		m_skinModel.Satburend(sinsoku);
-		okiagari=true;
+		okiagari = true;
 	}
 }
 void AI::NPCResistance_Player()//ƒvƒŒƒCƒ„[‚Ö‚Ì’ïR‚ÉŠÖ‚·‚éˆ—BƒI[ƒo[ƒ‰ƒCƒh‚³‚¹‚éB
@@ -736,7 +736,7 @@ void AI::NPCRunangle(CVector3 kyori)//’¼üƒxƒNƒgƒ‹‚ð‚»‚Ì‚Ü‚ÜŽg‚Á‚½ˆÚ“®‚ÌÛ‚ÌA‰ñ
 }
 void AI::pasmove(int mokuhyou)
 {
-	work->kyorikeisan(mokuhyou - 1, m_position, m_forward, game->pasu[Leftfrag].m_pointList);
+	work->kyorikeisan(mokuhyou - 1, m_position, m_forward,game->pasu[Leftfrag].m_pointList);
 	m_movespeed = work->Getbekutor() * (work->Getmuve()*m_speed + mobe* GameTime().GetFrameDeltaTime());
 	m_movespeed.y += gravity;
 	m_position = A_charaCon.Execute(GameTime().GetFrameDeltaTime(), m_movespeed);//ˆÚ“®

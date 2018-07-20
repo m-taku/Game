@@ -147,7 +147,7 @@ void AI::NPCZombie_Chase()
 void AI::NPCZombie_Attack()//vs特殊部隊
 {
 	if (tekip != NULL) {
-		float len = GetKyori(m_position, tekip->tamapos[No]);
+		float len = GetKyori(m_position, tekip->tekipos[No]);
 		if (len > 2100.0f||tekip->tekiheiflag[No] <= 0) {			//他のNPCを見失った(距離が2100以上あいた)、あるいは死んだら							  
 			kaiten = false;											//元の位置に戻る。
 			HitFlag = false;										//検索結果を初期化する。

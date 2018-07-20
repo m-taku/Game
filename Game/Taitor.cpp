@@ -155,7 +155,7 @@ void Taitor::Update()
 		}
 		if (BasisVector.Length() <= 40.0f)
 		{
-			NewGO<Game>(0, "Game");
+			NewGO<Game>(2, "Game");
 			DeleteGO(this);
 		}
 		break;

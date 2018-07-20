@@ -18,6 +18,7 @@ Osu::~Osu()
 
 bool Osu::Start()
 {
+	m_player = FindGO<Player>("Player");
 	m_skinModelData.Load(L"modelData/liam.cmo");//男性型を書け
 	m_skinModel.Init(m_skinModelData);
 	ai_NPCAnimationClips[shiminidle].Load(L"animData/shiminidle.tka");//仮。後で入れろ。
@@ -101,7 +102,13 @@ bool Osu::Start()
 
 void Osu::Update()
 {
-
+	if (m_player != nullptr) {
+		auto diff = m_player->GetPosition() - Getposition();
+		if (diff.LengthSq() > 4000 * 4000) {
+			return;
+		}
+	}
+	
 	AI::Update();
 	AI_Animation();
 }
@@ -116,6 +123,19 @@ void Osu::AI_Animation()//AIのアニメーション制御
 		{
 			death_Animation();
 		}
+
+		else if (okiagari == true)
+		{
+			ai_NPCAnimation.Play(shiminoki,0.7f);
+			if (!ai_NPCAnimation.IsPlaying()) {
+				okiagari = false;
+				pa = Damage;
+			}
+		}
+		else if (pa == Resistance_NPC|| pa == Resistance_Player)
+		{
+			death_Animation();
+		}	
 		else if (m_speed < 0.5f) {
 			death_Animation();
 		}
@@ -131,18 +151,7 @@ void Osu::AI_Animation()//AIのアニメーション制御
 		if (pa == flyNPC) {
 			Zombie_Ziko_Animation();
 		}
-		else if (okiagari == true)
-		{
-			ai_NPCAnimation.Play(shiminoki,0.7f);
-			if (!ai_NPCAnimation.IsPlaying()) {
-				okiagari = false;
-				pa = Damage;
-			}
-		}
-		else if (pa == Resistance_NPC|| pa == Resistance_Player)
-		{
-			death_Animation();
-		}
+		
 		else if (pa == Death)
 		{
 			death_Animation();

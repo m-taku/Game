@@ -43,5 +43,6 @@ private:
 	CAnimation ai_NPCAnimation;				//アニメーション。
 	CAnimationClip ai_NPCAnimationClips[animnum];	//アニメーションクリップ。
 	static CShaderResourceView* zondi ;
+	Player* m_player = nullptr; 
 };
 

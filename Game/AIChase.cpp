@@ -24,10 +24,10 @@ void AI::NPCChase()
 		HitFlag = false;
 	}
 	else {
-		if (mokuteki.Length() >= 00.0f)
+		if (mokuteki.Length() >= 800.0f)
 		{
 			Chasepas(lam->m_position);//Œo˜H‚½‚ñ‚³H
-			m_rotation.Multiply(work->Getkaku());
+		//	m_rotation.Multiply(work->Getkaku());
 		}
 		else
 		{
