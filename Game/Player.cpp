@@ -338,7 +338,11 @@ void Player::Update()
 			m_moveSpeed = CVector3::Zero;
 		}
 	}
+	/*if ((1 / 25.0f) - GameTime().GetFrameDeltaTime() <= 0)
+	{
 
+		game = true;
+	}*/
 	
 	Setposition(m_position);
 	m_skinModel.Update(m_position, m_rotation, { 20.0f,20.0f,20.0f });// CVector3::One*20.0f);

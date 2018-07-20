@@ -150,7 +150,7 @@ void Game::PostRender(CRenderContext& renderContext)
 	if (player->getcamera_f() == true)
 	{
 		m_font.Begin(renderContext);
-		m_font.Draw(test_font, font_pos, { 255.0f,255.0f,255.0f,1.0f }, 0.0f, 4.0f, fomt_pivot);
+		m_font.Draw(test_font, font_pos, { 255.0f,255.0f,255.0f,1.0f }, 0.0f, 2.0f, fomt_pivot);
 		m_font.End(renderContext);
 	}
 }

@@ -204,7 +204,7 @@ private:
 	std::wstring inputwstr = L"ABCDEFG";
 	CFont m_font;
 	wchar_t test_font[255];
-	CVector2 font_pos = { 700.0f,400.0f };
+	CVector2 font_pos = { 800.0f,400.0f };
 	CVector2 fomt_pivot = { 0.0f,0.0f };
 	int bullet_sum = 5;
 	
